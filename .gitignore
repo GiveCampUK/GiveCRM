@@ -4,7 +4,6 @@ deploy
 *.csproj.user
 *.suo
 *.cache
-*.nupkg
 ~$*
 *~
 *ReSharper*
