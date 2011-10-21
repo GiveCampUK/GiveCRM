@@ -17,5 +17,10 @@ namespace GiveCRM.Models
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2} ({3})", Title, FirstName, LastName, EmailAddress);
+        }
     }
 }
