@@ -70,7 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
-    <Compile Include="When_constructing.cs" />
+    <Compile Include="When_constructing_export.cs" />
+    <Compile Include="When_constructing_import.cs" />
     <Compile Include="When_creating_formatted_content.cs" />
     <Compile Include="When_creating_plain_content.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
