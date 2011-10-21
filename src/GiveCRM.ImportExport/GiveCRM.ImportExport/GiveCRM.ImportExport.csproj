@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\packages\EPPlus.2.9.0.1\lib\2.0\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\NPOI.1.2.3\lib\2.0\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -68,6 +71,8 @@
   <ItemGroup>
     <Compile Include="Borders\Border.cs" />
     <Compile Include="ExcelImport.cs" />
+    <Compile Include="ExcelXlsImporter.cs" />
+    <Compile Include="IExcelImporter.cs" />
     <Compile Include="NPOIExtensions.cs" />
     <Compile Include="ExcelExport.cs" />
     <Compile Include="Cells\Cell.cs" />
