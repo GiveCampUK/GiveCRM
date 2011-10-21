@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using NPOI;
 
 namespace GiveCRM.ImportExport
@@ -12,6 +13,8 @@ namespace GiveCRM.ImportExport
             Dispose(false);
         }
 
+        
+
         public void Dispose()
         {
             Dispose(true);
@@ -24,6 +27,11 @@ namespace GiveCRM.ImportExport
             {
                 disposed = true;
             }
+        }
+
+        public void Open(Stream streamToProcess)
+        {
+            if (streamToProcess == null) throw new ArgumentNullException("streamToProcess");
         }
     }
 }
