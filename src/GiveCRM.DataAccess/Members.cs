@@ -31,40 +31,65 @@ namespace GiveCRM.DataAccess
 
         public Member Insert(Member member)
         {
-            Member inserted = _db.Members.Insert(member);
-            foreach (var phoneNumber in member.PhoneNumbers)
+            using (var transaction = _db.BeginTransaction())
             {
-                phoneNumber.MemberId = inserted.Id;
+                try
+                {
+                    Member inserted = transaction.Members.Insert(member);
+
+                    foreach (var phoneNumber in member.PhoneNumbers)
+                    {
+                        phoneNumber.MemberId = inserted.Id;
+                    }
+                    inserted.PhoneNumbers = transaction.PhoneNumbers.Insert(member.PhoneNumbers).ToList<PhoneNumber>();
+                    transaction.Commit();
+                    return inserted;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
-            inserted.PhoneNumbers = _db.PhoneNumbers.Insert(member.PhoneNumbers).ToList<PhoneNumber>();
-            return inserted;
         }
 
         public void Update(Member member)
         {
-            _db.Members.UpdateById(member);
-            UpdatePhoneNumbers(member);
+            using (var transaction = _db.BeginTransaction())
+            {
+                try
+                {
+                    transaction.Members.UpdateById(member);
+                    UpdatePhoneNumbers(member, transaction);
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
 
-        private void UpdatePhoneNumbers(Member member)
+        private void UpdatePhoneNumbers(Member member, dynamic transaction)
         {
             bool refetchPhoneNumbers = false;
             foreach (var phoneNumber in member.PhoneNumbers)
             {
                 if (phoneNumber.MemberId == 0)
                 {
-                    _db.PhoneNumbers.Insert(phoneNumber);
+                    transaction.PhoneNumbers.Insert(phoneNumber);
                     refetchPhoneNumbers = true;
                 }
                 else
                 {
-                    _db.PhoneNumbers.UpdateById(phoneNumber);
+                    transaction.PhoneNumbers.UpdateById(phoneNumber);
                 }
             }
 
             if (refetchPhoneNumbers)
             {
-                member.PhoneNumbers = _db.PhoneNumbers.FindByMemberId(member.Id).ToList<PhoneNumber>();
+                member.PhoneNumbers = transaction.PhoneNumbers.FindByMemberId(member.Id).ToList<PhoneNumber>();
             }
         }
     }
