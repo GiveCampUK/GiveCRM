@@ -75,6 +75,7 @@
     <Compile Include="When_creating_formatted_content.cs" />
     <Compile Include="When_creating_plain_content.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="When_opening_file_from_stream.cs" />
     <Compile Include="When_using_ExcelExport.cs" />
   </ItemGroup>
   <ItemGroup>
