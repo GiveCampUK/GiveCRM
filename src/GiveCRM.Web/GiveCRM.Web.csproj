@@ -91,7 +91,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -241,8 +240,7 @@
     <Content Include="Views\Donation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_GlobFooter.cshtml" />
-    <Content Include="Views\Shared\_GlobHeader.cshtml" />
+    <Content Include="Views\Donation\DonationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Donation\DonationList.cshtml" />
