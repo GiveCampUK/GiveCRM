@@ -4,9 +4,17 @@
     ViewBag.Title = "Donate";
 }
 
-<h2>Add Donation</h2>
+<h2>Add Donation for @ViewBag.MemberName</h2>
 
 @{Html.BeginForm(actionName: "SaveDonation", controllerName: "Member");}
+
+@Html.HiddenFor(d => d.MemberId)
+
+@Html.LabelFor(d=>d.CampaignId)
+
+@Html.DropDownListFor(
+    d => d.CampaignId, 
+    (IEnumerable<SelectListItem>)ViewBag.Campaigns)<br />
 
 @Html.LabelFor(d=>d.Date) @Html.TextBoxFor(d=>d.Date)<br />
 
@@ -16,8 +24,8 @@
 
 @{Html.EndForm();}
 
-<script>
+<script type="text/javascript" language="javascript">
     $(function () {
-        $("#Date").datepicker();
+        $("#Date").datepicker({ dateFormat: 'dd/mm/yy' });
     });
 	</script>
