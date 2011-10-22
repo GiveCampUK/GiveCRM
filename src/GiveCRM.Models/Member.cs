@@ -17,6 +17,7 @@ namespace GiveCRM.Models
         public string Region { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
+        public bool Archived { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 
         public override string ToString()
