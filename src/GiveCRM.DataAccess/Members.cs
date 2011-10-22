@@ -20,13 +20,35 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> All()
         {
-            foreach (dynamic record in _db.Members.All())
+            var query = _db.Members.All()
+                .Select(_db.Members.Id, _db.Members.Reference, _db.Members.Title, _db.Members.FirstName,
+                        _db.Members.LastName, _db.Members.Salutation, _db.Members.EmailAddress,
+                        _db.Members.AddressLine1, _db.Members.AddressLine2, _db.Members.City, _db.Members.Region,
+                        _db.Members.PostalCode, _db.Members.Country,
+                        _db.Members.Archived,
+                        _db.Members.PhoneNumbers.Id.As("PhoneNumberId"), _db.Members.PhoneNumbers.Type,
+                        _db.Members.PhoneNumbers.Number,
+                        _db.Members.Donations.Amount.Sum().As("TotalDonations"))
+                .OrderBy(_db.Members.Id);
+
+            Member member = null;
+
+            foreach (dynamic record in query)
             {
-                Member member = record;
-                member.PhoneNumbers = _db.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>(); // record.PhoneNumbers.ToList<PhoneNumber>();
-                member.Donations = _db.Donations.FindAllByMemberId(member.Id).ToList<Donation>();
-                yield return member;
+                if (member != null && member.Id != record.Id)
+                {
+                    yield return member;
+                    member = null;
+                }
+                if (member == null)
+                {
+                    member = record;
+                    member.PhoneNumbers = new List<PhoneNumber>();
+                }
+                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId, MemberId = member.Id, Number = record.Number, Type = record.Type });
             }
+
+            yield return member;
         }
 
         public Member Insert(Member member)
