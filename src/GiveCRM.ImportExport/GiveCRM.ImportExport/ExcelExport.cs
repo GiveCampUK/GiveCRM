@@ -2,24 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using GiveCRM.ImportExport.Cells;
-using NPOI.SS.UserModel;
 using Cell = GiveCRM.ImportExport.Cells.Cell;
 
 namespace GiveCRM.ImportExport
 {
-    public class ExcelExport:IDisposable
+    public class ExcelExport:IDisposable, IExcelExport
     {
-        private readonly Workbook workBook;
-        private Sheet currentSheet;
-        private bool disposed = false;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExcelExport"/> class.
-        /// </summary>
-        public ExcelExport()
-        {
-            workBook = new NPOI.HSSF.UserModel.HSSFWorkbook();
-        }
+        internal IExcelExporter ExcelExporter;
+        private bool disposed;
 
         ~ExcelExport()
         {
@@ -32,9 +22,11 @@ namespace GiveCRM.ImportExport
         /// <returns>Stream holding the Excel workbook</returns>
         public void ExportToStream(Stream outputStream)
         {
-            workBook.Write(outputStream);
-            outputStream.Flush();
-            outputStream.Position = 0;
+            if (ExcelExporter == null)
+            {
+                throw new InvalidOperationException("WriteDataToExport must be called before ExportToStream");
+            }
+            ExcelExporter.ExportToStream(outputStream);
         }
 
         /// <summary>
@@ -42,14 +34,14 @@ namespace GiveCRM.ImportExport
         /// </summary>
         /// <param name="rowData">The data to be exported to the workbook</param>
         /// <param name="formatter"></param>
-        public void WriteDataToExport(IEnumerable<IEnumerable<Cell>> rowData, CellFormatter formatter)
+        public void WriteDataToExport(IEnumerable<IEnumerable<Cell>> rowData, CellFormatter formatter, ExcelFileType excelFileType)
         {
-            if (currentSheet == null)
+            if (excelFileType == ExcelFileType.XLS)
             {
-                currentSheet = workBook.CreateSheet("Sheet 1");
+                ExcelExporter = new ExcelXlsExporter();
             }
 
-            formatter.WriteDataToSheet(currentSheet, rowData);
+            ExcelExporter.WriteDataToExport(rowData, formatter, "Sheet 1");
         }
 
         public void Dispose()
@@ -64,8 +56,10 @@ namespace GiveCRM.ImportExport
             {
                 if (disposing)
                 {
-                    currentSheet.Dispose();
-                    workBook.Dispose();
+                    if (ExcelExporter != null)
+                    {
+                        ExcelExporter.Dispose(); 
+                    }
                 }
 
                 disposed = true;

@@ -40,8 +40,8 @@
     foreach(var phone in Model.PhoneNumbers)
     {
         <span>@phone.Type</span><span>@phone.Number</span><br />
-        <input type="hidden" name="member.PhoneNumbers[@i].Type" value="@phone.Type" />
-        <input type="hidden" name="member.PhoneNumbers[@i].Number" value="@phone.Number" /> 
+        <input type="hidden" name="PhoneNumbers[@i].Type" value="@phone.Type" />
+        <input type="hidden" name="PhoneNumbers[@i].Number" value="@phone.Number" /> 
         i += 1; 
     }
 }
