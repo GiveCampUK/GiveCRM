@@ -86,5 +86,14 @@ namespace GiveCRM.Web.Properties {
                 return ResourceManager.GetString("Literal_Open", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show {0} Campaigns.
+        /// </summary>
+        internal static string Show_Campaigns_Text {
+            get {
+                return ResourceManager.GetString("Show_Campaigns_Text", resourceCulture);
+            }
+        }
     }
 }
