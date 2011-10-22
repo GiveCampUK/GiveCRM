@@ -110,7 +110,7 @@ namespace GiveCRM.Web.Controllers
         {
             Campaign campaign = campaignViewModel.Campaign;
             new Campaigns().Update(campaign);
-            return View(campaignViewModel);
+            return RedirectToAction("Show", new { id = campaign.Id });
         }
 
         [HttpGet]
