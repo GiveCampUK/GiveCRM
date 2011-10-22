@@ -8,7 +8,12 @@ namespace GiveCRM.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? RunOn { get; set; }
-        public char IsClosed { get; set; }
+        private string _isClosed = "N";
+        public string IsClosed
+        {
+            get { return _isClosed; }
+            set { _isClosed = value; }
+        }
 
         public override string ToString()
         {
