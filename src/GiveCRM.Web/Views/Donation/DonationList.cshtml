@@ -1,1 +1,16 @@
-﻿
+﻿@model IEnumerable<GiveCRM.Models.Donation>
+
+<table>
+<tr>
+    <th>Date</th><th>Amount</th>
+</tr>
+
+@foreach (var donation in Model)
+{
+    <tr>
+        <td>@donation.Date.ToLongDateString()</td>
+        <td>@donation.Amount</td>
+    </tr>
+}
+
+</table>

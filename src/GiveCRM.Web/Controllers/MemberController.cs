@@ -52,6 +52,12 @@ namespace GiveCRM.Web.Controllers
         {
             var member = _membersDb.Get(id);
 
+            member.AddressLine1 = "deleted";
+            member.AddressLine2 = "deleted";
+            member.EmailAddress = "deleted";
+            member.FirstName = "deleted";
+            member.LastName = "deleted";
+            
             member.Archived = true;
 
             _membersDb.Update(member);
@@ -104,7 +110,14 @@ namespace GiveCRM.Web.Controllers
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
-        
+
+        public ActionResult TopDonors()
+        {
+            var members = _membersDb.All().OrderByDescending(m => m.TotalDonations).Take(5);
+
+            return View("MembersList", members);
+        }
+
         #region helper methods
 
         // todo: move these out!
