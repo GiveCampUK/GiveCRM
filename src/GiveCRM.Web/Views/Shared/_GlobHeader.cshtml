@@ -1,0 +1,28 @@
+﻿<div class="fill">
+	<div class="container">
+		<a class="brand" href="#">GiveCRM</a>
+          
+		<ul class="nav">
+				<!--TODO add active states, other Actions links-->
+				<li>@Html.ActionLink("Home", "Index", "Campaign")</li>
+				<li>@Html.ActionLink("Members", "Index", "Member")</li>
+		</ul>
+
+		<div class="pull-right">
+			@if (Request.IsAuthenticated) {
+				<span class="welcome">Welcome <strong>@User.Identity.Name</strong></span>
+				@Html.ActionLink("Log Off", "LogOff", "Account")
+			}
+			else {
+				<!-- TODO add submit to correct location, use validation -->
+				<form action="?">
+					<input class="input-small" type="text" name="email" placeholder="Email">
+					<input class="input-small" type="password"name="password" placeholder="Password">
+					<button class="btn" type="submit">Sign in</button>
+				</form>
+
+				@Html.ActionLink("Log On", "LogOn", "Account")
+			 }
+		</div>
+	</div>
+</div>
