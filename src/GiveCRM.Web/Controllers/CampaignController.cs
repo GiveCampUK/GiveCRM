@@ -123,11 +123,17 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
+            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+
+            // we have to find one
+            var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
+
             var memberSearchFilterRepo = new MemberSearchFilters();
             var memberSearchFilter = new MemberSearchFilter
                                              {
                                                 CampaignId = viewModel.CampaignId,
-                                                InternalName = "??",
+                                                InternalName = searchCriterion.InternalName,
+                                                FilterType = (int) searchCriterion.Type,
                                                 DisplayName = viewModel.CriteriaName,
                                                 SearchOperator = (int) viewModel.SearchOperator,
                                                 Value = viewModel.Value
