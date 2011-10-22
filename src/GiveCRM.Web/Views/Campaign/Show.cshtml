@@ -1,5 +1,5 @@
-﻿@model GiveCRM.Web.Models.Campaigns.CampaignShowViewModel
-@using GiveCRM.Models
+﻿@model CampaignShowViewModel
+@using GiveCRM.Web.Models.Campaigns
 
 @{
     ViewBag.Title = Model.Title;
@@ -25,8 +25,9 @@
         @Model.NoSearchFiltersText;
     }    
 
-    @foreach (MemberSearchFilter filter in Model.SearchFilters) {
-        <li>@Html.DisplayFor(v => filter.LeftHandSide) | @Html.DisplayFor(v => filter.Operator) | @Html.DisplayFor(v => filter.RightHandSide) @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new { campaignId = filter.CampaignId, memberSearchFilterId = filter.Id })</li>
+    @foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
+        <li>@filterViewModel.CriteriaDisplayText
+            @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new { campaignId = filterViewModel.CampaignId, memberSearchFilterId = filterViewModel.MemberSearchFilterId })</li>
     }
     </ul>
     
