@@ -50,7 +50,10 @@
                 "Tom",
                 "Nathan",
                 "Abraham",
-                "Adam"
+                "Adam",
+                "Luke",
+                "Scott",
+                "Ewan"
             };
 
         internal static List<string> FemaleFirstNames = new List<string>
@@ -88,7 +91,8 @@
                 "Hannah",
                 "Eve",
                 "Rachel",
-                "Rebecca"
+                "Rebecca",
+                "Jade"
             };
 
         internal static List<string> Surnames = new List<string>
