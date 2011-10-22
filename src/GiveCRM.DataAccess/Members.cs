@@ -94,12 +94,8 @@ namespace GiveCRM.DataAccess
             {
                 try
                 {
-                    // TODO: change this to check if there are any new numbers
-                    if (member.PhoneNumbers.Any(n => n.Id == 0))
-                        refetchPhoneNumbers = true;
-                    
                     transaction.Members.UpdateById(member);
-                    UpdatePhoneNumbers(member, transaction);
+                    refetchPhoneNumbers = UpdatePhoneNumbers(member, transaction);
                     transaction.Commit();
                 }
                 catch
@@ -117,8 +113,9 @@ namespace GiveCRM.DataAccess
 
         }
 
-        private void UpdatePhoneNumbers(Member member, dynamic transaction)
+        private bool UpdatePhoneNumbers(Member member, dynamic transaction)
         {
+            bool refetchPhoneNumbers = false; 
             
             foreach (var phoneNumber in member.PhoneNumbers)
             {
@@ -126,13 +123,15 @@ namespace GiveCRM.DataAccess
                 {
                     phoneNumber.MemberId = member.Id;
                     transaction.PhoneNumbers.Insert(phoneNumber);
-                    
+                    refetchPhoneNumbers = true; 
                 }
                 else
                 {
                     transaction.PhoneNumbers.UpdateById(phoneNumber);
                 }
             }
+
+            return refetchPhoneNumbers; 
         }
 
 

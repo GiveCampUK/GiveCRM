@@ -38,7 +38,22 @@
                 "Anthony",
                 "Andrew",
                 "Kendall",
-                "Ken"
+                "Ken",
+                "Philip",
+                "Phil",
+                "Bill",
+                "William",
+                "Anders",
+                "Steven",
+                "Stephen",
+                "Thomas",
+                "Tom",
+                "Nathan",
+                "Abraham",
+                "Adam",
+                "Luke",
+                "Scott",
+                "Ewan"
             };
 
         internal static List<string> FemaleFirstNames = new List<string>
@@ -74,7 +89,10 @@
                 "Megan",
                 "Ava",
                 "Hannah",
-                "Eve"
+                "Eve",
+                "Rachel",
+                "Rebecca",
+                "Jade"
             };
 
         internal static List<string> Surnames = new List<string>
