@@ -18,7 +18,7 @@ namespace GiveCRM.DummyDataGenerator
                 {
                     Name = campaignName,
                     Description = "The " + campaignName + " is test data",
-                    IsClosed = 'N',
+                    IsClosed = "N",
                     RunOn = DateTime.Today
                 };
         }
