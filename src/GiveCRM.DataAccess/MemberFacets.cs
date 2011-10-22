@@ -20,9 +20,43 @@ namespace GiveCRM.DataAccess
                         _db.MemberFacets.MemberFacetValue.Id.As("MemberFacetValueId"),
                         _db.MemberFacets.Facet.Type, _db.MemberFacets.Facet.Name);
 
-            throw new NotImplementedException();
+            var listCache = new Dictionary<int, MemberFacetList>();
 
-            //return new MemberFacetAggregator(query).Run();
+            foreach (var row in query)
+            {
+                if (row.Type == FacetType.FreeText.ToString())
+                {
+                    MemberFacetFreeText facet = row;
+                    facet.Facet = new Facet {Id = row.FacetId, Name = row.Name, Type = FacetType.FreeText};
+                    yield return facet;
+                }
+                else if (row.Type == FacetType.List.ToString())
+                {
+                    MemberFacetList facet;
+                    if (listCache.ContainsKey(row.Id))
+                    {
+                        facet = listCache[row.Id];
+                    }
+                    else
+                    {
+                        facet = row;
+                        facet.Facet = new Facet { Id = row.FacetId, Name = row.Name, Type = FacetType.List };
+                        facet.Values = new List<MemberFacetValue>();
+                        listCache.Add(facet.Id, facet);
+                    }
+                    facet.Values.Add(new MemberFacetValue
+                                         {
+                                             Id = row.MemberFacetValueId,
+                                             FacetValueId = row.MemberFacetValueId,
+                                             MemberFacetId = row.Id
+                                         });
+                }
+            }
+
+            foreach (var memberFacetList in listCache.Values)
+            {
+                yield return memberFacetList;
+            }
         }
 
         public MemberFacet Insert(MemberFacet facet)
@@ -49,15 +83,28 @@ namespace GiveCRM.DataAccess
 
         public MemberFacetList Insert(MemberFacetList facet)
         {
-            MemberFacetList inserted = _db.MemberFacets.Insert(facet);
-            inserted.Values = new List<MemberFacetValue>();
-            foreach (var value in facet.Values)
+            using (var transaction = _db.BeginTransaction())
             {
-                value.MemberFacetId = inserted.Id;
-                MemberFacetValue insertedValue = _db.MemberFacetValues.Insert(value);
-                inserted.Values.Add(insertedValue);
+                try
+                {
+                    MemberFacetList inserted = transaction.MemberFacets.Insert(facet);
+
+                    inserted.Values = new List<MemberFacetValue>();
+                    foreach (var value in facet.Values)
+                    {
+                        value.MemberFacetId = inserted.Id;
+                        MemberFacetValue insertedValue = transaction.MemberFacetValues.Insert(value);
+                        inserted.Values.Add(insertedValue);
+                    }
+                    transaction.Commit();
+                    return inserted;
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
-            return inserted;
         }
     }
 }
