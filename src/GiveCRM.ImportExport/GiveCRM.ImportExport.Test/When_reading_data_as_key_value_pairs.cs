@@ -50,5 +50,20 @@ namespace GiveCRM.ImportExport.Test
                 Assert.That(values, Is.Not.Empty);
             }            
         }
+
+        [Test]
+        public void Should_return_keyvaluepairs_for_xlsx()
+        {
+            var import = new ExcelImport(ExcelFileType.XLSX, true);
+
+            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            {
+                import.Open(stream);
+
+                var values = import.GetRowsAsKeyValuePairs(0);
+
+                Assert.That(values, Is.Not.Empty);
+            }
+        }
     }
 }
