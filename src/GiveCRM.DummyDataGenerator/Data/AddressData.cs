@@ -9,9 +9,14 @@
                 "",
                 "",
                 "",
+                "",
+                "",
+                "",
+                "",
                 "Upper",
-                "Upper",
-                "Lower"
+                "Lower",
+                "New",
+                "Old"
             };
 
         internal static List<string> StreetNames = new List<string>
@@ -27,9 +32,10 @@
                 "Red",
                 "Black",
                 "White",
+                "White",
+                "White",
                 "Manor",
                 "Queens",
-                "New",
                 "Grange",
                 "Kings",
                 "Windsor",
@@ -85,7 +91,10 @@
                 "Snapdragon",
                 "Tansy",
                 "Tulip",
-                "Yarrow"
+                "Yarrow",
+                "Chuechill",
+                "Pitt",
+                "Atlee"
             };
 
         internal static List<string> StreetSuffix = new List<string>
