@@ -70,6 +70,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Campaign\CampaignIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
+      <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
+      <Name>GiveCRM.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
+      <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
+      <Name>GiveCRM.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Campaign\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Member\Index.cshtml" />

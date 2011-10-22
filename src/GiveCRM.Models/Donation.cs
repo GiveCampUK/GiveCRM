@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GiveCRM.Models
 {
@@ -12,5 +9,10 @@ namespace GiveCRM.Models
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         public int? CampaignId { get; set; }
+
+        public override string ToString()
+        {
+            return Id + " " + MemberId + " " + Amount + " " + Date.ToString();
+        }
     }
 }

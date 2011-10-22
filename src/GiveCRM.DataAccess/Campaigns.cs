@@ -23,12 +23,12 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Campaign> AllOpen()
         {
-            return _db.Campaigns.FindByIsClosed('N').OrderByRunOnDescending().Cast<Campaign>();
+            return _db.Campaigns.FindAllByIsClosed('N').OrderByRunOnDescending().Cast<Campaign>();
         }
 
         public IEnumerable<Campaign> AllClosed()
         {
-            return _db.Campaigns.FindByIsClosed('Y').OrderByRunOnDescending().Cast<Campaign>();
+            return _db.Campaigns.FindAllByIsClosed('Y').OrderByRunOnDescending().Cast<Campaign>();
         }
 
         public Campaign Insert(Campaign campaign)
