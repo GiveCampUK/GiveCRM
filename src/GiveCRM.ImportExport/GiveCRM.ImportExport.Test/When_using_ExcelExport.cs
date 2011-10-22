@@ -11,6 +11,28 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_using_ExcelExport
     {
+        private Workbook _workBook;
+        private List<List<Cell>> _sampleData;
+
+        [SetUp]
+        public void Setup()
+        {
+
+            _workBook = Helper.CreateWorkBookWithSheet();
+
+            _sampleData = new List<List<Cell>> 
+                              {
+                                  new List<Cell>
+                                  {
+                                    new Cell {Value = "1"},
+                                    new Cell {Value = "2", IsBold = true},
+                                    new Cell {Value = "a"},
+                                    new Cell {Value = "b", IsBold = true},
+                                  }
+                              };
+
+        }
+
         [Test]
         public void Should_be_able_to_create_instance_of_class()
         {
@@ -43,6 +65,9 @@ namespace GiveCRM.ImportExport.Test
         {
             MemoryStream outputStream = new MemoryStream();
             ExcelExport target = new ExcelExport();
+             CellFormatter formatter = new CellFormatter();
+
+            target.WriteDataToExport(_sampleData, formatter,ExcelFileType.XLS);
 
             target.ExportToStream(outputStream);
 
