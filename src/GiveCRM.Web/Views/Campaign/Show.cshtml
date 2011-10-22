@@ -18,9 +18,8 @@
 		@using (Html.BeginForm())
 		{
 			@Html.ValidationSummary(true)
-			
+			<h2>General Details</h2>
 			<fieldset>
-				<legend>General</legend>
 				@Html.HiddenFor(m => m.Campaign.Id)
 
 				<div class="clearfix">
@@ -38,35 +37,39 @@
 				</div>
 			</fieldset>
 				
-			<fieldset>
-				<legend>Recipient List</legend>
-				@* TODO(BS) Build logic to create recipient list generation *@
-				<div class="clearfix">
-					<div class="input">
-						@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
+			<h2>Recipient Listing</h2>
+			
+			@* TODO(BS) Build logic to create recipient list generation *@
+			<h3>Search Filters</h3>				
+			<ul>
+				@if (Model.SearchFilters.Any() == false) {
+					@Model.NoSearchFiltersText;
+				}
+				else {
+					foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
+						<li>
+							@filterViewModel.CriteriaDisplayText
+							@Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {
+								campaignId = filterViewModel.CampaignId,
+								memberSearchFilterId = filterViewModel.MemberSearchFilterId
+							})
+						</li>
+					}
+				}
 
-						@if (Model.SearchFilters.Any() == false) {
-							@Model.NoSearchFiltersText;
-						}    
-					<ul>
-						@foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
-							<li>
-								@filterViewModel.CriteriaDisplayText
-								@Html.ActionLink("[x]", "DeleteMemberSearchFilter", new	{
-									campaignId = filterViewModel.CampaignId,
-									memberSearchFilterId = filterViewModel.MemberSearchFilterId
-								})
-							</li>
-						}
-					</ul>
-    			
-					@* TODO(BS) search results goes here *@
-				</div> 
-				<div class="actions clearfix">
-					<input type="submit" value="Create Campaign" class="btn primary @formWidthClass" />
-				</div>
-			</fieldset>
-		}
+				<li>
+					@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
+				</li>
+			</ul>
+
+			<h3>Matched Recipient Listing</h3>
+			@* TODO *@
+					
+			
+			<div class="actions clearfix">
+				<input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
+			</div>
+  }
 		</div>
 	
 		<div class="sidebar span-one-third">
