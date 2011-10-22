@@ -103,7 +103,13 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult AjaxSearch(string criteria)
         {
-            return View();
+            var results = _membersDb
+                .All()
+                .Where(member =>
+                    !member.Archived &&
+                    (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
+
+            return View(results);
         }
 
         public ActionResult TopDonors()

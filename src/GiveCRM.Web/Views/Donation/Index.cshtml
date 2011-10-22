@@ -59,7 +59,6 @@
 
     function DoSearch() {
         var criteria = $("#SearchCriteria").val();
-        alert(criteria);
         $.ajax({
             type: 'GET',
             url: './member/ajaxsearch?criteria=' + criteria,
@@ -76,7 +75,19 @@
             url: './donation/quickdonate?id=' + id,
             dataType: 'html',
             success: function (html, textStatus) {
-                $('#QuickResults')[0].innerHTML = html;
+                $('#AddDonation')[0].innerHTML = html;
+                $('#Date').datepicker({ dateFormat: 'dd/mm/yy' });
+            }
+        });
+    }
+
+    function DoDonate() {
+        $.ajax({
+            type: 'GET',
+            url: './donation/doquickdonate?id=' + $("#DonorId").val() + "&amount=" + $("#Amount").val() + "&date=" + $("#Date").val().replace('/', '%2F'),
+            dataType: 'html',
+            success: function (html, textStatus) {
+                $('#AddDonation')[0].innerHTML = "Done!";
             }
         });
     }
