@@ -36,10 +36,10 @@ namespace GiveCRM.Web.Controllers
             title = string.Format("{0} {1}", title, Resources.Literal_Campaigns);
             linkText = string.Format(Resources.Show_Campaigns_Text, linkText);
 
-            var model = new CampaignIndexViewModel
+            var model = new CampaignIndexViewModel(title)
                             {
-                                Title = title,
                                 ShowCampaignsLinkText = linkText,
+                                CreateCampaignLinkText = Resources.Literal_CreateCampaign,
                                 ShowClosed = showClosed,
                                 Campaigns = openCampaigns
                             };
@@ -47,5 +47,10 @@ namespace GiveCRM.Web.Controllers
             return View(model);
         }
 
+        public ActionResult Create()
+        {
+            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            return View("Show", model);
+        }
     }
 }
