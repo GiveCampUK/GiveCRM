@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
@@ -101,6 +102,44 @@ namespace GiveCRM.Web.Controllers
         {
             new Campaigns().Update(campaign);
             return View(campaign);
+        }
+
+        [HttpGet]
+        public ActionResult AddMembershipSearchFilter(int campaignId)
+        {
+            var emptySearchCriteria = new SearchService().GetEmptySearchCriteria();
+            var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
+            var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
+
+            var model = new AddSearchFilterViewModel(Resources.Literal_AddSearchFilter)
+                            {
+                                CampaignId = campaignId,
+                                CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
+                            };
+            return View("AddSearchFilter", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
+        {
+            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+
+            // we have to find one
+            var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
+
+            var memberSearchFilterRepo = new MemberSearchFilters();
+            var memberSearchFilter = new MemberSearchFilter
+                                             {
+                                                CampaignId = viewModel.CampaignId,
+                                                InternalName = searchCriterion.InternalName,
+                                                FilterType = (int) searchCriterion.Type,
+                                                DisplayName = viewModel.CriteriaName,
+                                                SearchOperator = (int) viewModel.SearchOperator,
+                                                Value = viewModel.Value
+                                             };
+            memberSearchFilterRepo.Insert(memberSearchFilter);
+            return RedirectToAction("Show", new {id = viewModel.CampaignId});
         }
 
         [HttpGet]
