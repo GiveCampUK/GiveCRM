@@ -20,8 +20,7 @@
 	<script>window.jQuery || document.write('<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")"><\/script>')</script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery.min.js"></script>
-	<script> window.jQuery.ui || document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")"><\/script>')</script>
-
+	<script>window.jQuery.ui || document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")"><\/script>')</script>
 </head>
 
 <body>
@@ -38,6 +37,8 @@
 			@Html.Partial("_GlobFooter")
 		</div>
 	</div>
+
+	<script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")"></script>
 
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
 		chromium.org/developers/how-tos/chrome-frame-getting-started -->

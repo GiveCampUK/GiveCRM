@@ -1,11 +1,35 @@
-﻿<div class="fill">
+﻿@using GiveCRM.Web.Views
+
+<div class="fill">
 	<div class="container">
 		<a class="brand" href="#">GiveCRM</a>
           
 		<ul class="nav">
-				<!--TODO add active states, other Actions links-->
-				<li>@Html.ActionLink("Home", "Index", "Campaign")</li>
-				<li>@Html.ActionLink("Members", "Index", "Member")</li>
+			<li @Html.NavigationClassBuilder("Campaign", additionalClasses: "dropdown") data-dropdown="dropdown">
+				@Html.ActionLink("Campaign", "Index", "Campaign", null, new { @class = "dropdown-toggle" })
+				
+				<ul class="dropdown-menu">
+					<li @Html.NavigationClassBuilder("Campaign", "Index")>
+						@Html.ActionLink("List Campaign", "Index", "Campaign")
+					</li>
+					<li @Html.NavigationClassBuilder("Campaign", "Add")>
+						@Html.ActionLink("Add Campaign", "Create", "Campaign")
+					</li>
+				</ul>
+			</li>
+			
+			<li @Html.NavigationClassBuilder("Member", additionalClasses: "dropdown") data-dropdown="dropdown">
+				@Html.ActionLink("Member", "Index", "Member", null, new { @class = "dropdown-toggle" })
+				
+				<ul class="dropdown-menu">
+					<li @Html.NavigationClassBuilder("Member", "Index")>
+						@Html.ActionLink("List Members", "Index", "Member")
+					</li>
+					<li @Html.NavigationClassBuilder("Member", "Add")>
+						@Html.ActionLink("Add Members", "Add", "Member")
+					</li>
+				</ul>
+			</li>
 		</ul>
 
 		<div class="pull-right">
@@ -14,7 +38,7 @@
 				@Html.ActionLink("Log Off", "LogOff", "Account")
 			}
 			else {
-				<!-- TODO add submit to correct location, use validation -->
+				<!-- TODO(BS) add submit to correct location, use validation, use Razor forms -->
 				<form action="?">
 					<input class="input-small" type="text" name="email" placeholder="Email">
 					<input class="input-small" type="password"name="password" placeholder="Password">
