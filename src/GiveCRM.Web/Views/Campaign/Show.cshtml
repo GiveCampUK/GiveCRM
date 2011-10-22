@@ -43,7 +43,8 @@
 				@* TODO(BS) Build logic to create recipient list generation *@
 				<div class="clearfix">
 					<div class="input">
-				
+						@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
+
 						@if (Model.SearchFilters.Any() == false) {
 							@Model.NoSearchFiltersText;
 						}    
@@ -77,8 +78,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <!-- TODO(BS) pull these in from http://www.asp.net/ajaxlibrary/cdn.ashx#ASPNET_MVC_Releases_on_the_CDN_9 with local fallback -->
 <!-- TODO(BS) ensure JS validation works as expected (once back end is working too) -->

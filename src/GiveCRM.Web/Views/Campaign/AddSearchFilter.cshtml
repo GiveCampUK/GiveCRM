@@ -1,0 +1,21 @@
+﻿@model AddSearchFilterViewModel
+@using GiveCRM.Web.Models.Campaigns
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    @Html.DropDownListFor(m => m.CriteriaName, Model.CriteriaNames)
+    @Html.DropDownListFor(m => m.SearchOperator, Model.SearchOperators)
+    @Html.TextBoxFor(m => m.Value)
+    
+    <p>
+        <input type="submit" value="Save" />@Html.HiddenFor(m => m.CampaignId)
+    </p>
+}

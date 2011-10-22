@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
@@ -56,14 +57,27 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            model.Campaign = new Campaign
+                {
+                    Name = "New Campaign"
+                };
+
             return View("Show", model);
         }
 
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            new Campaigns().Insert(campaign);
-            return RedirectToAction("Show");
+            int newId = this.InsertCampaign(campaign);
+            return RedirectToAction("Show", new { id = newId });
+        }
+
+        private int InsertCampaign(Campaign campaign)
+        {
+            Campaigns db = new Campaigns();
+            Campaign savedCampaign = db.Insert(campaign);
+
+            return savedCampaign.Id;
         }
 
         [HttpGet]
@@ -101,6 +115,44 @@ namespace GiveCRM.Web.Controllers
         {
             new Campaigns().Update(campaign);
             return View(campaign);
+        }
+
+        [HttpGet]
+        public ActionResult AddMembershipSearchFilter(int campaignId)
+        {
+            var emptySearchCriteria = new SearchService().GetEmptySearchCriteria();
+            var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
+            var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
+
+            var model = new AddSearchFilterViewModel(Resources.Literal_AddSearchFilter)
+                            {
+                                CampaignId = campaignId,
+                                CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
+                            };
+            return View("AddSearchFilter", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
+        {
+            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+
+            // we have to find one
+            var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
+
+            var memberSearchFilterRepo = new MemberSearchFilters();
+            var memberSearchFilter = new MemberSearchFilter
+                                             {
+                                                CampaignId = viewModel.CampaignId,
+                                                InternalName = searchCriterion.InternalName,
+                                                FilterType = (int) searchCriterion.Type,
+                                                DisplayName = viewModel.CriteriaName,
+                                                SearchOperator = (int) viewModel.SearchOperator,
+                                                Value = viewModel.Value
+                                             };
+            memberSearchFilterRepo.Insert(memberSearchFilter);
+            return RedirectToAction("Show", new {id = viewModel.CampaignId});
         }
 
         [HttpGet]
