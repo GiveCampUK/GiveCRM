@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
+using GiveCRM.DataAccess;
 
 namespace GiveCRM.Web.Models.Search
 {
@@ -32,13 +33,14 @@ namespace GiveCRM.Web.Models.Search
 {
     case SearchOperator.EqualTo: return lhs == rhs;
     case SearchOperator.NotEqualTo: return lhs != rhs;
-    case SearchOperator.LessThan: return (rhs is int || rhs is double) && lhs < rhs;
-    case SearchOperator.GreaterThan: return (rhs is int || rhs is double) && lhs > rhs;
-    case SearchOperator.LessThanOrEqualTo: return (rhs is int || rhs is double) && lhs <= rhs;
-    case SearchOperator.GreaterThanOrEqualTo: return (rhs is int || rhs is double) && lhs >= rhs;
-    case SearchOperator.StartsWith: return lhs.ToString().StartsWith(rhs.ToString());
+    case SearchOperator.LessThan: return (this.Type == SearchFieldType.Int && (int)lhs < (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs < (double)rhs);
+    case SearchOperator.GreaterThan: return (this.Type == SearchFieldType.Int && (int)lhs > (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs > (double)rhs);
+    case SearchOperator.LessThanOrEqualTo: return (this.Type == SearchFieldType.Int && (int)lhs <= (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs <= (double)rhs);
+    case SearchOperator.GreaterThanOrEqualTo: return (this.Type == SearchFieldType.Int && (int)lhs > (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs > (double)rhs);
+    case SearchOperator.StartsWith: return (this.Type == SearchFieldType.Int && (int)lhs >= (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs >= (double)rhs);
     case SearchOperator.EndsWith: return lhs.ToString().EndsWith(rhs.ToString());
     case SearchOperator.Contains: return lhs.ToString().Contains(rhs.ToString());
+    default: return false;
 }
     }
     }
