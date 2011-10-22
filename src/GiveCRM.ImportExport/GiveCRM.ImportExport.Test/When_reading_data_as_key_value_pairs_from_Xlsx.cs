@@ -19,6 +19,8 @@ namespace GiveCRM.ImportExport.Test
         [SetUp]
         public void SetUp()
         {
+            import = new ExcelImport();
+
             _firstRowDictionary = new Dictionary<string, object>
                                                       {
                                                           {"ID", "1"},
@@ -65,17 +67,16 @@ namespace GiveCRM.ImportExport.Test
                                                           {"ContactByPost","N"}
                                                       };
 
-            import = new ExcelImport(ExcelFileType.XLSX, true);
         }
 
         [Test]
         public void Should_throw_InvalidOperationException_if_hasHeaderRow_is_false_for_XLSX()
         {
-            import = new ExcelImport(ExcelFileType.XLSX, false);
+            import = new ExcelImport();
 
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, false);
 
                 Assert.Throws<InvalidOperationException>(() => import.GetRowsAsKeyValuePairs(1));
             }
@@ -84,11 +85,11 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_return_keyvaluepairs_for_xlsx()
         {
-            var import = new ExcelImport(ExcelFileType.XLSX, true);
+            var import = new ExcelImport();
 
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, true);
 
                 var values = import.GetRowsAsKeyValuePairs(0);
                 Assert.That(values, Is.Not.Empty);
@@ -102,7 +103,7 @@ namespace GiveCRM.ImportExport.Test
 
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, true);
 
                 resultSet = import.GetRowsAsKeyValuePairs(0).ToList();
             }
@@ -118,7 +119,7 @@ namespace GiveCRM.ImportExport.Test
 
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, true);
 
                 resultSet = import.GetRowsAsKeyValuePairs(0).ToList();
             }
