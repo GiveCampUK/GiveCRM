@@ -46,8 +46,11 @@ namespace GiveCRM.DataAccess
                     member = record;
                     member.PhoneNumbers = new List<PhoneNumber>();
                 }
-                
-                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, PhoneNumberType = (PhoneNumberType)record.PhoneNumberType });
+
+                if (record.PhoneNumberId != null)
+                {
+                    member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, PhoneNumberType = (PhoneNumberType)record.PhoneNumberType });
+                }
             }
 
             if (member != null)
