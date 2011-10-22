@@ -1,0 +1,56 @@
+<mockup version="1.0" skin="sketch" measuredW="780" measuredH="637" mockupW="746" mockupH="604">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="34" y="33" w="746" h="604" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//givecrm.org</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Title" x="64" y="114" w="-1" h="-1" measuredW="440" measuredH="50" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20your%20list%20of%20members</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::SubTitle" x="108" y="195" w="-1" h="-1" measuredW="271" measuredH="33" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1.%20Download%20the%20template</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Link" x="131" y="253" w="-1" h="-1" measuredW="173" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Download%20the%20Excel%20template</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="108" y="228" w="548" h="22" measuredW="347" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>To%20upload%20your%20member%20list%2C%20we%20need%20the%20data%20in%20our%20format.</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::SubTitle" x="108" y="289" w="-1" h="-1" measuredW="523" measuredH="33" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2.%20Enter%20your%20data%20into%20the%20template%20spreadsheet</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::SubTitle" x="108" y="370" w="-1" h="-1" measuredW="287" measuredH="33" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>3.%20Upload%20the%20spreadsheet</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::TextInput" x="140" y="403" w="255" h="-1" measuredW="79" measuredH="27" zOrder="7" locked="false" isInGroup="-1"/>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::Button" x="403" y="402" w="-1" h="-1" measuredW="76" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Browse...</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="140" y="445" w="253" h="66" measuredW="204" measuredH="34" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>24</size>
+        <text>Upload%20your%20data</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="108" y="324" w="548" h="38" measuredW="758" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20your%20own%20data%20to%20the%20template%20spreadsheet%20in%20Excel.%20%20When%20you%20have%20completed%20this%20step%2C%20you%20can%20proceed%20to%20the%20next%20stage.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
