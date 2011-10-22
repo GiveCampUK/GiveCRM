@@ -13,6 +13,7 @@ namespace GiveCRM.Web.Controllers
         private const int MaxResults = 25;
 
         private Members _membersDb = new Members();
+        private Donations _donationsDb = new Donations();
 
         public ActionResult Index()
         {
@@ -41,12 +42,15 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Donate(int id)
         {
+            ViewBag.MemberName = GetFormattedName(_membersDb.Get(id));
             return View(new Donation { MemberId = id });
         }
 
         public ActionResult SaveDonation(Donation donation)
         {
-            throw new NotImplementedException();
+            _donationsDb.Insert(donation);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Save(Member member)
@@ -111,6 +115,11 @@ namespace GiveCRM.Web.Controllers
         private string GetInitialSurname(Member member)
         {
             return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName).ToLower();
+        }
+
+        private string GetFormattedName(Member member)
+        {
+            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName);
         }
 
         #endregion
