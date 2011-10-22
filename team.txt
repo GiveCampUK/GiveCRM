@@ -4,5 +4,7 @@ Chris Diver	chris.diver@gmail.com	chrisjdiver
 Anthony Steele	anthony@plasticavalon.org	anthonysteele
 Alastair Smith	alastair@alastairsmith.me.uk	alastairs
 Adrian Banks	adrian@adrianbanks.co.uk	adrianbanks
-Robin Minto robin@minto.co.uk robinem
-Kendall Miller 	kendall.miller@esymmetrix.com 	kendallmiller
+Robin Minto	robin@minto.co.uk	robinem
+Kendall Miller	kendall.miller@esymmetrix.com	kendallmiller
+Mark Rendle	mark@markrendle.net	markrendle
+Neil Barnwell	mailbox@neilbarnwell.co.uk	nbarnwell
