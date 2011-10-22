@@ -34,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Castle.Core.3.0.0.2001\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Castle.Windsor.3.0.0.2001\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -64,18 +72,24 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
+    <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\IoC\ExportInstaller.cs" />
+    <Compile Include="Infrastructure\IoC\MailingListExportInstaller.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
+    <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\CampaignSearchCriteria.cs" />
     <Compile Include="Models\Search\DonationSearchCriteria.cs" />
+    <Compile Include="Models\Search\FacetSearchCriteria.cs" />
+    <Compile Include="Models\Search\LocationSearchCriteria.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
     <Compile Include="Models\Search\SearchFieldType.cs" />
     <Compile Include="Models\Search\SearchOperator.cs" />
@@ -87,6 +101,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IMailingListService.cs" />
+    <Compile Include="Services\MailingListService.cs" />
+    <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -232,6 +249,22 @@
   <ItemGroup>
     <Content Include="Views\Campaign\Show.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Donation\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Donation\DonationList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Donation\DonationList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_GlobFooter.cshtml" />
+    <Content Include="Views\Shared\_GlobHeader.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

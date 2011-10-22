@@ -22,9 +22,7 @@ namespace GiveCRM.Web.Models.Search
             switch (this.InternalName)
             {
                 case "donatedToCampaign": return thisMembersDonations.Any(d => Evaluate(campaigns.Get(d.CampaignId.Value).Name));
-
-                default:
-                    return false;
+                                    default: return false;
             }
         }
     }
