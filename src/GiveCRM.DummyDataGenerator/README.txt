@@ -9,3 +9,5 @@ Usage:
  
  - Generate donations. (Must have members and campaign first). Between 33% and 66% of the loaded members have a campaign donation generated against them.
  
+ 
+ At present the only way to control which database is used is to edit the app.config file, and configure the connection called "GiveCRM". This databse will be used.

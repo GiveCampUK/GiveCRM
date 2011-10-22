@@ -37,10 +37,15 @@
             generationOutput.Text = generator.GenerateCampaign();
         }
 
+        private void GenerateCampaignAndDonations(object sender, RoutedEventArgs e)
+        {
+            generationOutput.Text = generator.GenerateCampaign();
+            generationOutput.Text = generator.GenerateDonations();
+        }
+
         private void GenerateDonations(object sender, RoutedEventArgs e)
         {
             generationOutput.Text = generator.GenerateDonations();
-
         }
     }
 }
