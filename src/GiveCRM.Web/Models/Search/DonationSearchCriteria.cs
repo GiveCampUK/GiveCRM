@@ -19,14 +19,10 @@ namespace GiveCRM.Web.Models.Search
         {
             switch (this.InternalName)
             {
-                case "individualDonation":
-                   
-                                    case "totalDonations":
-
-                case "lastDonationDate":
-
-                default:
-                    return false;
+                case "individualDonation": return m.Donations.Any(x => Evaluate(x));
+                case "totalDonations": return Evaluate(m.Donations.Sum(x => x.Amount));
+                case "lastDonationDate": return Evaluate(m.Donations.OrderBy(x=>x.Date).Last());
+                default: return false;
             }
         }
     }
