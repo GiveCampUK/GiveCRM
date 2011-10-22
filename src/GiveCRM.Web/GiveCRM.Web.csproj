@@ -73,7 +73,10 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
+    <Compile Include="Models\Search\DonationSearchCriteria.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
+    <Compile Include="Models\Search\SearchFieldType.cs" />
+    <Compile Include="Models\Search\SearchOperator.cs" />
     <Compile Include="Models\Search\SearchService.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
