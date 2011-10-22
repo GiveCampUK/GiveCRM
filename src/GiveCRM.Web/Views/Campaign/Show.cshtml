@@ -1,4 +1,4 @@
-﻿@model GiveCRM.Web.Models.Campaign.CampaignShowViewModel
+﻿@model GiveCRM.Web.Models.Campaigns.CampaignShowViewModel
 
 @{
     ViewBag.Title = Model.Title;
@@ -11,12 +11,19 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
-    
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-}
+ 
+    @Html.LabelFor(m => m.Campaign.Name) @Html.TextBoxFor(m => m.Campaign.Name)
+    <br/>
+    @Html.LabelFor(m => m.Campaign.Description) @Html.TextAreaFor(m => m.Campaign.Description, 5, 80, null)
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <hr />
+    <text>search criteria goes here</text>    
+    
+    <hr />
+    <text>search results goes here</text>    
+    <hr/>
+    
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+}
