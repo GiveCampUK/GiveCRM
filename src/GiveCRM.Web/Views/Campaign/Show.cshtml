@@ -76,7 +76,7 @@
 			<h2>Quick Links</h2>
 		
 			<ul class="toolbar">
-                            @if (Model.Campaign.Id > 0) {
+                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsClosed == "N") {
                                 <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>
                             }
                             else {
