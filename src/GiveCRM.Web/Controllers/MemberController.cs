@@ -26,15 +26,7 @@ namespace GiveCRM.Web.Controllers
             return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
-        public ActionResult AddNumber(Member member, String number, String numberType)
-        {
-            if (member.PhoneNumbers == null)
-                member.PhoneNumbers = new List<PhoneNumber>();
-                
-            member.PhoneNumbers.Add(new PhoneNumber { Number = number, Type = numberType });
-            return View("Add", member); 
-        }
-
+        
         public ActionResult Import()
         {
             return View();
@@ -52,6 +44,12 @@ namespace GiveCRM.Web.Controllers
         {
             var member = _membersDb.Get(id);
 
+            member.AddressLine1 = "deleted";
+            member.AddressLine2 = "deleted";
+            member.EmailAddress = "deleted";
+            member.FirstName = "deleted";
+            member.LastName = "deleted";
+            
             member.Archived = true;
 
             _membersDb.Update(member);
@@ -77,8 +75,6 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Save(Member member)
         {
-            member.PhoneNumbers = new List<PhoneNumber>();
-
             if (member.Id == 0)
             {
                 _membersDb.Insert(member);
@@ -104,7 +100,14 @@ namespace GiveCRM.Web.Controllers
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
-        
+
+        public ActionResult TopDonors()
+        {
+            var members = _membersDb.All().OrderByDescending(m => m.TotalDonations).Take(5);
+
+            return View("MembersList", members);
+        }
+
         #region helper methods
 
         // todo: move these out!

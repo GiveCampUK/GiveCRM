@@ -4,19 +4,14 @@
 
 <h2>Donations</h2>
 
+<h3>Top Donations</h3>
+
+@{Html.RenderAction("TopDonations");}
+
 <h3>Latest Donations</h3>
 
-<table>
-<tr>
-    <th>Date</th><th>Amount</th>
-</tr>
+@{Html.RenderAction("LatestDonations");}
 
-@foreach (var donation in Model)
-{
-    <tr>
-        <td>@donation.Date.ToLongDateString()</td>
-        <td>@donation.Amount</td>
-    </tr>
-}
+<h3>Top Donors</h3>
 
-</table>
+@{Html.RenderAction("TopDonors", "Member");}
