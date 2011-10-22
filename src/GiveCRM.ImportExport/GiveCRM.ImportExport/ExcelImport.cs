@@ -28,7 +28,10 @@ namespace GiveCRM.ImportExport
         {
             if (!_disposed)
             {
-                ExcelImporter.Dispose();
+                if (ExcelImporter != null)
+                {
+                    ExcelImporter.Dispose(); 
+                }
                 _disposed = true;
             }
         }
