@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using GiveCRM.ImportExport.Cells;
 using NPOI.SS.UserModel;
@@ -72,6 +73,21 @@ namespace GiveCRM.ImportExport.Test
             target.ExportToStream(outputStream);
 
             Assert.IsTrue(outputStream.Length > 0);
+        }
+
+        [Test]
+        public void Should_throw_exception_if_null_stream_provided()
+        {
+            ExcelExport target = new ExcelExport();
+            Assert.Throws<ArgumentNullException>(() => target.ExportToStream(null));
+        }
+
+        [Test]
+        public void Should_throw_exception_if_OutputToStream_called_before_any_data_written()
+        {
+            MemoryStream outputStream = new MemoryStream();
+            ExcelExport target = new ExcelExport();
+            Assert.Throws<InvalidOperationException>(() => target.ExportToStream(outputStream));
         }
     }
 }
