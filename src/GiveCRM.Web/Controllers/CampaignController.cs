@@ -56,15 +56,15 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign) {Campaign = new Campaign()};
             return View("Show", model);
         }
 
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            new Campaigns().Insert(campaign);
-            return RedirectToAction("Show");
+            var inserted = new Campaigns().Insert(campaign);
+            return RedirectToAction("Show", new {id = inserted.Id});
         }
 
         [HttpGet]
