@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Campaign;
+using GiveCRM.Web.Properties;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -14,12 +15,34 @@ namespace GiveCRM.Web.Controllers
         //
         // GET: /Campaign/
 
-        public ActionResult Index()
+        public ActionResult Index(bool showClosed = false)
         {
             var campaigns = new Campaigns();
-            IEnumerable<Campaign> openCampaigns = campaigns.AllOpen();
+            IEnumerable<Campaign> openCampaigns = showClosed ? campaigns.AllClosed() : campaigns.AllOpen();
 
-            var model = new CampaignIndexViewModel { Campaigns = openCampaigns };
+            string title, linkText;
+
+            if (showClosed)
+            {
+                title = Resources.Literal_Closed;
+                linkText = Resources.Literal_Open;
+            }
+            else
+            {
+                title = Resources.Literal_Open;
+                linkText = Resources.Literal_Closed;
+            }
+
+            title = string.Format("{0} {1}", title, Resources.Literal_Campaigns);
+            linkText = string.Format(Resources.Show_Campaigns_Text, linkText);
+
+            var model = new CampaignIndexViewModel
+                            {
+                                Title = title,
+                                ShowCampaignsLinkText = linkText,
+                                ShowClosed = showClosed,
+                                Campaigns = openCampaigns
+                            };
 
             return View(model);
         }
