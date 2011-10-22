@@ -8,7 +8,7 @@ namespace GiveCRM.Web.Models.Search
 {
     public class SearchService
     {
-        public IEnumerable<SearchCriteria> GetSearchCriteria()
+        public IEnumerable<SearchCriteria> GetEmptySearchCriteria()
         {
             var criteria = new List<SearchCriteria>();
             criteria.AddRange(DonationSearchCriteria.GetEmptyCriteria());

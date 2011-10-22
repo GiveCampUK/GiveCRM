@@ -62,7 +62,7 @@ namespace GiveCRM.App
             } while (row != String.Empty);
 
             var export = new ExcelExport();
-            export.WriteDataToExport(data, new CellFormatter());
+            export.WriteDataToExport(data, new CellFormatter(), ExcelFileType.XLS);
             using (var stream = new FileStream(@"C:\temp\export.xls", FileMode.Create))
             {
                 export.ExportToStream(stream);
