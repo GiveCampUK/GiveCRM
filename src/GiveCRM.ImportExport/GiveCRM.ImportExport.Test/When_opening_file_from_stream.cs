@@ -13,11 +13,19 @@ namespace GiveCRM.ImportExport.Test
         private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
 
         [Test]
-        public void Should_throw_exception_if_file_stream_null()
+        public void Should_throw_exception_if_file_stream_for_xlsx_null()
         {
             var import = new ExcelImport();
 
             Assert.Throws<ArgumentNullException>(() => import.OpenXlsx(null));
+        }
+
+        [Test]
+        public void Should_throw_exception_if_file_stream_for_xls_null()
+        {
+            var import = new ExcelImport();
+
+            Assert.Throws<ArgumentNullException>(() => import.OpenXls(null));
         }
 
         [Test]
