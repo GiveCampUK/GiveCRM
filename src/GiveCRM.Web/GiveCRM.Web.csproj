@@ -76,6 +76,8 @@
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\CampaignSearchCriteria.cs" />
     <Compile Include="Models\Search\DonationSearchCriteria.cs" />
+    <Compile Include="Models\Search\FacetSearchCriteria.cs" />
+    <Compile Include="Models\Search\LocationSearchCriteria.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
     <Compile Include="Models\Search\SearchFieldType.cs" />
     <Compile Include="Models\Search\SearchOperator.cs" />
