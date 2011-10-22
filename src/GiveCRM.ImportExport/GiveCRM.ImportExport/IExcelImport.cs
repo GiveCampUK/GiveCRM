@@ -1,12 +1,12 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace GiveCRM.ImportExport
 {
-    public interface IExcelImporter : IDisposable
+    public interface IExcelImport
     {
-        void Open(Stream stream);
+        void OpenXlsx(Stream streamToProcess);
+        void OpenXls(Stream streamToProcess);
         IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow);
     }
 }

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
 
 namespace GiveCRM.ImportExport
 {
@@ -12,6 +9,7 @@ namespace GiveCRM.ImportExport
     {
         internal ExcelWorkbook Workbook;
         internal ExcelPackage Package;
+        private bool _disposed;
 
         public void Open(Stream stream)
         {
@@ -20,9 +18,29 @@ namespace GiveCRM.ImportExport
             Workbook = Package.Workbook;
         }
 
-        public IEnumerable<IEnumerable<Cell>> GetRows(int sheetIndex)
+        public IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow)
         {
             throw new NotImplementedException();
+        }
+
+        ~ExcelXlsxImporter()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+
+                _disposed = true;
+            }
         }
     }
 }
