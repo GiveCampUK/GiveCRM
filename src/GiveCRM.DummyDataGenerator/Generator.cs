@@ -24,7 +24,7 @@ namespace GiveCRM.DummyDataGenerator
             members.Clear();
             members.Capacity = countToGenerate;
 
-            var newMembers = generator.Generate(countToGenerate);
+            List<Member> newMembers = generator.Generate(countToGenerate);
 
             SaveMembers(newMembers);
 
