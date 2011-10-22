@@ -51,11 +51,13 @@
 </div>
 
 <div id="AddNumber">
-    <label for="AddNumber_Type">Number Type</label><select id="AddNumber_Type" name="AddNumber_Type">
-                                                    <option value="Home">Home</option>
-                                                    <option value="Mobile">Mobile</option>
-                                                    <option value="Work">Work</option>
-                                                </select><br />
+    <label for="AddNumber_Type">Number Type</label>
+    <select id="AddNumber_Type" name="AddNumber_Type">
+    @foreach(int phoneType in Enum.GetValues(typeof(GiveCRM.Models.PhoneNumberType))) 
+    {
+       <option value="@phoneType">@Enum.GetName(typeof(GiveCRM.Models.PhoneNumberType), @phoneType)</option>
+    }
+    </select><br />
     <label for="AddNumber_Number">Number</label><input id="AddNumber_Number" name="number" type="text" />
     <input id="AddNumber_Button" type="button" value="Add Number"  /><br />
 </div>
@@ -70,7 +72,7 @@
     $(function () {
         $('#AddNumber_Button').click(function () {
             var index = $('.numbertype').length;
-            var type = HtmlEncode($('#AddNumber_Type option:selected').attr('value'));
+            var type = HtmlEncode($('#AddNumber_Type option:selected').text());
             var number = HtmlEncode($('#AddNumber_Number').val());
             $('#AddNumber_Number').val('');
             if (number.trim() === '')
