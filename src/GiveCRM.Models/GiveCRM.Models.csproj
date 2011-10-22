@@ -40,9 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FacetType.cs" />
     <Compile Include="Campaign.cs" />
+    <Compile Include="Facet.cs" />
     <Compile Include="Donation.cs" />
+    <Compile Include="FacetValue.cs" />
     <Compile Include="Member.cs" />
+    <Compile Include="MemberFacet.cs" />
+    <Compile Include="MemberFacetFreeText.cs" />
+    <Compile Include="MemberFacetList.cs" />
     <Compile Include="PhoneNumber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
