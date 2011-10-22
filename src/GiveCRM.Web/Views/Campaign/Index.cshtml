@@ -1,4 +1,4 @@
-﻿@model GiveCRM.Web.Models.Campaign.CampaignIndexViewModel
+﻿@model GiveCRM.Web.Models.Campaigns.CampaignIndexViewModel
 
 @{
     ViewBag.Title = @Model.Title;
@@ -6,10 +6,14 @@
 
 <h2>@Model.Title</h2>
 
+<ul class="toolbar">
+    <li>@Html.ActionLink(Model.CreateCampaignLinkText, "Create")</li>
+</ul>
+
 <ul>
 @foreach (var item in Model.Campaigns) {
     <li>
-        @Html.ActionLink(item.Name, "Show", new { id=item.Id })
+        @Html.ActionLink(item.Name, "Show", new { id = item.Id })
         <div>
             @Html.DisplayFor(modelItem => item.Description)
         </div>

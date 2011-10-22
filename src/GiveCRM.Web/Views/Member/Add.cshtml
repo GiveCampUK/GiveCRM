@@ -5,9 +5,15 @@
 
 <h2>Add Member</h2>
 
+<div>
+
 @{Html.BeginForm("Save", "Member", FormMethod.Post);}
 
 @Html.HiddenFor(m => m.Id)
+
+@Html.LabelFor(m=>m.Reference) @Html.TextBoxFor(m => m.Reference)<br />
+
+@Html.LabelFor(m => m.Title) @Html.TextBoxFor(m=> m.Title)<br />
 
 @Html.LabelFor(m => m.Salutation) @Html.TextBoxFor(m=> m.Salutation)<br />
 
@@ -23,6 +29,8 @@
 
 @Html.LabelFor(m => m.PostalCode) @Html.TextBoxFor(m => m.PostalCode)<br />
 
+@Html.LabelFor(m => m.Region) @Html.TextBoxFor(m=> m.Region)<br />
+
 @Html.LabelFor(m => m.Country) @Html.TextBoxFor(m => m.Country)<br />
 
 @Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress)<br />
@@ -30,3 +38,11 @@
 <input type="submit" value="Save" />
 
 @{Html.EndForm();}
+
+</div>
+
+<div>
+
+
+
+</div>
