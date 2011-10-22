@@ -72,6 +72,7 @@
     <Compile Include="Borders\Border.cs" />
     <Compile Include="ExcelImport.cs" />
     <Compile Include="ExcelXlsImporter.cs" />
+    <Compile Include="ExcelXlsxImporter.cs" />
     <Compile Include="IExcelImporter.cs" />
     <Compile Include="NPOIExtensions.cs" />
     <Compile Include="ExcelExport.cs" />

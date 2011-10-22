@@ -11,9 +11,6 @@ namespace GiveCRM.ImportExport
     {
         private bool _disposed;
 
-        internal HSSFWorkbook Workbook97;
-        internal ExcelWorkbook Workbook;
-
         internal IExcelImporter ExcelImporter;
 
         ~ExcelImport()
@@ -38,8 +35,9 @@ namespace GiveCRM.ImportExport
         public void OpenXlsx(Stream streamToProcess)
         {
             if (streamToProcess == null) throw new ArgumentNullException("streamToProcess");
-            var package = new ExcelPackage(streamToProcess);
-            Workbook = package.Workbook;
+
+            ExcelImporter = new ExcelXlsxImporter();
+            ExcelImporter.Open(streamToProcess);
         }
 
         public void OpenXls(Stream streamToProcess)
