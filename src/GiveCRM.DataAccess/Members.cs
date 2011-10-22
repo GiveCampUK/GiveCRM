@@ -50,7 +50,10 @@ namespace GiveCRM.DataAccess
                 member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, PhoneNumberType = (PhoneNumberType)record.PhoneNumberType });
             }
 
-            yield return member;
+            if (member != null)
+            {
+                 yield return member;
+            }
         }
 
         public Member Insert(Member member)
