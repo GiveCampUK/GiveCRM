@@ -1,4 +1,5 @@
 ﻿@model GiveCRM.Web.Models.Campaigns.CampaignShowViewModel
+@using GiveCRM.Models
 
 @{
     ViewBag.Title = Model.Title;
@@ -17,7 +18,12 @@
     @Html.LabelFor(m => m.Campaign.Description) @Html.TextAreaFor(m => m.Campaign.Description, 5, 80, null)
 
     <hr />
-    <text>search criteria goes here</text>    
+    
+    <ul>
+    @foreach (MemberSearchFilter filter in Model.SearchFilters) {
+        <li>@Html.DisplayFor(v => filter.LeftHandSide) | @Html.DisplayFor(v => filter.Operator) | @Html.DisplayFor(v => filter.RightHandSide)</li>
+    }
+    </ul>
     
     <hr />
     <text>search results goes here</text>    
