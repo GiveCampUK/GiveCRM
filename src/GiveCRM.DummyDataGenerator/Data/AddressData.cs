@@ -92,7 +92,7 @@
                 "Tansy",
                 "Tulip",
                 "Yarrow",
-                "Chuechill",
+                "Churchill",
                 "Pitt",
                 "Atlee"
             };
