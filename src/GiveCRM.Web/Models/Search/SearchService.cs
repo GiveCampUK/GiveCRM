@@ -12,6 +12,7 @@ namespace GiveCRM.Web.Models.Search
         {
             var criteria = new List<SearchCriteria>();
             criteria.AddRange(DonationSearchCriteria.GetEmptyCriteria());
+            criteria.AddRange(CampaignSearchCriteria.GetEmptyCriteria());
             return criteria;
         }
 
