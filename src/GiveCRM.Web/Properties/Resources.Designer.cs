@@ -79,11 +79,29 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Campaign.
+        /// </summary>
+        internal static string Literal_CreateCampaign {
+            get {
+                return ResourceManager.GetString("Literal_CreateCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         internal static string Literal_Open {
             get {
                 return ResourceManager.GetString("Literal_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campaign.
+        /// </summary>
+        internal static string Literal_ShowCampaign {
+            get {
+                return ResourceManager.GetString("Literal_ShowCampaign", resourceCulture);
             }
         }
         

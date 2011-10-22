@@ -42,7 +42,7 @@ namespace GiveCRM.DataAccess
             {
                 facetList = _memberFacets[facet.FacetId];
             }
-            facetList.Values.Add(new FacetValue {FacetId = facet.FacetId, Id = facet.Id, Value = facet.Value});
+            facetList.Values.Add(new MemberFacetValue {Id = facet.Id, Value = facet.Value});
         }
 
         private MemberFacetList CreateMemberFacetList(dynamic facet)
@@ -52,7 +52,8 @@ namespace GiveCRM.DataAccess
                                     Id = facet.Id,
                                     FacetId = facet.FacetId,
                                     MemberId = facet.MemberId,
-                                    Values = new List<FacetValue>()
+                                    Values = new List<FacetValue>(),
+                                    Facet = new Facet { Id = facet.FacetId, Type = facet.Type, Name = facet.Name }
                                 };
             _memberFacets.Add(facet.FacetId, facetList);
             return facetList;
@@ -66,7 +67,8 @@ namespace GiveCRM.DataAccess
                                       Id = facet.Id,
                                       FacetId = facet.FacetId,
                                       MemberId = facet.MemberId,
-                                      Value = facet.FreeTextValue
+                                      FreeTextValue = facet.FreeTextValue,
+                                      Facet = new Facet { Id = facet.FacetId, Type = facet.Type, Name = facet.Name }
                                   });
         }
     }
