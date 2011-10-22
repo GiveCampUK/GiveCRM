@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
 
 namespace GiveCRM.Web
 {
@@ -31,6 +34,10 @@ namespace GiveCRM.Web
 
         protected void Application_Start()
         {
+            IWindsorContainer container = new WindsorContainer();
+            container.Install(FromAssembly.This());
+            container.Register(Component.For<IWindsorContainer>().Instance(container));
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
