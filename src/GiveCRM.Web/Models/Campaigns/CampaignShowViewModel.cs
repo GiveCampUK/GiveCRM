@@ -12,6 +12,9 @@ namespace GiveCRM.Web.Models.Campaigns
 
         public string NoSearchFiltersText { get; set; }
 
+        public CampaignShowViewModel() : this(string.Empty)
+        {}
+
         public CampaignShowViewModel(string title) : base(title)
         {
             SearchFilters = Enumerable.Empty<MemberSearchFilterViewModel>();
