@@ -21,7 +21,8 @@ namespace GiveCRM.Models
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2} ({3})", Title, FirstName, LastName, EmailAddress);
+            return string.Format("{0} {1} {2}  ref:{3} email:{4}", Title, FirstName, LastName, 
+                Reference, EmailAddress);
         }
     }
 }

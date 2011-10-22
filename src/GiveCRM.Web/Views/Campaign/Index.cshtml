@@ -1,51 +1,22 @@
 ﻿@model GiveCRM.Web.Models.Campaign.CampaignIndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = @Model.Title;
 }
 
-<h2>Index</h2>
+<h2>@Model.Title</h2>
+
+<ul>
+@foreach (var item in Model.Campaigns) {
+    <li>
+        @Html.ActionLink(item.Name, "Show", new { id=item.Id })
+        <div>
+            @Html.DisplayFor(modelItem => item.Description)
+        </div>
+    </li>
+}
+</ul>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Model.ShowCampaignsLinkText, "Index", new { showClosed = !@Model.ShowClosed })
 </p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            RunOn
-        </th>
-        <th>
-            IsClosed
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model.Campaigns) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RunOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsClosed)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
