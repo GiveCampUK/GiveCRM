@@ -1,17 +1,21 @@
 using System;
+using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Infrastructure.IoC
 {
-    public class MailingListExportInstaller : IWindsorInstaller
+    public class AspNetMvcInstaller : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IMailingListService>().ImplementedBy<MailingListService>().LifeStyle.PerWebRequest
+                AllTypes
+                    .FromThisAssembly()
+                    .BasedOn<Controller>()
+                    .Configure(registration => registration.Named(registration.Implementation.Name))
+                    .LifestylePerWebRequest()
                 );
         }
     }
