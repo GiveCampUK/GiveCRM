@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using GiveCRM.DataAccess;
-using GiveCRM.DummyDataGenerator.Generation;
 using GiveCRM.Models;
-using System.Collections.Generic;
+using GiveCRM.DummyDataGenerator.Generation;
 
 namespace GiveCRM.DummyDataGenerator
 {
@@ -83,7 +83,7 @@ namespace GiveCRM.DummyDataGenerator
                 newDonations.Count, campaign.Name, elapsedTime);
         }
 
-        private static void SaveDonations(IList<Donation> newDonations)
+        private static void SaveDonations(IEnumerable<Donation> newDonations)
         {
             Donations donationDb = new Donations();
 
