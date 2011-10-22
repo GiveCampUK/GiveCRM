@@ -10,7 +10,7 @@ namespace GiveCRM.Web.Controllers
     public class DonationController : Controller
     {
         private Donations _donationsDb = new Donations();
-
+        
         public ActionResult Index()
         {
             return View();
@@ -20,14 +20,14 @@ namespace GiveCRM.Web.Controllers
         {
             var donations = _donationsDb.All().OrderByDescending(d => d.Amount).Take(5);
 
-            return View(donations);
+            return View("DonationList", donations);
         }
 
         public ActionResult LatestDonations()
         {
             var donations = _donationsDb.All().OrderByDescending(d => d.Date).Take(5);
 
-            return View(donations);
+            return View("DonationList", donations);
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
@@ -6,11 +7,19 @@ using GiveCRM.Models;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
     public class CampaignController : Controller
     {
+        private readonly IMailingListService _mailingListService;
+
+        public CampaignController(IMailingListService mailingListService)
+        {
+            _mailingListService = mailingListService;
+        }
+
         public ActionResult Index(bool showClosed = false)
         {
             var campaigns = new Campaigns();
@@ -100,6 +109,23 @@ namespace GiveCRM.Web.Controllers
             var memberSearchFilterRepo = new MemberSearchFilters();
             memberSearchFilterRepo.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new {id = campaignId});
+        }
+
+        [HttpPost]
+        public FileResult DownloadMailingList(int id)
+        {
+            // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
+
+            var members = new List<Member>();
+
+            byte[] filecontent;
+            using (var stream = new MemoryStream())
+            {
+                _mailingListService.WriteToStream(members, stream, OutputFormat.XLS);
+                filecontent = stream.ToArray();
+            }
+
+            return File(filecontent, "application/vnd.ms-excel");
         }
     }
 }
