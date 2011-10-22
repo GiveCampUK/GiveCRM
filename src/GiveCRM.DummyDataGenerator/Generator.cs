@@ -24,7 +24,7 @@ namespace GiveCRM.DummyDataGenerator
             members.Clear();
             members.Capacity = countToGenerate;
 
-            var newMembers = generator.Generate(countToGenerate);
+            List<Member> newMembers = generator.Generate(countToGenerate);
 
             SaveMembers(newMembers);
 
@@ -53,8 +53,7 @@ namespace GiveCRM.DummyDataGenerator
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
-            return string.Format("{0} members loaded in {1}", members.Count, elapsedTime);
-            
+            return string.Format("{0} members loaded in {1}", members.Count, elapsedTime); 
         }
 
         internal string GenerateCampaign()
@@ -63,7 +62,6 @@ namespace GiveCRM.DummyDataGenerator
             campaign = generator.Generate();
 
             Campaigns campaignDb = new Campaigns();
-
             campaign = campaignDb.Insert(campaign);
 
             return "Generated campaign " + campaign;
