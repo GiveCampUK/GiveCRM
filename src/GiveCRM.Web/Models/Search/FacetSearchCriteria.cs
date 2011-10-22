@@ -9,17 +9,28 @@ namespace GiveCRM.Web.Models.Search
 {
     public class FacetSearchCriteria : SearchCriteria
     {
+        private static Facets facets = new Facets();
+
         public static IEnumerable<SearchCriteria> GetEmptyCriteria()
         {
-            return null;
+            foreach (Facet f in facets.All())
+            {
+                if (f.Type == FacetType.FreeText)
+                {
+                    yield return new FacetSearchCriteria { InternalName="freeTextFacet_"+f.Id, DisplayName=f.Name, Type=SearchFieldType.String };
+                }
+            }
         }
 
         public override bool IsMatch(Member m)
         {
-            switch (this.InternalName)
+            if (this.InternalName.StartsWith("freeTextFacet"))
             {
-                default: return false;
+                int facetId = int.Parse(this.InternalName.Replace("freeTextFacet_", ""));
+                return Evaluate(facets.Get(facetId));
             }
+
+            return false;
         }
     }
 }

@@ -6,7 +6,7 @@ using GiveCRM.DataAccess;
 
 namespace GiveCRM.Web.Models.Search
 {
-    public abstract class SearchCriteria
+    public class SearchCriteria
     {
         public string InternalName { get; set; }
         public string DisplayName { get; set; }
@@ -14,7 +14,10 @@ namespace GiveCRM.Web.Models.Search
         public SearchOperator SearchOperator { get; set; }
         public string Value { get; set; }
 
-        public abstract bool IsMatch(Member m);
+        public virtual bool IsMatch(Member m)
+        {
+            return false;
+        }
 
         protected bool Evaluate(object lhs)
     {
@@ -42,5 +45,10 @@ namespace GiveCRM.Web.Models.Search
     default: return false;
 }
     }
+
+        public override string ToString()
+            {
+                return this.DisplayName + " " + this.SearchOperator.ToString() + " " + this.Value;
+        }
     }
 }
