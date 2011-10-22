@@ -4,23 +4,44 @@
     ViewBag.Title = @Model.Title;
 }
 
-<h2>@Model.Title</h2>
+<div class="campaigns">
+	<div class="row">
+		<div class="span16">
+			<h1>Campaigns</h1>
+		</div>
+	</div>
 
-<ul class="toolbar">
-    <li>@Html.ActionLink(Model.CreateCampaignLinkText, "Create")</li>
-</ul>
+	<div class="row">
+		<div class="maincol span-two-thirds">
+			<ul class="tabs">
+				<li @(!Model.ShowClosed ? Html.Raw("class=\"active\"") : Html.Raw(""))>
+					@Html.ActionLink("Open Campaigns", "Index", new { showClosed = false })
+				</li>
+				<li @(Model.ShowClosed ? Html.Raw("class=\"active\"") : Html.Raw(""))>
+					@Html.ActionLink("Closed Campaigns", "Index", new { showClosed = true })
+				</li>
+			</ul>
 
-<ul>
-@foreach (var item in Model.Campaigns) {
-    <li>
-        @Html.ActionLink(item.Name, "Show", new { id = item.Id })
-        <div>
-            @Html.DisplayFor(modelItem => item.Description)
-        </div>
-    </li>
-}
-</ul>
+			<div class="campaignlist ">
+				<ul class="itemlist">
+				@foreach (var item in Model.Campaigns) {
+					<li>
+						@Html.ActionLink(item.Name, "Show", new { id = item.Id }, new { @class = "name"})
+						<div class="description">
+							@Html.DisplayFor(modelItem => item.Description)
+						</div>
+					</li>
+				}
+				</ul>
+			</div>
+		</div>
 
-<p>
-    @Html.ActionLink(Model.ShowCampaignsLinkText, "Index", new { showClosed = !@Model.ShowClosed })
-</p>
+		<div class="sidebar span-one-third">
+			<h2>Quick Links</h2>
+		
+			<ul class="toolbar">
+				<li>@Html.ActionLink(Model.CreateCampaignLinkText, "Create")</li>
+			</ul>
+		</div>
+	</div>
+</div>
