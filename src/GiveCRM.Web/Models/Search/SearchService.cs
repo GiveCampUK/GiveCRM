@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using GiveCRM.DataAccess;
+﻿using System.Collections.Generic;
+
 using GiveCRM.Models;
 
 namespace GiveCRM.Web.Models.Search
