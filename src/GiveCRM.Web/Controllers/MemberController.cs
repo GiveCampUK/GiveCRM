@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
-using GiveCRM.Web.Models.Member;
+using GiveCRM.Web.Models.Members;
 
 namespace GiveCRM.Web.Controllers
 {
