@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.DataAccess", "GiveC
 EndProject
 Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "GiveCRM.Database", "GiveCRM.Database\GiveCRM.Database.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.Web", "GiveCRM.Web\GiveCRM.Web.csproj", "{4BFCD2B3-0EF2-4770-994F-D563AEFFB90B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BA5306E7-DD5F-4B34-BDEF-649120FFCFC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.DataAccess.Test", "GiveCRM.DataAccess.Test\GiveCRM.DataAccess.Test.csproj", "{F773E096-3736-4DC7-AD44-367D058A5340}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.DummyDataGenerator", "GiveCRM.DummyDataGenerator\GiveCRM.DummyDataGenerator.csproj", "{FA79BA3A-70C7-4E58-8974-1C4F50204E42}"
 EndProject
@@ -48,6 +50,12 @@ Global
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+<<<<<<< HEAD
+		{F773E096-3736-4DC7-AD44-367D058A5340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F773E096-3736-4DC7-AD44-367D058A5340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F773E096-3736-4DC7-AD44-367D058A5340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F773E096-3736-4DC7-AD44-367D058A5340}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
@@ -72,8 +80,12 @@ Global
 		{FA79BA3A-70C7-4E58-8974-1C4F50204E42}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FA79BA3A-70C7-4E58-8974-1C4F50204E42}.Release|x86.ActiveCfg = Release|x86
 		{FA79BA3A-70C7-4E58-8974-1C4F50204E42}.Release|x86.Build.0 = Release|x86
+>>>>>>> c04ca19fc7195037bfd3988b64f2cbff51dedd3c
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F773E096-3736-4DC7-AD44-367D058A5340} = {BA5306E7-DD5F-4B34-BDEF-649120FFCFC6}
 	EndGlobalSection
 EndGlobal

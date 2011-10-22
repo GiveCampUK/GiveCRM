@@ -333,3 +333,32 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
+label
+{
+    float: left;
+    width: 200px;
+}
+
+/* Member dashboard */
+
+#actions
+{
+    float: left;
+    width: 300px;
+    height: 150px;
+}
+
+#search
+{
+    float: left;
+    width: 400px;
+    height: 150px;
+}
+
+#results
+{
+    margin-top: 150px;
+    display: block;
+    width: 100%;
+}
