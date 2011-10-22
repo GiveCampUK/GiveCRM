@@ -13,49 +13,49 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_throw_exception_if_file_stream_for_xlsx_null()
         {
-            var import = new ExcelImport(ExcelFileType.XLSX, true);
+            var import = new ExcelImport();
 
-            Assert.Throws<ArgumentNullException>(() => import.Open(null));
+            Assert.Throws<ArgumentNullException>(() => import.Open(null, ExcelFileType.XLS, true));
         }
 
         [Test]
         public void Should_throw_exception_if_file_stream_for_xls_null()
         {
-            var import = new ExcelImport(ExcelFileType.XLS, true);
+            var import = new ExcelImport();
 
-            Assert.Throws<ArgumentNullException>(() => import.Open(null));
+            Assert.Throws<ArgumentNullException>(() => import.Open(null, ExcelFileType.XLS, true));
         }
 
         [Test]
         public void Should_accept_file_stream()
         {
-            var import = new ExcelImport(ExcelFileType.XLSX, true);
+            var import = new ExcelImport();
             
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, true);
             }
         }
 
         [Test]
         public void Should_accept_file_stream_from_Excel97()
         {
-            var import = new ExcelImport(ExcelFileType.XLS, true);
+            var import = new ExcelImport();
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLS, true);
             }
         }
 
         [Test]
         public void Should_create_Xls_Importer_for_Xls_file()
         {
-            var import = new ExcelImport(ExcelFileType.XLS, true);
+            var import = new ExcelImport();
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLS, true);
 
                 Assert.IsInstanceOf(typeof(ExcelXlsImporter), import.ExcelImporter);
             }
@@ -64,11 +64,11 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_create_Xlsx_Importer_for_Xlsx_file()
         {
-            var import = new ExcelImport(ExcelFileType.XLSX, true);
+            var import = new ExcelImport();
 
             using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream);
+                import.Open(stream, ExcelFileType.XLSX, true);
 
                 Assert.IsInstanceOf(typeof(ExcelXlsxImporter), import.ExcelImporter);
             }
