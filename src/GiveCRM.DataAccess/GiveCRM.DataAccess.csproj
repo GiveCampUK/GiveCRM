@@ -55,7 +55,6 @@
     <Compile Include="Campaigns.cs" />
     <Compile Include="Donations.cs" />
     <Compile Include="Facets.cs" />
-    <Compile Include="MemberFacetAggregator.cs" />
     <Compile Include="MemberFacets.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

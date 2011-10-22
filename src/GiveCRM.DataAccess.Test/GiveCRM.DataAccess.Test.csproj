@@ -78,7 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignsTest.cs" />
+    <Compile Include="FacetSetUpHelper.cs" />
     <Compile Include="FacetsTest.cs" />
+    <Compile Include="MemberFacetsTest.cs" />
     <Compile Include="MembersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -215,5 +215,14 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Indexes\MemberFacet.IX_MemberFacet_FacetValueID.index.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\MemberFacetValue.table.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\MemberFacetValue.FK_MemberFacetValue_FacetValue.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\MemberFacetValue.FK_MemberFacetValue_MemberFacet.fkey.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
 </Project>

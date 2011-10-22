@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
 using NUnit.Framework;
@@ -26,30 +25,17 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void InsertFreeTextFacet()
         {
-            var facet = CreateFreeTextFacet();
+            var facet = FacetSetUpHelper.CreateFreeTextFacet();
             facet = new Facets().Get(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.FreeText, facet.Type);
             Assert.AreEqual("FreeTextTest", facet.Name);
         }
 
-        private static Facet CreateFreeTextFacet()
-        {
-            var facets = new Facets();
-            var facet = new Facet
-                            {
-                                Type = FacetType.FreeText,
-                                Name = "FreeTextTest"
-                            };
-            var record = facets.Insert(facet);
-            facet = record;
-            return facet;
-        }
-
         [Test]
         public void InsertListFacet()
         {
-            var facet = CreateListFacet();
+            var facet = FacetSetUpHelper.CreateListFacet();
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.List, facet.Type);
             Assert.AreEqual("ListTest", facet.Name);
@@ -66,7 +52,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void GetListFacet()
         {
-            var facet = CreateListFacet();
+            var facet = FacetSetUpHelper.CreateListFacet();
 
             facet = new Facets().Get(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
@@ -85,8 +71,8 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void AllFacets()
         {
-            CreateFreeTextFacet();
-            CreateListFacet();
+            FacetSetUpHelper.CreateFreeTextFacet();
+            FacetSetUpHelper.CreateListFacet();
 
             var facet = new Facets().All().FirstOrDefault(f => f.Type == FacetType.FreeText);
             Assert.IsNotNull(facet);
@@ -105,24 +91,6 @@ namespace GiveCRM.DataAccess.Test
                 Assert.AreEqual(facet.Id, value.FacetId);
                 Assert.AreNotEqual(0, value.Id);
             }
-        }
-
-        private static Facet CreateListFacet()
-        {
-            var facets = new Facets();
-            var facet = new Facet
-                            {
-                                Type = FacetType.List,
-                                Name = "ListTest",
-                                Values = new List<FacetValue>
-                                             {
-                                                 new FacetValue {Value = "One"},
-                                                 new FacetValue {Value = "Two"},
-                                             }
-                            };
-            var record = facets.Insert(facet);
-            facet = record;
-            return facet;
         }
     }
 }
