@@ -35,40 +35,57 @@
 
 @Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress)<br />
 
+
+<div id="PhoneNumbers">
 @{
     int i = 0; 
     foreach(var phone in Model.PhoneNumbers)
     {
-        <span>@phone.Type</span><span>@phone.Number</span><br />
-        <input type="hidden" name="PhoneNumbers[@i].Type" value="@phone.Type" />
-        <input type="hidden" name="PhoneNumbers[@i].Number" value="@phone.Number" /> 
+        <label for="PhoneNumbers[@i].NumberBox">@phone.Type</label><input id="PhoneNumbers[@i].NumberBox" name="PhoneNumbers[@i].Number" type="text" disabled value="@phone.Number" /><br />
+        <input type="hidden" name="PhoneNumbers[@i].Number" value="@phone.Number" />
+        <input type="hidden" name="PhoneNumbers[@i].MemberId" value="@phone.MemberId" />
+        <input type="hidden" class="numbertype" name="PhoneNumbers[@i].Type" value="@phone.Type" />
         i += 1; 
     }
 }
+</div>
 
-
-    <label for="numbertype">Number Type</label><select id="numbertype" name="numbertype" type="text">
+<div id="AddNumber">
+    <label for="AddNumber_Type">Number Type</label><select id="AddNumber_Type" name="AddNumber_Type">
                                                     <option value="Home">Home</option>
                                                     <option value="Mobile">Mobile</option>
                                                     <option value="Work">Work</option>
-                                                </select>
-            <br />
-    <label for="number">Number</label><input id="number" name="number" type="text" />
-    <input id="AddNumber" type="button" value="Add Number"  /><br />
-    <input type="submit" value="Save" />
-
-@{Html.EndForm();}
+                                                </select><br />
+    <label for="AddNumber_Number">Number</label><input id="AddNumber_Number" name="number" type="text" />
+    <input id="AddNumber_Button" type="button" value="Add Number"  /><br />
 </div>
+
+<input type="submit" value="Save" />
+@{Html.EndForm();}
 
 <div>
 
 <script type="text/javascript">
-    var form = document.getElementById('addMember');
-    var button = document.getElementById('AddNumber')
-    button.onclick = function () {
-        form.action = '/member/addnumber';
-        form.submit(); 
-    };
+
+    $(function () {
+        $('#AddNumber_Button').click(function () {
+            var index = $('.numbertype').length;
+            var type = HtmlEncode($('#AddNumber_Type option:selected').attr('value'));
+            var number = HtmlEncode($('#AddNumber_Number').val());
+            $('#AddNumber_Number').val('');
+            if (number.trim() === '')
+                return;
+            $('#PhoneNumbers').append('<label for="PhoneNumbers[' + index + '].NumberBox">' + type +
+                                      '</label><input name="PhoneNumbers[' + index + '].NumberBox" type="text" value="' + number + '" disabled /><br />' +
+                                      '<input name="PhoneNumbers[' + index + '].Number" type="hidden" value="' + number + '" />' + 
+                                      '<input type="hidden" class="numbertype" name="PhoneNumbers[' + index + '].Type" value="' + type + '" />');
+
+        });
+
+        var HtmlEncode = function (val) {
+            return $('<div/>').text(val).html();
+        };
+    }); 
 </script>
 
 
