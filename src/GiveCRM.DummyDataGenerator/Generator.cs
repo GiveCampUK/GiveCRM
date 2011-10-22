@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+
+using GiveCRM.DataAccess;
+using GiveCRM.DummyDataGenerator.Generation;
+using GiveCRM.Models;
+using System.Collections.Generic;
 
 namespace GiveCRM.DummyDataGenerator
 {
-    using System;
-
-    using GiveCRM.DataAccess;
-    using GiveCRM.DummyDataGenerator.Generation;
-    using GiveCRM.Models;
-
     internal class Generator
     {
         private Campaign campaign;
@@ -18,8 +17,13 @@ namespace GiveCRM.DummyDataGenerator
             DateTime startTime = DateTime.Now;
             MemberGenerator generator = new MemberGenerator();
             
+            if (members == null)
+            {
+                members = new List<Member>();
+            }
             members.Clear();
             members.Capacity = countToGenerate;
+
             var newMembers = generator.Generate(countToGenerate);
 
             Members membersDb = new Members();
