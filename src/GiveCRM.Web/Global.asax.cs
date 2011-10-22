@@ -10,6 +10,8 @@ using Castle.Windsor.Installer;
 
 namespace GiveCRM.Web
 {
+    using GiveCRM.Web.Infrastructure;
+
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -38,6 +40,7 @@ namespace GiveCRM.Web
             container.Install(FromAssembly.This());
             container.Register(Component.For<IWindsorContainer>().Instance(container));
 
+            ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
