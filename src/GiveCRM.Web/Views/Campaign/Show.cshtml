@@ -48,7 +48,13 @@
     <hr />
     <text>search results goes here</text>    
     <hr/>
-        <p>
+    
+    <p>
         <input type="submit" value="Save" />@Html.HiddenFor(m => m.Campaign.Id)
+
+    @if (Model.Campaign.Id > 0) 
+    {
+        @Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})
+    }
     </p>
 }
