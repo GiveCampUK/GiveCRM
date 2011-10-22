@@ -1,0 +1,22 @@
+﻿@model GiveCRM.Web.Models.Campaign.CampaignIndexViewModel
+
+@{
+    ViewBag.Title = @Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+<ul>
+@foreach (var item in Model.Campaigns) {
+    <li>
+        @Html.ActionLink(item.Name, "Show", new { id=item.Id })
+        <div>
+            @Html.DisplayFor(modelItem => item.Description)
+        </div>
+    </li>
+}
+</ul>
+
+<p>
+    @Html.ActionLink(Model.ShowCampaignsLinkText, "Index", new { showClosed = !@Model.ShowClosed })
+</p>
