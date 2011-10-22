@@ -6,6 +6,10 @@
 
 <h2>@Model.Title</h2>
 
+<ul class="toolbar">
+    <li>@Html.ActionLink(Model.CreateCampaignLinkText, "Create")</li>
+</ul>
+
 <ul>
 @foreach (var item in Model.Campaigns) {
     <li>
