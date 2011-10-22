@@ -20,3 +20,4 @@ NDependOut
 *.dotCover
 *_mm_cache.bin
 src/GiveCRM.Database/sql/debug
+*.orig
