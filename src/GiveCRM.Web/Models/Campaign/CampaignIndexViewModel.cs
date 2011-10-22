@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.Models;
+﻿using System.Collections.Generic;
 
 namespace GiveCRM.Web.Models.Campaign
 {
