@@ -9,7 +9,7 @@ namespace GiveCRM.ImportExport.Test
     {
         private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
         private string _testDataTypesXls = Directory.GetCurrentDirectory() + "/TestData/TestDataTypes.xls";
-
+        
         [Test]
         public void Should_return_correct_number_of_rows_ignoring_header()
         {
