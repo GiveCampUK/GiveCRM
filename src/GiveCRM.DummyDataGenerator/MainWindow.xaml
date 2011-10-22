@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="GiveCRM Dummy data generator" Height="300" Width="300">
     <StackPanel Margin="2">
+        <Button Margin="2,2,2,12" Click="LoadMembers">Load existing members</Button>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Margin="2">Member count:</TextBlock>
+            <TextBlock Margin="2">Generate member count:</TextBlock>
             <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
                      Name="memberCount">10000</TextBox>
 
         </StackPanel>
-        <Button Margin="2" Click="GenerateMembers">Generate members</Button>
-        <Button Margin="2" Click="LoadMembers">Load members</Button>
+        <Button Margin="2,2,2,12" Click="GenerateMembers">Generate members</Button>
         <Button Margin="2" Click="GenerateCampaign">Generate Campaign</Button>
         <Button Margin="2" Click="GenerateDonations">Generate Donations</Button>
 
