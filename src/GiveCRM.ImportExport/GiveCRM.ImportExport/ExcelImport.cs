@@ -1,17 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using GiveCRM.ImportExport.Cells;
-using NPOI.HSSF.UserModel;
-using OfficeOpenXml;
 
 namespace GiveCRM.ImportExport
 {
     public class ExcelImport:IDisposable, IExcelImport
     {
         private bool _disposed;
+        private ExcelFileType fileType;
+        private readonly bool hasHeaderRow;
 
         internal IExcelImporter ExcelImporter;
+
+        public ExcelImport(ExcelFileType fileType, bool hasHeaderRow)
+        {
+            this.fileType = fileType;
+            this.hasHeaderRow = hasHeaderRow;
+        }
 
         ~ExcelImport()
         {
@@ -36,25 +41,41 @@ namespace GiveCRM.ImportExport
             }
         }
 
-        public void OpenXlsx(Stream streamToProcess)
+        public void Open(Stream streamToProcess)
         {
             if (streamToProcess == null) throw new ArgumentNullException("streamToProcess");
 
-            ExcelImporter = new ExcelXlsxImporter();
+            if (fileType == ExcelFileType.XLS)
+            {
+                ExcelImporter = new ExcelXlsImporter();
+            }
+            else
+            {
+                ExcelImporter = new ExcelXlsxImporter();
+            }
+
             ExcelImporter.Open(streamToProcess);
         }
 
-        public void OpenXls(Stream streamToProcess)
+        public IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool includeHeaderRow)
         {
-            if (streamToProcess == null) throw new ArgumentNullException("streamToProcess");
+            if (!hasHeaderRow && includeHeaderRow)
+            {
+                throw new ArgumentException("Cannot include header row when hasHeaderRow is false");
+            }
 
-            ExcelImporter = new ExcelXlsImporter();
-            ExcelImporter.Open(streamToProcess);
+            return ExcelImporter.GetRows(sheetIndex, includeHeaderRow);
         }
 
-        public IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow)
+        public IEnumerable<IDictionary<string, object>> GetRowsAsKeyValuePairs(int sheetIndex)
         {
-            return ExcelImporter.GetRows(sheetIndex, hasHeaderRow);
+            if (!hasHeaderRow)
+            {
+                throw new InvalidOperationException(
+                    "Unable to return data as Key Value Pair when hasHeaderRow is false as relies on header row to provide key names");
+            }
+
+            return ExcelImporter.GetRowsAsKeyValuePairs(sheetIndex);
         }
     }
 }

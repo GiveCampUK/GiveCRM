@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 
@@ -11,13 +12,26 @@ namespace GiveCRM.ImportExport.Test
         private string _testDataTypesXls = Directory.GetCurrentDirectory() + "/TestData/TestDataTypes.xls";
 
         [Test]
-        public void Should_return_correct_number_of_rows_ignoring_header()
+        public void Should_throw_ArgumentExcetion_if_asking_for_header_row_when_file_does_not_have_header_row()
         {
-            var import = new ExcelImport();
+            var import = new ExcelImport(ExcelFileType.XLS, false);
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.OpenXls(stream);
+                import.Open(stream);
+
+                Assert.Throws<ArgumentException>(() => import.GetRows(0, true));
+            }
+        }
+
+        [Test]
+        public void Should_return_correct_number_of_rows_ignoring_header()
+        {
+            var import = new ExcelImport(ExcelFileType.XLS, true);
+
+            using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
+            {
+                import.Open(stream);
 
                 var rows = import.GetRows(0, true);
                 Assert.AreEqual(5, rows.Count());
@@ -27,11 +41,11 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_return_correct_number_of_rows_with_header()
         {
-            var import = new ExcelImport();
+            var import = new ExcelImport(ExcelFileType.XLS, true);
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.OpenXls(stream);
+                import.Open(stream);
 
                 var rows = import.GetRows(0, false);
                 Assert.AreEqual(6, rows.Count());
@@ -41,11 +55,11 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_return_correct_data()
         {
-            var import = new ExcelImport();
+            var import = new ExcelImport(ExcelFileType.XLS, true);
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.OpenXls(stream);
+                import.Open(stream);
 
                 var firstRow = import.GetRows(0, true).ToList()[0].ToList();
                 Assert.AreEqual("Bob", firstRow[2]);
@@ -60,11 +74,11 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_correctly_convert_data_type_to_string()
         {
-            var import = new ExcelImport();
+            var import = new ExcelImport(ExcelFileType.XLS, true);
 
             using (FileStream stream = new FileStream(_testDataTypesXls, FileMode.Open, FileAccess.Read))
             {
-                import.OpenXls(stream);
+                import.Open(stream);
 
                 var row = import.GetRows(0, false).ToList()[0].ToList();
                 Assert.AreEqual("abcdef", row[0]);
@@ -80,11 +94,11 @@ namespace GiveCRM.ImportExport.Test
         [Culture("en-GB")]
         public void Should_correctly_convert_date_type_to_string()
         {
-            var import = new ExcelImport();
+            var import = new ExcelImport(ExcelFileType.XLS, true);
 
             using (FileStream stream = new FileStream(_testDataTypesXls, FileMode.Open, FileAccess.Read))
             {
-                import.OpenXls(stream);
+                import.Open(stream);
 
                 var row = import.GetRows(0, false).ToList()[0].ToList();
                 Assert.AreEqual("22/10/2011", row[1]);

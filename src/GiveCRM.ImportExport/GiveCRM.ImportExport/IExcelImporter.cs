@@ -8,5 +8,6 @@ namespace GiveCRM.ImportExport
     {
         void Open(Stream stream);
         IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow);
+        IEnumerable<IDictionary<string, object>> GetRowsAsKeyValuePairs(int sheetIndex);
     }
 }

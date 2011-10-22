@@ -23,6 +23,11 @@ namespace GiveCRM.ImportExport
             throw new NotImplementedException();
         }
 
+        public IEnumerable<IDictionary<string, object>> GetRowsAsKeyValuePairs(int sheetIndex)
+        {
+            throw new NotImplementedException();
+        }
+
         ~ExcelXlsxImporter()
         {
             Dispose(false);
