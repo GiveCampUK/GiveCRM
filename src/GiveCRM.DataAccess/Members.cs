@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using GiveCRM.Models;
 using Simple.Data;
 
@@ -45,7 +45,8 @@ namespace GiveCRM.DataAccess
                     member = record;
                     member.PhoneNumbers = new List<PhoneNumber>();
                 }
-                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId, MemberId = member.Id, Number = record.Number, Type = record.Type });
+
+                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, Type = record.Type ?? string.Empty });
             }
 
             yield return member;
@@ -93,12 +94,8 @@ namespace GiveCRM.DataAccess
             {
                 try
                 {
-                    // TODO: change this to check if there are any new numbers
-                    //if (member.Id == 0)
-                        refetchPhoneNumbers = true;
-                    
                     transaction.Members.UpdateById(member);
-                    UpdatePhoneNumbers(member, transaction);
+                    refetchPhoneNumbers = UpdatePhoneNumbers(member, transaction);
                     transaction.Commit();
                 }
                 catch
@@ -116,8 +113,9 @@ namespace GiveCRM.DataAccess
 
         }
 
-        private void UpdatePhoneNumbers(Member member, dynamic transaction)
+        private bool UpdatePhoneNumbers(Member member, dynamic transaction)
         {
+            bool refetchPhoneNumbers = false; 
             
             foreach (var phoneNumber in member.PhoneNumbers)
             {
@@ -125,13 +123,15 @@ namespace GiveCRM.DataAccess
                 {
                     phoneNumber.MemberId = member.Id;
                     transaction.PhoneNumbers.Insert(phoneNumber);
-                    
+                    refetchPhoneNumbers = true; 
                 }
                 else
                 {
                     transaction.PhoneNumbers.UpdateById(phoneNumber);
                 }
             }
+
+            return refetchPhoneNumbers; 
         }
 
 

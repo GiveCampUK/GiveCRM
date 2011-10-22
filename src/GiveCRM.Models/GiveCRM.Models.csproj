@@ -51,6 +51,7 @@
     <Compile Include="MemberFacetList.cs" />
     <Compile Include="MemberSearchFilter.cs" />
     <Compile Include="PhoneNumber.cs" />
+    <Compile Include="PhoneNumberType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

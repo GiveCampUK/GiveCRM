@@ -31,7 +31,7 @@ namespace GiveCRM.DataAccess.Test
                                       {
                                           new PhoneNumber
                                               {
-                                                  Type = "Home",
+                                                  Type = PhoneNumberType.Home,
                                                   Number = "01234 567890"
                                               }
                                       };

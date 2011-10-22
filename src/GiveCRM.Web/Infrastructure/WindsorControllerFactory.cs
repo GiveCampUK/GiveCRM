@@ -6,7 +6,7 @@ using Castle.MicroKernel;
 
 namespace GiveCRM.Web.Infrastructure
 {
-    public class WindsorControllerFactory : IControllerFactory
+    public class WindsorControllerFactory : DefaultControllerFactory
     {
         private readonly IKernel _kernel;
 
@@ -15,17 +15,17 @@ namespace GiveCRM.Web.Infrastructure
             _kernel = kernel;
         }
 
-        public IController CreateController(RequestContext requestContext, string controllerName)
+        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            return _kernel.Resolve<IController>(controllerName.ToLowerInvariant() + "controller");
+            if (controllerType != null)
+            {
+                return (IController)_kernel.Resolve(controllerType);
+            }
+
+            return base.GetControllerInstance(requestContext, controllerType);
         }
 
-        public SessionStateBehavior GetControllerSessionBehavior(RequestContext requestContext, string controllerName)
-        {
-            return SessionStateBehavior.Default;
-        }
-
-        public void ReleaseController(IController controller)
+        public override void ReleaseController(IController controller)
         {
             _kernel.ReleaseComponent(controller);
         }
