@@ -35,5 +35,10 @@ namespace GiveCRM.Web.Controllers
             return View(id);
         }
 
+        public ActionResult DoQuickDonate(int id, int amount, string date)
+        {
+            _donationsDb.Insert(new GiveCRM.Models.Donation { Amount = amount, Date = DateTime.Parse(date), MemberId = id });
+            return View();
+        }
     }
 }

@@ -4,12 +4,12 @@ namespace GiveCRM.Models
     {
         public int Id { get; set; }
         public int MemberId { get; set; }
-        public PhoneNumberType Type { get; set; }
+        public PhoneNumberType PhoneNumberType { get; set; }
         public string Number { get; set; }
 
         public override string ToString()
         {
-            return Type + " " + Number;
+            return PhoneNumberType + " " + Number;
         }
     }
 }

@@ -75,7 +75,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             {
                 member.PhoneNumbers.Add(new PhoneNumber
                     {
-                        Type = PhoneNumberType.Home,
+                        PhoneNumberType = PhoneNumberType.Home,
                         Number = random.PhoneDigits()
                     });
             }
@@ -84,7 +84,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             {
                 member.PhoneNumbers.Add(new PhoneNumber
                 {
-                    Type = PhoneNumberType.Work,
+                    PhoneNumberType = PhoneNumberType.Work,
                     Number = random.PhoneDigits()
                 });
             }
@@ -93,7 +93,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             {
                 member.PhoneNumbers.Add(new PhoneNumber
                 {
-                    Type = PhoneNumberType.Mobile,
+                    PhoneNumberType = PhoneNumberType.Mobile,
                     Number = random.PhoneDigits()
                 });
             }
