@@ -18,5 +18,5 @@
 </ul>
 
 <p>
-    @Html.ActionLink("Show Closed Campaigns", "Index", new { showClosed=true })
+    @Html.ActionLink(Model.ShowCampaignsLinkText, "Index", new { showClosed = !@Model.ShowClosed })
 </p>
