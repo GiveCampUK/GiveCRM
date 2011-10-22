@@ -14,6 +14,7 @@ namespace GiveCRM.Web.Controllers
 
         private Members _membersDb = new Members();
         private Donations _donationsDb = new Donations();
+        private Campaigns _campaignsDb = new Campaigns();
 
         public ActionResult Index()
         {
@@ -43,6 +44,9 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Donate(int id)
         {
             ViewBag.MemberName = GetFormattedName(_membersDb.Get(id));
+
+            ViewBag.Campaigns = _campaignsDb.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+
             return View(new Donation { MemberId = id });
         }
 
