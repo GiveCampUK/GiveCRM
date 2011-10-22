@@ -59,17 +59,18 @@ namespace GiveCRM.ImportExport
             {
                 var sheet = Workbook.Worksheets[sheetIndex + 1];
 
+                var count = 1;
                 for (int j = 1; j <= sheet.Dimension.End.Column; j++)
                 {
-                    headerRowValues.Add(sheet.Cells[1, j].GetValue<string>());
+                    headerRowValues.Add(sheet.Cells[count, j].GetValue<string>() ?? String.Empty);
                 }
-
-                for (int i = 1; i <= sheet.Dimension.End.Row; i++)
+                count++;
+                for (int i = count; i <= sheet.Dimension.End.Row; i++)
                 {
                     var cells = new Dictionary<string, object>();
-                    for (int j = 1; j < sheet.Dimension.End.Column; j++)
+                    for (int j = 1; j <= sheet.Dimension.End.Column; j++)
                     {
-                        cells.Add(headerRowValues[j], sheet.Cells[i, j].GetValue<string>());
+                        cells.Add(headerRowValues[j - 1], sheet.Cells[i, j].GetValue<string>() ?? String.Empty);
                     }
                     rows.Add(cells);
                 } 
