@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
 using Simple.Data;
@@ -26,7 +27,7 @@ namespace GiveCRM.DataAccess
                         _db.Members.AddressLine1, _db.Members.AddressLine2, _db.Members.City, _db.Members.Region,
                         _db.Members.PostalCode, _db.Members.Country,
                         _db.Members.Archived,
-                        _db.Members.PhoneNumbers.Id.As("PhoneNumberId"), _db.Members.PhoneNumbers.Type,
+                        _db.Members.PhoneNumbers.Id.As("PhoneNumberId"), _db.Members.PhoneNumbers.PhoneNumberType,
                         _db.Members.PhoneNumbers.Number,
                         _db.Members.Donations.Amount.Sum().As("TotalDonations"))
                 .OrderBy(_db.Members.Id);
@@ -45,8 +46,8 @@ namespace GiveCRM.DataAccess
                     member = record;
                     member.PhoneNumbers = new List<PhoneNumber>();
                 }
-
-                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, Type = record.Type ?? string.Empty });
+                
+                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, PhoneNumberType = (PhoneNumberType)record.PhoneNumberType });
             }
 
             yield return member;
