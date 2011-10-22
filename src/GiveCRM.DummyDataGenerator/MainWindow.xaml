@@ -1,0 +1,12 @@
+﻿<Window x:Class="GiveCRM.DummyDataGenerator.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GiveCRM Dummy data generator" Height="300" Width="300">
+    <StackPanel Margin="2">
+        <Button Margin="2" Click="GenerateMembers">Generate members</Button>
+        <Button Margin="2" Click="GenerateCampaign">Generate Campaign</Button>
+        <Button Margin="2" Click="GenerateDonations">Generate Donation</Button>
+
+        <TextBlock Margin="2" Name="generationOutput"></TextBlock>
+    </StackPanel>
+</Window>
