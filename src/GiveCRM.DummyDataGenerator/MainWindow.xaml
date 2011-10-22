@@ -4,6 +4,7 @@
         Title="GiveCRM Dummy data generator" Height="300" Width="300">
     <StackPanel Margin="2">
         <Button Margin="2" Click="GenerateMembers">Generate members</Button>
+        <Button Margin="2" Click="LoadMembers">Load members</Button>
         <Button Margin="2" Click="GenerateCampaign">Generate Campaign</Button>
         <Button Margin="2" Click="GenerateDonations">Generate Donation</Button>
 

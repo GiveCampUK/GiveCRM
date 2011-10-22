@@ -17,7 +17,7 @@
 			<Metadata Name="CompatibilityMode" Value="100" />
 		</CustomData>
 		<CustomData Category="Permissions" Type="XmlPermissions">
-			<Metadata Name="FileName" Value="C:\CODE\GIVECAMPUK2011\GIVECRM\SRC\GIVECRM.DATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
+			<Metadata Name="FileName" Value="C:\GC_CODE\GIVECRM_UI\SRC\GIVECRM.DATABASE\PROPERTIES\DATABASE.SQLPERMISSIONS" />
 		</CustomData>
 	</Header>
 	<Model>
@@ -960,7 +960,7 @@
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="ISql100SimpleColumn" Name="[dbo].[Member].[Town]">
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[Member].[City]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">

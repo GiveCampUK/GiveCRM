@@ -17,7 +17,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult Add()
@@ -47,6 +47,8 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Save(Member member)
         {
+            member.PhoneNumbers = new List<PhoneNumber>();
+
             if (member.Id == 0)
             {
                 _membersDb.Insert(member);
@@ -56,7 +58,7 @@ namespace GiveCRM.Web.Controllers
                 _membersDb.Update(member);
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
