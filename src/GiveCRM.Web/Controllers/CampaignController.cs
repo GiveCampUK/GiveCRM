@@ -2,16 +2,13 @@
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
-using GiveCRM.Web.Models.Campaign;
+using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Properties;
 
 namespace GiveCRM.Web.Controllers
 {
     public class CampaignController : Controller
     {
-        //
-        // GET: /Campaign/
-
         public ActionResult Index(bool showClosed = false)
         {
             var campaigns = new Campaigns();
@@ -47,6 +44,18 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            return View("Show", model);
+        }
+
+        public ActionResult Show(int id)
+        {
+            var campaigns = new Campaigns();
+            var campaign = campaigns.Get(id);
+
+            var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
+                            {
+                                Campaign = campaign
+                            };
             return View("Show", model);
         }
     }
