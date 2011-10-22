@@ -960,7 +960,7 @@
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="ISql100SimpleColumn" Name="[dbo].[Member].[Town]">
+					<Element Type="ISql100SimpleColumn" Name="[dbo].[Member].[City]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="ISql90TypeSpecifier">
