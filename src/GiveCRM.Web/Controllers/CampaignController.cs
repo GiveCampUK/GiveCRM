@@ -59,12 +59,14 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var campaigns = new Campaigns();
-            var campaign = campaigns.Get(id);
+            var campaignRepo = new Campaigns();
+            var memberSearchFilterRepo = new MemberSearchFilters();
+            var campaign = campaignRepo.Get(id);
 
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
-                                Campaign = campaign
+                                Campaign = campaign,
+                                SearchFilters = memberSearchFilterRepo.ForCampaign(id)
                             };
             return View(model);
         }
