@@ -15,5 +15,10 @@ namespace GiveCRM.DataAccess
         {
             return _db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
         }
+
+        public void Delete(int id)
+        {
+            _db.MemberSearchFilters.DeleteById(id);
+        }
     }
 }
