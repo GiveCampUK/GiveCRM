@@ -10,6 +10,8 @@ namespace GiveCRM.Web.Models.Campaigns
 
         public IEnumerable<MemberSearchFilter> SearchFilters { get; set; }
 
+        public string NoSearchFiltersText { get; set; }
+
         public CampaignShowViewModel(string title) : base(title)
         {}
     }
