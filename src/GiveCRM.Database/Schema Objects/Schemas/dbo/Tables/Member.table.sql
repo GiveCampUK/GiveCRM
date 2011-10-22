@@ -12,5 +12,6 @@
 	City nvarchar(50) NULL,
 	Region nvarchar(50) NULL,
 	PostalCode nvarchar(50) NULL,
-	Country nvarchar(50) NULL
+	Country nvarchar(50) NULL,
+	Archived bit NOT NULL 0
 )

@@ -16,7 +16,7 @@
 {
     <tr>
         <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
-        <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
+        <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id }, new { onclick="return CheckDelete('" + member.Reference + "');" })</td>
         <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
         <td>@member.Reference</td>
         <td>@member.Salutation @member.FirstName @member.LastName</td>
@@ -26,3 +26,9 @@
 }
 
 </table>
+
+<script type="text/javascript" language="javascript">
+    function CheckDelete(ref) {
+        return confirm("Are you sure you wish to delete member " + ref);
+    }
+</script>

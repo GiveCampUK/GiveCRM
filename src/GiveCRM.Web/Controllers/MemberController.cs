@@ -38,7 +38,13 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            var member = _membersDb.Get(id);
+
+            member.Archived = true;
+
+            _membersDb.Update(member);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Donate(int id)
@@ -79,6 +85,7 @@ namespace GiveCRM.Web.Controllers
             var results = _membersDb
                 .All()
                 .Where(member => 
+                    !member.Archived &&
                     (name == string.Empty || NameSearch(member, name.ToLower())) &&
                     (postcode == string.Empty || PostcodeSearch(member, postcode.ToLower())) &&
                     (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
