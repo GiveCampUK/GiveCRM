@@ -20,6 +20,10 @@
 
     <hr />
     
+    <p>
+        @Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
+    </p>
+
     <ul>
     @if (Model.SearchFilters.Any() == false) {
         @Model.NoSearchFiltersText;

@@ -87,10 +87,16 @@ namespace GiveCRM.DataAccess
 
         public void Update(Member member)
         {
+            bool refetchPhoneNumbers = false;
+
             using (var transaction = _db.BeginTransaction())
             {
                 try
                 {
+                    // TODO: change this to check if there are any new numbers
+                    //if (member.Id == 0)
+                        refetchPhoneNumbers = true;
+                    
                     transaction.Members.UpdateById(member);
                     UpdatePhoneNumbers(member, transaction);
                     transaction.Commit();
@@ -101,28 +107,30 @@ namespace GiveCRM.DataAccess
                     throw;
                 }
             }
+
+            if (refetchPhoneNumbers)
+            {
+                var newNos = _db.PhoneNumbers.FindAllByMemberId(member.Id);
+                member.PhoneNumbers = newNos.ToList<PhoneNumber>();
+            }
+
         }
 
         private void UpdatePhoneNumbers(Member member, dynamic transaction)
         {
-            bool refetchPhoneNumbers = false;
+            
             foreach (var phoneNumber in member.PhoneNumbers)
             {
                 if (phoneNumber.MemberId == 0)
                 {
                     phoneNumber.MemberId = member.Id;
                     transaction.PhoneNumbers.Insert(phoneNumber);
-                    refetchPhoneNumbers = true;
+                    
                 }
                 else
                 {
                     transaction.PhoneNumbers.UpdateById(phoneNumber);
                 }
-            }
-
-            if (refetchPhoneNumbers)
-            {
-                member.PhoneNumbers = transaction.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>();
             }
         }
 
