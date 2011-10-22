@@ -17,6 +17,8 @@ namespace GiveCRM.DataAccess.Test
             _db.CampaignRuns.DeleteAll();
             _db.Campaigns.DeleteAll();
             _db.PhoneNumbers.DeleteAll();
+            _db.MemberFacetValues.DeleteAll();
+            _db.MemberFacets.DeleteAll();
             _db.Members.DeleteAll();
             _db.FacetValues.DeleteAll();
             _db.Facets.DeleteAll();
