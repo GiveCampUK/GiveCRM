@@ -1,0 +1,17 @@
+﻿@model GiveCRM.Models.Donation
+
+@{
+    ViewBag.Title = "Donate";
+}
+
+<h2>Add Donation</h2>
+
+@{Html.BeginForm(actionName: "SaveDonation", controllerName: "Member");}
+
+@Html.LabelFor(d=>d.Date) @Html.TextBoxFor(d=>d.Date)<br />
+
+@Html.LabelFor(d=>d.Amount) @Html.TextBoxFor(d=>d.Amount)<br />
+
+<input type="submit" value="Save" />
+
+@{Html.EndForm();}

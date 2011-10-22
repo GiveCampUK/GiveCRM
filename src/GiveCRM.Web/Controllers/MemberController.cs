@@ -42,6 +42,11 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Donate(int id)
         {
+            return View(new Donation { MemberId = id });
+        }
+
+        public ActionResult SaveDonation(Donation donation)
+        {
             throw new NotImplementedException();
         }
 
