@@ -14,7 +14,6 @@ namespace GiveCRM.Web.Models.Search
         public SearchOperator SearchOperator { get; set; }
         public string Value { get; set; }
 
-        public abstract IEnumerable<SearchCriteria> GetEmptyCriteria();
         public abstract bool IsMatch(Member m);
 
         protected bool Evaluate(object lhs)
