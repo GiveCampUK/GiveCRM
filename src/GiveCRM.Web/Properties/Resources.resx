@@ -117,6 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllOf" xml:space="preserve">
+    <value>is all of</value>
+  </data>
+  <data name="AnyOf" xml:space="preserve">
+    <value>is any of</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>contains</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>ends with</value>
+  </data>
+  <data name="EqualTo" xml:space="preserve">
+    <value>is equal to</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>is greater than</value>
+  </data>
+  <data name="GreaterThanOrEqualTo" xml:space="preserve">
+    <value>is greater than or equal to</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>is less than</value>
+  </data>
+  <data name="LessThanOrEqualTo" xml:space="preserve">
+    <value>is less than or equal to</value>
+  </data>
   <data name="Literal_AddSearchFilter" xml:space="preserve">
     <value>Add a new search filter</value>
   </data>
@@ -138,7 +165,13 @@
   <data name="Literal_ShowCampaign" xml:space="preserve">
     <value>Campaign</value>
   </data>
+  <data name="NotEqualTo" xml:space="preserve">
+    <value>is not equal to</value>
+  </data>
   <data name="Show_Campaigns_Text" xml:space="preserve">
     <value>Show {0} Campaigns</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>starts with</value>
   </data>
 </root>
