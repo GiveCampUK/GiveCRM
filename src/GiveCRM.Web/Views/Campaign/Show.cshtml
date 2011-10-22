@@ -16,23 +16,34 @@
     @Html.LabelFor(m => m.Campaign.Name) @Html.TextBoxFor(m => m.Campaign.Name)
     <br/>
     @Html.LabelFor(m => m.Campaign.Description) @Html.TextAreaFor(m => m.Campaign.Description, 5, 80, null)
-    <hr />
-    <p>
-        @Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
-    </p>
 
-    <ul>
-    @if (Model.SearchFilters.Any() == false)
+    if (Model.Campaign.Id > 0) 
     {
-        @Model.NoSearchFiltersText;
-    }    
-
-    @foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters)
-    {
-        <li>@filterViewModel.CriteriaDisplayText
-            @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new { campaignId = filterViewModel.CampaignId, memberSearchFilterId = filterViewModel.MemberSearchFilterId })</li>
+        <text>
+            <p>
+                 @Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new {campaignId = Model.Campaign.Id})
+            </p> 
+        </text>
     }
-    </ul>
+            
+    if (Model.SearchFilters.Any() == false)
+    {
+        <p>
+            @Model.NoSearchFiltersText
+        </p>
+    }
+    else
+    {
+        <text>
+            <ul>
+            @foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters)
+            {
+                <li>@filterViewModel.CriteriaDisplayText
+                    @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {campaignId = filterViewModel.CampaignId, memberSearchFilterId = filterViewModel.MemberSearchFilterId})</li>
+            }
+            </ul>
+        </text>
+    }
     
     <hr />
     <text>search results goes here</text>    
