@@ -26,16 +26,21 @@ namespace GiveCRM.DummyDataGenerator
 
             var newMembers = generator.Generate(countToGenerate);
 
-            Members membersDb = new Members();
-            foreach (var member in newMembers)
-            {
-                Member saved = membersDb.Insert(member);
-                members.Add(saved);
-            }
+            SaveMembers(newMembers);
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
             return string.Format("{0} members saved in {1}", members.Count, elapsedTime);
+        }
+
+        private void SaveMembers(IEnumerable<Member> newMembers)
+        {
+            Members membersDb = new Members();
+            foreach (var member in newMembers)
+            {
+                Member saved = membersDb.Insert(member);
+                this.members.Add(saved);
+            }
         }
 
         internal string LoadMembers()
@@ -70,17 +75,22 @@ namespace GiveCRM.DummyDataGenerator
             DonationsGenerator generator = new DonationsGenerator(campaign, members);
             IList<Donation> newDonations = generator.Generate();
 
+            SaveDonations(newDonations);
+
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - startTime;
+            return string.Format("{0} donations inserted on campaign {1} in {2}", 
+                newDonations.Count, campaign.Name, elapsedTime);
+        }
+
+        private static void SaveDonations(IList<Donation> newDonations)
+        {
             Donations donationDb = new Donations();
 
             foreach (var donation in newDonations)
             {
                 donationDb.Insert(donation);
             }
-
-            DateTime endTime = DateTime.Now;
-            TimeSpan elapsedTime = endTime - startTime;
-            return string.Format("{0} donations inserted on campaign {1} in {2}", 
-                newDonations.Count, campaign.Name, elapsedTime);
         }
     }
 }
