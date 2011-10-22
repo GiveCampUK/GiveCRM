@@ -45,7 +45,7 @@ namespace GiveCRM.Web.Models.Search
 
         public override string ToString()
         {
-            return this.DisplayName + " " + this.SearchOperator.ToString() + " " + this.Value;
+            return string.Format("{0} {1} {2}", DisplayName, SearchOperator.ToFriendlyDisplayString(), Value);
         }
     }
 }
