@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Campaigns;
+using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
 
 namespace GiveCRM.Web.Controllers
@@ -52,8 +53,7 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            var result = new Campaigns().Insert(campaign);
-
+            new Campaigns().Insert(campaign);
             return RedirectToAction("Show");
         }
 
@@ -67,7 +67,21 @@ namespace GiveCRM.Web.Controllers
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = memberSearchFilterRepo.ForCampaign(id).ToList(),
+                                SearchFilters = memberSearchFilterRepo.ForCampaign(id).Select(
+                                m => 
+                                    new MemberSearchFilterViewModel
+                                        {
+                                            MemberSearchFilterId = m.Id,
+                                            CampaignId = campaign.Id,
+                                            CriteriaDisplayText = new SearchCriteria
+                                                                      {
+                                                                            InternalName = m.InternalName,
+                                                                            DisplayName = m.DisplayName,
+                                                                            Type = (SearchFieldType) m.FilterType,
+                                                                            SearchOperator = (SearchOperator) m.SearchOperator,
+                                                                            Value = m.Value
+                                                                      }.ToString()
+                                        }).ToList(),
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
             return View(model);
@@ -84,9 +98,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
             var memberSearchFilterRepo = new MemberSearchFilters();
-
             memberSearchFilterRepo.Delete(memberSearchFilterId);
-
             return RedirectToAction("Show", new {id = campaignId});
         }
     }

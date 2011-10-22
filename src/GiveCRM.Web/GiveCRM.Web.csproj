@@ -73,6 +73,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
+    <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\CampaignSearchCriteria.cs" />
@@ -242,6 +243,9 @@
   <ItemGroup>
     <Content Include="Views\Shared\_GlobFooter.cshtml" />
     <Content Include="Views\Shared\_GlobHeader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Donation\DonationList.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

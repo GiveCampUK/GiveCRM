@@ -228,4 +228,9 @@
       <SubType>Code</SubType>
     </Build>
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\MemberSearchFilter.FK_MemberSearchFilter_Campaign.fkey.sql">
+      <SubType>NotInBuild</SubType>
+    </Build>
+  </ItemGroup>
 </Project>
