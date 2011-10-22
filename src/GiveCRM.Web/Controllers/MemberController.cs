@@ -34,9 +34,9 @@ namespace GiveCRM.Web.Controllers
             var results = membersDb
                 .All()
                 .Where(member => 
-                    NameSearch(member, name) || 
-                    PostcodeSearch(member, postcode) || 
-                    ReferenceSearch(member, reference));
+                    (name == string.Empty || NameSearch(member, name.ToLower())) &&
+                    (postcode == string.Empty || PostcodeSearch(member, postcode.ToLower())) &&
+                    (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
 
             return View(results);
         }
@@ -48,13 +48,13 @@ namespace GiveCRM.Web.Controllers
 
         private bool PostcodeSearch(Member member, string criteria)
         {
-            return member.PostalCode.Replace(" ", "").Contains(criteria.Replace(" ", ""));
+            return member.PostalCode == null ? false : member.PostalCode.ToLower().Replace(" ", "").Contains(criteria.Replace(" ", ""));
         }
 
         private bool ReferenceSearch(Member member, string criteria)
         {
             // TODO: We think member is missing a reference field
-            return member.Id.ToString().Contains(criteria);
+            return member.Reference.ToLower().Contains(criteria);
         }
 
         private bool NameSearch(Member member, string criteria)
@@ -64,17 +64,17 @@ namespace GiveCRM.Web.Controllers
 
         private string GetForenameSurname(Member member)
         {
-            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName);
+            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName).ToLower();
         }
 
         private string GetSurnameForename(Member member)
         {
-            return string.Format("{0} {1} {2}", member.Salutation, member.LastName, member.FirstName);
+            return string.Format("{0} {1} {2}", member.Salutation, member.LastName, member.FirstName).ToLower();
         }
 
         private string GetInitialSurname(Member member)
         {
-            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName);
+            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName).ToLower();
         }
 
         #endregion
