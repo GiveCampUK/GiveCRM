@@ -30,5 +30,10 @@ namespace GiveCRM.Web.Controllers
             return View("DonationList", donations);
         }
 
+        public ActionResult QuickDonate(int id)
+        {
+            return View(id);
+        }
+
     }
 }
