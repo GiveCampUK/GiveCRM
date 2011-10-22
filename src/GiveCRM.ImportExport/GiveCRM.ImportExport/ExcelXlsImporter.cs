@@ -54,6 +54,7 @@ namespace GiveCRM.ImportExport
             {
                 headerRowValues.Add(GetCellValue(headerRow.GetCell(j)));
             }
+            count++;
 
             for (var i = count; i <= sheet.LastRowNum; i++)
             {
