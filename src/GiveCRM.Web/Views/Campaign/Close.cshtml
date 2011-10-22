@@ -1,0 +1,23 @@
+﻿@model CampaignCloseViewModel
+@using GiveCRM.Web.Models.Campaigns
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.CampaignId)
+
+    <p>
+        Close @Model.CampaignName?
+    </p>
+    
+    <p>
+        <input type="submit" value="Close" />
+        @Html.ActionLink("Cancel", "Index")
+    </p>
+}
