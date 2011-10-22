@@ -3,39 +3,84 @@
 
 @{
     ViewBag.Title = Model.Title;
+	string formWidthClass = "span4";
 }
 
-<h2>@Model.Title</h2>
+<div class="campaign">
+	<div class="row">
+		<div class="span16">
+			<h1>@Model.Title</h1>
+		</div>
+	</div>
 
+	<div class="row">
+		<div class="maincol span-two-thirds">
+		@using (Html.BeginForm())
+		{
+			@Html.ValidationSummary(true)
+			
+			<fieldset>
+				<legend>General</legend>
+				@Html.HiddenFor(m => m.Campaign.Id)
+
+				<div class="clearfix">
+					@Html.LabelFor(m => m.Campaign.Name)
+					<div class="input">
+						@Html.TextBoxFor(m => m.Campaign.Name, new { @class = formWidthClass })
+					</div>
+				</div>
+
+				<div class="clearfix">
+					@Html.LabelFor(m => m.Campaign.Description)
+					<div class="input">
+						@Html.TextAreaFor(m => m.Campaign.Description, 5, 80, new { @class = formWidthClass })
+					</div>
+				</div>
+			</fieldset>
+				
+			<fieldset>
+				<legend>Recipient List</legend>
+				@* TODO(BS) Build logic to create recipient list generation *@
+				<div class="clearfix">
+					<div class="input">
+				
+						@if (Model.SearchFilters.Any() == false) {
+							@Model.NoSearchFiltersText;
+						}    
+					<ul>
+						@foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
+							<li>
+								@filterViewModel.CriteriaDisplayText
+								@Html.ActionLink("[x]", "DeleteMemberSearchFilter", new	{
+									campaignId = filterViewModel.CampaignId,
+									memberSearchFilterId = filterViewModel.MemberSearchFilterId
+								})
+							</li>
+						}
+					</ul>
+    			
+					@* TODO(BS) search results goes here *@
+				</div> 
+				<div class="actions clearfix">
+					<input type="submit" value="Create Campaign" class="btn primary @formWidthClass" />
+				</div>
+			</fieldset>
+		}
+		</div>
+	
+		<div class="sidebar span-one-third">
+			<h2>Quick Links</h2>
+		
+			<ul class="toolbar">
+				<li>Nothing Here</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- TODO(BS) pull these in from http://www.asp.net/ajaxlibrary/cdn.ashx#ASPNET_MVC_Releases_on_the_CDN_9 with local fallback -->
+<!-- TODO(BS) ensure JS validation works as expected (once back end is working too) -->
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true)
- 
-    @Html.LabelFor(m => m.Campaign.Name) @Html.TextBoxFor(m => m.Campaign.Name)
-    <br/>
-    @Html.LabelFor(m => m.Campaign.Description) @Html.TextAreaFor(m => m.Campaign.Description, 5, 80, null)
-
-    <hr />
-    
-    <ul>
-    @if (Model.SearchFilters.Any() == false) {
-        @Model.NoSearchFiltersText;
-    }    
-
-    @foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
-        <li>@filterViewModel.CriteriaDisplayText
-            @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new { campaignId = filterViewModel.CampaignId, memberSearchFilterId = filterViewModel.MemberSearchFilterId })</li>
-    }
-    </ul>
-    
-    <hr />
-    <text>search results goes here</text>    
-    <hr/>
-    
-    <p>
-        <input type="submit" value="Save" />@Html.HiddenFor(m => m.Campaign.Id)
-    </p>
-}
