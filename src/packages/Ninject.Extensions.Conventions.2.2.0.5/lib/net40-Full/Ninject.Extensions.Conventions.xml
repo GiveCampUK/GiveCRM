@@ -1,0 +1,620 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ninject.Extensions.Conventions</name>
+    </assembly>
+    <members>
+        <member name="T:Ninject.Extensions.Conventions.AssemblyScanner">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.IAssemblyScanner">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Reflection.Assembly)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Uses the supplied types for processing subject to excludes and filters.
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromCallingAssembly">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.String)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String},System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="assemblies"></param>
+            <param name="filter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssemblyContaining``1">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssemblyContaining(System.Type)">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssemblyContaining(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <param name="types">The types.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesInPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesInPath(System.String,System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <param name="assemblyFilter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesMatching(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesMatching(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="patterns"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Including``1">
+            <summary>
+            Includes this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Including(System.Type)">
+            <summary>
+            Includes the specified type.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Including(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Includes the specified filters.
+            </summary>
+            <param name="filters">The filters.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeIsInNamespace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="nameSpace"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeIsInNamespaceOf``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Excluding``1">
+            <summary>
+            Excludes this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Excluding(System.Type)">
+            <summary>
+            Excludes the specified type.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Excluding(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Excludes the specified filters.
+            </summary>
+            <param name="filters">The filters.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Where(System.Predicate{System.Type})">
+            <summary>
+            Excludes the specified filter.
+            </summary>
+            <param name="filter">The filter.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeIsNotInNamespace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="nameSpace"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeIsNotInNamespaceOf``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.BindWith``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.BindWith(Ninject.Extensions.Conventions.IBindingGenerator)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.BindWithDefaultConventions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.AutoLoadModules">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeInheritsFrom``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeInheritsFrom(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeInheritsFromAny(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.InScope(System.Func{Ninject.Activation.IContext,System.Object})">
+            <summary>
+            Indicates that instances activated via the binding should be re-used as long as the object
+            returned by the provided callback remains alive (that is, has not been garbage collected).
+            </summary>
+            <param name="scope">The callback that returns the scope.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.InSingletonScope">
+            <summary>
+            Indicates that only a single instance of the binding should be created, and then
+            should be re-used for all subsequent requests.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.InTransientScope">
+            <summary>
+            Indicates that instances activated via the binding should not be re-used, nor have
+            their lifecycle managed by Ninject.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.InThreadScope">
+            <summary>
+            Indicates that instances activated via the binding should be re-used within the same thread.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.InRequestScope">
+            <summary>
+            Indicates that instances activated via the binding should be re-used within the same
+            HTTP request.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ninject.Extensions.Conventions.AssemblyScanner"/> class.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Process(Ninject.IKernel)">
+            <summary>
+            Performs binding generation on all targeted assemblies.
+            </summary>
+            <param name="kernel"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Reflection.Assembly)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromCallingAssembly">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.String)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String},System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="assemblies"></param>
+            <param name="filter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesInPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesInPath(System.String,System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <param name="assemblyFilter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesMatching(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesMatching(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="patterns"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.AutoLoadModules">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssemblyContaining``1">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssemblyContaining(System.Type)">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssemblyContaining(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Loads the assembly containing.
+            </summary>
+            <param name="types">The types.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Uses the supplied types for processing subject to excludes and filters.
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Including``1">
+            <summary>
+            Includes this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Including(System.Type)">
+            <summary>
+            Includes the specified type.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Including(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Includes the specified types.
+            </summary>
+            <param name="types">The types.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeIsInNamespace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="nameSpace"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.NamespacesMatch(System.String,System.String)">
+            <summary>
+            Deternmines whether two namespaces match.
+            </summary>
+            <param name="lhs">The target namespace.</param>
+            <param name="rhs">The namespace template to match against.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeIsInNamespaceOf``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Excluding``1">
+            <summary>
+            Excludes this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Excluding(System.Type)">
+            <summary>
+            Excludes the specified type.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Excluding(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Excludes the specified filters.
+            </summary>
+            <param name="filters">The filters.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.Where(System.Predicate{System.Type})">
+            <summary>
+            Excludes the specified filter.
+            </summary>
+            <param name="filter">The filter.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeIsNotInNamespace(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="nameSpace"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeIsNotInNamespaceOf``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.BindWith``1">
+            <summary>
+            Usings this instance.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.BindWith(Ninject.Extensions.Conventions.IBindingGenerator)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.BindWithDefaultConventions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeInheritsFrom``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeInheritsFrom(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.WhereTypeInheritsFromAny(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            </summary>
+            <param name="types"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.InScope(System.Func{Ninject.Activation.IContext,System.Object})">
+            <summary>
+            Indicates that instances activated via the binding should be re-used as long as the object
+            returned by the provided callback remains alive (that is, has not been garbage collected).
+            </summary>
+            <param name="scope">The callback that returns the scope.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.InSingletonScope">
+            <summary>
+            Indicates that only a single instance of the binding should be created, and then
+            should be re-used for all subsequent requests.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.InTransientScope">
+            <summary>
+            Indicates that instances activated via the binding should not be re-used, nor have
+            their lifecycle managed by Ninject.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.InThreadScope">
+            <summary>
+            Indicates that instances activated via the binding should be re-used within the same thread.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.InRequestScope">
+            <summary>
+            Indicates that instances activated via the binding should be re-used within the same
+            HTTP request.
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.ScopeCallback">
+            <summary>
+            The scope callback delegate to use in binding generation
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.TargetAssemblies">
+            <summary>
+            The collection of assemblies to process.
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.BindingGenerators">
+            <summary>
+            The generators used to create bindings
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.Excludes">
+            <summary>
+            Used to remove specifically exclude types from processing
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.Filters">
+            <summary>
+            The filters used to remove potential binding candidates.
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.Includes">
+            <summary>
+            The filters used to identify potential binding candidates.
+            </summary>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.AssemblyScanner.FilteredTypes">
+            <summary>
+            The filters used to identify potential binding candidates.
+            </summary>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.DefaultBindingGenerator">
+            <summary>
+            Binds I{Name} to {Name} implementation.
+            </summary>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.IBindingGenerator">
+            <summary>
+            Gernerates bindings for the given type in the the kernel.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IBindingGenerator.Process(System.Type,System.Func{Ninject.Activation.IContext,System.Object},Ninject.IKernel)">
+            <summary>
+            Processes the specified type creating kernel bindings.
+            </summary>
+            <param name="type">The type to process.</param>
+            <param name="scopeCallback">the scope callback.</param>
+            <param name="kernel">The kernel to configure.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.DefaultBindingGenerator.Process(System.Type,System.Func{Ninject.Activation.IContext,System.Object},Ninject.IKernel)">
+            <summary>
+            Processes the specified type creating kernel bindings.
+            </summary>
+            <param name="type">The type to process.</param>
+            <param name="scopeCallback">the scope callback.</param>
+            <param name="kernel">The kernel to configure.</param>
+        </member>
+        <member name="F:Ninject.Extensions.Conventions.ExtensionsForAssembly.EmptyTypes">
+            <summary>
+            Used instead of Type.EmptyTypes to support netcf
+            </summary>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.ExtensionsForIKernel">
+            <summary>
+            Provides extensions for the IKernel interface
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.ExtensionsForIKernel.Scan(Ninject.IKernel,Ninject.Extensions.Conventions.AssemblyScanner)">
+            <summary>
+            Assembly the types specified by the assembly loader.
+            </summary>
+            <param name="kernel">the kernel instance to act upon.</param>
+            <param name="assemblyScanner">the loader to process.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.ExtensionsForIKernel.Scan(Ninject.IKernel,System.Action{Ninject.Extensions.Conventions.AssemblyScanner})">
+            <summary>
+            Loads assembly scanner according to the spedicified acion.
+            </summary>
+            <param name="kernel">the kernel instance to act upon.</param>
+            <param name="scan">the scanner sequence to process.</param>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.GenericBindingGenerator">
+            <summary>
+            Creates bindings on open generic types.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.GenericBindingGenerator.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ninject.Extensions.Conventions.GenericBindingGenerator"/> class.
+            </summary>
+            <param name="contractType">Type of the contract.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.GenericBindingGenerator.Process(System.Type,System.Func{Ninject.Activation.IContext,System.Object},Ninject.IKernel)">
+            <summary>
+            Processes the specified type creating kernel bindings.
+            </summary>
+            <param name="type">The type to process.</param>
+            <param name="scopeCallback">the scope callback.</param>
+            <param name="kernel">The kernel to configure.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.GenericBindingGenerator.ResolveClosingInterface(System.Type)">
+            <summary>
+            Resolves the closing interface.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Ninject.Extensions.Conventions.RegexBindingGenerator">
+            <summary>
+            Creates binding based on regex patterns to match interfaces to implementations.
+            </summary>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.RegexBindingGenerator.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.RegexBindingGenerator.#ctor(System.String,System.Text.RegularExpressions.RegexOptions)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+            <param name="options"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.RegexBindingGenerator.Process(System.Type,System.Func{Ninject.Activation.IContext,System.Object},Ninject.IKernel)">
+            <summary>
+            Processes the specified type creating kernel bindings.
+            If the type being processed has an interface that matches the regex pattern, 
+            a binding will be created for them.
+            </summary>
+            <param name="type">The type to process.</param>
+            <param name="scopeCallback">the scope callback.</param>
+            <param name="kernel">The kernel to configure.</param>
+        </member>
+        <member name="P:Ninject.Extensions.Conventions.RegexBindingGenerator.Regex">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
