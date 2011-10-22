@@ -31,7 +31,7 @@ namespace GiveCRM.DataAccess.Test
                                       {
                                           new PhoneNumber
                                               {
-                                                  Type = PhoneNumberType.Home,
+                                                  PhoneNumberType = PhoneNumberType.Home,
                                                   Number = "01234 567890"
                                               }
                                       };
@@ -82,7 +82,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual(1, member.PhoneNumbers.Count);
             PhoneNumber phone = member.PhoneNumbers.First();
             Assert.AreEqual(member.Id, phone.MemberId);
-            Assert.AreEqual("Home", phone.Type);
+            Assert.AreEqual("Home", phone.PhoneNumberType);
             Assert.AreEqual("01234 567890", phone.Number);
         }
 
@@ -118,7 +118,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual(1, member.PhoneNumbers.Count);
             PhoneNumber phone = member.PhoneNumbers.First();
             Assert.AreEqual(member.Id, phone.MemberId);
-            Assert.AreEqual("Home", phone.Type);
+            Assert.AreEqual("Home", phone.PhoneNumberType);
             Assert.AreEqual("01234 567890", phone.Number);
         }
 
