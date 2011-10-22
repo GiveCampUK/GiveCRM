@@ -123,8 +123,14 @@
   <data name="Literal_Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
+  <data name="Literal_CreateCampaign" xml:space="preserve">
+    <value>Create Campaign</value>
+  </data>
   <data name="Literal_Open" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="Literal_ShowCampaign" xml:space="preserve">
+    <value>Campaign</value>
   </data>
   <data name="Show_Campaigns_Text" xml:space="preserve">
     <value>Show {0} Campaigns</value>

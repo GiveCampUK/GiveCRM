@@ -4,11 +4,20 @@ namespace GiveCRM.Models
 {
     public class MemberFacetList : MemberFacet
     {
-        public ICollection<FacetValue> Values { get; set; }
+        public ICollection<int> Ids { get; set; } 
+        public ICollection<MemberFacetValue> Values { get; set; }
 
         public override string ToString()
         {
             return string.Join(",", Values);
         }
+    }
+
+    public class MemberFacetValue
+    {
+        public int Id { get; set; }
+        public int FacetValueId { get; set; }
+
+        public int MemberFacetId { get; set; }
     }
 }
