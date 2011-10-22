@@ -57,6 +57,11 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            model.Campaign = new Campaign
+                {
+                    Name = "New Campaign"
+                };
+
             return View("Show", model);
         }
 

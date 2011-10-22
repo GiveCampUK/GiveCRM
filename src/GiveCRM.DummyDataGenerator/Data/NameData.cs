@@ -53,7 +53,9 @@
                 "Adam",
                 "Luke",
                 "Scott",
-                "Ewan"
+                "Ewan",
+                "Robert",
+                "Bob"
             };
 
         internal static List<string> FemaleFirstNames = new List<string>
