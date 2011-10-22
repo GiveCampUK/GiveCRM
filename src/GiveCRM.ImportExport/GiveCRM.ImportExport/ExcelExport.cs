@@ -22,6 +22,7 @@ namespace GiveCRM.ImportExport
         /// <returns>Stream holding the Excel workbook</returns>
         public void ExportToStream(Stream outputStream)
         {
+            if (outputStream == null) throw new ArgumentNullException("outputStream");
             if (ExcelExporter == null)
             {
                 throw new InvalidOperationException("WriteDataToExport must be called before ExportToStream");
