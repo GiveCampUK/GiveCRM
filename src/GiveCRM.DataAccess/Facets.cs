@@ -33,6 +33,47 @@ namespace GiveCRM.DataAccess
             return _db.Facets.Insert(facet);
         }
 
+        public void Update(Facet facet)
+        {
+            if (facet.Values != null && facet.Values.Count > 0)
+            {
+                UpdateWithValues(facet);
+            }
+            else
+            {
+                _db.Facets.UpdateById(facet);
+            }
+        }
+
+        private void UpdateWithValues(Facet facet)
+        {
+            using (var transaction = _db.BeginTransaction())
+            {
+                try
+                {
+                    transaction.Facets.UpdateById(facet);
+                    foreach (var facetValue in facet.Values)
+                    {
+                        if (facetValue.Id == 0)
+                        {
+                            facetValue.FacetId = facet.Id;
+                            transaction.FacetValues.Insert(facetValue);
+                        }
+                        else
+                        {
+                            transaction.FacetValues.UpdateById(facetValue);
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
         private Facet InsertWithValues(Facet facet)
         {
             using (var transaction = _db.BeginTransaction())
