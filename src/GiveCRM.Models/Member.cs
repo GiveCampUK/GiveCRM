@@ -4,7 +4,8 @@ namespace GiveCRM.Models
 {
     public class Member
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public string Reference { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,5 +18,11 @@ namespace GiveCRM.Models
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}  ref:{3} email:{4}", Title, FirstName, LastName, 
+                Reference, EmailAddress);
+        }
     }
 }
