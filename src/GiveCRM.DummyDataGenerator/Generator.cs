@@ -2,6 +2,8 @@
 
 namespace GiveCRM.DummyDataGenerator
 {
+    using System;
+
     using GiveCRM.DataAccess;
     using GiveCRM.DummyDataGenerator.Generation;
     using GiveCRM.Models;
@@ -13,16 +15,39 @@ namespace GiveCRM.DummyDataGenerator
 
         internal string GenerateMembers()
         {
+            DateTime startTime = DateTime.Now;
             MemberGenerator generator = new MemberGenerator();
-            members = generator.Generate(1000);
+            
+            // target data size = 100 000 members
+            const int CountToGenerate = 100000;
+            members.Clear();
+            members.Capacity = CountToGenerate;
+            var newMembers = generator.Generate(CountToGenerate);
 
-            var membersDb = new Members();
-            foreach (var member in members)
+            Members membersDb = new Members();
+            foreach (var member in newMembers)
             {
-                membersDb.Insert(member);
+                Member saved = membersDb.Insert(member);
+                members.Add(saved);
             }
 
-            return string.Format("{0} members saved", members.Count);
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - startTime;
+            return string.Format("{0} members saved in {1}", members.Count, elapsedTime);
+        }
+
+        internal string LoadMembers()
+        {
+            DateTime startTime = DateTime.Now;
+
+            Members membersDb = new Members();
+
+            members = new List<Member>(membersDb.All());
+
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - startTime;
+            return string.Format("{0} members loaded in {1}", members.Count, elapsedTime);
+            
         }
 
         internal string GenerateCampaign()
@@ -30,15 +55,29 @@ namespace GiveCRM.DummyDataGenerator
             CampaignGenerator generator = new CampaignGenerator();
             campaign = generator.Generate();
 
+            Campaigns campaignDb = new Campaigns();
+
+            campaign = campaignDb.Insert(campaign);
+
             return "Generated campaign " + campaign;
         }
 
         internal string GenerateDonations()
         {
+            DateTime startTime = DateTime.Now;
             DonationsGenerator generator = new DonationsGenerator(campaign, members);
-            var donations = generator.Generate();
+            IList<Donation> newDonations = generator.Generate();
 
-            return string.Format("{0} donations generated", donations.Count);
+            Donations donationDb = new Donations();
+
+            foreach (var donation in newDonations)
+            {
+                donationDb.Insert(donation);
+            }
+
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - startTime;
+            return string.Format("{0} donations inserted in {1}", newDonations.Count, elapsedTime);
         }
     }
 }

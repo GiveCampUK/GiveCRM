@@ -73,13 +73,11 @@
     <Compile Include="Models\Campaign\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Member\MemberSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -108,6 +106,13 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap-alerts.js" />
+    <Content Include="Scripts\bootstrap-dropdown.js" />
+    <Content Include="Scripts\bootstrap-modal.js" />
+    <Content Include="Scripts\bootstrap-popover.js" />
+    <Content Include="Scripts\bootstrap-scrollspy.js" />
+    <Content Include="Scripts\bootstrap-tabs.js" />
+    <Content Include="Scripts\bootstrap-twipsy.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
@@ -166,25 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Campaign\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Member\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
-      <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
-      <Name>GiveCRM.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
-      <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
-      <Name>GiveCRM.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Member\Search.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Member\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />

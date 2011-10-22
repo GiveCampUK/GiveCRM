@@ -8,8 +8,11 @@ namespace GiveCRM.DummyDataGenerator.Generation
     internal class MemberGenerator
     {
         private readonly RandomSource random = new RandomSource();
-        private readonly List<string> generatedEmails = new List<string>(); 
-        private readonly List<string> generatedPostalAddresses = new List<string>();
+
+        // these are used to check for and avoid generating duplicate values
+        // use dictionary not list since contains checking is faster
+        private readonly Dictionary<string, bool> generatedEmails = new Dictionary<string, bool>();
+        private readonly Dictionary<string, bool> generatedPostalAddresses = new Dictionary<string, bool>();
 
         private int lastReferenceIndex = 0;
 
@@ -37,6 +40,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
                     LastName = random.PickFromList(NameData.Surnames),
                     Title = titleSalutation.Title,
                     Salutation = titleSalutation.Salutation,
+                    City = random.PickFromList(AddressData.Cities),
                     Country = "United Kingdom"
                 };
 
@@ -98,12 +102,13 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private void MakeStreetAddress(Member member)
         {
             string streetAddress = GenerateStreetAddress();
-            while (generatedPostalAddresses.Contains(streetAddress))
+            while (generatedPostalAddresses.ContainsKey(streetAddress))
             {
                 // duplicate! try again
                 streetAddress = GenerateStreetAddress();
             }
 
+            generatedPostalAddresses.Add(streetAddress, true);
             member.AddressLine1 = streetAddress;
 
             member.PostalCode = RandomPostalCode();
@@ -112,10 +117,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private string GenerateStreetAddress()
         {
-            string street = random.PickFromList(AddressData.StreetNames);
-            string streetNumber = (random.Next(100) + 1).ToString();
+            string street = random.PickFromList(AddressData.StreetNamePrefix) + " " 
+                + random.PickFromList(AddressData.StreetNames) + " " + random.PickFromList(AddressData.StreetSuffix);
+            street = street.Trim();
+            string streetNumber = (random.Next(200) + 1).ToString();
 
-            if (random.Percent(10))
+            if (random.Percent(20))
             {
                 streetNumber += random.Bool() ? "A" : "B";
             }
@@ -132,11 +139,13 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private void MakeEmailAddress(Member member)
         {
             string newEmailAddress = GenerateEmailAddress(member);
-            while (generatedEmails.Contains(newEmailAddress))
+            while (generatedEmails.ContainsKey(newEmailAddress))
             {
                 // duplicate! regenerate it.
                newEmailAddress = GenerateEmailAddress(member);
             }
+            generatedEmails.Add(newEmailAddress, true);
+
             member.EmailAddress = newEmailAddress;
         }
 
