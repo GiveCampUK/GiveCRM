@@ -198,6 +198,7 @@
                 "not.net",
                 "notmail.com",
                 "notmail.net",
+                "coldmail.net",
                 "voidmail.net",
                 "voidmail.org",
                 "pmail.com",

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
-using GiveCRM.Web.Models.Member;
+using GiveCRM.Web.Models.Members;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -14,10 +13,12 @@ namespace GiveCRM.Web.Controllers
         private const int MaxResults = 25;
 
         private Members _membersDb = new Members();
+        private Donations _donationsDb = new Donations();
+        private Campaigns _campaignsDb = new Campaigns();
 
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public ActionResult Add()
@@ -42,11 +43,24 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Donate(int id)
         {
-            throw new NotImplementedException();
+            ViewBag.MemberName = GetFormattedName(_membersDb.Get(id));
+
+            ViewBag.Campaigns = _campaignsDb.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+
+            return View(new Donation { MemberId = id });
+        }
+
+        public ActionResult SaveDonation(Donation donation)
+        {
+            _donationsDb.Insert(donation);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Save(Member member)
         {
+            member.PhoneNumbers = new List<PhoneNumber>();
+
             if (member.Id == 0)
             {
                 _membersDb.Insert(member);
@@ -56,7 +70,7 @@ namespace GiveCRM.Web.Controllers
                 _membersDb.Update(member);
             }
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -105,6 +119,11 @@ namespace GiveCRM.Web.Controllers
         private string GetInitialSurname(Member member)
         {
             return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName).ToLower();
+        }
+
+        private string GetFormattedName(Member member)
+        {
+            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName);
         }
 
         #endregion

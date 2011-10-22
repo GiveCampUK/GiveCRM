@@ -16,7 +16,20 @@
 
         private void GenerateMembers(object sender, RoutedEventArgs e)
         {
-            generationOutput.Text = generator.GenerateMembers();
+            // default data size = 100 000 members
+            const string DefaultCountToGenerate = "10000";
+            if (string.IsNullOrEmpty(memberCount.Text))
+            {
+                memberCount.Text = DefaultCountToGenerate;
+            }
+
+            int memberCountValue = int.Parse(memberCount.Text);
+            generationOutput.Text = generator.GenerateMembers(memberCountValue);
+        }
+
+        private void LoadMembers(object sender, RoutedEventArgs e)
+        {
+            generationOutput.Text = generator.LoadMembers();
         }
 
         private void GenerateCampaign(object sender, RoutedEventArgs e)
