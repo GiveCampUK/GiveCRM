@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using GiveCRM.DummyDataGenerator.Generation;
-
     internal static class NameData
     {
         internal static List<string> MaleFirstNames = new List<string>
@@ -36,7 +34,11 @@
                 "Joseph",
                 "Jacob",
                 "Max",
-                "Robin"
+                "Robin",
+                "Anthony",
+                "Andrew",
+                "Kendall",
+                "Ken"
             };
 
         internal static List<string> FemaleFirstNames = new List<string>
@@ -44,7 +46,10 @@
                 "Ruth",
                 "Sarah",
                 "Ann",
+                "Anna",
                 "Elizabeth",
+                "Liz",
+                "Sally",
                 "Olivia",
                 "Catherine",
                 "Ruby",
@@ -61,7 +66,9 @@
                 "Amelia",
                 "Evie",
                 "Ella",
+                "Daniella",
                 "Katie",
+                "Kate",
                 "Charlotte",
                 "Ellie",
                 "Megan",
