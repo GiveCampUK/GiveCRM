@@ -61,6 +61,96 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is all of.
+        /// </summary>
+        internal static string AllOf {
+            get {
+                return ResourceManager.GetString("AllOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is any of.
+        /// </summary>
+        internal static string AnyOf {
+            get {
+                return ResourceManager.GetString("AnyOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contains.
+        /// </summary>
+        internal static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ends with.
+        /// </summary>
+        internal static string EndsWith {
+            get {
+                return ResourceManager.GetString("EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is equal to.
+        /// </summary>
+        internal static string EqualTo {
+            get {
+                return ResourceManager.GetString("EqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is greater than.
+        /// </summary>
+        internal static string GreaterThan {
+            get {
+                return ResourceManager.GetString("GreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is greater than or equal to.
+        /// </summary>
+        internal static string GreaterThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("GreaterThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is less than.
+        /// </summary>
+        internal static string LessThan {
+            get {
+                return ResourceManager.GetString("LessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is less than or equal to.
+        /// </summary>
+        internal static string LessThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("LessThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new search filter.
+        /// </summary>
+        internal static string Literal_AddSearchFilter {
+            get {
+                return ResourceManager.GetString("Literal_AddSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Campaigns.
         /// </summary>
         internal static string Literal_Campaigns {
@@ -115,11 +205,29 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to is not equal to.
+        /// </summary>
+        internal static string NotEqualTo {
+            get {
+                return ResourceManager.GetString("NotEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show {0} Campaigns.
         /// </summary>
         internal static string Show_Campaigns_Text {
             get {
                 return ResourceManager.GetString("Show_Campaigns_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to starts with.
+        /// </summary>
+        internal static string StartsWith {
+            get {
+                return ResourceManager.GetString("StartsWith", resourceCulture);
             }
         }
     }
