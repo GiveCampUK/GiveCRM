@@ -2,6 +2,8 @@
 
 namespace GiveCRM.DummyDataGenerator
 {
+    using System;
+
     using GiveCRM.DataAccess;
     using GiveCRM.DummyDataGenerator.Generation;
     using GiveCRM.Models;
@@ -13,8 +15,11 @@ namespace GiveCRM.DummyDataGenerator
 
         internal string GenerateMembers()
         {
+            DateTime startTime = DateTime.Now;
             MemberGenerator generator = new MemberGenerator();
-            members = generator.Generate(1000);
+            
+            // taqrget data size = 100 000 members
+            members = generator.Generate(100000);
 
             var membersDb = new Members();
             foreach (var member in members)
@@ -22,7 +27,9 @@ namespace GiveCRM.DummyDataGenerator
                 membersDb.Insert(member);
             }
 
-            return string.Format("{0} members saved", members.Count);
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - startTime;
+            return string.Format("{0} members saved in {1}", members.Count, elapsedTime);
         }
 
         internal string GenerateCampaign()
