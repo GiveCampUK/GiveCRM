@@ -9,6 +9,10 @@
 
 @Html.HiddenFor(m => m.Id)
 
+@Html.LabelFor(m=>m.Reference) @Html.TextBoxFor(m => m.Reference)<br />
+
+@Html.LabelFor(m => m.Title) @Html.TextBoxFor(m=> m.Title)<br />
+
 @Html.LabelFor(m => m.Salutation) @Html.TextBoxFor(m=> m.Salutation)<br />
 
 @Html.LabelFor(m => m.FirstName) @Html.TextBoxFor(m => m.FirstName)<br />
@@ -22,6 +26,8 @@
 @Html.LabelFor(m => m.City) @Html.TextBoxFor(m => m.City)<br />
 
 @Html.LabelFor(m => m.PostalCode) @Html.TextBoxFor(m => m.PostalCode)<br />
+
+@Html.LabelFor(m => m.Region) @Html.TextBoxFor(m=> m.Region)<br />
 
 @Html.LabelFor(m => m.Country) @Html.TextBoxFor(m => m.Country)<br />
 
