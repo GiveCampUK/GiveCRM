@@ -7,16 +7,9 @@ namespace GiveCRM.ImportExport
     public class ExcelImport:IDisposable, IExcelImport
     {
         private bool _disposed;
-        private ExcelFileType fileType;
-        private readonly bool hasHeaderRow;
+        private bool hasHeaderRow;
 
         internal IExcelImporter ExcelImporter;
-
-        public ExcelImport(ExcelFileType fileType, bool hasHeaderRow)
-        {
-            this.fileType = fileType;
-            this.hasHeaderRow = hasHeaderRow;
-        }
 
         ~ExcelImport()
         {
@@ -41,9 +34,11 @@ namespace GiveCRM.ImportExport
             }
         }
 
-        public void Open(Stream streamToProcess)
+        public void Open(Stream streamToProcess, ExcelFileType fileType, bool hasHeaderRow)
         {
             if (streamToProcess == null) throw new ArgumentNullException("streamToProcess");
+
+            this.hasHeaderRow = hasHeaderRow;
 
             if (fileType == ExcelFileType.XLS)
             {

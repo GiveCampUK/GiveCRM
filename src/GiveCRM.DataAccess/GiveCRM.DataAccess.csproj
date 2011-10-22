@@ -57,6 +57,7 @@
     <Compile Include="Facets.cs" />
     <Compile Include="MemberFacets.cs" />
     <Compile Include="Members.cs" />
+    <Compile Include="MemberSearchFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

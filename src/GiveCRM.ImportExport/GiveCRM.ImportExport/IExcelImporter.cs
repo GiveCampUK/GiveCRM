@@ -4,7 +4,7 @@ using System.IO;
 
 namespace GiveCRM.ImportExport
 {
-    public interface IExcelImporter : IDisposable
+    internal interface IExcelImporter : IDisposable
     {
         void Open(Stream stream);
         IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow);

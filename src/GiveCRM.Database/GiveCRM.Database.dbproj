@@ -224,5 +224,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\MemberFacetValue.FK_MemberFacetValue_MemberFacet.fkey.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\MemberSearchFilter.table.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
 </Project>
