@@ -5,8 +5,8 @@ namespace GiveCRM.ImportExport
 {
     public interface IExcelImport
     {
-        void OpenXlsx(Stream streamToProcess);
-        void OpenXls(Stream streamToProcess);
-        IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow);
+        void Open(Stream streamToProcess);
+        IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool includeHeaderRow);
+        IEnumerable<IDictionary<string, object>> GetRowsAsKeyValuePairs(int sheetIndex);
     }
 }

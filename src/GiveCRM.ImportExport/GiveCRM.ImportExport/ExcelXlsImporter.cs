@@ -41,6 +41,34 @@ namespace GiveCRM.ImportExport
             return rows;
         }
 
+        public IEnumerable<IDictionary<string, object>> GetRowsAsKeyValuePairs(int sheetIndex)
+        {
+            var sheet = Workbook.GetSheetAt(sheetIndex);
+            var headerRowValues = new List<string>();
+            var rows = new List<IDictionary<string,object>>();
+
+            var count = 0;
+            var headerRow = sheet.GetRow(count);
+
+            for (int j = 0; j < headerRow.LastCellNum; j++)
+            {
+                headerRowValues.Add(GetCellValue(headerRow.GetCell(j)));
+            }
+
+            for (var i = count; i <= sheet.LastRowNum; i++)
+            {
+                var row = sheet.GetRow(i);
+                var cells = new Dictionary<string, object>();
+                for (int j = 0; j < row.LastCellNum; j++)
+                {
+                    cells.Add(headerRowValues[j], GetCellValue(row.GetCell(j)));
+                }
+                rows.Add(cells);
+            }
+
+            return rows;
+        }
+
         private string GetCellValue(Cell cell)
         {
             if (cell == null)
