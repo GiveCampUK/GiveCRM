@@ -50,7 +50,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private Donation DonationForMember(Member member)
         {
             DateTime backDate = DateTime.Today.AddDays(-1 * random.Next(100));
-            decimal randomAmount = (decimal)5 + random.Next(95);
+            decimal randomAmount = (decimal)5 + random.Next(96);
             return new Donation
                 {
                     CampaignId = campaign.Id,
