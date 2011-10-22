@@ -96,6 +96,7 @@
     <Compile Include="Models\Search\SearchCriteria.cs" />
     <Compile Include="Models\Search\SearchFieldType.cs" />
     <Compile Include="Models\Search\SearchOperator.cs" />
+    <Compile Include="Models\Search\SearchOperatorExtensions.cs" />
     <Compile Include="Models\Search\SearchService.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
