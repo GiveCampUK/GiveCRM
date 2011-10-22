@@ -1,0 +1,32 @@
+﻿@model GiveCRM.Models.Member
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add Member</h2>
+
+@{Html.BeginForm("Save", "Member", FormMethod.Post);}
+
+@Html.HiddenFor(m => m.Id)
+
+@Html.LabelFor(m => m.Salutation) @Html.TextBoxFor(m=> m.Salutation)<br />
+
+@Html.LabelFor(m => m.FirstName) @Html.TextBoxFor(m => m.FirstName)<br />
+
+@Html.LabelFor(m => m.LastName) @Html.TextBoxFor(m => m.LastName)<br />
+
+@Html.LabelFor(m => m.AddressLine1) @Html.TextBoxFor(m => m.AddressLine1)<br />
+
+@Html.LabelFor(m => m.AddressLine2) @Html.TextBoxFor(m => m.AddressLine2)<br />
+
+@Html.LabelFor(m => m.City) @Html.TextBoxFor(m => m.City)<br />
+
+@Html.LabelFor(m => m.PostalCode) @Html.TextBoxFor(m => m.PostalCode)<br />
+
+@Html.LabelFor(m => m.Country) @Html.TextBoxFor(m => m.Country)<br />
+
+@Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress)<br />
+
+<input type="submit" value="Save" />
+
+@{Html.EndForm();}
