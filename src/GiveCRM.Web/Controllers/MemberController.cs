@@ -100,6 +100,12 @@ namespace GiveCRM.Web.Controllers
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
 
+        [HttpGet]
+        public ActionResult AjaxSearch(string criteria)
+        {
+            return View();
+        }
+
         public ActionResult TopDonors()
         {
             var members = _membersDb.All().OrderByDescending(m => m.TotalDonations).Take(5);
