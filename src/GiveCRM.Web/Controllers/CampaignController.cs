@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
@@ -6,11 +8,19 @@ using GiveCRM.Models;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
     public class CampaignController : Controller
     {
+        private readonly IMailingListService _mailingListService;
+
+        public CampaignController(IMailingListService mailingListService)
+        {
+            _mailingListService = mailingListService;
+        }
+
         public ActionResult Index(bool showClosed = false)
         {
             var campaigns = new Campaigns();
@@ -95,11 +105,66 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult AddMembershipSearchFilter(int campaignId)
+        {
+            var emptySearchCriteria = new SearchService().GetEmptySearchCriteria();
+            var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
+            var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
+
+            var model = new AddSearchFilterViewModel(Resources.Literal_AddSearchFilter)
+                            {
+                                CampaignId = campaignId,
+                                CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
+                            };
+            return View("AddSearchFilter", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
+        {
+            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+
+            // we have to find one
+            var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
+
+            var memberSearchFilterRepo = new MemberSearchFilters();
+            var memberSearchFilter = new MemberSearchFilter
+                                             {
+                                                CampaignId = viewModel.CampaignId,
+                                                InternalName = searchCriterion.InternalName,
+                                                FilterType = (int) searchCriterion.Type,
+                                                DisplayName = viewModel.CriteriaName,
+                                                SearchOperator = (int) viewModel.SearchOperator,
+                                                Value = viewModel.Value
+                                             };
+            memberSearchFilterRepo.Insert(memberSearchFilter);
+            return RedirectToAction("Show", new {id = viewModel.CampaignId});
+        }
+
+        [HttpGet]
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
             var memberSearchFilterRepo = new MemberSearchFilters();
             memberSearchFilterRepo.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new {id = campaignId});
+        }
+
+        [HttpPost]
+        public FileResult DownloadMailingList(int id)
+        {
+            // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
+
+            var members = new List<Member>();
+
+            byte[] filecontent;
+            using (var stream = new MemoryStream())
+            {
+                _mailingListService.WriteToStream(members, stream, OutputFormat.XLS);
+                filecontent = stream.ToArray();
+            }
+
+            return File(filecontent, "application/vnd.ms-excel");
         }
     }
 }
