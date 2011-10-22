@@ -65,7 +65,6 @@ namespace GiveCRM.ImportExport.Test
                                                           {"ContactByPost","N"}
                                                       };
 
-            import = new ExcelImport(ExcelFileType.XLS, true);
         }
 
         [Test]
@@ -75,7 +74,7 @@ namespace GiveCRM.ImportExport.Test
 
             using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
             {
-                import.Open(stream, ExcelFileType.XLSX, false);
+                import.Open(stream, ExcelFileType.XLS, false);
 
                 Assert.Throws<InvalidOperationException>(() => import.GetRowsAsKeyValuePairs(1));
             }
