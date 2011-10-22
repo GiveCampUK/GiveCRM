@@ -15,8 +15,8 @@
         <Button Margin="2" Click="GenerateCampaignAndDonations">Generate campaign and donations</Button>
         <Button Margin="2" Click="GenerateCampaign">Generate bare campaign</Button>
         <Button Margin="2" Click="GenerateDonations">Generate donations on last campaign</Button>
-        <Border BorderThickness="1" BorderBrush="Black" Margin="2">
-            <TextBlock TextWrapping="Wrap" Name="generationOutput"></TextBlock>
+        <Border BorderThickness="1" BorderBrush="Black" Margin="2" Padding="2">
+            <TextBlock TextWrapping="Wrap" Name="generationOutput">Ready</TextBlock>
         </Border>
     </StackPanel>
 </Window>
