@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Members Dashboard</h2>
+
+<div id="actions">
+    <ul>
+        <li>@Html.ActionLink("Add New Member", "Add")</li>
+        <li>@Html.ActionLink("Import Excel Spreadsheet", "Import")</li>
+    </ul>
+</div>
+
+<div id="search">
+    @{Html.BeginForm(actionName: "Search", controllerName: "Member", method: FormMethod.Post);}
+    
+    <label>Name</label> @Html.TextBox("Name")<br />
+    <label>Postcode</label> @Html.TextBox("Postcode")<br />
+    <label>Reference</label> @Html.TextBox("Reference")<br />
+
+    <input type="submit" value="Search" />
+
+    @{Html.EndForm();}
+    
+</div>
+
+<div id="results">&nbsp;</div>
