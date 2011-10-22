@@ -14,6 +14,7 @@ namespace GiveCRM.DataAccess
             var record = _db.Members.FindById(id);
             Member member = record;
             member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
+            member.Donations = record.Donations.ToList<Donation>();
             return member;
         }
 
@@ -23,6 +24,7 @@ namespace GiveCRM.DataAccess
             {
                 Member member = record;
                 member.PhoneNumbers = _db.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>(); // record.PhoneNumbers.ToList<PhoneNumber>();
+                member.Donations = _db.Donations.FindAllByMemberId(member.Id).ToList<Donation>();
                 yield return member;
             }
         }
@@ -101,5 +103,7 @@ namespace GiveCRM.DataAccess
                 member.PhoneNumbers = transaction.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>();
             }
         }
+
+
     }
 }
