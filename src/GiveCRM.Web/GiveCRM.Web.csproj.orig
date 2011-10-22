@@ -72,7 +72,10 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
+<<<<<<< HEAD
+=======
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
+>>>>>>> a562c973da84f29810354c5714a7ff8fb79bb46a
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\DonationSearchCriteria.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
@@ -190,9 +193,13 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+=======
+    <Content Include="packages.config" />
+>>>>>>> a562c973da84f29810354c5714a7ff8fb79bb46a
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
