@@ -39,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=2.9.0.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL" />
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\NPOI.1.2.3\lib\2.0\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -70,14 +71,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
-    <Compile Include="When_constructing.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="When_constructing_export.cs" />
+    <Compile Include="When_constructing_import.cs" />
     <Compile Include="When_creating_formatted_content.cs" />
     <Compile Include="When_creating_plain_content.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="When_opening_file_from_stream.cs" />
+    <Compile Include="When_reading_data_as_key_value_pairs.cs" />
+    <Compile Include="When_reading_data_from_Xls.cs" />
     <Compile Include="When_using_ExcelExport.cs" />
+    <Compile Include="When_using_ExcelXlsImporter.cs" />
+    <Compile Include="When_using_ExcelXlsxImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\MemberData.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\MemberData.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\TestDataTypes.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
@@ -87,6 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

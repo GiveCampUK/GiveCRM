@@ -73,7 +73,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(Campaign campaign)
         {
             new Campaigns().Update(campaign);
-            return RedirectToAction("Show");
+            return View(campaign);
         }
     }
 }
