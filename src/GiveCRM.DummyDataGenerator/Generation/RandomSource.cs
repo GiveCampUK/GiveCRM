@@ -8,7 +8,6 @@ namespace GiveCRM.DummyDataGenerator.Generation
     {
         private readonly Random random = new Random();
 
-
         public int Next(int max)
         {
             return random.Next(max);
@@ -36,7 +35,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         public string Letter()
         {
             var offset = random.Next(25);
-            var index = (int)'A' + offset;
+            var index = 'A' + offset;
 
             var letter = (char)index;
 

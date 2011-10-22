@@ -12,7 +12,7 @@ namespace GiveCRM.Web.Models.Search
         private Donations donations = new Donations();
 
 
-        public override IEnumerable<SearchCriteria> GetEmptyCriteria()
+        public static IEnumerable<SearchCriteria> GetEmptyCriteria()
         {
             yield return new DonationSearchCriteria { InternalName = "individualDonation", DisplayName = "Individual donation", Type = SearchFieldType.Double };
             yield return new DonationSearchCriteria { InternalName = "totalDonations", DisplayName = "Total donations", Type = SearchFieldType.Double };
