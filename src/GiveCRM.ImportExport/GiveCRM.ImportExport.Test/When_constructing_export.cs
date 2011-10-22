@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace GiveCRM.ImportExport.Test
 {
     [TestFixture]
-    public class When_constructing
+    public class When_constructing_export
     {
         [Test]
         public void Border_should_have_default_values()

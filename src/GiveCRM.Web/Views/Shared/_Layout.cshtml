@@ -4,39 +4,35 @@
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-jsa" lang="en"> <!--<![endif]-->
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>@ViewBag.Title</title>
-    
+	
+	<!-- TODO load minified version if we're in prod (BS) / load from google CDN (jQ UI) -->
 	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")"></script>
-    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
 
-	<script src="../js/libs/modernizr-2.0.6.min.js"></script>
+	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    
+	<!-- TODO load me in from Google cdn -->
+	<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")"></script>
 </head>
+
 <body>
-    <div class="page">
-        <div id="header">
-            <div id="title">
-                <h1>GiveCRM</h1>
-            </div>
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
-            </div>
-            <div id="menucontainer">
-                <ul id="menu">
-                    <li>@Html.ActionLink("Dashboard", "Index", "Campaign")</li>
-                    <li>@Html.ActionLink("Members", "Index", "Member")</li>
-                </ul>
-            </div>
-        </div>
-        <div id="main">
-            @RenderBody()
-        </div>
-        <div id="footer">
-        </div>
-    </div>
+	<div class="page">
+		<div id="header" class="topbar">
+			@Html.Partial("_GlobHeader")
+		</div>
+
+		<div id="main" class="container">
+			@RenderBody()
+		</div>
+
+		<div id="footer">
+			@Html.Partial("_GlobFooter")
+		</div>
+	</div>
 </body>
 </html>
