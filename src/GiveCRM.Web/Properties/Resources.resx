@@ -126,6 +126,9 @@
   <data name="Literal_CreateCampaign" xml:space="preserve">
     <value>Create Campaign</value>
   </data>
+  <data name="Literal_NoSearchFiltersText" xml:space="preserve">
+    <value>There are currently no search filters</value>
+  </data>
   <data name="Literal_Open" xml:space="preserve">
     <value>Open</value>
   </data>
