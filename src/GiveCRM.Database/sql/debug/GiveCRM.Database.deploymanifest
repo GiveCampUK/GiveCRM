@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetConnectionString>Data Source=.;Integrated Security=True;Pooling=False</TargetConnectionString>
     <TargetDatabase>GiveCRM</TargetDatabase>
-    <DeployToDatabase>False</DeployToDatabase>
+    <DeployToDatabase>True</DeployToDatabase>
     <DeployToScript>True</DeployToScript>
     <SourceModel>GiveCRM.Database.dbschema</SourceModel>
     <DeployScriptFileName>GiveCRM.Database.sql</DeployScriptFileName>
