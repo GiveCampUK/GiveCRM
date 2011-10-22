@@ -1895,7 +1895,7 @@ def main(config):
       <TableType>Generated</TableType>
       <PopulationDetails version="1" type="PopulationDetails">
         <PopulationType>RowCount</PopulationType>
-        <RowCount>1000</RowCount>
+        <RowCount>34</RowCount>
         <ProportionTableExists>False</ProportionTableExists>
         <Proportion>0</Proportion>
         <TimeToPopulate>0</TimeToPopulate>
@@ -1949,7 +1949,7 @@ def main(config):
             <GeneratorProperties type="Dictionary&lt;string, object&gt;" version="1">
               <element>
                 <key type="string">Expression</key>
-                <value type="string">($"NamesFirst.txt")</value>
+                <value type="string">averageDonationsPerYear|individualDonation|totalDonations|donatedToCampaign|lastDonationDate</value>
               </element>
               <element>
                 <key type="string">Unique</key>
@@ -1993,7 +1993,7 @@ def main(config):
             <GeneratorProperties type="Dictionary&lt;string, object&gt;" version="1">
               <element>
                 <key type="string">Expression</key>
-                <value type="string">($"NamesFirst.txt")</value>
+                <value type="string">$[InternalName]</value>
               </element>
               <element>
                 <key type="string">Unique</key>
@@ -2049,11 +2049,11 @@ def main(config):
               </element>
               <element>
                 <key type="string">MinValue</key>
-                <value type="string">-2147483648</value>
+                <value type="string">0</value>
               </element>
               <element>
                 <key type="string">MaxValue</key>
-                <value type="string">2147483647</value>
+                <value type="string">5</value>
               </element>
               <element>
                 <key type="string">UseColumnOffset</key>
@@ -2105,11 +2105,11 @@ def main(config):
               </element>
               <element>
                 <key type="string">MinValue</key>
-                <value type="string">-2147483648</value>
+                <value type="string">0</value>
               </element>
               <element>
                 <key type="string">MaxValue</key>
-                <value type="string">2147483647</value>
+                <value type="string">10</value>
               </element>
               <element>
                 <key type="string">UseColumnOffset</key>
@@ -2149,7 +2149,7 @@ def main(config):
             <GeneratorProperties type="Dictionary&lt;string, object&gt;" version="1">
               <element>
                 <key type="string">Expression</key>
-                <value type="string">[A-Z0-9]*</value>
+                <value type="string">1|10|50|100|150|20000</value>
               </element>
               <element>
                 <key type="string">Unique</key>
@@ -2202,7 +2202,8 @@ def main(config):
     <value version="1" type="SQLScript">
       <SQLScriptType>InternalSQLScript</SQLScriptType>
       <Name>Facet.Delete</Name>
-      <Script>DELETE MemberFacet
+      <Script>DELETE FROM MemberFacetValue
+DELETE FROM MemberFacet
 DELETE FROM FacetValue
 DELETE FROM Facet
 DBCC CHECKIDENT('FacetValue', RESEED, 0) WITH NO_INFOMSGS
