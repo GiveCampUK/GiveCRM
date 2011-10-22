@@ -7,7 +7,7 @@ using OfficeOpenXml;
 
 namespace GiveCRM.ImportExport
 {
-    public class ExcelImport:IDisposable
+    public class ExcelImport:IDisposable, IExcelImport
     {
         private bool _disposed;
 
@@ -28,6 +28,7 @@ namespace GiveCRM.ImportExport
         {
             if (!_disposed)
             {
+                ExcelImporter.Dispose();
                 _disposed = true;
             }
         }
@@ -48,9 +49,9 @@ namespace GiveCRM.ImportExport
             ExcelImporter.Open(streamToProcess);
         }
 
-        public IEnumerable<IEnumerable<Cell>> GetRows(int sheetIndex)
+        public IEnumerable<IEnumerable<string>> GetRows(int sheetIndex, bool hasHeaderRow)
         {
-            return ExcelImporter.GetRows(sheetIndex);
+            return ExcelImporter.GetRows(sheetIndex, hasHeaderRow);
         }
     }
 }

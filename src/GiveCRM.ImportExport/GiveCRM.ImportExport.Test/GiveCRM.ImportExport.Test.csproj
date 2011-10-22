@@ -82,6 +82,7 @@
     <Compile Include="When_creating_plain_content.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_opening_file_from_stream.cs" />
+    <Compile Include="When_reading_data_from_Xls.cs" />
     <Compile Include="When_using_ExcelExport.cs" />
     <Compile Include="When_using_ExcelXlsImporter.cs" />
     <Compile Include="When_using_ExcelXlsxImporter.cs" />
@@ -91,7 +92,10 @@
     <None Include="TestData\MemberData.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\MemberData97.xls">
+    <None Include="TestData\MemberData.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\TestDataTypes.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

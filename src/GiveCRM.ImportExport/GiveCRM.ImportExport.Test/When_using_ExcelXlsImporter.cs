@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 
 namespace GiveCRM.ImportExport.Test
@@ -10,7 +7,7 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_using_ExcelXlsImporter
     {
-        private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData97.xls";
+        private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
 
         [Test]
         public void Should_throw_exception_if_file_stream_null()
