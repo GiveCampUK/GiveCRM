@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
 using Simple.Data;
@@ -46,7 +47,11 @@ namespace GiveCRM.DataAccess
                     member.PhoneNumbers = new List<PhoneNumber>();
                 }
 
-                member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, Type = record.Type ?? string.Empty });
+                member.PhoneNumbers.Add(new PhoneNumber { 
+                    Id = record.PhoneNumberId ?? 0, 
+                    MemberId = member.Id, 
+                    Number = record.Number ?? string.Empty, 
+                    Type = (PhoneNumberType)Enum.Parse(typeof(PhoneNumberType), record.Type ?? "Home") });
             }
 
             yield return member;
