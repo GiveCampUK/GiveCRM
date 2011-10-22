@@ -15,7 +15,7 @@ namespace GiveCRM.Web.Models.Campaigns
         public IEnumerable<SelectListItem> CriteriaNames { get; set; }
         public IEnumerable<SelectListItem> SearchOperators { get; set; }
 
-        public AddSearchFilterViewModel() : base(string.Empty)
+        public AddSearchFilterViewModel() : this(string.Empty)
         {}
 
         public AddSearchFilterViewModel(string title) : base(title)
