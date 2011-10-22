@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GiveCRM.Models
 {
@@ -11,5 +8,10 @@ namespace GiveCRM.Models
         public FacetType Type { get; set; }
         public string Name { get; set; }
         public ICollection<FacetValue> Values { get; set; }
+
+        public override string ToString()
+        {
+            return Id + " " + Type + " " + Name;
+        }
     }
 }
