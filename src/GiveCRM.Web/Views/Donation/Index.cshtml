@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Donations</h2>
+
+<h3>Top Donations</h3>
+
+@{Html.RenderAction("TopDonations");}
+
+<h3>Latest Donations</h3>
+
+@{Html.RenderAction("LatestDonations");}
+
+<h3>Top Donors</h3>
+
+@{Html.RenderAction("TopDonors", "Member");}

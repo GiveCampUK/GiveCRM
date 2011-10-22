@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GiveCRM.Models
 {
@@ -19,6 +20,21 @@ namespace GiveCRM.Models
         public string Country { get; set; }
         public bool Archived { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<Donation> Donations { get; set; }
+
+        public decimal TotalDonations
+        {
+            get {
+                if (Donations != null)
+                {
+                    return Donations.Sum(d => d.Amount);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
 
         public override string ToString()
         {
