@@ -23,7 +23,16 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Add()
         {
-            return View(new Member());
+            return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
+        }
+
+        public ActionResult AddNumber(Member member, String number, String numberType)
+        {
+            if (member.PhoneNumbers == null)
+                member.PhoneNumbers = new List<PhoneNumber>();
+                
+            member.PhoneNumbers.Add(new PhoneNumber { Number = number, Type = numberType });
+            return View("Add", member); 
         }
 
         public ActionResult Import()
@@ -33,7 +42,10 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(viewName: "Add", model: _membersDb.Get(id));
+            var model = _membersDb.Get(id); 
+            if(model.PhoneNumbers == null) 
+               model.PhoneNumbers = new List<PhoneNumber>(); 
+            return View(viewName: "Add", model: model);
         }
 
         public ActionResult Delete(int id)

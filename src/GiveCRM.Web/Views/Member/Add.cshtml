@@ -7,7 +7,7 @@
 
 <div>
 
-@{Html.BeginForm("Save", "Member", FormMethod.Post);}
+@{Html.BeginForm("Save", "Member", FormMethod.Post, new {id="addMember"});}
 
 @Html.HiddenFor(m => m.Id)
 
@@ -35,14 +35,41 @@
 
 @Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress)<br />
 
-<input type="submit" value="Save" />
+@{
+    int i = 0; 
+    foreach(var phone in Model.PhoneNumbers)
+    {
+        <span>@phone.Type</span><span>@phone.Number</span><br />
+        <input type="hidden" name="member.PhoneNumbers[@i].Type" value="@phone.Type" />
+        <input type="hidden" name="member.PhoneNumbers[@i].Number" value="@phone.Number" /> 
+        i += 1; 
+    }
+}
+
+
+    <label for="numbertype">Number Type</label><select id="numbertype" name="numbertype" type="text">
+                                                    <option value="Home">Home</option>
+                                                    <option value="Mobile">Mobile</option>
+                                                    <option value="Work">Work</option>
+                                                </select>
+            <br />
+    <label for="number">Number</label><input id="number" name="number" type="text" />
+    <input id="AddNumber" type="button" value="Add Number"  /><br />
+    <input type="submit" value="Save" />
 
 @{Html.EndForm();}
-
 </div>
 
 <div>
 
+<script type="text/javascript">
+    var form = document.getElementById('addMember');
+    var button = document.getElementById('AddNumber')
+    button.onclick = function () {
+        form.action = '/member/addnumber';
+        form.submit(); 
+    };
+</script>
 
 
 </div>
