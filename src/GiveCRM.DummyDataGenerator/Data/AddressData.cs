@@ -10,6 +10,7 @@
                 "",
                 "",
                 "Upper",
+                "Upper",
                 "Lower"
             };
 
@@ -21,7 +22,11 @@
                 "Church",
                 "London",
                 "Victoria",
-                "Green Lane",
+                "Green",
+                "Blue",
+                "Red",
+                "Black",
+                "White",
                 "Manor",
                 "Queens",
                 "New",
@@ -42,8 +47,7 @@
                 "Manchester",
                 "Richmond",
                 "South",
-                "School Lane",
-                "The Drive",
+                "School",
                 "Stanley",
                 "Chester",
                 "Mill",
@@ -92,7 +96,8 @@
                 "Mews",
                 "Boulevard",
                 "Crescent",
-                "Lane"
+                "Lane",
+                "Drive"
             };
 
 
