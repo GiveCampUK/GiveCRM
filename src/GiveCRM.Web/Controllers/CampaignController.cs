@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -66,7 +67,8 @@ namespace GiveCRM.Web.Controllers
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = memberSearchFilterRepo.ForCampaign(id)
+                                SearchFilters = memberSearchFilterRepo.ForCampaign(id).ToList(),
+                                NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
             return View(model);
         }
@@ -76,6 +78,16 @@ namespace GiveCRM.Web.Controllers
         {
             new Campaigns().Update(campaign);
             return View(campaign);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
+        {
+            var memberSearchFilterRepo = new MemberSearchFilters();
+
+            memberSearchFilterRepo.Delete(memberSearchFilterId);
+
+            return RedirectToAction("Show", new {id = campaignId});
         }
     }
 }
