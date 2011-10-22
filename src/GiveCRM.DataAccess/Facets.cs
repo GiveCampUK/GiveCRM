@@ -14,13 +14,41 @@ namespace GiveCRM.DataAccess
         {
             var record = _db.Facets.FindById(id);
             Facet facet = record;
-            facet.Values = record.Values.ToList<FacetValue>();
+            facet.Values = record.FacetValues.ToList<FacetValue>();
             return facet;
         }
 
         public IEnumerable<Facet> All()
         {
-            return _db.Facets.All().Cast<Facet>();
+            var query = _db.Facets.All()
+                .Select(_db.Facets.Id, _db.Facets.Type, _db.Facets.Name,
+                _db.Facets.FacetValues.Id.As("FacetValueId"), _db.Facets.FacetValues.FacetId, _db.Facets.FacetValues.Value)
+                .OrderBy(_db.Facets.Id);
+
+            Facet facet = null;
+
+            foreach (var row in query)
+            {
+                if (facet == null)
+                {
+                    facet = row;
+                }
+                if (row.FacetId == facet.Id)
+                {
+                    if (facet.Values == null) facet.Values = new List<FacetValue>();
+                    facet.Values.Add(new FacetValue { FacetId = row.Id, Id = row.FacetValueId, Value = row.Value });
+                }
+                else
+                {
+                    yield return facet;
+                    facet = null;
+                }
+            }
+
+            if (facet != null)
+            {
+                yield return facet;
+            }
         }
 
         public Facet Insert(Facet facet)
@@ -29,7 +57,8 @@ namespace GiveCRM.DataAccess
             {
                 return InsertWithValues(facet);
             }
-            return _db.Facets.Insert(facet);
+            var record = _db.Facets.Insert(facet);
+            return record;
         }
 
         public void Update(Facet facet)

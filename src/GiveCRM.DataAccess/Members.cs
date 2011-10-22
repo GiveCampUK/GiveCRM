@@ -19,12 +19,10 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> All()
         {
-            foreach (var record in _db.Members.All())
+            foreach (dynamic record in _db.Members.All())
             {
                 Member member = record;
-
-                // TODO: restore this - kmr removed temporarily...
-                //member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
+                member.PhoneNumbers = _db.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>(); // record.PhoneNumbers.ToList<PhoneNumber>();
                 yield return member;
             }
         }
