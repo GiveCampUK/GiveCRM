@@ -9,15 +9,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>@ViewBag.Title</title>
 	
-	<!-- TODO load minified version if we're in prod (BS) / load from google CDN (jQ UI) -->
+	<!-- TODO load bootstrap.min if we're in prod -->
 	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
 
 	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
     
-	<!-- TODO load me in from Google cdn -->
-	<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="@Url.Content("~/Scripts/jquery-1.6.4.min.js")"><\/script>')</script>
 </head>
 
 <body>
@@ -34,5 +34,12 @@
 			@Html.Partial("_GlobFooter")
 		</div>
 	</div>
+
+	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+		chromium.org/developers/how-tos/chrome-frame-getting-started -->
+	<!--[if lt IE 7 ]>
+		<script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+		<script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+	<![endif]-->
 </body>
 </html>
