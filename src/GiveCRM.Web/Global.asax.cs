@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -31,20 +27,24 @@ namespace GiveCRM.Web
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Campaign", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
         }
 
         protected void Application_Start()
         {
-            IWindsorContainer container = new WindsorContainer();
-            container.Install(FromAssembly.This());
-            container.Register(Component.For<IWindsorContainer>().Instance(container));
+            InstallWindsor();
 
-            ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        private static void InstallWindsor()
+        {
+            IWindsorContainer container = new WindsorContainer();
+            container.Install(FromAssembly.This());
+            container.Register(Component.For<IWindsorContainer>().Instance(container));
+            ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
         }
     }
 }
