@@ -3,7 +3,7 @@ Usage:
 -  Run it
 - Click one of
   - Generate members. The default number of mebers to generate is 10 000. This takes about a minute. It has been tested to scale OK up to 100 000 members.
-  - Load members. Load existing mebers from the database
+  - Load members. Load existing members from the database. Loading 100 000 mebers takes around 20 seconds.
   
  - Generate campaign. Make a new campaign.
  
