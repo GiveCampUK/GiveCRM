@@ -1,0 +1,36 @@
+﻿@model GiveCRM.Web.Models.Member.MemberSearchViewModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@if (Model.AreMore)
+{
+    <h2>There are more than 25 results - please refine your search.</h2>
+}
+
+<table>
+
+    <tr>
+        <th>Reference</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+    </tr>
+
+@foreach (var member in Model.Results)
+{
+    <tr>
+        <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
+        <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
+        <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
+        <td>@member.Reference</td>
+        <td>@member.Salutation @member.FirstName @member.LastName</td>
+        <td>@member.AddressLine1 @member.AddressLine2 @member.City @member.PostalCode</td>
+        <td>@member.EmailAddress</td>
+    </tr>
+}
+
+</table>

@@ -10,7 +10,7 @@ namespace GiveCRM.ImportExport.Test
     {
         private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
         private string _testDataTypesXls = Directory.GetCurrentDirectory() + "/TestData/TestDataTypes.xls";
-
+        
         [Test]
         public void Should_throw_ArgumentExcetion_if_asking_for_header_row_when_file_does_not_have_header_row()
         {
