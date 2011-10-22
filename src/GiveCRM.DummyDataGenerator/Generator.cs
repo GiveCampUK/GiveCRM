@@ -79,7 +79,8 @@ namespace GiveCRM.DummyDataGenerator
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
-            return string.Format("{0} donations inserted in {1}", newDonations.Count, elapsedTime);
+            return string.Format("{0} donations inserted on campaign {1} in {2}", 
+                newDonations.Count, campaign.Name, elapsedTime);
         }
     }
 }
