@@ -19,6 +19,11 @@
             generationOutput.Text = generator.GenerateMembers();
         }
 
+        private void LoadMembers(object sender, RoutedEventArgs e)
+        {
+            generationOutput.Text = generator.LoadMembers();
+        }
+
         private void GenerateCampaign(object sender, RoutedEventArgs e)
         {
             generationOutput.Text = generator.GenerateCampaign();
