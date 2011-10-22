@@ -11,6 +11,8 @@
     
 	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.5.1.min.js")"></script>
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
 
 	<script src="../js/libs/modernizr-2.0.6.min.js"></script>
 </head>
@@ -26,6 +28,7 @@
             <div id="menucontainer">
                 <ul id="menu">
                     <li>@Html.ActionLink("Dashboard", "Index", "Campaign")</li>
+                    <li>@Html.ActionLink("Members", "Index", "Member")</li>
                 </ul>
             </div>
         </div>

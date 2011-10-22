@@ -72,6 +72,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
+    <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\DonationSearchCriteria.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
