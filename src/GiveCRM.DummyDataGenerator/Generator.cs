@@ -13,16 +13,14 @@ namespace GiveCRM.DummyDataGenerator
         private Campaign campaign;
         private List<Member> members;
 
-        internal string GenerateMembers()
+        internal string GenerateMembers(int countToGenerate)
         {
             DateTime startTime = DateTime.Now;
             MemberGenerator generator = new MemberGenerator();
             
-            // target data size = 100 000 members
-            const int CountToGenerate = 100000;
             members.Clear();
-            members.Capacity = CountToGenerate;
-            var newMembers = generator.Generate(CountToGenerate);
+            members.Capacity = countToGenerate;
+            var newMembers = generator.Generate(countToGenerate);
 
             Members membersDb = new Members();
             foreach (var member in newMembers)

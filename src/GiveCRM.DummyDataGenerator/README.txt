@@ -1,0 +1,11 @@
+Simple tool to generate dummay data (members, Campaigns and donations) for GiveCRM
+Usage:
+-  Run it
+- Click one of
+  - Generate members. The default number of mebers to generate is 10 000. This takes about a minute. It has been tested to scale OK up to 100 000 members.
+  - Load members. Load existing mebers from the database
+  
+ - Generate campaign. Make a new campaign.
+ 
+ - Generate donations. (Must have members and campaign first). Between 33% and 66% of the loaded members have a campaign donation generated against them.
+ 
