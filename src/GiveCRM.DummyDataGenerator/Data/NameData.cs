@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using GiveCRM.DummyDataGenerator.Generation;
-
     internal static class NameData
     {
         internal static List<string> MaleFirstNames = new List<string>
@@ -36,7 +34,11 @@
                 "Joseph",
                 "Jacob",
                 "Max",
-                "Robin"
+                "Robin",
+                "Anthony",
+                "Andrew",
+                "Kendall",
+                "Ken"
             };
 
         internal static List<string> FemaleFirstNames = new List<string>
@@ -44,7 +46,10 @@
                 "Ruth",
                 "Sarah",
                 "Ann",
+                "Anna",
                 "Elizabeth",
+                "Liz",
+                "Sally",
                 "Olivia",
                 "Catherine",
                 "Ruby",
@@ -61,7 +66,9 @@
                 "Amelia",
                 "Evie",
                 "Ella",
+                "Daniella",
                 "Katie",
+                "Kate",
                 "Charlotte",
                 "Ellie",
                 "Megan",
@@ -150,7 +157,47 @@
                 "Richards",
                 "Russel",
                 "Wilkinson",
-                "Khan"
+                "Khan",
+                "Graham",
+                "Stewart",
+                "Reid",
+                "Marray",
+                "Powell",
+                "Palmer",
+                "Holmes",
+                "Rogers",
+                "Stevens",
+                "Walsh",
+                "Hunter",
+                "Thompson",
+                "Matthews",
+                "Ross",
+                "Owen",
+                "Mason",
+                "Knight",
+                "Kennedy",
+                "Butler",
+                "Saunders",
+                "Cole",
+                "Pearce",
+                "Dean",
+                "Foster",
+                "Harvey",
+                "Hudson",
+                "Gibson",
+                "Mills",
+                "Berry",
+                "Barnes",
+                "Pearson",
+                "Kaur",
+                "Booth",
+                "Dixon",
+                "Grant",
+                "Gordon",
+                "Lane",
+                "Harper",
+                "Ali",
+                "Hart"
             };
 
         internal static List<TitleData> MaleTitles = new List<TitleData>
@@ -206,6 +253,7 @@
                 "gahoo.com",
                 "gahoo.org",
                 "offthe.net",
+                "notonthe.net",
             };
 
         internal static List<string> PhoneTypes = new List<string> { "Home", "Mobile", "Work" };

@@ -26,7 +26,6 @@ namespace GiveCRM.Web.Controllers
             return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
-        
         public ActionResult Import()
         {
             return View();
