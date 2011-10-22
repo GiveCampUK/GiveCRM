@@ -5,11 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
+using GiveCRM.Web.Models.Member;
 
 namespace GiveCRM.Web.Controllers
 {
     public class MemberController : Controller
     {
+        private const int MaxResults = 25;
+
+        private Members _membersDb = new Members();
 
         public ActionResult Index()
         {
@@ -18,7 +22,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            return View(new Member());
         }
 
         public ActionResult Import()
@@ -26,22 +30,48 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
+        public ActionResult Edit(int id)
+        {
+            return View(viewName: "Add", model: _membersDb.Get(id));
+        }
+
+        public ActionResult Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Donate(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult Save(Member member)
+        {
+            if (member.Id == 0)
+            {
+                _membersDb.Insert(member);
+            }
+            else
+            {
+                _membersDb.Update(member);
+            }
+
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Search(string name, string postcode, string reference)
         {
-            var membersDb = new Members();
-
-            var results = membersDb
+            var results = _membersDb
                 .All()
                 .Where(member => 
                     (name == string.Empty || NameSearch(member, name.ToLower())) &&
                     (postcode == string.Empty || PostcodeSearch(member, postcode.ToLower())) &&
                     (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
 
-            return View(results);
+            return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
-
-
+        
         #region helper methods
 
         // todo: move these out!
