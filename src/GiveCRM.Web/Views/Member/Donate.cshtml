@@ -4,7 +4,7 @@
     ViewBag.Title = "Donate";
 }
 
-<h2>Add Donation</h2>
+<h2>Add Donation for @ViewBag.MemberName</h2>
 
 @{Html.BeginForm(actionName: "SaveDonation", controllerName: "Member");}
 
@@ -16,7 +16,7 @@
 
 @{Html.EndForm();}
 
-<script>
+<script type="text/javascript" language="javascript">
     $(function () {
         $("#Date").datepicker();
     });
