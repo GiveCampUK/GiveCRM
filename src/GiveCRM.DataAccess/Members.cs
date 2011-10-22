@@ -78,6 +78,7 @@ namespace GiveCRM.DataAccess
             {
                 if (phoneNumber.MemberId == 0)
                 {
+                    phoneNumber.MemberId = member.Id;
                     transaction.PhoneNumbers.Insert(phoneNumber);
                     refetchPhoneNumbers = true;
                 }
@@ -89,7 +90,7 @@ namespace GiveCRM.DataAccess
 
             if (refetchPhoneNumbers)
             {
-                member.PhoneNumbers = transaction.PhoneNumbers.FindByMemberId(member.Id).ToList<PhoneNumber>();
+                member.PhoneNumbers = transaction.PhoneNumbers.FindAllByMemberId(member.Id).ToList<PhoneNumber>();
             }
         }
     }
