@@ -41,12 +41,22 @@ namespace GiveCRM.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
             return View("Show", model);
         }
 
+        [HttpPost]
+        public ActionResult Create(Campaign campaign)
+        {
+            var result = new Campaigns().Insert(campaign);
+
+            return RedirectToAction("Show");
+        }
+
+        [HttpGet]
         public ActionResult Show(int id)
         {
             var campaigns = new Campaigns();
@@ -56,7 +66,14 @@ namespace GiveCRM.Web.Controllers
                             {
                                 Campaign = campaign
                             };
-            return View("Show", model);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Show(Campaign campaign)
+        {
+            new Campaigns().Update(campaign);
+            return RedirectToAction("Show");
         }
     }
 }
