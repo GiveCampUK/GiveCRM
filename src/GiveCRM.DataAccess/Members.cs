@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using GiveCRM.Models;
 using Simple.Data;
 
@@ -72,7 +72,7 @@ namespace GiveCRM.DataAccess
                 try
                 {
                     // TODO: change this to check if there are any new numbers
-                    //if (member.Id == 0)
+                    if (member.PhoneNumbers.Any(n => n.Id == 0))
                         refetchPhoneNumbers = true;
                     
                     transaction.Members.UpdateById(member);
