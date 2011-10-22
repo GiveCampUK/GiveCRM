@@ -115,7 +115,7 @@ namespace GiveCRM.Web.Controllers
                             {
                                 CampaignId = campaignId,
                                 CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
-                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
                             };
             return View("AddSearchFilter", model);
         }
