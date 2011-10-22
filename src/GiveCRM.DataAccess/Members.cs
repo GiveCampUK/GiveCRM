@@ -22,7 +22,9 @@ namespace GiveCRM.DataAccess
             foreach (var record in _db.Members.All())
             {
                 Member member = record;
-                member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
+
+                // TODO: restore this - kmr removed temporarily...
+                //member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
                 yield return member;
             }
         }
