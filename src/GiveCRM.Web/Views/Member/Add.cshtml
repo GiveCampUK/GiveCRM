@@ -41,10 +41,10 @@
     int i = 0; 
     foreach(var phone in Model.PhoneNumbers)
     {
-        <label for="PhoneNumbers[@i].NumberBox">@phone.Type</label><input id="PhoneNumbers[@i].NumberBox" name="PhoneNumbers[@i].Number" type="text" disabled value="@phone.Number" /><br />
+        <label for="PhoneNumbers[@i].NumberBox">@phone.PhoneNumberType</label><input id="PhoneNumbers[@i].NumberBox" name="PhoneNumbers[@i].Number" type="text" disabled value="@phone.Number" /><br />
         <input type="hidden" name="PhoneNumbers[@i].Number" value="@phone.Number" />
         <input type="hidden" name="PhoneNumbers[@i].MemberId" value="@phone.MemberId" />
-        <input type="hidden" class="numbertype" name="PhoneNumbers[@i].Type" value="@phone.Type" />
+        <input type="hidden" class="numbertype" name="PhoneNumbers[@i].Type" value="@phone.PhoneNumberType" />
         i += 1; 
     }
 }
@@ -91,4 +91,5 @@
 </script>
 
 
+</div>
 </div>
