@@ -57,9 +57,9 @@
 					}
 				}
 
-				<li>
-					@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })
-				</li>
+                            @if (Model.Campaign.Id > 0) {
+				<li>@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })</li>
+                            }
 			</ul>
 
 			<h3>Matched Recipient Listing</h3>
@@ -76,7 +76,12 @@
 			<h2>Quick Links</h2>
 		
 			<ul class="toolbar">
-				<li>Nothing Here</li>
+                            @if (Model.Campaign.Id > 0) {
+                                <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>
+                            }
+                            else {
+                                <li>Nothing Here</li>
+                            }
 			</ul>
 		</div>
 	</div>
