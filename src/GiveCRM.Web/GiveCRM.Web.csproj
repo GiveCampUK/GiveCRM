@@ -70,8 +70,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Campaign\CampaignIndexViewModel.cs" />
-    <Compile Include="Models\Campaign\CampaignShowViewModel.cs" />
+    <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
+    <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\Search\SearchCriteria.cs" />
     <Compile Include="Models\Search\SearchService.cs" />
