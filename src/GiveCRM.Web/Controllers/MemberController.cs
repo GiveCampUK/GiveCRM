@@ -26,15 +26,7 @@ namespace GiveCRM.Web.Controllers
             return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
-        public ActionResult AddNumber(Member member, String number, String numberType)
-        {
-            if (member.PhoneNumbers == null)
-                member.PhoneNumbers = new List<PhoneNumber>();
-                
-            member.PhoneNumbers.Add(new PhoneNumber { Number = number, Type = numberType });
-            return View("Add", member); 
-        }
-
+        
         public ActionResult Import()
         {
             return View();
@@ -83,8 +75,6 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Save(Member member)
         {
-            member.PhoneNumbers = new List<PhoneNumber>();
-
             if (member.Id == 0)
             {
                 _membersDb.Insert(member);
