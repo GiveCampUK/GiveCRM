@@ -65,7 +65,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create(Campaign campaign)
         {
             int newId = this.InsertCampaign(campaign);
-            return RedirectToAction("Show", new { id = newId });
+            return RedirectToAction("Show", new {id = newId});
         }
 
         private int InsertCampaign(Campaign campaign)
@@ -110,7 +110,7 @@ namespace GiveCRM.Web.Controllers
         {
             Campaign campaign = campaignViewModel.Campaign;
             new Campaigns().Update(campaign);
-            return RedirectToAction("Show", new { id = campaign.Id });
+            return RedirectToAction("Show", new {id = campaign.Id});
         }
 
         [HttpGet]
@@ -157,6 +157,16 @@ namespace GiveCRM.Web.Controllers
             var memberSearchFilterRepo = new MemberSearchFilters();
             memberSearchFilterRepo.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new {id = campaignId});
+        }
+
+        [HttpGet]
+        public ActionResult CloseCampaign(int campaignId)
+        {
+            var campaigns = new Campaigns();
+            var campaign = campaigns.Get(campaignId);
+            campaign.IsClosed = "Y";
+            campaigns.Update(campaign);
+            return RedirectToAction("Index", new {showClosed = true});
         }
 
         [HttpPost]
