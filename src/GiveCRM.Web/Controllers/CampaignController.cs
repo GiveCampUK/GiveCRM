@@ -20,12 +20,27 @@ namespace GiveCRM.Web.Controllers
             var campaigns = new Campaigns();
             IEnumerable<Campaign> openCampaigns = showClosed ? campaigns.AllClosed() : campaigns.AllOpen();
 
-            string title = showClosed ? Resources.Literal_Closed : Resources.Literal_Open;
+            string title, linkText;
+
+            if (showClosed)
+            {
+                title = Resources.Literal_Closed;
+                linkText = Resources.Literal_Open;
+            }
+            else
+            {
+                title = Resources.Literal_Open;
+                linkText = Resources.Literal_Closed;
+            }
+
             title = string.Format("{0} {1}", title, Resources.Literal_Campaigns);
+            linkText = string.Format(Resources.Show_Campaigns_Text, linkText);
 
             var model = new CampaignIndexViewModel
                             {
                                 Title = title,
+                                ShowCampaignsLinkText = linkText,
+                                ShowClosed = showClosed,
                                 Campaigns = openCampaigns
                             };
 
