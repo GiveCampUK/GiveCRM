@@ -68,8 +68,16 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            new Campaigns().Insert(campaign);
-            return RedirectToAction("Show");
+            int newId = this.InsertCampaign(campaign);
+            return RedirectToAction("Show", new { id = newId });
+        }
+
+        private int InsertCampaign(Campaign campaign)
+        {
+            Campaigns db = new Campaigns();
+            Campaign savedCampaign = db.Insert(campaign);
+
+            return savedCampaign.Id;
         }
 
         [HttpGet]
