@@ -3,10 +3,10 @@ using System.Web.Routing;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using GiveCRM.Web.Infrastructure;
 
 namespace GiveCRM.Web
 {
-    using GiveCRM.Web.Infrastructure;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
