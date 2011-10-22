@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaign\CampaignIndexViewModel.cs" />
+ <Compile Include="Models\Member\MemberSearchViewModel.cs" />
     <Compile Include="Models\Campaign\CampaignShowViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,13 +170,29 @@
     <Content Include="Views\Campaign\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Content Include="Views\Member\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
+      <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
+      <Name>GiveCRM.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
+      <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
+      <Name>GiveCRM.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+ <ItemGroup>
     <Content Include="Views\Campaign\Show.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Member\Search.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Member\Add.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
