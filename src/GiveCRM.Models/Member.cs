@@ -5,6 +5,7 @@ namespace GiveCRM.Models
     public class Member
     {
         public int Id { get; set; }
+        public string Reference { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
