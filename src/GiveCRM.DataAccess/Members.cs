@@ -31,6 +31,15 @@ namespace GiveCRM.DataAccess
 
         public Member Insert(Member member)
         {
+            if (member.PhoneNumbers != null && member.PhoneNumbers.Count > 0)
+            {
+                return InsertWithPhoneNumbers(member);
+            }
+            return _db.Members.Insert(member);
+        }
+
+        private Member InsertWithPhoneNumbers(Member member)
+        {
             using (var transaction = _db.BeginTransaction())
             {
                 try
@@ -41,7 +50,8 @@ namespace GiveCRM.DataAccess
                     {
                         phoneNumber.MemberId = inserted.Id;
                     }
-                    inserted.PhoneNumbers = transaction.PhoneNumbers.Insert(member.PhoneNumbers).ToList<PhoneNumber>();
+                    inserted.PhoneNumbers =
+                        transaction.PhoneNumbers.Insert(member.PhoneNumbers).ToList<PhoneNumber>();
                     transaction.Commit();
                     return inserted;
                 }
