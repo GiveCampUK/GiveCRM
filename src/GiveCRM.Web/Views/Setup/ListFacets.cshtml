@@ -15,7 +15,7 @@
 @foreach (var facet in Model.Facets)
 {
     <li>@facet.Name @facet.Type</li>
-    if (facet.Values.Count > 0)
+    if ((facet.Values != null) && (facet.Values.Count > 0))
      {
         <div>Values:
         <ul>
