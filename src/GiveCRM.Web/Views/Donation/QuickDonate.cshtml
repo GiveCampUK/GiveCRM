@@ -2,8 +2,14 @@
 
 @Html.Hidden("DonorId", Model)
 
-@Html.TextBox("Date", DateTime.Now.ToShortDateString())
+@{
+    var campaignDb = new GiveCRM.DataAccess.Campaigns();
+}
 
-@Html.TextBox("Amount", 0)
+@Html.DropDownList("CampaignId", campaignDb.AllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))<br />
+
+@Html.TextBox("Date", DateTime.Now.ToShortDateString())<br />
+
+@Html.TextBox("Amount", 0)<br />
 
 <a href="javascript:DoDonate();">Save</a>
