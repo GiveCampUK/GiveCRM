@@ -1,7 +1,7 @@
 ﻿@model GiveCRM.Models.Facet
 
 @{
-    var pageTitle = Model.Id > 0 ? "Edit facet" : "Add Facet";
+    var pageTitle = Model.Id > 0 ? "Edit facet" : "Create Facet";
     ViewBag.Title = pageTitle;
 }
 <h2>@pageTitle</h2>
@@ -26,8 +26,8 @@
             <label for="Values[@i].ValueBox">@option.Value</label>
             <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" disabled value="@option.Value" />
             <br />
-            <input type="hidden" name="Values[@i].ID" value="@option.Id" />
-            <input type="hidden" name="Values[@i].FacetID" class="facetCount" value="@option.FacetId" />
+            <input type="hidden" name="Values[@i].Id" value="@option.Id" />
+            <input type="hidden" name="Values[@i].FacetId" class="facetCount" value="@option.FacetId" />
             i += 1;
         }
     }
@@ -54,8 +54,8 @@
             $('#FacetOptions').append(
                 '<label for="Values[' + index + '].ValueBox">Value</label>' +
                 '<input id="Values[' + index + '].ValueBox" name="Values[' + index + '].Value" type="text" disabled value="' + value + '" /><br />' +
-                '<input type="hidden" name="Values[' + index + '].ID" value="0" />' +
-                '<input type="hidden" name="Values[' + index + '].FacetID" class="facetCount" value="0" />');
+                '<input type="hidden" name="Values[' + index + '].Id" value="0" />' +
+                '<input type="hidden" name="Values[' + index + '].FacetId" class="facetCount" value="0" />');
 
         });
 
