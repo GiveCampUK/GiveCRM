@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CampaignRuns.cs" />
     <Compile Include="Campaigns.cs" />
     <Compile Include="Donations.cs" />
     <Compile Include="Facets.cs" />
