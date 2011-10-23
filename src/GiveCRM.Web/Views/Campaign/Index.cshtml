@@ -27,6 +27,12 @@
 				@foreach (var item in Model.Campaigns) {
 					<li>
 						@Html.ActionLink(item.Name, "Show", new { id = item.Id }, new { @class = "name"})
+                                                
+                                                @if (item.RunOn != null)
+                                                {
+                                                    <text>(Committed)</text>
+                                                }
+
 						<div class="description">
 							@Html.DisplayFor(modelItem => item.Description)
 						</div>

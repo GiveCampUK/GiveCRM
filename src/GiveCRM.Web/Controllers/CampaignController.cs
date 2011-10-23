@@ -26,8 +26,8 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Index(bool showClosed = false)
         {
-            var campaigns = new Campaigns();
-            IEnumerable<Campaign> openCampaigns = showClosed ? campaigns.AllClosed() : campaigns.AllOpen();
+            var campaignsRepo = new Campaigns();
+            IEnumerable<Campaign> campaigns = showClosed ? campaignsRepo.AllClosed() : campaignsRepo.AllOpen();
 
             string title, linkText;
 
@@ -50,7 +50,7 @@ namespace GiveCRM.Web.Controllers
                                 ShowCampaignsLinkText = linkText,
                                 CreateCampaignLinkText = Resources.Literal_CreateCampaign,
                                 ShowClosed = showClosed,
-                                Campaigns = openCampaigns
+                                Campaigns = campaigns
                             };
 
             return View(model);
@@ -107,6 +107,7 @@ namespace GiveCRM.Web.Controllers
                                 NoMatchingMembersText = Resources.Literal_NoMatchingMembersText,
                                 ApplicableMembers = applicableMembers.ToList()
                             };
+
             return View(model);
         }
 
@@ -202,15 +203,13 @@ namespace GiveCRM.Web.Controllers
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
             new CampaignRuns().Commit(viewModel.CampaignId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Show", new {id = viewModel.CampaignId});
         }
 
-        [HttpPost]
         public FileResult DownloadMailingList(int id)
         {
-            // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
-
-            var members = new List<Member>();
+            var membersRepo = new Members();
+            var members = membersRepo.FromCampaignRun(id);
 
             byte[] filecontent;
             using (var stream = new MemoryStream())

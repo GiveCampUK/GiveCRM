@@ -23,6 +23,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.Title = "Add Member"; 
             return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
@@ -33,6 +34,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Edit(int id)
         {
+            ViewBag.Title = "Edit Member"; 
             var model = _membersDb.Get(id); 
             if(model.PhoneNumbers == null) 
                model.PhoneNumbers = new List<PhoneNumber>(); 
@@ -74,6 +76,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Save(Models.Members.MemberEditViewModel member)
         {
+            ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
             if(!ModelState.IsValid)
                 return View(viewName: "Add", model: member);
 
@@ -90,15 +93,9 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string name, string postcode, string reference)
+        public ActionResult Search(string name, string postcode, string reference, int start = 0)
         {
-            var results = _membersDb
-                .All()
-                .Where(member => 
-                    !member.Archived &&
-                    (name == string.Empty || NameSearch(member, name.ToLower())) &&
-                    (postcode == string.Empty || PostcodeSearch(member, postcode.ToLower())) &&
-                    (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
+            var results = _membersDb.Search(name, postcode, reference);
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }

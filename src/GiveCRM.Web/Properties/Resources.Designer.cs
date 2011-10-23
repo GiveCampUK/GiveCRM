@@ -160,7 +160,7 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cloned.
+        ///   Looks up a localized string similar to Copy.
         /// </summary>
         internal static string Literal_Cloned {
             get {
