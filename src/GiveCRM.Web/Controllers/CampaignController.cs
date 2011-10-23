@@ -114,7 +114,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(Campaign campaign)
         {
             new Campaigns().Update(campaign);
-            return View(campaign);
+            return Show(campaign.Id);
         }
 
         [HttpGet]
