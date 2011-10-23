@@ -27,26 +27,24 @@
 		</div>
 
 		<div class="sidebar span-one-third">
-			<h2>Quick Links</h2>
+			<h2>Quick Donate</h2>
 		
-			<ul class="toolbar">
-				<li>
-                    @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post, new { name = "AjaxSearch", id = "AjaxSearch" });}
+            @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post, new { name = "AjaxSearch", id = "AjaxSearch" });}
+            <div class="clearfix">
+                @Html.Label("SearchCriteria", "Search Criteria")
+                <div class="input">
+                    @Html.TextBox("SearchCriteria", null, new { @class = "span2" })
+                </div>
+            </div>
 
-                    <label>Search</label>
+            <div class="actions">
+                    <a class="btn primary" href="javascript:DoSearch();">Search</a>
+            </div>
+            @{Html.EndForm();}
 
-                    @Html.TextBox("SearchCriteria")
+            <div id="QuickResults">&nbsp;</div>
 
-                    <a href="javascript:DoSearch();">Search</a>
-
-                    @{Html.EndForm();}
-
-                    <div id="QuickResults">&nbsp;</div>
-
-                    <div id="AddDonation">&nbsp</div>
-
-                </li>
-			</ul>
+            <div id="AddDonation">&nbsp</div>
 		</div>
 	</div>
 </div>
