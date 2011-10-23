@@ -28,7 +28,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult SaveFacet(Facet facet)
         {
             _facetsDb.Insert(facet);
-            return RedirectToAction("ShowFacets");
+            return RedirectToAction("ListFacets");
         }
 
         public ActionResult AddFacetOption(FacetValue facetValue)
