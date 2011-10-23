@@ -50,6 +50,28 @@ namespace GiveCRM.DataAccess
                 return Enumerable.Empty<Member>();
             }
             
+            var query = CompileQuery(criteriaList);
+
+            return query.Cast<Member>();
+        }
+
+        public IEnumerable<int> RunWithIdOnly(IEnumerable<SearchCriteria> criteria)
+        {
+            var criteriaList = criteria.ToList();
+
+            if (criteriaList.Count == 0)
+            {
+                // don't attempt to search if there are not criteria - don't want the whole database
+                return Enumerable.Empty<int>();
+            }
+
+            var query = CompileQuery(criteriaList);
+
+            return query.Select(_db.Members.MemberId).ToScalarList<int>();
+        }
+
+        private dynamic CompileQuery(List<SearchCriteria> criteriaList)
+        {
             var expr = CompileLocationCriteria(criteriaList.OfType<LocationSearchCriteria>(), null);
             SimpleExpression having = null;
             CompileDonationCriteria(criteriaList.OfType<DonationSearchCriteria>(), ref expr, ref having);
@@ -65,8 +87,7 @@ namespace GiveCRM.DataAccess
             {
                 query = query.Having(having);
             }
-            
-            return query.Cast<Member>();
+            return query;
         }
 
         internal SimpleExpression CompileFacetCriteria(IEnumerable<FacetSearchCriteria> criteria, SimpleExpression expr)
