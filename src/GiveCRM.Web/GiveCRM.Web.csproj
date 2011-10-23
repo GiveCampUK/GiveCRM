@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\IoC\AspNetMvcInstaller.cs" />
     <Compile Include="Infrastructure\IoC\ExportInstaller.cs" />
     <Compile Include="Infrastructure\IoC\MailingListExportInstaller.cs" />
+    <Compile Include="Infrastructure\SearchExtensions.cs" />
     <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
