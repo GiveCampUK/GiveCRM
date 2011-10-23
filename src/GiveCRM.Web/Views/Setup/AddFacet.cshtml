@@ -1,5 +1,23 @@
-﻿@{
-    ViewBag.Title = "AddFacet";
+﻿@model GiveCRM.Models.Facet
+
+@{
+    ViewBag.Title = "Add Facet";
 }
 
-<h2>AddFacet</h2>
+<h2>Add Facet</h2>
+
+<div>
+
+@{Html.BeginForm("SaveFacet", "Setup", FormMethod.Post);}
+
+@Html.TextBoxFor(f => f.Name)
+
+@Html.DropDownListFor(
+    f => f.Type, 
+    new List<SelectListItem> { new SelectListItem { Text = "Free Text", Value="FreeText" }, new SelectListItem { Text = "Lookup", Value="List" } })
+
+<input type="submit" value="Save" />
+
+@{Html.EndForm();}
+
+</div>

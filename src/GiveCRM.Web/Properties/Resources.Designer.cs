@@ -187,6 +187,15 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No members found.
+        /// </summary>
+        internal static string Literal_NoMatchingMembersText {
+            get {
+                return ResourceManager.GetString("Literal_NoMatchingMembersText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are currently no search filters.
         /// </summary>
         internal static string Literal_NoSearchFiltersText {

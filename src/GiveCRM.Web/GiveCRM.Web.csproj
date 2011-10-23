@@ -38,10 +38,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Core.3.0.0.2001\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Castle.Windsor.3.0.0.2001\lib\net40\Castle.Windsor.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -94,11 +90,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\IoC\AspNetMvcInstaller.cs" />
-    <Compile Include="Infrastructure\IoC\ExportInstaller.cs" />
-    <Compile Include="Infrastructure\IoC\MailingListExportInstaller.cs" />
     <Compile Include="Infrastructure\SearchExtensions.cs" />
-    <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterViewModel.cs" />
@@ -106,6 +98,7 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
+    <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
@@ -122,6 +115,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\GiveCRM-icon-157x45.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -306,7 +300,7 @@
     <Content Include="Views\Setup\AddFacetOption.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Setup\ShowFacets.cshtml" />
+    <Content Include="Views\Setup\ListFacets.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
