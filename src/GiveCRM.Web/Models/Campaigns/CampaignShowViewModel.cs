@@ -11,6 +11,7 @@ namespace GiveCRM.Web.Models.Campaigns
         public IEnumerable<Member> ApplicableMembers { get; set; }
         public string NoSearchFiltersText { get; set; }
         public string NoMatchingMembersText { get; set; }
+        public IList<string> QuickLinks { get; set; }
 
         public CampaignShowViewModel() : this(string.Empty)
         {}
