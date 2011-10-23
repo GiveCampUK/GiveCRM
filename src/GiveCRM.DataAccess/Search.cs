@@ -33,6 +33,13 @@ namespace GiveCRM.DataAccess
             }
         }
 
+        public IEnumerable<Member> RunCampaign(int campaignId)
+        {
+            var memberSearchFilterRepo = new MemberSearchFilters();
+            var filters = memberSearchFilterRepo.ForCampaign(campaignId).Select(msf => msf.ToSearchCriteria());
+            return Run(filters);
+        }
+
         public IEnumerable<Member> Run(IEnumerable<SearchCriteria> criteria)
         {
             var criteriaList = criteria.ToList();

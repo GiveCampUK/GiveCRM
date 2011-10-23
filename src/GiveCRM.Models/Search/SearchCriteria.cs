@@ -47,11 +47,27 @@ namespace GiveCRM.Models.Search
 
         public static SearchCriteria Create(string internalName, string displayName, SearchFieldType filterType, SearchOperator searchOperator, string value)
         {
-            SearchCriteria criteria;
+            SearchCriteria criteria = null;
             if (CampaignSearchCriteria.IsCampaignSearchCriteria(internalName)) criteria = new CampaignSearchCriteria();
             else if (LocationSearchCriteria.IsLocationSearchCriteria(internalName)) criteria = new LocationSearchCriteria();
             else if (DonationSearchCriteria.IsDonationSearchCriteria(internalName)) criteria = new DonationSearchCriteria();
-            else criteria = new FacetSearchCriteria();
+            else
+            {
+                if (internalName.StartsWith("freeTextFacet_"))
+                {
+                    int facetId;
+                    if (int.TryParse(internalName.Substring(14), out facetId))
+                    {
+                        criteria = new FacetSearchCriteria {FacetId = facetId};
+                    }
+                }
+
+            }
+
+            if (criteria == null)
+            {
+                throw new InvalidOperationException("Could not parse search criteria");
+            }
 
             criteria.InternalName = internalName;
             criteria.DisplayName = displayName;
