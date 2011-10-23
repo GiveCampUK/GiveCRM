@@ -21,16 +21,30 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> All()
         {
+            var query = _db.Members.All().OrderBy(_db.Members.Id);
+            return RunMemberQueryWithPhoneNumbers(query);
+        }
+
+        public IEnumerable<Member> FromCampaignRun(int campaignId)
+        {
             var query = _db.Members.All()
-                .Select(_db.Members.Id, _db.Members.Reference, _db.Members.Title, _db.Members.FirstName,
-                        _db.Members.LastName, _db.Members.Salutation, _db.Members.EmailAddress,
-                        _db.Members.AddressLine1, _db.Members.AddressLine2, _db.Members.City, _db.Members.Region,
-                        _db.Members.PostalCode, _db.Members.Country,
-                        _db.Members.Archived,
-                        _db.Members.PhoneNumbers.Id.As("PhoneNumberId"), _db.Members.PhoneNumbers.PhoneNumberType,
-                        _db.Members.PhoneNumbers.Number,
-                        _db.Members.Donations.Amount.Sum().As("TotalDonations"))
+                .Where(_db.Members.CampaignRun.CampaignId == campaignId)
                 .OrderBy(_db.Members.Id);
+            return RunMemberQueryWithPhoneNumbers(query);
+        }
+
+        private IEnumerable<Member> RunMemberQueryWithPhoneNumbers(dynamic query)
+        {
+            query = query.Select(_db.Members.Id, _db.Members.Reference, _db.Members.Title, _db.Members.FirstName,
+                                 _db.Members.LastName, _db.Members.Salutation, _db.Members.EmailAddress,
+                                 _db.Members.AddressLine1, _db.Members.AddressLine2, _db.Members.City,
+                                 _db.Members.Region,
+                                 _db.Members.PostalCode, _db.Members.Country,
+                                 _db.Members.Archived,
+                                 _db.Members.PhoneNumbers.Id.As("PhoneNumberId"),
+                                 _db.Members.PhoneNumbers.PhoneNumberType,
+                                 _db.Members.PhoneNumbers.Number,
+                                 _db.Members.Donations.Amount.Sum().As("TotalDonations"));
 
             Member member = null;
 
@@ -49,13 +63,19 @@ namespace GiveCRM.DataAccess
 
                 if (record.PhoneNumberId != null)
                 {
-                    member.PhoneNumbers.Add(new PhoneNumber { Id = record.PhoneNumberId ?? 0, MemberId = member.Id, Number = record.Number ?? string.Empty, PhoneNumberType = (PhoneNumberType)record.PhoneNumberType });
+                    member.PhoneNumbers.Add(new PhoneNumber
+                                                {
+                                                    Id = record.PhoneNumberId ?? 0,
+                                                    MemberId = member.Id,
+                                                    Number = record.Number ?? string.Empty,
+                                                    PhoneNumberType = (PhoneNumberType) record.PhoneNumberType
+                                                });
                 }
             }
 
             if (member != null)
             {
-                 yield return member;
+                yield return member;
             }
         }
 
