@@ -30,6 +30,20 @@
 					</li>
 				</ul>
 			</li>
+
+			<li @Html.NavigationClassBuilder("Setup", additionalClasses: "dropdown") data-dropdown="dropdown">
+				@Html.ActionLink("Setup", "Index", "Setup", null, new { @class = "dropdown-toggle" })
+				
+				<ul class="dropdown-menu">
+					<li @Html.NavigationClassBuilder("Setup", "Index")>
+						@Html.ActionLink("Add Facets", "Index", "Setup")
+					</li>
+				</ul>
+			</li>
+
+            <li @Html.NavigationClassBuilder("Donation")>
+				@Html.ActionLink("Donations", "Index", "Donation", null, null)
+			</li>
 		</ul>
 
 		<div class="pull-right">

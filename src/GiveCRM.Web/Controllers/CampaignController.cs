@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Models.Search;
+using GiveCRM.Web.Infrastructure;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
@@ -58,14 +59,27 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            model.Campaign = new Campaign
+            {
+                Name = "New Campaign"
+            };
+
             return View("Show", model);
         }
 
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            new Campaigns().Insert(campaign);
-            return RedirectToAction("Show");
+            int newId = this.InsertCampaign(campaign);
+            return RedirectToAction("Show", new { id = newId });
+        }
+
+        private int InsertCampaign(Campaign campaign)
+        {
+            Campaigns db = new Campaigns();
+            Campaign savedCampaign = db.Insert(campaign);
+
+            return savedCampaign.Id;
         }
 
         [HttpGet]
@@ -89,7 +103,7 @@ namespace GiveCRM.Web.Controllers
                                                                             (SearchFieldType) m.FilterType,
                                                                             (SearchOperator) m.SearchOperator,
                                                                             m.Value
-                                                                      ).ToString()
+                                                                      ).ToFriendlyDisplayString()
                                         }).ToList(),
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
@@ -114,7 +128,7 @@ namespace GiveCRM.Web.Controllers
                             {
                                 CampaignId = campaignId,
                                 CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
-                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
                             };
             return View("AddSearchFilter", model);
         }
@@ -147,6 +161,28 @@ namespace GiveCRM.Web.Controllers
             var memberSearchFilterRepo = new MemberSearchFilters();
             memberSearchFilterRepo.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new {id = campaignId});
+        }
+
+        [HttpGet]
+        public ActionResult CloseCampaign(int campaignId)
+        {
+            var campaign = new Campaigns().Get(campaignId);
+            var viewModel = new CampaignCloseViewModel(Resources.Literal_CloseCampaign)
+                                {
+                                    CampaignId = campaignId,
+                                    CampaignName = campaign.Name
+                                };
+            return View("Close", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CloseCampaign(CampaignCloseViewModel viewModel)
+        {
+            var campaigns = new Campaigns();
+            var campaign = campaigns.Get(viewModel.CampaignId);
+            campaign.IsClosed = "Y";
+            campaigns.Update(campaign);
+            return RedirectToAction("Index", new {showClosed = true});
         }
 
         [HttpPost]
