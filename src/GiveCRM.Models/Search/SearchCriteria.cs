@@ -45,11 +45,6 @@ namespace GiveCRM.Models.Search
             return Enum.GetValues(typeof (SearchOperator)).Cast<SearchOperator>();
         }
 
-        public override string ToString()
-        {
-            return string.Format("{0} {1} {2}", DisplayName, SearchOperator.ToFriendlyDisplayString(), Value);
-        }
-
         public static SearchCriteria Create(string internalName, string displayName, SearchFieldType filterType, SearchOperator searchOperator, string value)
         {
             SearchCriteria criteria;
