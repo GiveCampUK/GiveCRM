@@ -14,7 +14,7 @@
 <ul>
 @foreach (var facet in Model.Facets)
 {
-    <li>@facet.Name @facet.Type</li>
+    <li><strong>@facet.Name</strong> @facet.Type  @Html.ActionLink("Edit", "EditFacet", new { id = facet.Id }) </li>
     if ((facet.Values != null) && (facet.Values.Count > 0))
      {
         <div>Values:

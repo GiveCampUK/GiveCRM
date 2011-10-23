@@ -1,4 +1,5 @@
 ﻿@model CampaignShowViewModel
+@using GiveCRM.Models
 @using GiveCRM.Web.Models.Campaigns
 
 @{
@@ -63,10 +64,22 @@
 			</ul>
 
 			<h3>Matched Recipient Listing</h3>
-			@* TODO *@
-					
-			
-			<div class="actions clearfix">
+	
+                         if (Model.ApplicableMembers.Count() == 0)
+                         {
+                             @Model.NoMatchingMembersText
+                         }
+                         else
+                         {
+                             <ul>
+                                 @foreach (Member member in Model.ApplicableMembers)
+                                 {
+                                     <li>@member.Salutation @member.FirstName @member.LastName</li>
+                                 }
+                             </ul>
+                         }
+                         
+                        <div class="actions clearfix">
 				<input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
 			</div>
                 }
