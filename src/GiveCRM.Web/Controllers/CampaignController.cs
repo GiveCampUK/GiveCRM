@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Models.Search;
+using GiveCRM.Web.Infrastructure;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
@@ -102,7 +103,7 @@ namespace GiveCRM.Web.Controllers
                                                                             (SearchFieldType) m.FilterType,
                                                                             (SearchOperator) m.SearchOperator,
                                                                             m.Value
-                                                                      ).ToString()
+                                                                      ).ToFriendlyDisplayString()
                                         }).ToList(),
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
@@ -127,7 +128,7 @@ namespace GiveCRM.Web.Controllers
                             {
                                 CampaignId = campaignId,
                                 CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
-                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
                             };
             return View("AddSearchFilter", model);
         }
