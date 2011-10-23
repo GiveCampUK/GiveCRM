@@ -89,6 +89,8 @@ namespace GiveCRM.Web.Controllers
             var memberSearchFilterRepo = new MemberSearchFilters();
             var campaign = campaignRepo.Get(id);
 
+            var applicableMembers = new Search().RunCampaign(id);
+
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
@@ -105,7 +107,9 @@ namespace GiveCRM.Web.Controllers
                                                                             m.Value
                                                                       ).ToFriendlyDisplayString()
                                         }).ToList(),
-                                NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
+                                NoSearchFiltersText = Resources.Literal_NoSearchFiltersText,
+                                NoMatchingMembersText = Resources.Literal_NoMatchingMembersText,
+                                ApplicableMembers = applicableMembers.ToList()
                             };
             return View(model);
         }
@@ -114,7 +118,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(Campaign campaign)
         {
             new Campaigns().Update(campaign);
-            return View(campaign);
+            return Show(campaign.Id);
         }
 
         [HttpGet]
