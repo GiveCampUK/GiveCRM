@@ -98,7 +98,7 @@
                                 if (Model.Campaign.IsCommitted == false && Model.Campaign.IsClosed == "N") {
                                     <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new { campaignId = Model.Campaign.Id })</li>
                                 } else {
-                                    <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id })</li>
+                                    <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id, name=Model.Campaign.Name })</li>
                                 }
                                 
                                 <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
