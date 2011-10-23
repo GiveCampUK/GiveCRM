@@ -97,7 +97,7 @@ namespace GiveCRM.ImportExport.Cells
 
         private void SetColor(Cell cell, CellStyle style)
         {
-            if (cell.BackgroundColor != Color.Empty || cell.BackgroundColor != Color.White)
+            if (cell.BackgroundColor != Color.Empty && cell.BackgroundColor != Color.White)
             {
                 style.FillForegroundColor = cell.BackgroundColor.ToNPOIColor();
                 style.FillPattern = FillPatternType.SOLID_FOREGROUND;
