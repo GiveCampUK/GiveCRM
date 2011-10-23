@@ -1,11 +1,17 @@
 ﻿using System.Text.RegularExpressions;
 using System.Threading;
+using GiveCRM.Models.Search;
 using GiveCRM.Web.Properties;
 
-namespace GiveCRM.Web.Models.Search
+namespace GiveCRM.Web.Infrastructure
 {
-    internal static class SearchOperatorExtensions
+    internal static class SearchExtensions
     {
+        internal static string ToFriendlyDisplayString(this SearchCriteria searchCriteria)
+        {
+            return string.Format("{0} {1} {2}", searchCriteria.DisplayName, searchCriteria.SearchOperator.ToFriendlyDisplayString(), searchCriteria.Value);
+        }
+
         internal static string ToFriendlyDisplayString(this SearchOperator searchOperator)
         {
             string searchOperatorStr = searchOperator.ToString();

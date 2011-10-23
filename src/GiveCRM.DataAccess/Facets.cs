@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using GiveCRM.Models;
@@ -136,7 +137,7 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Facet> AllFreeText()
         {
-            return _db.Facets.FindAllByType(FacetType.FreeText.ToString());
+            return _db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }
     }
 }
