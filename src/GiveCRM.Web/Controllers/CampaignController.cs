@@ -107,6 +107,7 @@ namespace GiveCRM.Web.Controllers
                                 NoMatchingMembersText = Resources.Literal_NoMatchingMembersText,
                                 ApplicableMembers = applicableMembers.ToList()
                             };
+
             return View(model);
         }
 
