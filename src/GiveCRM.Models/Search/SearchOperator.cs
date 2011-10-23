@@ -1,4 +1,4 @@
-﻿namespace GiveCRM.Web.Models.Search
+﻿namespace GiveCRM.Models.Search
 {
     public enum SearchOperator
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Search;
 
 namespace GiveCRM.Web.Models.Campaigns
