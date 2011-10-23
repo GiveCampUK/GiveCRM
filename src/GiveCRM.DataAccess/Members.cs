@@ -25,6 +25,28 @@ namespace GiveCRM.DataAccess
             return RunMemberQueryWithPhoneNumbers(query);
         }
 
+        public IEnumerable<Member> Search(string lastName, string postalCode, string reference)
+        {
+            var query = _db.Members.All();
+
+            if(!String.IsNullOrWhiteSpace(lastName))
+            {
+                query = query.Where(_db.Members.LastName.Like(lastName + "%"));
+            }
+
+            if(!String.IsNullOrWhiteSpace(postalCode))
+            {
+                query = query.Where(_db.Members.PostalCode.Like(postalCode + "%")); 
+            }
+
+            if(!String.IsNullOrWhiteSpace(reference)) 
+            {
+                query = query.Where(_db.Members.Reference.Like(reference + "%")); 
+            }
+
+            return query.ToList<Member>(); 
+        }
+
         public IEnumerable<Member> FromCampaignRun(int campaignId)
         {
             var query = _db.Members.All()

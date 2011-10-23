@@ -2,10 +2,14 @@
 	padding-top: 40px;
 }
 
+.topbar .brand {
+	padding-top:5px;
+	padding-bottom:0px;
+}
+
 #main {
 	padding-top: 1em;
 }
-
 
 .itemlist > li {
 	margin-bottom: 1em;

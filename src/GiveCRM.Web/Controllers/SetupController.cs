@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -8,7 +9,7 @@ namespace GiveCRM.Web.Controllers
 {
     public class SetupController : Controller
     {
-        private Facets _facetsDb = new Facets();
+        private readonly Facets _facetsDb = new Facets();
 
         public ActionResult Index()
         {
@@ -17,43 +18,56 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult AddFacet()
         {
-            return View(new Facet { Values = new List<FacetValue>() });
+            var facet = new Facet
+                {
+                    Values = new List<FacetValue>()
+                };
+            return View("EditFacet", facet);
         }
 
         public ActionResult EditFacet(int id)
         {
             var facet = _facetsDb.Get(id);
-            return View("AddFacet", facet);
+            return View("EditFacet", facet);
         }
 
         [HttpPost]
         public ActionResult SaveFacet(Facet facet)
         {
+            CleanFacet(facet);
+
             if (facet.Id > 0)
             {
                 _facetsDb.Update(facet);
             }
             else
             {
-                _facetsDb.Insert(facet);
-                
+                _facetsDb.Insert(facet);             
             }
 
             return RedirectToAction("ListFacets");
         }
 
-        public ActionResult AddFacetOption(FacetValue facetValue)
+        /// <summary>
+        /// bad Hack because the form is going wrong and values are not working
+        /// discard the null ones
+        /// </summary>
+        /// <param name="facet"></param>
+        private void CleanFacet(Facet facet)
         {
-            return View();
+            if (facet.Values != null)
+            {
+                facet.Values = facet.Values.Where(fc => ! string.IsNullOrEmpty(fc.Value)).ToList();
+            }
         }
 
         public ActionResult ListFacets()
         {
             var facets = new List<Facet>(_facetsDb.All());
             var viewModel = new FacetListViewModel
-            {
-                Facets = facets
-            };
+                {
+                    Facets = facets
+                };
 
             return View(viewModel);
         }
