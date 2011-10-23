@@ -1,15 +1,36 @@
 ﻿@model int
 
+<form onsubmit="DoDonate();return false;" class="form-stacked">
+
 @Html.Hidden("DonorId", Model)
 
 @{
     var campaignDb = new GiveCRM.DataAccess.Campaigns();
 }
+<div class="clearfix">
+    <label for"CampaignId">Campaign</label>
+    <div class="input">
+        @Html.DropDownList("CampaignId", campaignDb.AllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))
+    </div>
+</div>
 
-@Html.DropDownList("CampaignId", campaignDb.AllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))<br />
+<div class="clearfix">
+    <label for"Date">Date Donated</label>
+    <div class="input">
+        @Html.TextBox("Date", DateTime.Now.ToShortDateString())
+    </div>
+</div>
 
-@Html.TextBox("Date", DateTime.Now.ToShortDateString())<br />
+<div class="clearfix">
+    <label for"Amount">Amount</label>
+    <div class="input">
+        @Html.TextBox("Amount", 0)
+    </div>
+</div>
 
-@Html.TextBox("Amount", 0)<br />
+<div class="input">
+    <a class="btn small" href="javascript:DoDonate();">Save</a>
+</div>
 
-<a href="javascript:DoDonate();">Save</a>
+</form>
+
