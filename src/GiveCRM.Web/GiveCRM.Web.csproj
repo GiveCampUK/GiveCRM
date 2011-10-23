@@ -95,7 +95,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterViewModel.cs" />
-    <Compile Include="Models\Campaigns\CampaignCloseViewModel.cs" />
+    <Compile Include="Models\Campaigns\SimpleCampaignViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
@@ -302,6 +302,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Setup\ListFacets.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Campaign\Commit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
