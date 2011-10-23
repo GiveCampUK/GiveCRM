@@ -20,6 +20,7 @@ namespace GiveCRM.DataAccess
             {
                 try
                 {
+                    transaction.Campaign.UpdateById(Id : campaignId, runOn : DateTime.Today);
                     transaction.CampaignRuns.Insert(results);
                     transaction.Commit();
                 }

@@ -89,13 +89,16 @@
 			<h2>Quick Links</h2>
 		
 			<ul class="toolbar">
-                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsClosed == "N") {
-                                <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>
-                                <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new {campaignId = Model.Campaign.Id})</li>
+                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsClosed == "N" && Model.Campaign.IsCommitted == true) {
+                                <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>                                
                             }
-                            else {
-                                <li>Nothing Here</li>
+                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsCommitted == false) {
+                                <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new { campaignId = Model.Campaign.Id })</li>
                             }
+                            else
+                            {
+                                <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { campaignId = Model.Campaign.Id })</li>
+                            }                            
                             <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
 			</ul>
 		</div>
