@@ -31,17 +31,17 @@ namespace GiveCRM.DataAccess
 
             if(!String.IsNullOrWhiteSpace(lastName))
             {
-                query.Where(_db.Members.LastName.Like(lastName + "%"));
+                query = query.Where(_db.Members.LastName.Like(lastName + "%"));
             }
 
             if(!String.IsNullOrWhiteSpace(postalCode))
             {
-                query.Where(_db.Members.PostalCode.Like(postalCode + "%")); 
+                query = query.Where(_db.Members.PostalCode.Like(postalCode + "%")); 
             }
 
             if(!String.IsNullOrWhiteSpace(reference)) 
             {
-                query.Where(_db.Members.Reference.Like(reference + "%")); 
+                query = query.Where(_db.Members.Reference.Like(reference + "%")); 
             }
 
             return query.ToList<Member>(); 
