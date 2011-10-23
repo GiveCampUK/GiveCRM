@@ -150,6 +150,9 @@
   <data name="Literal_Campaigns" xml:space="preserve">
     <value>Campaigns</value>
   </data>
+  <data name="Literal_Cloned" xml:space="preserve">
+    <value>Cloned</value>
+  </data>
   <data name="Literal_CloseCampaign" xml:space="preserve">
     <value>Close Campaign</value>
   </data>

@@ -8,6 +8,7 @@ namespace GiveCRM.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? RunOn { get; set; }
+
         private string _isClosed = "N";
         public string IsClosed
         {

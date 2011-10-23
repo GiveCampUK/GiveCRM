@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -204,6 +205,42 @@ namespace GiveCRM.Web.Controllers
             }
 
             return File(filecontent, "application/vnd.ms-excel");
+        }
+
+        [HttpGet]
+        public ActionResult Clone(int id)
+        {
+            var campaignRepo = new Campaigns();
+            var memberSearchFilterRepo = new MemberSearchFilters();
+
+            var campaign = campaignRepo.Get(id);
+            Campaign campaignClone = new Campaign
+                                         {
+                                             Id = 0,
+                                             Description = campaign.Description + " (" + Resources.Literal_Cloned + ")",
+                                             IsClosed = "N",
+                                             Name = campaign.Name + " (" + Resources.Literal_Cloned + ")",
+                                             RunOn = null
+                                         };
+
+            campaignClone = campaignRepo.Insert(campaignClone);
+
+            IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
+
+            foreach (MemberSearchFilter memberSearchFilter in memberSearchFilters)
+            {
+                memberSearchFilterRepo.Insert(new MemberSearchFilter
+                                                  {
+                                                      CampaignId = campaignClone.Id,
+                                                      DisplayName = memberSearchFilter.DisplayName,
+                                                      FilterType = memberSearchFilter.FilterType,
+                                                      InternalName = memberSearchFilter.InternalName,
+                                                      SearchOperator = memberSearchFilter.SearchOperator,
+                                                      Value = memberSearchFilter.Value
+                                                  });
+            }
+
+            return RedirectToAction("Show", new {id = campaignClone.Id});
         }
     }
 }
