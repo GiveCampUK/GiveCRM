@@ -26,7 +26,6 @@ namespace GiveCRM.Web.Controllers
             return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
-        
         public ActionResult Import()
         {
             return View();
@@ -99,6 +98,18 @@ namespace GiveCRM.Web.Controllers
                     (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
+        }
+
+        [HttpGet]
+        public ActionResult AjaxSearch(string criteria)
+        {
+            var results = _membersDb
+                .All()
+                .Where(member =>
+                    !member.Archived &&
+                    (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
+
+            return View(results);
         }
 
         public ActionResult TopDonors()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
@@ -30,7 +31,7 @@ namespace GiveCRM.DataAccess.Test
                                       {
                                           new PhoneNumber
                                               {
-                                                  Type = "Home",
+                                                  PhoneNumberType = PhoneNumberType.Home,
                                                   Number = "01234 567890"
                                               }
                                       };
@@ -81,7 +82,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual(1, member.PhoneNumbers.Count);
             PhoneNumber phone = member.PhoneNumbers.First();
             Assert.AreEqual(member.Id, phone.MemberId);
-            Assert.AreEqual("Home", phone.Type);
+            Assert.AreEqual("Home", phone.PhoneNumberType);
             Assert.AreEqual("01234 567890", phone.Number);
         }
 
@@ -91,6 +92,9 @@ namespace GiveCRM.DataAccess.Test
             var members = new Members();
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
+            var donations = new Donations();
+            donations.Insert(new Donation {MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today});
+            donations.Insert(new Donation { MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today.Subtract(TimeSpan.FromDays(1)) });
 
             var list = members.All().ToList();
             Assert.IsNotNull(list);
@@ -109,11 +113,12 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual("Delta Quadrant", member.Region);
             Assert.AreEqual("Wales", member.Country);
             Assert.AreEqual("CA1 0PP", member.PostalCode);
+            Assert.AreEqual(25m, member.TotalDonations);
 
             Assert.AreEqual(1, member.PhoneNumbers.Count);
             PhoneNumber phone = member.PhoneNumbers.First();
             Assert.AreEqual(member.Id, phone.MemberId);
-            Assert.AreEqual("Home", phone.Type);
+            Assert.AreEqual("Home", phone.PhoneNumberType);
             Assert.AreEqual("01234 567890", phone.Number);
         }
 

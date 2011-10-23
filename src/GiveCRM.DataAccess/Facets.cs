@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using GiveCRM.Models;
@@ -6,7 +7,16 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-    public class Facets
+    public interface IFacets
+    {
+        Facet Get(int id);
+        IEnumerable<Facet> All();
+        Facet Insert(Facet facet);
+        void Update(Facet facet);
+        IEnumerable<Facet> AllFreeText();
+    }
+
+    public class Facets : IFacets
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
@@ -123,6 +133,11 @@ namespace GiveCRM.DataAccess
                     throw;
                 }
             }
+        }
+
+        public IEnumerable<Facet> AllFreeText()
+        {
+            return _db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }
     }
 }

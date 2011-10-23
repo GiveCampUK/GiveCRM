@@ -1,0 +1,9 @@
+﻿@model int
+
+@Html.Hidden("DonorId", Model)
+
+@Html.TextBox("Date", DateTime.Now.ToShortDateString())
+
+@Html.TextBox("Amount", 0)
+
+<a href="javascript:DoDonate();">Save</a>

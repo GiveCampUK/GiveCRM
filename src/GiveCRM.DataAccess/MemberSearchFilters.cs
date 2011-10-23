@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using GiveCRM.Models;
 using Simple.Data;
 
@@ -14,6 +11,11 @@ namespace GiveCRM.DataAccess
         public IEnumerable<MemberSearchFilter> ForCampaign(int campaignId)
         {
             return _db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
+        }
+
+        public void Insert(MemberSearchFilter memberSearchFilter)
+        {
+            _db.MemberSearchFilters.Insert(memberSearchFilter);
         }
 
         public void Delete(int id)

@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GiveCRM.Models
 {
     public class Member
     {
+        private decimal _totalDonations;
+        private Lazy<ICollection<Donation>> _lazyDonations;
         public int Id { get; set; }
         public string Reference { get; set; }
         public string Title { get; set; }
@@ -20,20 +23,31 @@ namespace GiveCRM.Models
         public string Country { get; set; }
         public bool Archived { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        public ICollection<Donation> Donations { get; set; }
+        private ICollection<Donation> _donations;
+        public ICollection<Donation> Donations
+        {
+            get { return _donations ?? (_donations = _lazyDonations != null ? _lazyDonations.Value : null); }
+            set { _donations = value; }
+        }
 
         public decimal TotalDonations
         {
             get {
-                if (Donations != null)
+                if (_donations != null)
                 {
-                    return Donations.Sum(d => d.Amount);
+                    return _donations.Sum(d => d.Amount);
                 }
                 else
                 {
-                    return 0;
+                    return _totalDonations;
                 }
             }
+            set { _totalDonations = value; }
+        }
+
+        public void SetLazyDonations(Lazy<ICollection<Donation>> lazyDonations)
+        {
+            _lazyDonations = lazyDonations;
         }
 
         public override string ToString()
