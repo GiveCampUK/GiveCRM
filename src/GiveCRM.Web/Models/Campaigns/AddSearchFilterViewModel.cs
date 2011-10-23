@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
 
 namespace GiveCRM.Web.Models.Campaigns
 {
@@ -21,12 +20,5 @@ namespace GiveCRM.Web.Models.Campaigns
 
         public AddSearchFilterViewModel(string title) : base(title)
         {}
-    }
-
-    public class AddSearchFilterSearchCriterionViewModel
-    {
-        public string InternalName { get; set; }
-        public string CriteriaName { get; set; }
-        public int FilterType { get; set; }
     }
 }
