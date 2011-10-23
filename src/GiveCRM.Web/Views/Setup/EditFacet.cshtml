@@ -4,19 +4,19 @@
     var pageTitle = Model.Id > 0 ? "Edit facet" : "Add Facet";
     ViewBag.Title = pageTitle;
 }
-
 <h2>@pageTitle</h2>
-
 <div>
-
 @{Html.BeginForm("SaveFacet", "Setup", FormMethod.Post);}
 
 @Html.HiddenFor(f => f.Id)
 @Html.TextBoxFor(f => f.Name)
 
-@Html.DropDownListFor(
-    f => f.Type, 
-    new List<SelectListItem> { new SelectListItem { Text = "Free Text", Value="FreeText" }, new SelectListItem { Text = "Lookup", Value="List" } })
+@Html.DropDownListFor(f => f.Type, 
+    new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Free Text", Value="FreeText" }, 
+            new SelectListItem { Text = "Lookup", Value="List" }
+        })
 
 <div id="FacetOptions">
     @{
@@ -52,7 +52,7 @@
             if (value.trim() === '')
                 return;
             $('#FacetOptions').append(
-                '<label for="Values[' + index + '].ValueBox">Option</label>' +
+                '<label for="Values[' + index + '].ValueBox">Value</label>' +
                 '<input id="Values[' + index + '].ValueBox" name="Values[' + index + '].Value" type="text" disabled value="' + value + '" /><br />' +
                 '<input type="hidden" name="Values[' + index + '].ID" value="0" />' +
                 '<input type="hidden" name="Values[' + index + '].FacetID" class="facetCount" value="0" />');
@@ -63,7 +63,7 @@
             return $('<div/>').text(val).html();
         };
 
-        var showFacetOptions = function () {
+        var showHideFacetOptions = function () {
             var facetOptions = $("#FacetOptions");
             var addOption = $("#AddOption");
             var typeSelect = $("#Type");
@@ -79,9 +79,9 @@
             }
         };
 
-        showFacetOptions();
+        showHideFacetOptions();
 
-        $("#Type").change(showFacetOptions);
+        $("#Type").change(showHideFacetOptions);
     }); 
 </script>
 </div>

@@ -88,18 +88,21 @@
 		<div class="sidebar span-one-third">
 			<h2>Quick Links</h2>
 		
-			<ul class="toolbar">
-                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsClosed == "N" && Model.Campaign.IsCommitted == true) {
-                                <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>                                
+			<ul class="toolbar">                            
+                            @if (Model.Campaign.Id > 0) {
+
+                                if (Model.Campaign.IsCommitted == true && Model.Campaign.IsClosed == "N") {
+                                    <li>@Html.ActionLink("Close campaign", "CloseCampaign", new { campaignId = Model.Campaign.Id })</li>                                
+                                }
+
+                                if (Model.Campaign.IsCommitted == false && Model.Campaign.IsClosed == "N") {
+                                    <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new { campaignId = Model.Campaign.Id })</li>
+                                } else {
+                                    <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id })</li>
+                                }
+                                
+                                <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
                             }
-                            @if (Model.Campaign.Id > 0 && Model.Campaign.IsCommitted == false) {
-                                <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new { campaignId = Model.Campaign.Id })</li>
-                            }
-                            else
-                            {
-                                <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { campaignId = Model.Campaign.Id })</li>
-                            }                            
-                            <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
 			</ul>
 		</div>
 	</div>
