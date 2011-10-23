@@ -8,7 +8,7 @@ namespace GiveCRM.Web.Controllers
 {
     public class SetupController : Controller
     {
-        private Facets _facetsDb = new Facets();
+        private readonly Facets _facetsDb = new Facets();
 
         public ActionResult Index()
         {
@@ -39,8 +39,7 @@ namespace GiveCRM.Web.Controllers
             }
             else
             {
-                _facetsDb.Insert(facet);
-                
+                _facetsDb.Insert(facet);             
             }
 
             return RedirectToAction("ListFacets");
@@ -50,9 +49,9 @@ namespace GiveCRM.Web.Controllers
         {
             var facets = new List<Facet>(_facetsDb.All());
             var viewModel = new FacetListViewModel
-            {
-                Facets = facets
-            };
+                {
+                    Facets = facets
+                };
 
             return View(viewModel);
         }
