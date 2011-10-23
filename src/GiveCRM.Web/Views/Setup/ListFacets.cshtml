@@ -1,0 +1,32 @@
+﻿@using GiveCRM.Web.Models.Facets
+@model FacetListViewModel
+           
+@{
+    ViewBag.Title = "Show Facets";
+}
+
+<h2>List Facets</h2>
+
+@if (Model.Facets.Count == 0)
+{
+    <div>No facets are defined</div> 
+}
+<ul>
+@foreach (var facet in Model.Facets)
+{
+    <li>@facet.Name @facet.Type</li>
+    if (facet.Values.Count > 0)
+     {
+        <div>Values:
+        <ul>
+         @foreach(var facetValue in facet.Values)
+         {
+             <li>@facetValue.Value</li>
+         }
+        </ul>
+        </div>
+     }
+}
+</ul>
+
+@Html.ActionLink("Add facet", "AddFacet")
