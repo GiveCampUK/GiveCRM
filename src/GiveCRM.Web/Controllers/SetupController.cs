@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
+using GiveCRM.Web.Models.Facets;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -17,9 +15,20 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
-        public ActionResult AddFacet(Facet facet)
+        public ActionResult AddFacet()
+        {
+            return View(new Facet());
+        }
+
+        public ActionResult EditFacet(int id)
         {
             return View();
+        }
+
+        public ActionResult SaveFacet(Facet facet)
+        {
+            _facetsDb.Insert(facet);
+            return RedirectToAction("ShowFacets");
         }
 
         public ActionResult AddFacetOption(FacetValue facetValue)
@@ -27,12 +36,15 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
-        public ActionResult ShowFacets()
+        public ActionResult ListFacets()
         {
-            var facets = _facetsDb.All();
+            var facets = new List<Facet>(_facetsDb.All());
+            var viewModel = new FacetListViewModel
+            {
+                Facets = facets
+            };
 
-            return View(facets);
+            return View(viewModel);
         }
-
     }
 }
