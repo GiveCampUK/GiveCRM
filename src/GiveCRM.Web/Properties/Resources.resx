@@ -159,6 +159,9 @@
   <data name="Literal_Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
+  <data name="Literal_CommitCampaign" xml:space="preserve">
+    <value>Commit Campaign</value>
+  </data>
   <data name="Literal_CreateCampaign" xml:space="preserve">
     <value>Create Campaign</value>
   </data>

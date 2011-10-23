@@ -187,6 +187,15 @@ namespace GiveCRM.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commit Campaign.
+        /// </summary>
+        internal static string Literal_CommitCampaign {
+            get {
+                return ResourceManager.GetString("Literal_CommitCampaign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Campaign.
         /// </summary>
         internal static string Literal_CreateCampaign {
