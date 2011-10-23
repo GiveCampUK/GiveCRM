@@ -8,7 +8,9 @@ namespace GiveCRM.Web.Models.Campaigns
     {
         public Campaign Campaign { get; set; }
         public IEnumerable<MemberSearchFilterViewModel> SearchFilters { get; set; }
+        public IEnumerable<Member> ApplicableMembers { get; set; }
         public string NoSearchFiltersText { get; set; }
+        public string NoMatchingMembersText { get; set; }
 
         public CampaignShowViewModel() : this(string.Empty)
         {}
