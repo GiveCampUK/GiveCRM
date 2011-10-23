@@ -91,10 +91,12 @@
 			<ul class="toolbar">
                             @if (Model.Campaign.Id > 0 && Model.Campaign.IsClosed == "N") {
                                 <li>@Html.ActionLink("Close campaign", "CloseCampaign", new {campaignId = Model.Campaign.Id})</li>
+                                <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new {campaignId = Model.Campaign.Id})</li>
                             }
                             else {
                                 <li>Nothing Here</li>
                             }
+                            <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
 			</ul>
 		</div>
 	</div>

@@ -13,11 +13,11 @@
     @Html.HiddenFor(m => m.CampaignId)
 
     <p>
-        Close @Model.CampaignName?
+        Commit @Model.CampaignName?
     </p>
     
     <p>
-        <input type="submit" value="Close" />
+        <input type="submit" value="Commit" />
         @Html.ActionLink("Cancel", "Index")
     </p>
 }
