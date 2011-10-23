@@ -57,7 +57,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
+            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign) {Campaign = new Campaign()};
             return View("Show", model);
         }
 
