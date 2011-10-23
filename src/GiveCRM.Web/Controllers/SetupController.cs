@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -33,6 +34,8 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult SaveFacet(Facet facet)
         {
+            CleanFacet(facet);
+
             if (facet.Id > 0)
             {
                 _facetsDb.Update(facet);
@@ -43,6 +46,19 @@ namespace GiveCRM.Web.Controllers
             }
 
             return RedirectToAction("ListFacets");
+        }
+
+        /// <summary>
+        /// bad Hack because the form is going wrong and values are not working
+        /// discard the null ones
+        /// </summary>
+        /// <param name="facet"></param>
+        private void CleanFacet(Facet facet)
+        {
+            if (facet.Values != null)
+            {
+                facet.Values = facet.Values.Where(fc => ! string.IsNullOrEmpty(fc.Value)).ToList();
+            }
         }
 
         public ActionResult ListFacets()
