@@ -203,10 +203,9 @@ namespace GiveCRM.Web.Controllers
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
             new CampaignRuns().Commit(viewModel.CampaignId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Show", new {id = viewModel.CampaignId});
         }
 
-        [HttpPost]
         public FileResult DownloadMailingList(int id)
         {
             // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
