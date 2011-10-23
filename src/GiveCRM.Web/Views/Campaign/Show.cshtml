@@ -97,7 +97,7 @@
                             }
                             else
                             {
-                                <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { campaignId = Model.Campaign.Id })</li>
+                                <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id })</li>
                             }                            
                             <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
 			</ul>
