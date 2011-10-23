@@ -20,6 +20,11 @@ namespace GiveCRM.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "DownloadMailingList",
+                "{controller}/DownloadMailingList/{id}/{name}",
+                new {controller = "Campaign", action = "DownloadMailingList"});
+
+            routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Campaign", action = "Index", id = UrlParameter.Optional } // Parameter defaults
