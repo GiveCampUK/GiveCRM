@@ -30,6 +30,10 @@
 					</li>
 				</ul>
 			</li>
+
+            <li @Html.NavigationClassBuilder("Donation")>
+				@Html.ActionLink("Donations", "Index", "Donation", null, null)
+			</li>
 		</ul>
 
 		<div class="pull-right">
