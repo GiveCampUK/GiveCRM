@@ -1,20 +1,17 @@
 ﻿using System;
-using GiveCRM.Models;
+using System.Collections.Generic;
+using System.Linq;
+using GiveCRM.Web.Models.Search;
 
-namespace GiveCRM.Web.Models.Search
+namespace GiveCRM.Models.Search
 {
-    public class SearchCriteria
+    public abstract class SearchCriteria
     {
         public string InternalName { get; set; }
         public string DisplayName { get; set; }
         public SearchFieldType Type { get; set; }
         public SearchOperator SearchOperator { get; set; }
         public string Value { get; set; }
-
-        public virtual bool IsMatch(Member m)
-        {
-            return false;
-        }
 
         protected bool Evaluate(object lhs)
         {
@@ -43,9 +40,31 @@ namespace GiveCRM.Web.Models.Search
             }
         }
 
+        public virtual IEnumerable<SearchOperator> GetAvailableOperators()
+        {
+            return Enum.GetValues(typeof (SearchOperator)).Cast<SearchOperator>();
+        }
+
         public override string ToString()
         {
             return this.DisplayName + " " + this.SearchOperator.ToString() + " " + this.Value;
+        }
+
+        public static SearchCriteria Create(string internalName, string displayName, SearchFieldType filterType, SearchOperator searchOperator, string value)
+        {
+            SearchCriteria criteria;
+            if (CampaignSearchCriteria.IsCampaignSearchCriteria(internalName)) criteria = new CampaignSearchCriteria();
+            else if (LocationSearchCriteria.IsLocationSearchCriteria(internalName)) criteria = new LocationSearchCriteria();
+            else if (DonationSearchCriteria.IsDonationSearchCriteria(internalName)) criteria = new DonationSearchCriteria();
+            else criteria = new FacetSearchCriteria();
+
+            criteria.InternalName = internalName;
+            criteria.DisplayName = displayName;
+            criteria.Type = filterType;
+            criteria.SearchOperator = searchOperator;
+            criteria.Value = value;
+
+            return criteria;
         }
     }
 }

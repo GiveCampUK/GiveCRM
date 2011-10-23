@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
+using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
@@ -83,14 +84,12 @@ namespace GiveCRM.Web.Controllers
                                         {
                                             MemberSearchFilterId = m.Id,
                                             CampaignId = campaign.Id,
-                                            CriteriaDisplayText = new SearchCriteria
-                                                                      {
-                                                                            InternalName = m.InternalName,
-                                                                            DisplayName = m.DisplayName,
-                                                                            Type = (SearchFieldType) m.FilterType,
-                                                                            SearchOperator = (SearchOperator) m.SearchOperator,
-                                                                            Value = m.Value
-                                                                      }.ToString()
+                                            CriteriaDisplayText = SearchCriteria.Create(m.InternalName,
+                                                                            m.DisplayName,
+                                                                            (SearchFieldType) m.FilterType,
+                                                                            (SearchOperator) m.SearchOperator,
+                                                                            m.Value
+                                                                      ).ToString()
                                         }).ToList(),
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
@@ -107,7 +106,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult AddMembershipSearchFilter(int campaignId)
         {
-            var emptySearchCriteria = new SearchService().GetEmptySearchCriteria();
+            var emptySearchCriteria = new Search().GetEmptySearchCriteria();
             var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
             var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
 
@@ -123,7 +122,7 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
-            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+            var searchCriteria = new Search().GetEmptySearchCriteria();
 
             // we have to find one
             var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);

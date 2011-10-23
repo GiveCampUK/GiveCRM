@@ -59,6 +59,7 @@
     <Compile Include="Members.cs" />
     <Compile Include="MemberSearchFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
