@@ -42,9 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Windsor.3.0.0.2001\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -101,6 +98,7 @@
     <Compile Include="Infrastructure\IoC\MailingListExportInstaller.cs" />
     <Compile Include="Infrastructure\WindsorControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignCloseViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
