@@ -67,7 +67,7 @@ namespace GiveCRM.DataAccess
 
             var query = CompileQuery(criteriaList);
 
-            return query.Select(_db.Members.MemberId).ToScalarList<int>();
+            return query.Select(_db.Members.Id).ToScalarList<int>();
         }
 
         private dynamic CompileQuery(List<SearchCriteria> criteriaList)

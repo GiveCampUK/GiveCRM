@@ -167,7 +167,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult CloseCampaign(int campaignId)
         {
             var campaign = new Campaigns().Get(campaignId);
-            var viewModel = new CampaignCloseViewModel(Resources.Literal_CloseCampaign)
+            var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
                                     CampaignName = campaign.Name
@@ -176,13 +176,32 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CloseCampaign(CampaignCloseViewModel viewModel)
+        public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
             var campaigns = new Campaigns();
             var campaign = campaigns.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
             campaigns.Update(campaign);
             return RedirectToAction("Index", new {showClosed = true});
+        }
+
+        [HttpGet]
+        public ActionResult CommitCampaign(int campaignId)
+        {
+            var campaign = new Campaigns().Get(campaignId);
+            var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
+                                {
+                                    CampaignId = campaignId,
+                                    CampaignName = campaign.Name
+                                };
+            return View("Commit", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
+        {
+            new CampaignRuns().Commit(viewModel.CampaignId);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
