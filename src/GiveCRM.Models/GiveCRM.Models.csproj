@@ -60,6 +60,7 @@
     <Compile Include="Search\SearchCriteria.cs" />
     <Compile Include="Search\SearchFieldType.cs" />
     <Compile Include="Search\SearchOperator.cs" />
+    <Compile Include="Search\SearchOperatorExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
