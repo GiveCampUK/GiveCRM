@@ -23,6 +23,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.Title = "Add Member"; 
             return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
@@ -33,6 +34,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Edit(int id)
         {
+            ViewBag.Title = "Edit Member"; 
             var model = _membersDb.Get(id); 
             if(model.PhoneNumbers == null) 
                model.PhoneNumbers = new List<PhoneNumber>(); 
@@ -74,6 +76,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Save(Models.Members.MemberEditViewModel member)
         {
+            ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
             if(!ModelState.IsValid)
                 return View(viewName: "Add", model: member);
 
@@ -106,7 +109,7 @@ namespace GiveCRM.Web.Controllers
                     !member.Archived &&
                     (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
 
-            return View(results);
+            return View(results.Take(10));
         }
 
         public ActionResult TopDonors()

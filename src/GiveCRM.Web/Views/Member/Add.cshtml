@@ -1,11 +1,8 @@
 ﻿@model GiveCRM.Web.Models.Members.MemberEditViewModel 
-@{
-    ViewBag.Title = "Add";
-}
 
-<h2>Add Member</h2>
+<h2>@ViewBag.Title</h2>
 
-@Html.ValidationSummary() 
+@Html.ValidationSummary("", new {@class="alert-message warning"})
 
 <div>
 @{Html.BeginForm("Save", "Member", FormMethod.Post, new {id="addMember"});}
