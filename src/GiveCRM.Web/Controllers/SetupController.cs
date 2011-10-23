@@ -17,7 +17,17 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
-        public ActionResult AddFacet(Facet facet)
+        public ActionResult AddFacet()
+        {
+            return View();
+        }
+
+        public ActionResult EditFacet(int id)
+        {
+            return View();
+        }
+
+        public ActionResult SaveFacet(Facet facet)
         {
             return View();
         }
