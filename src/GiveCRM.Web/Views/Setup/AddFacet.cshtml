@@ -1,15 +1,18 @@
-﻿@model GiveCRM.Models.Facet
+﻿@using GiveCRM.Models
+@model GiveCRM.Models.Facet
 
 @{
-    ViewBag.Title = "Add Facet";
+    var pageTitle = Model.Id > 0 ? "Edit facet" : "Add Facet";
+    ViewBag.Title = pageTitle;
 }
 
-<h2>Add Facet</h2>
+<h2>@pageTitle</h2>
 
 <div>
 
 @{Html.BeginForm("SaveFacet", "Setup", FormMethod.Post);}
 
+@Html.HiddenFor(f => f.Id)
 @Html.TextBoxFor(f => f.Name)
 
 @Html.DropDownListFor(
@@ -17,36 +20,34 @@
     new List<SelectListItem> { new SelectListItem { Text = "Free Text", Value="FreeText" }, new SelectListItem { Text = "Lookup", Value="List" } })
 
 <div id="FacetOptions">
-@{
-    int i = 0; 
-    foreach(var option in Model.Values)
-    {
-        <label for="Values[@i].ValueBox">@option.Value</label>
-        <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" disabled value="@option.Value" /><br />
-        <input type="hidden" name="Values[@i].ID" value="@option.Id" />
-        <input type="hidden" name="Values[@i].FacetID" class="facetCount" value="@option.FacetId" />
-        i += 1;
+    @{
+        int i = 0;
+        foreach (var option in Model.Values)
+        {
+            <label for="Values[@i].ValueBox">@option.Value</label>
+            <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" disabled value="@option.Value" />
+            <br />
+            <input type="hidden" name="Values[@i].ID" value="@option.Id" />
+            <input type="hidden" name="Values[@i].FacetID" class="facetCount" value="@option.FacetId" />
+            i += 1;
+        }
     }
-}
 </div>
 
-<div id="AddOption">
-    <label for="AddValue_Value">Value</label><input id="AddValue_Value" name="value" type="text" />
-    <input id="AddValue_Button" type="button" value="Add Value"  /><br />
-</div>
+    <div id="AddOption">
+        <label for="AddValue_Value">Value</label><input id="AddValue_Value" name="value" type="text" />
+        <input id="AddValue_Button" type="button" value="Add Value"  /><br />
+    </div>
 
 <input type="submit" value="Save" />
 
 @{Html.EndForm();}
-
-
 <script type="text/javascript">
 
     $(function () {
         $('#AddValue_Button').click(function () {
             var index = $('.facetCount').length;
-            alert(index);
-            var value = HtmlEncode($('#AddValue_Value').val());
+            var value = htmlEncode($('#AddValue_Value').val());
             $('#AddValue_Value').val('');
             if (value.trim() === '')
                 return;
@@ -58,11 +59,29 @@
 
         });
 
-        var HtmlEncode = function (val) {
+        var htmlEncode = function (val) {
             return $('<div/>').text(val).html();
         };
+
+        var showFacetOptions = function () {
+            var facetOptions = $("#FacetOptions");
+            var addOption = $("#AddOption");
+            var typeSelect = $("#Type");
+            var val = typeSelect.val();
+
+            if (val == "List") {
+                facetOptions.show();
+                addOption.show();
+            }
+            else {
+                facetOptions.hide();
+                addOption.hide();
+            }
+        };
+
+        showFacetOptions();
+
+        $("#Type").change(showFacetOptions);
     }); 
 </script>
-
-
 </div>
