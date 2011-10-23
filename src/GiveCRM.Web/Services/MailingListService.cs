@@ -29,21 +29,21 @@ namespace GiveCRM.Web.Services
         {
             return members.Select(m => new List<Cell>
                                            {
-                                               new Cell {Value = m.Reference, BackgroundColor = Color.Empty},
-                                               new Cell {Value = m.Title, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.Salutation, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.FirstName, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.LastName, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.EmailAddress, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.AddressLine1, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.AddressLine2, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.City, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.Region, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.PostalCode, BackgroundColor = Color.Empty},
-                                               new Cell {Value= m.Country, BackgroundColor = Color.Empty},
-                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Home), BackgroundColor = Color.Empty},
-                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Mobile), BackgroundColor = Color.Empty},
-                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Work), BackgroundColor = Color.Empty},
+                                               new Cell {Value = m.Reference},
+                                               new Cell {Value = m.Title},
+                                               new Cell {Value= m.Salutation},
+                                               new Cell {Value= m.FirstName},
+                                               new Cell {Value= m.LastName},
+                                               new Cell {Value= m.EmailAddress},
+                                               new Cell {Value= m.AddressLine1},
+                                               new Cell {Value= m.AddressLine2},
+                                               new Cell {Value= m.City},
+                                               new Cell {Value= m.Region},
+                                               new Cell {Value= m.PostalCode},
+                                               new Cell {Value= m.Country},
+                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Home)},
+                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Mobile)},
+                                               new Cell {Value= FirstTelephoneNumber(m, PhoneNumberType.Work)},
                                            }).ToList();
         }
 
@@ -59,21 +59,21 @@ namespace GiveCRM.Web.Services
                           {
                               new List<Cell>
                                   {
-                                      new Cell {Value = "Reference", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Title", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Salutation", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Firstname", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Surname", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Email", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Address 1", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Address 2", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "City", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Region", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Postal Code", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Country", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Home Telephone", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Mobile Telephone", IsBold = true, BackgroundColor = Color.Empty},
-                                      new Cell {Value = "Work Telephone", IsBold = true, BackgroundColor = Color.Empty},
+                                      new Cell {Value = "Reference", IsBold = true},
+                                      new Cell {Value = "Title", IsBold = true},
+                                      new Cell {Value = "Salutation", IsBold = true},
+                                      new Cell {Value = "Firstname", IsBold = true},
+                                      new Cell {Value = "Surname", IsBold = true},
+                                      new Cell {Value = "Email", IsBold = true},
+                                      new Cell {Value = "Address 1", IsBold = true},
+                                      new Cell {Value = "Address 2", IsBold = true},
+                                      new Cell {Value = "City", IsBold = true},
+                                      new Cell {Value = "Region", IsBold = true},
+                                      new Cell {Value = "Postal Code", IsBold = true},
+                                      new Cell {Value = "Country", IsBold = true},
+                                      new Cell {Value = "Home Telephone", IsBold = true},
+                                      new Cell {Value = "Mobile Telephone", IsBold = true},
+                                      new Cell {Value = "Work Telephone", IsBold = true},
                                   }
                           };
             return ret;
