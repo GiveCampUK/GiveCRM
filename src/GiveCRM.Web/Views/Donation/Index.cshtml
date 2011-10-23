@@ -86,7 +86,11 @@
     function DoDonate() {
         $.ajax({
             type: 'GET',
-            url: './donation/doquickdonate?id=' + $("#DonorId").val() + "&amount=" + $("#Amount").val() + "&date=" + $("#Date").val().replace('/', '%2F'),
+            url: './donation/doquickdonate?id=' +
+                $("#DonorId").val() +
+                "&campaignId=" + $("#CampaignId").val() +
+                "&amount=" + $("#Amount").val() + 
+                "&date=" + $("#Date").val().replace('/', '%2F'),
             dataType: 'html',
             success: function (html, textStatus) {
                 $('#AddDonation')[0].innerHTML = "Done!";
