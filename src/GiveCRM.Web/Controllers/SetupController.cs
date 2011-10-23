@@ -22,18 +22,24 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult EditFacet(int id)
         {
-            return View();
+            var facet = _facetsDb.Get(id);
+            return View("AddFacet", facet);
         }
 
+        [HttpPost]
         public ActionResult SaveFacet(Facet facet)
         {
-            if (facet.Id == 0)
+            if (facet.Id > 0)
             {
-                _facetsDb.Insert(facet);
+                _facetsDb.Update(facet);
             }
             else
             {
-                _facetsDb.Update(facet);
+                _facetsDb.Insert(facet);
+                
+            }
+
+            return RedirectToAction("ListFacets");
             }
             return RedirectToAction("ListFacets");
         }

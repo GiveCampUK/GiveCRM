@@ -1,4 +1,7 @@
-﻿namespace GiveCRM.Models
+﻿using GiveCRM.Models.Search;
+using GiveCRM.Web.Models.Search;
+
+namespace GiveCRM.Models
 {
     public class MemberSearchFilter
     {
@@ -10,5 +13,10 @@
         public int FilterType { get; set; }
         public int SearchOperator { get; set; }
         public string Value { get; set; }
+
+        public SearchCriteria ToSearchCriteria()
+        {
+            return SearchCriteria.Create(InternalName, DisplayName, (SearchFieldType) FilterType, (SearchOperator) SearchOperator, Value);
+        }
     }
 }

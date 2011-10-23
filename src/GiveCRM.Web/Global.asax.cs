@@ -1,9 +1,5 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using Castle.Windsor.Installer;
-using GiveCRM.Web.Infrastructure;
 
 namespace GiveCRM.Web
 {
@@ -38,14 +34,6 @@ namespace GiveCRM.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-        }
-
-        private static void InstallWindsor()
-        {
-            IWindsorContainer container = new WindsorContainer();
-            container.Install(FromAssembly.This());
-            container.Register(Component.For<IWindsorContainer>().Instance(container));
-            ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
         }
     }
 }
