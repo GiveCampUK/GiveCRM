@@ -1,10 +1,10 @@
 ﻿using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
+using GiveCRM.Web.Models.Facets;
 
 namespace GiveCRM.Web.Controllers
 {
-    using System.Collections.Generic;
 
     public class SetupController : Controller
     {
@@ -37,10 +37,12 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult ShowFacets()
         {
-            IEnumerable<Facet> facets = _facetsDb.All();
+            var viewModel = new FacetListViewModel
+            {
+                Facets = _facetsDb.All()
+            };
 
-            return View(facets);
+            return View(viewModel);
         }
-
     }
 }
