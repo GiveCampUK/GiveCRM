@@ -160,7 +160,6 @@ namespace GiveCRM.DataAccess
 
             return refetchPhoneNumbers; 
         }
-
-
+        
     }
 }

@@ -112,7 +112,7 @@ namespace GiveCRM.Web.Controllers
                     !member.Archived &&
                     (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
 
-            return View(results);
+            return View(results.Take(10));
         }
 
         public ActionResult TopDonors()
