@@ -149,6 +149,28 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Show", new {id = campaignId});
         }
 
+        [HttpGet]
+        public ActionResult CloseCampaign(int campaignId)
+        {
+            var campaign = new Campaigns().Get(campaignId);
+            var viewModel = new CampaignCloseViewModel(Resources.Literal_CloseCampaign)
+                                {
+                                    CampaignId = campaignId,
+                                    CampaignName = campaign.Name
+                                };
+            return View("Close", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CloseCampaign(CampaignCloseViewModel viewModel)
+        {
+            var campaigns = new Campaigns();
+            var campaign = campaigns.Get(viewModel.CampaignId);
+            campaign.IsClosed = "Y";
+            campaigns.Update(campaign);
+            return RedirectToAction("Index", new {showClosed = true});
+        }
+
         [HttpPost]
         public FileResult DownloadMailingList(int id)
         {
