@@ -23,7 +23,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Add()
         {
-            return View(new Member() { PhoneNumbers = new List<PhoneNumber>() });
+            return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
         public ActionResult Import()
@@ -36,7 +36,7 @@ namespace GiveCRM.Web.Controllers
             var model = _membersDb.Get(id); 
             if(model.PhoneNumbers == null) 
                model.PhoneNumbers = new List<PhoneNumber>(); 
-            return View(viewName: "Add", model: model);
+            return View(viewName: "Add", model: MemberEditViewModel.ToViewModel(model));
         }
 
         public ActionResult Delete(int id)
@@ -72,15 +72,18 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Save(Member member)
+        public ActionResult Save(Models.Members.MemberEditViewModel member)
         {
+            if(!ModelState.IsValid)
+                return View(viewName: "Add", model: member);
+
             if (member.Id == 0)
             {
-                _membersDb.Insert(member);
+                _membersDb.Insert(member.ToModel());
             }
             else
             {
-                _membersDb.Update(member);
+                _membersDb.Update(member.ToModel());
             }
 
             return RedirectToAction("Index");
