@@ -208,9 +208,8 @@ namespace GiveCRM.Web.Controllers
 
         public FileResult DownloadMailingList(int id)
         {
-            // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
-
-            var members = new List<Member>();
+            var membersRepo = new Members();
+            var members = membersRepo.FromCampaignRun(id);
 
             byte[] filecontent;
             using (var stream = new MemoryStream())
