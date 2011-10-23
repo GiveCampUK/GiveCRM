@@ -1,39 +1,40 @@
-﻿@model GiveCRM.Models.Member
+﻿@model GiveCRM.Web.Models.Members.MemberEditViewModel 
 @{
     ViewBag.Title = "Add";
 }
 
 <h2>Add Member</h2>
 
-<div>
+@Html.ValidationSummary() 
 
+<div>
 @{Html.BeginForm("Save", "Member", FormMethod.Post, new {id="addMember"});}
 
 @Html.HiddenFor(m => m.Id)
 
-@Html.LabelFor(m=>m.Reference) @Html.TextBoxFor(m => m.Reference)<br />
+@Html.LabelFor(m=>m.Reference) @Html.TextBoxFor(m => m.Reference) @Html.ValidationMessageFor(m => m.Reference)<br />
 
-@Html.LabelFor(m => m.Title) @Html.TextBoxFor(m=> m.Title)<br />
+@Html.LabelFor(m => m.Title) @Html.TextBoxFor(m=> m.Title) @Html.ValidationMessageFor(m => m.Title) <br />
 
-@Html.LabelFor(m => m.Salutation) @Html.TextBoxFor(m=> m.Salutation)<br />
+@Html.LabelFor(m => m.Salutation) @Html.TextBoxFor(m=> m.Salutation) @Html.ValidationMessageFor(m => m.Salutation) <br />
 
-@Html.LabelFor(m => m.FirstName) @Html.TextBoxFor(m => m.FirstName)<br />
+@Html.LabelFor(m => m.FirstName) @Html.TextBoxFor(m => m.FirstName) @Html.ValidationMessageFor(m => m.FirstName) <br />
 
-@Html.LabelFor(m => m.LastName) @Html.TextBoxFor(m => m.LastName)<br />
+@Html.LabelFor(m => m.LastName) @Html.TextBoxFor(m => m.LastName) @Html.ValidationMessageFor(m => m.LastName)<br />
 
-@Html.LabelFor(m => m.AddressLine1) @Html.TextBoxFor(m => m.AddressLine1)<br />
+@Html.LabelFor(m => m.AddressLine1) @Html.TextBoxFor(m => m.AddressLine1) @Html.ValidationMessageFor(m => m.AddressLine1)<br />
 
-@Html.LabelFor(m => m.AddressLine2) @Html.TextBoxFor(m => m.AddressLine2)<br />
+@Html.LabelFor(m => m.AddressLine2) @Html.TextBoxFor(m => m.AddressLine2) @Html.ValidationMessageFor(m => m.AddressLine2)<br />
 
-@Html.LabelFor(m => m.City) @Html.TextBoxFor(m => m.City)<br />
+@Html.LabelFor(m => m.City) @Html.TextBoxFor(m => m.City) @Html.ValidationMessageFor(m => m.City) <br />
 
-@Html.LabelFor(m => m.PostalCode) @Html.TextBoxFor(m => m.PostalCode)<br />
+@Html.LabelFor(m => m.PostalCode) @Html.TextBoxFor(m => m.PostalCode) @Html.ValidationMessageFor(m => m.PostalCode) <br />
 
-@Html.LabelFor(m => m.Region) @Html.TextBoxFor(m=> m.Region)<br />
+@Html.LabelFor(m => m.Region) @Html.TextBoxFor(m=> m.Region) @Html.ValidationMessageFor(m => m.Region)<br />
 
-@Html.LabelFor(m => m.Country) @Html.TextBoxFor(m => m.Country)<br />
+@Html.LabelFor(m => m.Country) @Html.TextBoxFor(m => m.Country) @Html.ValidationMessageFor(m => m.Country) <br />
 
-@Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress)<br />
+@Html.LabelFor(m => m.EmailAddress) @Html.TextBoxFor(m => m.EmailAddress) @Html.ValidationMessageFor(m => m.EmailAddress) <br />
 
 
 <div id="PhoneNumbers">
