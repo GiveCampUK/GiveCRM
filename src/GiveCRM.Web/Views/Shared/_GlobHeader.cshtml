@@ -36,7 +36,8 @@
 				
 				<ul class="dropdown-menu">
 					<li @Html.NavigationClassBuilder("Setup", "Index")>
-						@Html.ActionLink("Add Facets", "Index", "Setup")
+					        @Html.ActionLink("List Facets", "ListFacets", "Setup")
+							@Html.ActionLink("Add Facets", "Index", "Setup")
 					</li>
 				</ul>
 			</li>
