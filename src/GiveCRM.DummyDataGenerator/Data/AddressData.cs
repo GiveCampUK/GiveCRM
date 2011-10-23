@@ -106,7 +106,8 @@
                 "Boulevard",
                 "Crescent",
                 "Lane",
-                "Drive"
+                "Drive",
+                "Walk"
             };
 
 
@@ -148,7 +149,11 @@
                 "SE",
                 "SW",
                 "YO",
-                "BR"
+                "BR",
+                "AR",
+                "CD",
+                "DE",
+                "HI"
             };
     }
 }

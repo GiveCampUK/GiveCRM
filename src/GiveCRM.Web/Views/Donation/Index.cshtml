@@ -2,7 +2,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Donations</h2>
+<div class="campaigns">
+	<div class="row">
+		<div class="span16">
+<h1>Donations</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="maincol span-two-thirds">
 
 <h3>Top Donations</h3>
 
@@ -15,3 +23,73 @@
 <h3>Top Donors</h3>
 
 @{Html.RenderAction("TopDonors", "Member");}
+
+		</div>
+
+		<div class="sidebar span-one-third">
+			<h2>Quick Links</h2>
+		
+			<ul class="toolbar">
+				<li>
+                    @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post);}
+
+                    <label>Search</label>
+
+                    @Html.TextBox("SearchCriteria")
+
+                    <a href="javascript:DoSearch();">Search</a>
+
+                    @{Html.EndForm();}
+
+                    <div id="QuickResults">&nbsp;</div>
+
+                    <div id="AddDonation">&nbsp</div>
+
+                </li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        
+    });
+
+    function DoSearch() {
+        var criteria = $("#SearchCriteria").val();
+        $.ajax({
+            type: 'GET',
+            url: './member/ajaxsearch?criteria=' + criteria,
+            dataType: 'html',
+            success: function (html, textStatus) {
+                $('#QuickResults')[0].innerHTML = html;
+            }
+        });
+    }
+
+    function AddDonation(id) {
+        $.ajax({
+            type: 'GET',
+            url: './donation/quickdonate?id=' + id,
+            dataType: 'html',
+            success: function (html, textStatus) {
+                $('#AddDonation')[0].innerHTML = html;
+                $('#Date').datepicker({ dateFormat: 'dd/mm/yy' });
+            }
+        });
+    }
+
+    function DoDonate() {
+        $.ajax({
+            type: 'GET',
+            url: './donation/doquickdonate?id=' + $("#DonorId").val() + "&amount=" + $("#Amount").val() + "&date=" + $("#Date").val().replace('/', '%2F'),
+            dataType: 'html',
+            success: function (html, textStatus) {
+                $('#AddDonation')[0].innerHTML = "Done!";
+            }
+        });
+    }
+
+</script>

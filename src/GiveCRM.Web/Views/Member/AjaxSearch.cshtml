@@ -1,0 +1,6 @@
+﻿@model IEnumerable<GiveCRM.Models.Member>
+
+@foreach (var member in Model)
+{
+    <a href="javascript:AddDonation(@member.Id);">@member.FirstName @member.LastName</a>
+}

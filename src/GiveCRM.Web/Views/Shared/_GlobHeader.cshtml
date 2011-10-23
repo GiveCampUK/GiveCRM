@@ -10,10 +10,10 @@
 				
 				<ul class="dropdown-menu">
 					<li @Html.NavigationClassBuilder("Campaign", "Index")>
-						@Html.ActionLink("List Campaign", "Index", "Campaign")
+						@Html.ActionLink("List Campaigns", "Index", "Campaign")
 					</li>
 					<li @Html.NavigationClassBuilder("Campaign", "Add")>
-						@Html.ActionLink("Add Campaign", "Create", "Campaign")
+						@Html.ActionLink("Create Campaign", "Create", "Campaign")
 					</li>
 				</ul>
 			</li>
@@ -29,6 +29,20 @@
 						@Html.ActionLink("Add Members", "Add", "Member")
 					</li>
 				</ul>
+			</li>
+
+			<li @Html.NavigationClassBuilder("Setup", additionalClasses: "dropdown") data-dropdown="dropdown">
+				@Html.ActionLink("Setup", "Index", "Setup", null, new { @class = "dropdown-toggle" })
+				
+				<ul class="dropdown-menu">
+					<li @Html.NavigationClassBuilder("Setup", "Index")>
+						@Html.ActionLink("Add Facets", "Index", "Setup")
+					</li>
+				</ul>
+			</li>
+
+            <li @Html.NavigationClassBuilder("Donation")>
+				@Html.ActionLink("Donations", "Index", "Donation", null, null)
 			</li>
 		</ul>
 
