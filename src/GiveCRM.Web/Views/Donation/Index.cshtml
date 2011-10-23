@@ -2,7 +2,7 @@
     ViewBag.Title = "Index";
 }
 
-<div class="campaigns">
+<div class="donations">
 	<div class="row">
 		<div class="span16">
 <h1>Donations</h1>
@@ -31,7 +31,7 @@
 		
 			<ul class="toolbar">
 				<li>
-                    @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post);}
+                    @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post, new { name = "AjaxSearch", id = "AjaxSearch" });}
 
                     <label>Search</label>
 
@@ -54,11 +54,13 @@
 <script>
 
     $(document).ready(function () {
-        
+        $('#AjaxSearch').submit(function () { DoSearch(); return false; });
     });
 
     function DoSearch() {
         var criteria = $("#SearchCriteria").val();
+        $('#QuickResults')[0].innerHTML = "";
+        $('#AddDonation')[0].innerHTML = "";
         $.ajax({
             type: 'GET',
             url: './member/ajaxsearch?criteria=' + criteria,

@@ -2,5 +2,5 @@
 
 @foreach (var member in Model)
 {
-    <a href="javascript:AddDonation(@member.Id);">@member.FirstName @member.LastName</a>
+    <a href="javascript:AddDonation(@member.Id);">@member.FirstName @member.LastName @member.PostalCode</a><br />
 }
