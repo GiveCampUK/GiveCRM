@@ -17,13 +17,17 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult AddFacet()
         {
-            return View(new Facet());
+            var facet = new Facet
+                {
+                    Values = new List<FacetValue>()
+                };
+            return View("EditFacet", facet);
         }
 
         public ActionResult EditFacet(int id)
         {
             var facet = _facetsDb.Get(id);
-            return View("AddFacet", facet);
+            return View("EditFacet", facet);
         }
 
         [HttpPost]
@@ -40,11 +44,6 @@ namespace GiveCRM.Web.Controllers
             }
 
             return RedirectToAction("ListFacets");
-        }
-
-        public ActionResult AddFacetOption(FacetValue facetValue)
-        {
-            return View();
         }
 
         public ActionResult ListFacets()
