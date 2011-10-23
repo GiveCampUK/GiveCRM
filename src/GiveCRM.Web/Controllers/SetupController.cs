@@ -17,7 +17,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult AddFacet()
         {
-            return View();
+            return View(new Facet());
         }
 
         public ActionResult EditFacet(int id)
@@ -27,7 +27,8 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult SaveFacet(Facet facet)
         {
-            return View();
+            _facetsDb.Insert(facet);
+            return RedirectToAction("ShowFacets");
         }
 
         public ActionResult AddFacetOption(FacetValue facetValue)
