@@ -40,8 +40,6 @@ namespace GiveCRM.Web.Controllers
             }
 
             return RedirectToAction("ListFacets");
-            }
-            return RedirectToAction("ListFacets");
         }
 
         public ActionResult AddFacetOption(FacetValue facetValue)
