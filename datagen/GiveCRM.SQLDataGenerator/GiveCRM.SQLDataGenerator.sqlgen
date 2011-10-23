@@ -1709,33 +1709,49 @@ def main(config):
           <DefinedSize>4</DefinedSize>
         </value>
         <value version="1" type="SDGField">
-          <Name>Type</Name>
+          <Name>PhoneNumberType</Name>
           <FieldType>Generated</FieldType>
           <PrimaryKey>False</PrimaryKey>
           <ForeignKey>False</ForeignKey>
           <Unique>False</Unique>
           <AllowsNulls>False</AllowsNulls>
-          <SqlType>NVarchar</SqlType>
-          <Precision>0</Precision>
+          <SqlType>Integer32</SqlType>
+          <Precision>10</Precision>
           <Scale>0</Scale>
-          <DefinedSize>15</DefinedSize>
+          <DefinedSize>4</DefinedSize>
           <Generator version="1" type="GeneratorDetails">
-            <GeneratorTypeName>RedGate.SQLDataGenerator.ExpressionGenerators.RegexpGenerator</GeneratorTypeName>
-            <DisplayName>RegexpGenerator</DisplayName>
-            <Description>Used for formatted data</Description>
-            <CategoryName>Generic</CategoryName>
+            <GeneratorTypeName>RedGate.SQLDataGenerator.Generators.Number.Int32Generator</GeneratorTypeName>
+            <DisplayName>int</DisplayName>
+            <Description>Generates ints (32-bit)</Description>
+            <CategoryName>SQL Type</CategoryName>
             <GeneratorProperties type="Dictionary&lt;string, object&gt;" version="1">
               <element>
-                <key type="string">Expression</key>
-                <value type="string">(Mobile|Home|Work)</value>
+                <key type="string">Increment</key>
+                <value type="string">1</value>
+              </element>
+              <element>
+                <key type="string">UseSequence</key>
+                <value type="string">False</value>
               </element>
               <element>
                 <key type="string">Unique</key>
                 <value type="string">False</value>
               </element>
               <element>
+                <key type="string">MinValue</key>
+                <value type="string">0</value>
+              </element>
+              <element>
+                <key type="string">MaxValue</key>
+                <value type="string">2</value>
+              </element>
+              <element>
+                <key type="string">UseColumnOffset</key>
+                <value type="string">False</value>
+              </element>
+              <element>
                 <key type="string">Seed</key>
-                <value type="string">7170</value>
+                <value type="string">7172</value>
               </element>
               <element>
                 <key type="string">NullsAllowed</key>
@@ -1744,10 +1760,6 @@ def main(config):
               <element>
                 <key type="string">NullProportion</key>
                 <value type="string">0.01</value>
-              </element>
-              <element>
-                <key type="string">UseSequence</key>
-                <value type="string">False</value>
               </element>
             </GeneratorProperties>
           </Generator>
@@ -2236,7 +2248,7 @@ INSERT INTO FacetValue (FacetID, Value) VALUES (2, 'Violet')</Script>
     <value version="1" type="SQLScript">
       <SQLScriptType>InternalSQLScript</SQLScriptType>
       <Name>MemberFacet.Fix</Name>
-      <Script>UPDATE MemberFacet SET FacetID = 3, FacetValueID = NULL WHERE FreeTextValue IS NOT NULL</Script>
+      <Script>UPDATE MemberFacet SET FacetID = 2, FacetValueID = NULL WHERE FreeTextValue IS NOT NULL</Script>
     </value>
   </PostScripts>
 </Project>
