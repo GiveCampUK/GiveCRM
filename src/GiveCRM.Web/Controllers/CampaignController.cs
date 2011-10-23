@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -167,7 +168,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult CloseCampaign(int campaignId)
         {
             var campaign = new Campaigns().Get(campaignId);
-            var viewModel = new CampaignCloseViewModel(Resources.Literal_CloseCampaign)
+            var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
                                     CampaignName = campaign.Name
@@ -176,13 +177,32 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CloseCampaign(CampaignCloseViewModel viewModel)
+        public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
             var campaigns = new Campaigns();
             var campaign = campaigns.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
             campaigns.Update(campaign);
             return RedirectToAction("Index", new {showClosed = true});
+        }
+
+        [HttpGet]
+        public ActionResult CommitCampaign(int campaignId)
+        {
+            var campaign = new Campaigns().Get(campaignId);
+            var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
+                                {
+                                    CampaignId = campaignId,
+                                    CampaignName = campaign.Name
+                                };
+            return View("Commit", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
+        {
+            new CampaignRuns().Commit(viewModel.CampaignId);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -200,6 +220,42 @@ namespace GiveCRM.Web.Controllers
             }
 
             return File(filecontent, "application/vnd.ms-excel");
+        }
+
+        [HttpGet]
+        public ActionResult Clone(int id)
+        {
+            var campaignRepo = new Campaigns();
+            var memberSearchFilterRepo = new MemberSearchFilters();
+
+            var campaign = campaignRepo.Get(id);
+            Campaign campaignClone = new Campaign
+                                         {
+                                             Id = 0,
+                                             Description = campaign.Description + " (" + Resources.Literal_Cloned + ")",
+                                             IsClosed = "N",
+                                             Name = campaign.Name + " (" + Resources.Literal_Cloned + ")",
+                                             RunOn = null
+                                         };
+
+            campaignClone = campaignRepo.Insert(campaignClone);
+
+            IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
+
+            foreach (MemberSearchFilter memberSearchFilter in memberSearchFilters)
+            {
+                memberSearchFilterRepo.Insert(new MemberSearchFilter
+                                                  {
+                                                      CampaignId = campaignClone.Id,
+                                                      DisplayName = memberSearchFilter.DisplayName,
+                                                      FilterType = memberSearchFilter.FilterType,
+                                                      InternalName = memberSearchFilter.InternalName,
+                                                      SearchOperator = memberSearchFilter.SearchOperator,
+                                                      Value = memberSearchFilter.Value
+                                                  });
+            }
+
+            return RedirectToAction("Show", new {id = campaignClone.Id});
         }
     }
 }
