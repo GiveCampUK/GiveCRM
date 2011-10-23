@@ -9,6 +9,11 @@ namespace GiveCRM.Models
         public string Description { get; set; }
         public DateTime? RunOn { get; set; }
 
+        public bool IsCommitted
+        {
+            get { return RunOn.HasValue; }
+        }
+
         private string _isClosed = "N";
         public string IsClosed
         {
