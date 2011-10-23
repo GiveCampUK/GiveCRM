@@ -43,6 +43,13 @@ namespace GiveCRM.DataAccess
         public IEnumerable<Member> Run(IEnumerable<SearchCriteria> criteria)
         {
             var criteriaList = criteria.ToList();
+
+            if (criteriaList.Count == 0)
+            {
+                // don't attempt to search if there are not criteria - don't want the whole database
+                return Enumerable.Empty<Member>();
+            }
+            
             var expr = CompileLocationCriteria(criteriaList.OfType<LocationSearchCriteria>(), null);
             SimpleExpression having = null;
             CompileDonationCriteria(criteriaList.OfType<DonationSearchCriteria>(), ref expr, ref having);
