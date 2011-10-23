@@ -9,6 +9,7 @@ namespace GiveCRM.Models
         private decimal _totalDonations;
         private Lazy<ICollection<Donation>> _lazyDonations;
         public int Id { get; set; }
+
         public string Reference { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
