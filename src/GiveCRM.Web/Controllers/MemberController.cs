@@ -90,15 +90,9 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string name, string postcode, string reference)
+        public ActionResult Search(string name, string postcode, string reference, int start = 0)
         {
-            var results = _membersDb
-                .All()
-                .Where(member => 
-                    !member.Archived &&
-                    (name == string.Empty || NameSearch(member, name.ToLower())) &&
-                    (postcode == string.Empty || PostcodeSearch(member, postcode.ToLower())) &&
-                    (reference == string.Empty || ReferenceSearch(member, reference.ToLower())));
+            var results = _membersDb.Search(name, postcode, reference);
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }

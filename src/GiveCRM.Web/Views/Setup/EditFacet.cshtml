@@ -1,5 +1,4 @@
-﻿@using GiveCRM.Models
-@model GiveCRM.Models.Facet
+﻿@model GiveCRM.Models.Facet
 
 @{
     var pageTitle = Model.Id > 0 ? "Edit facet" : "Add Facet";
@@ -34,12 +33,13 @@
     }
 </div>
 
-    <div id="AddOption">
-        <label for="AddValue_Value">Value</label><input id="AddValue_Value" name="value" type="text" />
-        <input id="AddValue_Button" type="button" value="Add Value"  /><br />
-    </div>
-
+<div id="AddOption">
+    <label for="AddValue_Value">Value</label><input id="AddValue_Value" name="value" type="text" />
+    <input id="AddValue_Button" type="button" value="Add Value"  /><br />
+</div>
+<div style="clear:both;margin:4px;">
 <input type="submit" value="Save" />
+</div>
 
 @{Html.EndForm();}
 <script type="text/javascript">
