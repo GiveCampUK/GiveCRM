@@ -181,12 +181,12 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index", new {showClosed = true});
         }
 
-        [HttpPost]
+        //[HttpPost]
         public FileResult DownloadMailingList(int id)
         {
             // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
 
-            var members = new List<Member>();
+            var members = new Members().All();
 
             byte[] filecontent;
             using (var stream = new MemoryStream())
