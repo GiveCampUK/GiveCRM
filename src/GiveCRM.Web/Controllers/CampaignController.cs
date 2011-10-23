@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
+using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Campaigns;
 using GiveCRM.Web.Models.Search;
 using GiveCRM.Web.Properties;
@@ -57,22 +58,14 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Create()
         {
             var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
-            model.Campaign = new Campaign {Name = "New Campaign"};
             return View("Show", model);
         }
 
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            int newId = this.InsertCampaign(campaign);
-            return RedirectToAction("Show", new {id = newId});
-        }
-
-        private int InsertCampaign(Campaign campaign)
-        {
-            Campaigns db = new Campaigns();
-            Campaign savedCampaign = db.Insert(campaign);
-            return savedCampaign.Id;
+            new Campaigns().Insert(campaign);
+            return RedirectToAction("Show");
         }
 
         [HttpGet]
@@ -91,14 +84,12 @@ namespace GiveCRM.Web.Controllers
                                         {
                                             MemberSearchFilterId = m.Id,
                                             CampaignId = campaign.Id,
-                                            CriteriaDisplayText = new SearchCriteria
-                                                                      {
-                                                                            InternalName = m.InternalName,
-                                                                            DisplayName = m.DisplayName,
-                                                                            Type = (SearchFieldType) m.FilterType,
-                                                                            SearchOperator = (SearchOperator) m.SearchOperator,
-                                                                            Value = m.Value
-                                                                      }.ToString()
+                                            CriteriaDisplayText = SearchCriteria.Create(m.InternalName,
+                                                                            m.DisplayName,
+                                                                            (SearchFieldType) m.FilterType,
+                                                                            (SearchOperator) m.SearchOperator,
+                                                                            m.Value
+                                                                      ).ToString()
                                         }).ToList(),
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText
                             };
@@ -106,17 +97,16 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Show(CampaignShowViewModel campaignViewModel)
+        public ActionResult Show(Campaign campaign)
         {
-            Campaign campaign = campaignViewModel.Campaign;
             new Campaigns().Update(campaign);
-            return RedirectToAction("Show", new {id = campaign.Id});
+            return View(campaign);
         }
 
         [HttpGet]
         public ActionResult AddMembershipSearchFilter(int campaignId)
         {
-            var emptySearchCriteria = new SearchService().GetEmptySearchCriteria();
+            var emptySearchCriteria = new Search().GetEmptySearchCriteria();
             var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
             var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
 
@@ -124,7 +114,7 @@ namespace GiveCRM.Web.Controllers
                             {
                                 CampaignId = campaignId,
                                 CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
-                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
+                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToString()})
                             };
             return View("AddSearchFilter", model);
         }
@@ -132,7 +122,7 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
-            var searchCriteria = new SearchService().GetEmptySearchCriteria();
+            var searchCriteria = new Search().GetEmptySearchCriteria();
 
             // we have to find one
             var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
@@ -159,34 +149,12 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Show", new {id = campaignId});
         }
 
-        [HttpGet]
-        public ActionResult CloseCampaign(int campaignId)
-        {
-            var campaign = new Campaigns().Get(campaignId);
-            var viewModel = new CampaignCloseViewModel(Resources.Literal_CloseCampaign)
-                                {
-                                    CampaignId = campaignId,
-                                    CampaignName = campaign.Name
-                                };
-            return View("Close", viewModel);
-        }
-
         [HttpPost]
-        public ActionResult CloseCampaign(CampaignCloseViewModel viewModel)
-        {
-            var campaigns = new Campaigns();
-            var campaign = campaigns.Get(viewModel.CampaignId);
-            campaign.IsClosed = "Y";
-            campaigns.Update(campaign);
-            return RedirectToAction("Index", new {showClosed = true});
-        }
-
-        //[HttpPost]
         public FileResult DownloadMailingList(int id)
         {
             // TODO: Load list of members targetted against the given campaign ID to generate a mailing list
 
-            var members = new Members().All();
+            var members = new List<Member>();
 
             byte[] filecontent;
             using (var stream = new MemoryStream())
