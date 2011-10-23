@@ -6,6 +6,6 @@ namespace GiveCRM.Web.Models.Facets
 
     public class FacetListViewModel
     {
-        public IEnumerable<Facet> Facets { get; set; }
+        public IList<Facet> Facets { get; set; }
     }
 }
