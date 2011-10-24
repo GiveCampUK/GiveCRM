@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using GiveCRM.Admin.BusinessLogic;
+using GiveCRM.ImportExportService;
 using GiveCRM.Admin.Web.ViewModels;
 
 namespace GiveCRM.Admin.Web.Controllers

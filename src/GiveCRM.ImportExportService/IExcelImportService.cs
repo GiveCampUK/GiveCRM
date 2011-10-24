@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace GiveCRM.Admin.BusinessLogic
+namespace GiveCRM.ImportExportService
 {
     public interface IExcelImportService
     {

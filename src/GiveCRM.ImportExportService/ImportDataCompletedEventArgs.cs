@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GiveCRM.Admin.BusinessLogic
+namespace GiveCRM.ImportExportService
 {
     public class ImportDataCompletedEventArgs : EventArgs
     {

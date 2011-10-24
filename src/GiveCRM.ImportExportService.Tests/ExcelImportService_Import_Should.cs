@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using GiveCRM.ImportExport;
+using GiveCRM.ImportExportService;
 using Moq;
 using NUnit.Framework;
 
