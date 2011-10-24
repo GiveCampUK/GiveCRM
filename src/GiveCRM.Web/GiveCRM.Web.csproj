@@ -114,7 +114,9 @@
     <Compile Include="Services\IDonationsService.cs" />
     <Compile Include="Services\IFacetsService.cs" />
     <Compile Include="Services\IMailingListService.cs" />
+    <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\MailingListService.cs" />
+    <Compile Include="Services\MembersService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
