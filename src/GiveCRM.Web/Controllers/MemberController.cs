@@ -51,15 +51,7 @@ namespace GiveCRM.Web.Controllers
         {
             var member = _memberService.Get(id);
 
-            member.AddressLine1 = "deleted";
-            member.AddressLine2 = "deleted";
-            member.EmailAddress = "deleted";
-            member.FirstName = "deleted";
-            member.LastName = "deleted";
-            
-            member.Archived = true;
-
-            _memberService.Update(member);
+            _memberService.Delete(member); 
 
             return RedirectToAction("Index");
         }
