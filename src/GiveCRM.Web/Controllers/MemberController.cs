@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Members;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -12,9 +13,14 @@ namespace GiveCRM.Web.Controllers
     {
         private const int MaxResults = 25;
 
+        private IDonationsService _donationsService;
         private Members _membersDb = new Members();
-        private Donations _donationsDb = new Donations();
         private Campaigns _campaignsDb = new Campaigns();
+
+        public MemberController(IDonationsService donationsService)
+        {
+            _donationsService = donationsService;
+        }
 
         public ActionResult Index()
         {
@@ -69,7 +75,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult SaveDonation(Donation donation)
         {
-            _donationsDb.Insert(donation);
+            _donationsService.QuickDonation(donation);
 
             return RedirectToAction("Index");
         }
