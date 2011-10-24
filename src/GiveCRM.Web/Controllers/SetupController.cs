@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Facets;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
     public class SetupController : Controller
     {
-        private readonly Facets _facetsDb = new Facets();
+        private IFacetsService _facetService;
+
+        public SetupController(IFacetsService facetsService)
+        {
+            _facetService = facetsService;
+        }
 
         public ActionResult Index()
         {
@@ -27,7 +32,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult EditFacet(int id)
         {
-            var facet = _facetsDb.Get(id);
+            var facet = _facetService.Get(id);
             return View("EditFacet", facet);
         }
 
@@ -38,11 +43,11 @@ namespace GiveCRM.Web.Controllers
 
             if (facet.Id > 0)
             {
-                _facetsDb.Update(facet);
+                _facetService.Update(facet);
             }
             else
             {
-                _facetsDb.Insert(facet);             
+                _facetService.Insert(facet);            
             }
 
             return RedirectToAction("ListFacets");
@@ -63,7 +68,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult ListFacets()
         {
-            var facets = new List<Facet>(_facetsDb.All());
+            var facets = new List<Facet>(_facetService.All());
             var viewModel = new FacetListViewModel
                 {
                     Facets = facets

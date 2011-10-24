@@ -111,8 +111,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CampaignService.cs" />
+    <Compile Include="Services\DonationsService.cs" />
+    <Compile Include="Services\FacetsService.cs" />
+    <Compile Include="Services\IDonationsService.cs" />
+    <Compile Include="Services\IFacetsService.cs" />
     <Compile Include="Services\IMailingListService.cs" />
+    <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\MailingListService.cs" />
+    <Compile Include="Services\MemberService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
