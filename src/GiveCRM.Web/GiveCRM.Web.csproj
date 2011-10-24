@@ -109,6 +109,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\DonationsService.cs" />
+    <Compile Include="Services\IDonationsService.cs" />
     <Compile Include="Services\IMailingListService.cs" />
     <Compile Include="Services\MailingListService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
