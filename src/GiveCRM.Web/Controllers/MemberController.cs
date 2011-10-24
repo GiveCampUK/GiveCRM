@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Members;
 using GiveCRM.Web.Services;
@@ -15,12 +13,13 @@ namespace GiveCRM.Web.Controllers
 
         private IDonationsService _donationsService;
         private IMemberService _memberService;
-        private Campaigns _campaignsDb = new Campaigns();
+        private ICampaignService _campaignService;
 
-        public MemberController(IDonationsService donationsService, IMemberService memberService)
+        public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
             _donationsService = donationsService;
             _memberService = memberService;
+            _campaignService = campaignService;
         }
 
         public ActionResult Index()
@@ -69,7 +68,7 @@ namespace GiveCRM.Web.Controllers
         {
             ViewBag.MemberName = GetFormattedName(_memberService.Get(id));
 
-            ViewBag.Campaigns = _campaignsDb.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+            ViewBag.Campaigns = _campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             return View(new Donation { MemberId = id });
         }
