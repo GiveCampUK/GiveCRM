@@ -14,12 +14,13 @@ namespace GiveCRM.Web.Controllers
         private const int MaxResults = 25;
 
         private IDonationsService _donationsService;
-        private Members _membersDb = new Members();
+        private IMemberService _memberService;
         private Campaigns _campaignsDb = new Campaigns();
 
-        public MemberController(IDonationsService donationsService)
+        public MemberController(IDonationsService donationsService, IMemberService memberService)
         {
             _donationsService = donationsService;
+            _memberService = memberService;
         }
 
         public ActionResult Index()
@@ -40,8 +41,8 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            ViewBag.Title = "Edit Member"; 
-            var model = _membersDb.Get(id); 
+            ViewBag.Title = "Edit Member";
+            var model = _memberService.Get(id);
             if(model.PhoneNumbers == null) 
                model.PhoneNumbers = new List<PhoneNumber>(); 
             return View(viewName: "Add", model: MemberEditViewModel.ToViewModel(model));
@@ -49,7 +50,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            var member = _membersDb.Get(id);
+            var member = _memberService.Get(id);
 
             member.AddressLine1 = "deleted";
             member.AddressLine2 = "deleted";
@@ -59,14 +60,14 @@ namespace GiveCRM.Web.Controllers
             
             member.Archived = true;
 
-            _membersDb.Update(member);
+            _memberService.Update(member);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Donate(int id)
         {
-            ViewBag.MemberName = GetFormattedName(_membersDb.Get(id));
+            ViewBag.MemberName = GetFormattedName(_memberService.Get(id));
 
             ViewBag.Campaigns = _campaignsDb.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
@@ -88,11 +89,11 @@ namespace GiveCRM.Web.Controllers
 
             if (member.Id == 0)
             {
-                _membersDb.Insert(member.ToModel());
+                _memberService.Insert(member.ToModel());
             }
             else
             {
-                _membersDb.Update(member.ToModel());
+                _memberService.Update(member.ToModel());
             }
 
             return RedirectToAction("Index");
@@ -101,7 +102,7 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult Search(string name, string postcode, string reference, int start = 0)
         {
-            var results = _membersDb.Search(name, postcode, reference);
+            var results = _memberService.Search(name, postcode, reference);
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
@@ -109,18 +110,14 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult AjaxSearch(string criteria)
         {
-            var results = _membersDb
-                .All()
-                .Where(member =>
-                    !member.Archived &&
-                    (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
+            var results = _memberService.Search(criteria);
 
             return View(results.Take(10));
         }
 
         public ActionResult TopDonors()
         {
-            var members = _membersDb.All().OrderByDescending(m => m.TotalDonations).Take(5);
+            var members = _memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
             return View("MembersList", members);
         }
@@ -139,26 +136,7 @@ namespace GiveCRM.Web.Controllers
             // TODO: We think member is missing a reference field
             return member.Reference.ToLower().Contains(criteria);
         }
-
-        private bool NameSearch(Member member, string criteria)
-        {
-            return GetForenameSurname(member).Contains(criteria) || GetSurnameForename(member).Contains(criteria) || GetInitialSurname(member).Contains(criteria);
-        }
-
-        private string GetForenameSurname(Member member)
-        {
-            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName).ToLower();
-        }
-
-        private string GetSurnameForename(Member member)
-        {
-            return string.Format("{0} {1} {2}", member.Salutation, member.LastName, member.FirstName).ToLower();
-        }
-
-        private string GetInitialSurname(Member member)
-        {
-            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName).ToLower();
-        }
+        
 
         private string GetFormattedName(Member member)
         {
