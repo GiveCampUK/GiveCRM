@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using GiveCRM.DataAccess;
+using GiveCRM.Models;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
     public class DonationController : Controller
     {
-        private Donations _donationsDb = new Donations();
+        private readonly IDonationsService _donationsService;
+
+        public DonationController(IDonationsService donationsService)
+        {
+            _donationsService = donationsService;
+        }
         
         public ActionResult Index()
         {
@@ -18,14 +21,14 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult TopDonations()
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Amount).Take(5);
+            var donations = _donationsService.GetTopDonations();
 
             return View("DonationList", donations);
         }
 
         public ActionResult LatestDonations()
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Date).Take(5);
+            var donations = _donationsService.GetLatestDonations();
 
             return View("DonationList", donations);
         }
@@ -37,7 +40,13 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult DoQuickDonate(int id, int amount, string date, int campaignId)
         {
-            _donationsDb.Insert(new GiveCRM.Models.Donation { Amount = amount, Date = DateTime.Parse(date), MemberId = id, CampaignId = campaignId });
+            _donationsService.QuickDonation(new Donation
+                                                {
+                                                    Amount = amount,
+                                                    Date = DateTime.Parse(date),
+                                                    MemberId = id,
+                                                    CampaignId = campaignId
+                                                });
             return View();
         }
     }
