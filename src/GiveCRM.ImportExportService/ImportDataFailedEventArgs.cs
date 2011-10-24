@@ -1,6 +1,6 @@
 using System;
 
-namespace GiveCRM.Admin.BusinessLogic
+namespace GiveCRM.ImportExportService
 {
     public class ImportDataFailedEventArgs : EventArgs
     {

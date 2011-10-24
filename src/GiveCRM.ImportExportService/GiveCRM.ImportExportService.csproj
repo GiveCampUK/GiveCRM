@@ -8,8 +8,8 @@
     <ProjectGuid>{6442A87F-51D2-4694-B712-61D4512B162A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GiveCRM.Admin.BusinessLogic</RootNamespace>
-    <AssemblyName>GiveCRM.Admin.BusinessLogic</AssemblyName>
+    <RootNamespace>GiveCRM.ImportExportService</RootNamespace>
+    <AssemblyName>GiveCRM.ImportExportService</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

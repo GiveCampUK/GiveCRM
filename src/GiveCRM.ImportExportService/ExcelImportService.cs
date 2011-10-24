@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using GiveCRM.ImportExport;
 using Simple.Data;
 
-namespace GiveCRM.Admin.BusinessLogic
+namespace GiveCRM.ImportExportService
 {
     public class ExcelImportService : IExcelImportService
     {
