@@ -4,9 +4,9 @@ using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using GiveCRM.ImportExportService;
-using GiveCRM.Admin.Web.ViewModels;
+using GiveCRM.Web.Models;
 
-namespace GiveCRM.Admin.Web.Controllers
+namespace GiveCRM.Web.Controllers
 {
     public class ExcelImportController : AsyncController
     {

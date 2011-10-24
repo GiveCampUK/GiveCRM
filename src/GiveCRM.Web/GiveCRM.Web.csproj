@@ -100,6 +100,7 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
+    <Compile Include="Models\ExcelImportViewModel.cs" />
     <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
