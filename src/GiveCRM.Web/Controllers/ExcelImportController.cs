@@ -56,7 +56,7 @@ namespace GiveCRM.Web.Controllers
             // Process the file
             ImportAsync(file.InputStream);
             
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index", "Member");
         }
 
         private ActionResult ErrorView(string message)
@@ -90,7 +90,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult ImportCompleted(IEnumerable<IDictionary<string, object>> data)
         {
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index", "Member");
         }
     }
 }
