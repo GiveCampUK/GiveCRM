@@ -66,8 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\CampaignController.Tests.cs" />
     <Compile Include="controllers\DonationController.Tests.cs" />
     <Compile Include="controllers\HomeController.Tests.cs" />
+    <Compile Include="controllers\SetUpController.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
