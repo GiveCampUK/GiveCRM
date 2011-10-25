@@ -9,6 +9,8 @@ namespace GiveCRM.Web.Services
         Member Get(int id);
         void Update(Member member);
         void Insert(Member member);
+        void Delete(Member member);
+        void Save(Member member); 
         IEnumerable<Member> Search(string name, string postcode, string reference);
         IEnumerable<Member> Search(string criteria);
     }
