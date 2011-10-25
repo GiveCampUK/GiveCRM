@@ -46,22 +46,14 @@ namespace GiveCRM.Web.Controllers
         {
             var member = _memberService.Get(id);
 
-            member.AddressLine1 = "deleted";
-            member.AddressLine2 = "deleted";
-            member.EmailAddress = "deleted";
-            member.FirstName = "deleted";
-            member.LastName = "deleted";
-            
-            member.Archived = true;
-
-            _memberService.Update(member);
+            _memberService.Delete(member); 
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Donate(int id)
         {
-            ViewBag.MemberName = GetFormattedName(_memberService.Get(id));
+            ViewBag.MemberName = _memberService.Get(id).ToString();
 
             ViewBag.Campaigns = _campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
@@ -78,17 +70,11 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Save(Models.Members.MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
+
             if(!ModelState.IsValid)
                 return View(viewName: "Add", model: member);
 
-            if (member.Id == 0)
-            {
-                _memberService.Insert(member.ToModel());
-            }
-            else
-            {
-                _memberService.Update(member.ToModel());
-            }
+            _memberService.Save(member.ToModel()); 
 
             return RedirectToAction("Index");
         }
@@ -115,28 +101,5 @@ namespace GiveCRM.Web.Controllers
 
             return View("MembersList", members);
         }
-
-        #region helper methods
-
-        // todo: move these out!
-
-        private bool PostcodeSearch(Member member, string criteria)
-        {
-            return member.PostalCode == null ? false : member.PostalCode.ToLower().Replace(" ", "").Contains(criteria.Replace(" ", ""));
-        }
-
-        private bool ReferenceSearch(Member member, string criteria)
-        {
-            // TODO: We think member is missing a reference field
-            return member.Reference.ToLower().Contains(criteria);
-        }
-        
-
-        private string GetFormattedName(Member member)
-        {
-            return string.Format("{0} {1} {2}", member.Salutation, member.FirstName, member.LastName);
-        }
-
-        #endregion
     }
 }
