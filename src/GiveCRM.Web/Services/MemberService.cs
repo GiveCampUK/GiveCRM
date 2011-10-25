@@ -30,6 +30,27 @@ namespace GiveCRM.Web.Services
             _membersDb.Insert(member);
         }
 
+        public void Save(Member member)
+        {
+            if (member.Id == 0)
+                this.Insert(member);
+            else
+                this.Update(member);
+        }
+
+        public void Delete(Member member)
+        {
+            member.AddressLine1 = "deleted";
+            member.AddressLine2 = "deleted";
+            member.EmailAddress = "deleted";
+            member.FirstName = "deleted";
+            member.LastName = "deleted";
+
+            member.Archived = true;
+
+            _membersDb.Update(member);
+        }
+
         public IEnumerable<Member> Search(string name, string postcode, string reference)
         {
             var members = _membersDb.Search(name, postcode, reference);
