@@ -21,7 +21,6 @@ NDependOut
 *_mm_cache.bin
 src/GiveCRM.Database/sql/debug
 src/GiveCRM.Database/sql/release
-*.orig
-src/GiveCRM.Web/GiveCRM.Web backup.csproj
-src/GiveCRM.Web/GiveCRM.Web.csproj.orig
-src/GiveCRM.Web/Web.config.orig
+.DS_Store
+*.user
+

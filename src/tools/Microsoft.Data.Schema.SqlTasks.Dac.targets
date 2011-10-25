@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project InitialTargets="CheckRequiredProperties" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--Import common data targets-->
+  <Import Project="Microsoft.Data.Schema.Common.targets" />
+
+  <!--Override BuildDependsOn because we don't need DBSetupDeploy and the manifest it produces -->
+  <PropertyGroup>
+    <BuildDependsOn>
+      BeforeBuild;
+      PrepareForBuild;
+      PreBuildEvent;
+      ResolveReferences;
+      ResolveArtifactReferences;
+      DBBuild;
+      GetTargetPath;
+      PrepareForRun;
+      IncrementalClean;
+      PostBuildEvent;
+      AfterBuild;
+    </BuildDependsOn>
+  </PropertyGroup>
+
+
+  <UsingTask TaskName="DACCompilerTask" AssemblyName="Microsoft.SqlServer.Management.Dac.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask TaskName="DACDeployTask" AssemblyName="Microsoft.SqlServer.Management.Dac.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <UsingTask TaskName="SqlStaticCodeAnalysisTask" AssemblyName="Microsoft.Data.Schema.Tasks.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+
+  <PropertyGroup>
+    <TargetExt>.dacpac</TargetExt>
+    <TargetDatabase Condition="'$(TargetDatabase)' == ''">$(MSBuildProjectName)</TargetDatabase>
+    <DacApplicationName Condition="'$(DacApplicationName)' == ''">$(MSBuildProjectName)</DacApplicationName>
+    <DacVersionString Condition="'$(DacVersionString)' == ''">1.0.0.0</DacVersionString>
+    <DacDatabaseCollation Condition="'$(DacDatabaseCollation)' == ''">SQL_Latin1_General_CP1_CI_AS</DacDatabaseCollation>
+    <DbSchemaFileName Condition="'$(DbSchemaFileName)' == ''">$(MSBuildProjectName)</DbSchemaFileName>
+    <TargetName>$(DbSchemaFileName)</TargetName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DACFile Include="$(IntermediateOutputPath)$(TargetName)$(TargetExt)"/>
+  </ItemGroup>
+
+
+  <!--This makes the project files a dependency of all targets so that things rebuild if they change-->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);
+      Microsoft.Data.Schema.SqlTasks.targets
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--Add our target to define Sql DSP specific inputs-->
+    <SetupDBBuildInputsDependsOn>_SetupSqlBuildInputs</SetupDBBuildInputsDependsOn>
+  </PropertyGroup>
+
+  <Target Name="_SetupSqlBuildInputs"
+          Outputs="@(DBBuildInputItem)">
+    <!--
+    In our project system, source items are called Build - to integrate create Source items
+    from the Build items
+    -->
+    <CreateItem  Include="@(Build)">
+      <Output TaskParameter="Include" ItemName="Source"/>
+    </CreateItem>
+    <CreateItem  Include="@(DacPropertiesFile)">
+      <Output TaskParameter="Include" ItemName="DBBuildInputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(PostDeploy)">
+      <Output TaskParameter="Include" ItemName="DBBuildInputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(PreDeploy)">
+      <Output TaskParameter="Include" ItemName="DBBuildInputItem"/>
+    </CreateItem>
+
+  </Target>
+
+  <!--
+     Sets up the default outputs of a database build.  If there are additional
+     outputs they should be added as DBBuildOutputItem definitions
+     -->
+  <PropertyGroup>
+    <!--This property should be overridden to provide additional outputs-->
+    <SetupDBBuildOutputsDependsOn></SetupDBBuildOutputsDependsOn>
+  </PropertyGroup>
+  <Target Name="_SetupDBBuildOutputs"
+          Outputs="@(DBBuildOutputItem)"
+          DependsOnTargets="$(SetupDBBuildOutputsDependsOn)">
+    <CreateItem  Include="@(DACFile->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="__DBBuildOutputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(__DBBuildOutputItem->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBBuildOutputItem"/>
+    </CreateItem>
+  </Target>
+
+
+  <!--Build-->
+  <Target Name="DspBuild">
+    <DACCompilerTask
+      DatabaseSchemaProviderName="$(DSP)"
+      Source="@(Source)"
+      ReferencePath="@(ReferencePath)"
+      Content="@(Content)"
+      SqlPolicy="@(DacPropertiesFile)"
+      OutputAssembly="@(DACFile)"
+      DatabaseCollation="$(DacDatabaseCollation)"
+      ProjectPath="$(MSBuildProjectDirectory)"
+      ProjectName="$(MSBuildProjectName)"
+          
+      OutputDBSchema="@(DbSchemaFile)"
+      AllowServerObjects="$(AllowServerObjects)"
+      AllowDatabaseObjects="$(AllowDatabaseObjects)"
+      PreDeployFiles="@(PreDeploy)"
+      PostDeployFiles="@(PostDeploy)"
+      IntermediateOutputPath="$(IntermediateOutputPath)"
+      ContributorArguments="@(BuildContributorArgument)"
+      BuildExtensionConfiguration="@(BuildExtensionConfiguration)"
+      DacApplicationName="$(DacApplicationName)"
+      DacVersionString="$(DacVersionString)"
+      DacDescription="$(DacDescription)"
+          />
+  </Target>
+
+  <!-- Deploy -->
+  <Target Name="DspDeploy">
+    <DacDeployTask
+      ConnectionString="$(TargetConnectionString)"
+      TargetDatabaseName="$(TargetDatabase)"
+      OutputAssembly="@(IntermediateAssembly)"
+		  ProjectPath="$(MSBuildProjectDirectory)"
+		  ValidatePolicy="$(ValidatePolicy)"
+		  PreDeployFiles="@(PreDeploy)"
+      PostDeployFiles="@(PostDeploy)"
+      OutputPath="$(IntermediateOutputPath)"
+      />
+  </Target>
+
+
+  <!-- Static Code Analysis -->
+  <Target Name="DspStaticCodeAnalysis">
+
+    <SqlStaticCodeAnalysisTask
+      DatabaseSchemaProviderName="$(DSP)"
+			Source="@(Build)"
+			ReferencePath="@(ReferencePath)"
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      SuppressWarnings="$(SuppressWarnings)"
+      CodeAnalysisRules="$(CodeAnalysisRules)"
+      ResultsFile="$(ResultsFile)"
+      StaticCodeAnalysisSucceededFile="$(StaticCodeAnalysisSucceededFile)"
+      ProjectFolder="$(MSBuildProjectDirectory)"
+      AllowServerObjects="$(AllowServerObjects)"
+      AllowDatabaseObjects="$(AllowDatabaseObjects)"
+      ModelCollation="$(ModelCollation)"
+		/>
+  </Target>
+
+</Project>

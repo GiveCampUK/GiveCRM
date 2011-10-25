@@ -33,11 +33,6 @@ namespace GiveCRM.Web.Controllers
             return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
-        public ActionResult Import()
-        {
-            return View();
-        }
-
         public ActionResult Edit(int id)
         {
             ViewBag.Title = "Edit Member";

@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project InitialTargets="CheckRequiredProperties" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  This targets file is meant to be imported by all DSP specific target file implementations.  It contains
+  definitions for the standard targets used by Visual Studio.
+  -->
+  
+  <!--Some properties must be set in the main project file, before using this .TARGETS file-->
+  <Target Name="CheckRequiredProperties">
+  </Target>
+
+  <PropertyGroup>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+  </PropertyGroup>
+  <UsingTask TaskName="DBBuildTask" AssemblyName="Microsoft.Data.Schema.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="DBSetupDeployTask" AssemblyName="Microsoft.Data.Schema.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="DBDeployTask" AssemblyName="Microsoft.Data.Schema.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="DataGeneratorTask" AssemblyName="Microsoft.Data.Schema.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="StaticCodeAnalysisTask" AssemblyName="Microsoft.Data.Schema.Tasks, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+
+
+  <!--This makes the project files a dependency of all targets so that things rebuild if they change-->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);
+      Microsoft.Data.Schema.Common.targets
+    </MSBuildAllProjects>
+  </PropertyGroup>
+  
+  <!--Calculation of the VSTSDB path-->
+  <PropertyGroup>
+    <VSTSDBDirectory Condition="'$(VSTSDBDirectory)' == ''">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\VSTSDB@VSTSDBDirectory)</VSTSDBDirectory>
+    <VSTSDBDirectory Condition="'$(VSTSDBDirectory)' == ''">$(VS100COMNTOOLS)..\..\VSTSDB</VSTSDBDirectory>
+  </PropertyGroup>
+
+  <!--Output and path properties-->
+  <PropertyGroup>
+    <OutputType Condition="'$(OutputType)' == ''">Database</OutputType>
+    <TargetExt Condition="'$(TargetExt)' == ''">.dbschema</TargetExt>
+    <DeployScriptExt Condition="'$(DeployScriptExt)' == ''">.sql</DeployScriptExt>
+    <VerifyDeployment Condition="'$(VerifyDeployment)' == ''">true</VerifyDeployment>
+    <ForceDeployment Condition="'$(ForceDeployment)' == ''">true</ForceDeployment>
+    <DbSchemaFileName Condition="'$(DbSchemaFileName)' == ''">$(MSBuildProjectName)</DbSchemaFileName>
+    <TargetName>$(DbSchemaFileName)</TargetName>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <DbSchemaFile Include="$(IntermediateOutputPath)$(TargetFileName)"/>
+    <SourceModel Include="$(OutDir)$(TargetFileName)"/>
+    <DeploymentManifest Include="$(OutDir)$(DeployManifestName)"/>
+    <DeployScriptFile Include="$(OutDir)$(FinalDeployScriptFile)"/>
+  </ItemGroup>
+  
+  <!--
+  Sets up the default inputs to the build task.  If there are additional
+  inputs to the build task they should be added as one or more DBBuildInputItem
+  -->
+  <PropertyGroup>
+    <!--This property should be overridden to provide additional inputs-->
+    <SetupDBBuildInputsDependsOn></SetupDBBuildInputsDependsOn>
+  </PropertyGroup>
+  <Target Name="_SetupDBBuildInputs"
+          Outputs="@(DBBuildInputItem)"
+          DependsOnTargets="$(SetupDBBuildInputsDependsOn)">
+    <CreateItem Include="$(MSBuildAllProjects)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(Source)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+    <CreateItem  Include="$(MSBuildProjectFullPath)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+    
+    <CreateItem  Include="@(PropertiesFile)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+
+    <CreateItem  Include="@(ReferencePath)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+
+    <CreateItem  Include="@(DeploymentExtensionConfiguration)">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+    
+    <CreateItem Condition="Exists('$(MSBuildProjectFullPath).user')" Include="$(MSBuildProjectFullPath).user">
+      <Output TaskParameter="Include" ItemName="__DBBuildInputItem"/>
+    </CreateItem>
+
+    <CreateItem  Include="@(__DBBuildInputItem->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBBuildInputItem"/>
+    </CreateItem>
+
+    <!--All files marked NotInBuild are files that can be processed as content -->
+    <CreateItem  Include="@(NotInBuild)">
+      <Output TaskParameter="Include" ItemName="Content"/>
+    </CreateItem>
+  </Target>
+  
+  <!--
+  Sets up the default outputs of a database build.  If there are additional
+  outputs they should be added as DBBuildOutputItem definitions
+  -->
+  <PropertyGroup>
+    <!--This property should be overridden to provide additional outputs-->
+    <SetupDBBuildOutputsDependsOn></SetupDBBuildOutputsDependsOn>
+  </PropertyGroup>
+  <Target Name="_SetupDBBuildOutputs"
+          Outputs="@(DBBuildOutputItem)"
+          DependsOnTargets="$(SetupDBBuildOutputsDependsOn)">
+    <CreateItem  Include="@(DbSchemaFile->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="__DBBuildOutputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(__DBBuildOutputItem->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBBuildOutputItem"/>
+    </CreateItem>
+  </Target>
+
+  <!-- 
+  Deployment inputs and outputs.  These are used to perform conditional
+  deployment based on timestamps set on the .dbschema file and the deployment
+  script.  This is useful, for instance, in database unit testing where the user is 
+  executing against a sandbox database.
+  -->
+  <Target Name="_SetupDBDeployInputs"
+          Outputs="@(DBDeployInputItem)">
+    <CreateItem Include="@(SourceModel->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBDeployInputItem"/>
+    </CreateItem>
+    <CreateItem Condition="'$(ForceDeployment)' == 'true'" Include="ForceScriptRecalculation.txt">
+      <Output TaskParameter="Include" ItemName="DBDeployInputItem"/>
+    </CreateItem>
+  </Target>
+  <Target Name="_SetupDBDeployOutputs"
+        Outputs="@(DBDeployOutputItem)">
+    <CreateItem Include="@(DeployScriptFile->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBDeployOutputItem"/>
+    </CreateItem>
+  </Target>
+  
+  <!--
+  DspBuild
+  It is expected that this target will be overridden.  The default implementation
+  will create a serialized store
+  -->
+  <Target Name="DspBuild">
+    <DBBuildTask
+      DatabaseSchemaProviderName="$(DSP)"
+      Source="@(Source)"
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+      ReferencePath="@(ReferencePath)"
+      OutputDBSchema="@(DbSchemaFile)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      SuppressWarnings="$(SuppressWarnings)"
+      ModelCollation="$(ModelCollation)"
+      ContributorArguments="@(BuildContributorArgument)"
+      BuildExtensionConfiguration="@(BuildExtensionConfiguration)"
+      />
+
+  </Target>
+
+  <Target Name="DspSetupDeploy">
+    <DBSetupDeployTask
+      SourceModel="@(SourceModel)"
+      DeployManifestName="$(DeployManifestName)"
+      DatabaseSchemaProviderName="$(DSP)"
+      
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+      DeploymentConfigFile="$(FinalDeploymentConfigFile)"
+
+      ReferencePath="@(ReferencePath)"
+      DeploymentExtensions="$(DeploymentExtensions)"
+      DeploymentExtensionConfiguration="@(DeploymentExtensionConfiguration)"
+      PropertiesFile="@(PropertiesFile)"
+      ConnectionString="$(FinalTargetConnectionString)"
+      DatabaseName="$(FinalTargetDatabase)"
+      DeploymentScriptName="$(FinalDeployScriptFile)"
+      OutputDirectory="$(TargetDir)"
+      OverwriteExistingFiles="$(OverwriteDeploymentFiles)"
+      DeployToScript="$(FinalDeployToScript)"
+      DeployToDatabase="$(FinalDeployToDatabase)"
+      >
+      <Output TaskParameter="DeploymentFiles" ItemName="FileWrites"/>
+    </DBSetupDeployTask>
+  </Target>
+  
+  <!--DBBuild-->
+  <PropertyGroup>
+    <DBBuildDependsOn>
+      _SetupDBBuildInputs;
+      _SetupDBBuildOutputs;
+    </DBBuildDependsOn>
+  </PropertyGroup>
+  <Target Name="DBBuild"
+          DependsOnTargets="$(DBBuildDependsOn)"
+          Inputs="@(DBBuildInputItem)"
+          Outputs="@(DBBuildOutputItem)">
+    
+    <CallTarget Targets="DspBuild;"/>
+
+  </Target>
+
+  <Target Name="DBSetupDeploy">
+    <CallTarget Targets="DspSetupDeploy"/>
+  </Target>
+
+
+  <!-- 
+  Resolve all artifact and resolved project references
+  -->
+  <Target Name="ResolveArtifactReferences">
+
+    <CreateItem Include="@(_ResolvedProjectReferencePaths)"
+                Condition="'@(_ResolvedProjectReferencePaths)'!=''">
+      <Output
+        TaskParameter="Include"
+        ItemName="ReferencePath"/>
+
+      <Output
+        TaskParameter="Include"
+        ItemName="ReferenceCopyLocalPaths"/>
+    </CreateItem>
+
+    <CreateItem Include="@(ArtifactReference)"
+                Condition="'@(ArtifactReference)'!=''">
+      <Output
+        TaskParameter="Include"
+        ItemName="ReferencePath"/>
+
+      <Output
+        TaskParameter="Include"
+        ItemName="ReferenceCopyLocalPaths"/>
+    </CreateItem>
+
+  </Target>
+  
+  <!--
+  DspDeploy
+  It is expected that this target will be overridden to implement the Dsp's specific
+  deployment.  
+  -->
+  <Target Name="DspDeploy">
+
+    <DBDeployTask
+      SourceModel="@(SourceModel)"
+      DeploymentManifest="@(DeploymentManifest)"
+      
+      ConnectionString="$(FinalTargetConnectionString)"
+      DatabaseName="$(FinalTargetDatabase)"
+      DeployToScript="$(FinalDeployToScript)"
+      DeployScriptFile="$(DeployScriptFilePath)"
+      DeployToDatabase="$(FinalDeployToDatabase)"
+      DeploymentExtensions="$(DeploymentExtensions)"
+      DeploymentConfigurationFile="$(DeploymentConfigurationFile)"
+      ContributorArguments="@(DeploymentContributorArgument)"
+      />   
+    
+    <Message Importance="High" Text="$(MSBuildProjectName) -&gt; $(FinalDeployScriptFile)" />
+
+  </Target>
+
+  <!-- DBDeploy -->
+  <PropertyGroup>
+    <DBDeployDependsOn>
+      _SetupDBDeployInputs;
+      _SetupDBDeployOutputs;
+    </DBDeployDependsOn>
+  </PropertyGroup>
+  <Target Name="DBDeploy"
+          DependsOnTargets="$(DBDeployDependsOn)"
+          Inputs="@(DBDeployInputItem)"
+          Outputs="@(DBDeployOutputItem)">
+
+    <CallTarget Targets="DspDeploy;"/>
+  </Target>
+
+  
+
+  <!-- Data Generation -->
+  <PropertyGroup>
+    <VerboseDataGeneration Condition="'$(VerboseDataGeneration)' == ''">true</VerboseDataGeneration>
+    <PurgeTablesBeforePopulate Condition="'$(PurgeTablesBeforePopulate)' == ''">true</PurgeTablesBeforePopulate>
+  </PropertyGroup>
+  <Target Name="DataGeneration">
+    <DataGeneratorTask
+      SourceFile="$(SourceFile)"
+      ConnectionString="$(ConnectionString)"
+      Verbose="$(VerboseDataGeneration)"
+      PurgeTablesBeforePopulate="$(PurgeTablesBeforePopulate)"
+		/>
+  </Target>
+
+  <!--
+  Import the common targets to inherit all build environment definitions
+  and properties.  After this file is imported we will customize those build
+  environment settings for the database build environment
+  -->
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+
+  <PropertyGroup>
+    <!--
+    Default names for files/targets generated during build and deploy
+    -->
+    <DeployManifestName Condition="'$(DeployManifestName)' == ''">$(MSBuildProjectName).deploymanifest</DeployManifestName>
+    <DeployScriptFileName Condition="'$(DeployScriptFileName)' == ''">$(MSBuildProjectName)$(DeployScriptExt)</DeployScriptFileName>
+    <TargetDatabase Condition="'$(TargetDatabase)' == ''">$(MSBuildProjectName)</TargetDatabase>
+    <OverwriteDeploymentFiles Condition="'$(OverwriteDeploymentFiles)' == '' and '$(TeamBuildConstants)' == ''">True</OverwriteDeploymentFiles>
+    <DeployScriptFilePath>@(DeployScriptFile->'%(FullPath)')</DeployScriptFilePath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <AllDependsOn>Build;Deploy</AllDependsOn>
+  </PropertyGroup>
+  <Target Name="All" DependsOnTargets="$(AllDependsOn)" />
+
+  <PropertyGroup>
+    <!--Default Sandbox (.user file) names for files/targets generated during deploy.
+        The .user file will override these if these properties appear there.  The default
+        is not to use sandbox settings for deployment-->
+    <UseSandboxSettings Condition="'$(UseSandboxSettings)' != 'True'">False</UseSandboxSettings>
+    <SandboxDeployToDatabase Condition="'$(SandboxDeployToDatabase)' == ''">$(DeployToDatabase)</SandboxDeployToDatabase>
+    <SandboxDeployToScript Condition="'$(SandboxDeployToScript)' == ''">$(DeployToScript)</SandboxDeployToScript>
+    <SandboxDeployScriptFileName Condition="'$(SandboxDeployScriptFileName)' == ''">$(DeployScriptFileName)</SandboxDeployScriptFileName>
+    <SandboxTargetDatabase Condition="'$(SandboxTargetDatabase)' == ''">$(TargetDatabase)</SandboxTargetDatabase>
+    <SandboxSqlCommandVariablesFile Condition="'$(SandboxSqlCommandVariablesFile)' == ''">$(SqlCommandVariablesFile)</SandboxSqlCommandVariablesFile>
+    <SandboxDeploymentConfigFile Condition="'$(SandboxDeploymentConfigFile)' == ''">$(DeploymentConfigFile)</SandboxDeploymentConfigFile>
+  </PropertyGroup>
+
+  <!-- honor the non-sandbox settings -->
+  <PropertyGroup Condition="'$(UseSandboxSettings)'=='True'">
+    <FinalDeployToDatabase Condition="'$(FinalDeployToDatabase)' == ''">$(SandboxDeployToDatabase)</FinalDeployToDatabase>
+    <FinalDeployToScript Condition="'$(FinalDeployToScript)' == ''">$(SandboxDeployToScript)</FinalDeployToScript>
+    <FinalDeployScriptFile Condition="'$(FinalDeployScriptFile)' == ''">$(SandboxDeployScriptFileName)</FinalDeployScriptFile>
+    <FinalTargetDatabase Condition="'$(FinalTargetDatabase)' == ''">$(SandboxTargetDatabase)</FinalTargetDatabase>
+    <FinalTargetConnectionString Condition="'$(FinalTargetConnectionString)' == ''">$(SandboxTargetConnectionString)</FinalTargetConnectionString>
+    <FinalSqlCommandVariablesFile Condition="'$(FinalSqlCommandVariablesFile)' == ''">$(SandboxSqlCommandVariablesFile)</FinalSqlCommandVariablesFile>
+    <FinalDeploymentConfigFile Condition="'$(FinalDeploymentConfigFile)' == ''">$(SandboxDeploymentConfigFile)</FinalDeploymentConfigFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(UseSandboxSettings)'!='True'">
+    <FinalDeployToDatabase Condition="'$(FinalDeployToDatabase)' == ''">$(DeployToDatabase)</FinalDeployToDatabase>
+    <FinalDeployToScript Condition="'$(FinalDeployToScript)' == ''">$(DeployToScript)</FinalDeployToScript>
+    <FinalDeployScriptFile Condition="'$(FinalDeployScriptFile)' == ''">$(DeployScriptFileName)</FinalDeployScriptFile>
+    <FinalTargetDatabase Condition="'$(FinalTargetDatabase)' == ''">$(TargetDatabase)</FinalTargetDatabase>
+    <FinalTargetConnectionString Condition="'$(FinalTargetConnectionString)' == ''">$(TargetConnectionString)</FinalTargetConnectionString>
+    <FinalSqlCommandVariablesFile Condition="'$(FinalSqlCommandVariablesFile)' == ''">$(SqlCommandVariablesFile)</FinalSqlCommandVariablesFile>
+    <FinalDeploymentConfigFile Condition="'$(FinalDeploymentConfigFile)' == ''">$(DeploymentConfigFile)</FinalDeploymentConfigFile>
+  </PropertyGroup>
+
+<!-- Integrate the file types in our project system (Build, PropertiesFile, NotInBuild, PostDeploy, PreDeploy) with the source files in Microsoft.Common.targets. -->
+
+<PropertyGroup>
+        <GetCopyToOutputDirectoryItemsDependsOn>
+        
+        $(GetCopyToOutputDirectoryItemsDependsOn);
+            TSDataSourceFilesToCopy
+            
+        </GetCopyToOutputDirectoryItemsDependsOn>
+</PropertyGroup>
+
+<Target Name="TSDataSourceFilesToCopy">
+
+	<CreateItem  Include="@(Build)" Condition="'%(Build.CopyToOutputDirectory)'=='Always' or '%(Build.CopyToOutputDirectory)'=='PreserveNewest'">
+	      <Output TaskParameter="Include" ItemName="_BuildItemsToCopy"/>
+	</CreateItem>
+	
+	<AssignTargetPath Files="@(_BuildItemsToCopy)" RootFolder="$(MSBuildProjectDirectory)">
+            <Output TaskParameter="AssignedFiles" ItemName="_TSDataItemsToCopyWithTargetPath" />
+        </AssignTargetPath>
+        
+        <CreateItem  Include="@(NotInBuild)" Condition="'%(NotInBuild.CopyToOutputDirectory)'=='Always' or '%(NotInBuild.CopyToOutputDirectory)'=='PreserveNewest'">
+		<Output TaskParameter="Include" ItemName="_NotInBuildItemsToCopy"/>
+	</CreateItem>
+		
+	<AssignTargetPath Files="@(_NotInBuildItemsToCopy)" RootFolder="$(MSBuildProjectDirectory)">
+		<Output TaskParameter="AssignedFiles" ItemName="_TSDataItemsToCopyWithTargetPath" />
+	</AssignTargetPath>
+	
+	<CreateItem  Include="@(PropertiesFile)" Condition="'%(PropertiesFile.CopyToOutputDirectory)'=='Always' or '%(PropertiesFile.CopyToOutputDirectory)'=='PreserveNewest'">
+		<Output TaskParameter="Include" ItemName="_PropertiesFileItemsToCopy"/>
+	</CreateItem>
+			
+	<AssignTargetPath Files="@(_PropertiesFileItemsToCopy)" RootFolder="$(MSBuildProjectDirectory)">
+		<Output TaskParameter="AssignedFiles" ItemName="_TSDataItemsToCopyWithTargetPath" />
+	</AssignTargetPath>
+	
+  	<CreateItem  Include="@(PreDeploy)" Condition="'%(PreDeploy.CopyToOutputDirectory)'=='Always' or '%(PreDeploy.CopyToOutputDirectory)'=='PreserveNewest'">
+		<Output TaskParameter="Include" ItemName="_PreDeployItemsToCopy"/>
+	</CreateItem>
+				
+	<AssignTargetPath Files="@(_PreDeployItemsToCopy)" RootFolder="$(MSBuildProjectDirectory)">
+		<Output TaskParameter="AssignedFiles" ItemName="_TSDataItemsToCopyWithTargetPath" />
+	</AssignTargetPath>
+	
+	<CreateItem  Include="@(PostDeploy)" Condition="'%(PostDeploy.CopyToOutputDirectory)'=='Always' or '%(PostDeploy.CopyToOutputDirectory)'=='PreserveNewest'">
+		<Output TaskParameter="Include" ItemName="_PostDeployItemsToCopy"/>
+	</CreateItem>
+					
+	<AssignTargetPath Files="@(_PostDeployItemsToCopy)" RootFolder="$(MSBuildProjectDirectory)">
+		<Output TaskParameter="AssignedFiles" ItemName="_TSDataItemsToCopyWithTargetPath" />
+	</AssignTargetPath>
+	
+        <ItemGroup>
+            <AllItemsFullPathWithTargetPath            Include="@(_TSDataItemsToCopyWithTargetPath)"/>
+            <_SourceItemsToCopyToOutputDirectoryAlways Include="@(_TSDataItemsToCopyWithTargetPath)" Condition="'%(_TSDataItemsToCopyWithTargetPath.CopyToOutputDirectory)'=='Always'"/>
+            <_SourceItemsToCopyToOutputDirectory       Include="@(_TSDataItemsToCopyWithTargetPath)" Condition="'%(_TSDataItemsToCopyWithTargetPath.CopyToOutputDirectory)'=='PreserveNewest'"/>
+        </ItemGroup>
+        
+</Target>
+
+  <!-- Build -->
+  <PropertyGroup>
+    <BuildDependsOn>
+      BeforeBuild;
+      PrepareForBuild;
+      PreBuildEvent;
+      ResolveReferences;
+      ResolveArtifactReferences;
+      DBBuild;
+      DBSetupDeploy;
+      GetTargetPath;
+      PrepareForRun;
+      IncrementalClean;
+      PostBuildEvent;
+      AfterBuild;
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="Build"
+          DependsOnTargets="$(BuildDependsOn)"
+          Outputs="$(TargetPath)">
+
+    <!-- If the project maybe unloaded we need to cache the results of all external entry points. Most
+             of these targets don't do actual work but we need to make sure that the result of the targets is
+             in the cache.
+        -->
+    <CallTarget Targets="GetCopyToOutputDirectoryItems" UseResultsCache="true" Condition="'$(UnloadProjectsOnCompletion)'=='true'" />
+    <CallTarget Targets="GetNativeManifest" UseResultsCache="true" Condition="'$(UnloadProjectsOnCompletion)'=='true'"/>
+    <CallTarget Targets="GetTargetPath" UseResultsCache="true" Condition="'$(UnloadProjectsOnCompletion)'=='true'"/>
+
+    <OnError ExecuteTargets="_TimeStampAfterCompile;PostBuildEvent" Condition="'$(RunPostBuildEvent)'=='Always' or '$(RunPostBuildEvent)'=='OnOutputUpdated'"/>
+    <OnError ExecuteTargets="_CleanRecordFileWrites"/>
+    
+  </Target>        
+
+
+    <!-- Deploy -->
+  <Target Name="BeforeDeploy"/>
+  <Target Name="AfterDeploy"/>
+
+  <Target
+    Name="PreDeployEvent"
+    Condition="'$(PreDeployEvent)'!='' And Exists($(TargetDir))">
+    <Exec WorkingDirectory="$(TargetDir)" Command="$(PreDeployEvent)" />
+  </Target>
+
+  <Target
+    Name="PostDeployEvent"
+    Condition="'$(PostDeployEvent)'!='' And Exists($(TargetDir))">
+    <Exec WorkingDirectory="$(TargetDir)" Command="$(PostDeployEvent)" />
+  </Target>
+
+  <PropertyGroup>
+    <DeployDependsOn>
+      BeforeDeploy;
+      PreDeployEvent;
+      DBDeploy;
+      PostDeployEvent;
+      AfterDeploy
+  </DeployDependsOn>
+  </PropertyGroup>
+  <Target Name="Deploy" DependsOnTargets="$(DeployDependsOn)">
+
+    <OnError ExecuteTargets="PostDeployEvent" Condition="'$(RunPostDeployEvent)'=='Always'"/>
+  </Target>
+
+  <!-- RunCodeAnalysis -->
+
+  <!--
+  DspStaticCodeAnalysis
+  It is expected that this target will be overridden to implement the Dsp's specific
+  static code analysis.  
+  -->
+   <PropertyGroup>
+    <ResultsFile Condition=" '$(ResultsFile)' == '' ">$(TargetDir)$(MSBuildProjectName).StaticCodeAnalysis.Results.xml</ResultsFile>
+    <StaticCodeAnalysisSucceededFile Condition=" '$(StaticCodeAnalysisSucceededFile)' == '' ">$(TargetDir)$(MSBuildProjectName)_StaticCodeAnalysisSucceededFile</StaticCodeAnalysisSucceededFile>
+  </PropertyGroup>
+  
+ <Target Name="DspStaticCodeAnalysis">
+
+    <StaticCodeAnalysisTask
+      DatabaseSchemaProviderName="$(DSP)"
+			Source="@(Build)"
+			ReferencePath="@(ReferencePath)"
+      CatalogProperties="@(CatalogProperties)"
+      ServerProperties="@(ServerProperties)"
+      PropertyConfiguration="$(Configuration)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      SuppressWarnings="$(SuppressWarnings)"
+      CodeAnalysisRules="$(CodeAnalysisRules)"
+      ResultsFile="$(ResultsFile)"
+      StaticCodeAnalysisSucceededFile="$(StaticCodeAnalysisSucceededFile)"
+      ModelCollation="$(ModelCollation)"
+		/>
+  </Target>
+
+  <!-- StaticCodeAnalysis -->
+  <PropertyGroup>
+    <StaticCodeAnalysisDependsOn>
+      _SetupDBBuildInputs;
+      ResolveReferences;
+      ResolveArtifactReferences;
+      DspStaticCodeAnalysis
+    </StaticCodeAnalysisDependsOn>
+  </PropertyGroup>
+  
+  <Target Name="StaticCodeAnalysis" DependsOnTargets="$(StaticCodeAnalysisDependsOn)">
+  </Target>
+
+
+  <!-- Add RunCodeAnalysis to PrepareForRunDependsOn so that it would be called from Microsoft.Common.Targets -->
+  <PropertyGroup>
+      <PrepareForRunDependsOn>$(PrepareForRunDependsOn);RunCodeAnalysis</PrepareForRunDependsOn>
+  </PropertyGroup>
+
+  <!-- Delete code analysis log file during clean and rebuild -->
+  <PropertyGroup>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      CleanStaticCodeAnalysis;
+    </CleanDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CleanStaticCodeAnalysis">
+    <Delete Files="$(ResultsFile)"/>
+    <Delete Files="$(StaticCodeAnalysisSucceededFile)"/>
+  </Target>  
+
+  <PropertyGroup>
+    <RunCodeAnalysisDependsOn></RunCodeAnalysisDependsOn>
+  </PropertyGroup>
+  <Target 
+    Name="RunCodeAnalysis"
+    DependsOnTargets="$(RunCodeAnalysisDependsOn)"
+    Condition="'$(RunCodeAnalysis)'=='true' or '$(RunCodeAnalysisOnce)'=='true'"
+    Inputs="@(DBBuildInputItem)"
+    Outputs="$(ResultsFile);$(StaticCodeAnalysisSucceededFile)">
+    
+    <CallTarget Targets="StaticCodeAnalysis"/>
+  </Target>
+  
+  <!-- CreateManifestResourceNames target:  empty target -->
+  <PropertyGroup>
+    <CreateManifestResourceNamesDependsOn></CreateManifestResourceNamesDependsOn>
+  </PropertyGroup>
+
+  <Target Name="CreateManifestResourceNames" DependsOnTargets="$(CreateManifestResourceNamesDependsOn)"/>
+
+  <!--
+  ============================================================
+  Overriding BuiltProjectOutputGroup
+  ============================================================
+  -->
+  <PropertyGroup>
+    <BuiltProjectOutputGroupDependsOn>$(BuiltProjectOutputGroupDependsOn);_SetupDBBuildOutputs</BuiltProjectOutputGroupDependsOn>
+  </PropertyGroup>
+  <Target
+		Name="BuiltProjectOutputGroup"
+		Outputs="@(BuiltProjectOutputGroupOutput)"
+		DependsOnTargets="$(BuiltProjectOutputGroupDependsOn)">
+
+    <CreateItem Include="@(DBBuildOutputItem)">
+      <Output TaskParameter="Include" ItemName="_BuiltProjectOutputGroupOutputIntermediate"/>
+    </CreateItem>
+
+    <!-- Convert intermediate items into final items; this way we can get the full path for each item -->
+    <CreateItem Include="@(_BuiltProjectOutputGroupOutputIntermediate->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="BuiltProjectOutputGroupOutput"/>
+    </CreateItem>
+  </Target>
+
+  <!--
+    ============================================================
+    Overriding SourceFilesProjectOutputGroup
+    ============================================================
+    -->
+  <PropertyGroup>
+    <!--
+    DSPs should define this property to have a task called to allow definition of
+    additional source files as AdditionalSourceFile items
+    -->
+    <DspSourceFilesProjectOutputGroupDependsOn></DspSourceFilesProjectOutputGroupDependsOn>
+    <SourceFilesProjectOutputGroupDependsOn>
+      $(SourceFilesProjectOutputGroupDependsOn);
+      $(DspSourceFilesProjectOutputGroupDependsOn)
+    </SourceFilesProjectOutputGroupDependsOn>
+  </PropertyGroup>
+  <Target
+       Name="SourceFilesProjectOutputGroup"
+       Outputs="@(SourceFilesProjectOutputGroupOutput)"
+       DependsOnTargets="$(SourceFilesProjectOutputGroupDependsOn)">
+
+    <AssignTargetPath Files="@(Source)" RootFolder="$(MSBuildProjectDirectory)">
+      <Output TaskParameter="AssignedFiles" ItemName="__Source" />
+    </AssignTargetPath>
+
+    <AssignTargetPath Files="@(AdditionalSourceFile)" 
+                      RootFolder="$(MSBuildProjectDirectory)" 
+                      Condition="Exists(@(AdditionalSourceFiles))">
+      <Output TaskParameter="AssignedFiles" ItemName="__AdditionalSourceFile" />
+    </AssignTargetPath>
+
+    <CreateItem Include="@(__Source->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="SourceFilesProjectOutputGroupOutput"/>
+    </CreateItem>
+
+    <CreateItem Include="@(__AdditionalSourceFile->'%(FullPath)')" Condition="Exists(@(AdditionalSourceFiles))">
+      <Output TaskParameter="Include" ItemName="SourceFilesProjectOutputGroupOutput"/>
+    </CreateItem>
+    
+    <!-- Include the project file -->
+    <CreateItem Include="$(MSBuildProjectFullPath)" AdditionalMetadata="TargetPath=$(ProjectFileName)">
+      <Output TaskParameter="Include" ItemName="SourceFilesProjectOutputGroupOutput"/>
+    </CreateItem>
+  </Target>
+</Project>
