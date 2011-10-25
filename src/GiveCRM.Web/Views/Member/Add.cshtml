@@ -39,10 +39,10 @@
     int i = 0; 
     foreach(var phone in Model.PhoneNumbers)
     {
-        <label for="PhoneNumbers[@i].NumberBox">@phone.PhoneNumberType</label><input id="PhoneNumbers[@i].NumberBox" name="PhoneNumbers[@i].Number" type="text" disabled value="@phone.Number" /><br />
-        <input type="hidden" name="PhoneNumbers[@i].Number" value="@phone.Number" />
+        <label for="PhoneNumbers[@i].Number">@phone.PhoneNumberType</label><input id="PhoneNumbers[@i].Number" name="PhoneNumbers[@i].Number" type="text" value="@phone.Number" /><br />
         <input type="hidden" name="PhoneNumbers[@i].MemberId" value="@phone.MemberId" />
-        <input type="hidden" class="numbertype" name="PhoneNumbers[@i].Type" value="@phone.PhoneNumberType" />
+        <input type="hidden" name="PhoneNumbers[@i].Id" value="@phone.Id" />
+        <input type="hidden" class="numbertype" name="PhoneNumbers[@i].PhoneNumberType" value="@phone.PhoneNumberType" />
         i += 1; 
     }
 }
@@ -75,10 +75,10 @@
             $('#AddNumber_Number').val('');
             if (number.trim() === '')
                 return;
-            $('#PhoneNumbers').append('<label for="PhoneNumbers[' + index + '].NumberBox">' + type +
-                                      '</label><input name="PhoneNumbers[' + index + '].NumberBox" type="text" value="' + number + '" disabled /><br />' +
-                                      '<input name="PhoneNumbers[' + index + '].Number" type="hidden" value="' + number + '" />' + 
-                                      '<input type="hidden" class="numbertype" name="PhoneNumbers[' + index + '].Type" value="' + type + '" />');
+            $('#PhoneNumbers').append('<label for="PhoneNumbers[' + index + '].Number">' + type +
+                                      '</label><input name="PhoneNumbers[' + index + '].Number" type="text" value="' + number + '" /><br />' +
+                                      '<input type="hidden" name="PhoneNumbers[' + index + '].Id" value="0" />' +
+                                      '<input type="hidden" class="numbertype" name="PhoneNumbers[' + index + '].PhoneNumberType" value="' + type + '" />');
 
         });
 
