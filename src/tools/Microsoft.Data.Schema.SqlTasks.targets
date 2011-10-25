@@ -2,11 +2,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!--Import T-Sql (dbschema file) targets-->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.TSqlTasks.targets"
+  <Import Project="Microsoft.Data.Schema.TSqlTasks.targets"
           Condition="!('$(DAC)' == 'true')"/>
   
   <!--Import Dac targets-->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\TeamData\Microsoft.Data.Schema.SqlTasks.Dac.targets" 
+  <Import Project="Microsoft.Data.Schema.SqlTasks.Dac.targets" 
           Condition="'$(DAC)' == 'true'"/>
   
 </Project>
