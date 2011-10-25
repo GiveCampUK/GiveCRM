@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project InitialTargets="CheckRequiredProperties" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Sets the database to master if allow server objects is set to true -->
+  <PropertyGroup>
+    <TargetDatabase Condition="'$(AllowServerObjects)' == 'True' And '$(Azure)' != 'True'">master</TargetDatabase>
+    <SandboxTargetDatabase Condition="'$(AllowServerObjects)' == 'True' And '$(Azure)' != 'True'">master</SandboxTargetDatabase>
+  </PropertyGroup>
+  
+  <!--Import common data targets-->
+  <Import Project="Microsoft.Data.Schema.Common.targets" />
+
+  <UsingTask TaskName="SqlBuildTask" AssemblyName="Microsoft.Data.Schema.Tasks.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="SqlSetupDeployTask" AssemblyName="Microsoft.Data.Schema.Tasks.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="SqlDeployTask" AssemblyName="Microsoft.Data.Schema.Tasks.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  <UsingTask TaskName="SqlStaticCodeAnalysisTask" AssemblyName="Microsoft.Data.Schema.Tasks.Sql, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  
+  <!--This makes the project files a dependency of all targets so that things rebuild if they change-->
+  <PropertyGroup>
+    <MSBuildAllProjects>
+      $(MSBuildAllProjects);
+      Microsoft.Data.Schema.TSqlTasks.targets
+    </MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--Add our target to define Sql DSP specific inputs-->
+    <SetupDBBuildInputsDependsOn>_SetupSqlBuildInputs</SetupDBBuildInputsDependsOn>
+  </PropertyGroup>
+  <Target Name="_SetupSqlBuildInputs"
+          Outputs="@(DBBuildInputItem)">
+    <!--
+    In our project system, source items are called Build - to integrate create Source items
+    from the Build items
+    -->
+    <CreateItem  Include="@(Build)">
+      <Output TaskParameter="Include" ItemName="Source"/>
+    </CreateItem>
+ 
+    <CreateItem  Include="@(PostDeploy)">
+      <Output TaskParameter="Include" ItemName="__SqlBuildInputItem"/>
+    </CreateItem>
+    <CreateItem  Include="@(PreDeploy)">
+      <Output TaskParameter="Include" ItemName="__SqlBuildInputItem"/>
+    </CreateItem>
+    
+    <CreateItem  Include="@(__SqlBuildInputItem->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="DBBuildInputItem"/>
+    </CreateItem>
+  </Target>
+
+  <!--Build-->
+
+  <Target Name="DspBuild">
+
+    <SqlBuildTask
+      DatabaseSchemaProviderName="$(DSP)"
+      Source="@(Source)"
+      ReferencePath="@(ReferencePath)"
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+
+      OutputDBSchema="@(DbSchemaFile)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      SuppressWarnings="$(SuppressWarnings)"
+
+      AllowServerObjects="$(AllowServerObjects)"
+      AllowDatabaseObjects="$(AllowDatabaseObjects)"
+      ModelCollation="$(ModelCollation)"
+      ContributorArguments="@(BuildContributorArgument)"
+      BuildExtensionConfiguration="@(BuildExtensionConfiguration)"
+
+      PreserveHeaderComments="$(PreserveHeaderComments)"
+      />
+
+  </Target>
+
+  <Target Name="DspSetupDeploy">
+
+    <SqlSetupDeployTask
+      SourceModel="@(SourceModel)"
+      DeployManifestName="$(DeployManifestName)"
+      DatabaseSchemaProviderName="$(DSP)"
+      ReferencePath="@(ReferencePath)"
+
+      DeploymentConfigFile="$(FinalDeploymentConfigFile)"
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+      SqlCommandVariablesFile="$(FinalSqlCommandVariablesFile)"
+
+      DeploymentExtensions="$(DeploymentExtensions)"
+      DeploymentExtensionConfiguration="@(DeploymentExtensionConfiguration)"
+      PropertiesFile="@(PropertiesFile)"
+      ConnectionString="$(FinalTargetConnectionString)"
+      DatabaseName="$(FinalTargetDatabase)"
+      DeploymentScriptName="$(FinalDeployScriptFile)"
+      OutputDirectory="$(TargetDir)"
+      OverwriteExistingFiles="$(OverwriteDeploymentFiles)"
+      DeployToScript="$(FinalDeployToScript)"
+      DeployToDatabase="$(FinalDeployToDatabase)"
+      
+      PostdeployItem="@(PostDeploy)"
+      PredeployItem="@(PreDeploy)"
+      >
+
+      <Output TaskParameter="DeploymentFiles" ItemName="FileWrites"/>
+    </SqlSetupDeployTask>
+
+  </Target>
+  
+  <PropertyGroup>
+    <BlockIncrementalDeploymentIfDataLoss Condition="'$(BlockIncrementalDeploymentIfDataLoss)' == ''">true</BlockIncrementalDeploymentIfDataLoss>
+    <AllowServerObjects Condition="'$(AllowServerObjects)' == ''">false</AllowServerObjects>
+    <AllowDatabaseObjects Condition="'$(AllowDatabaseObjects)' == ''">true</AllowDatabaseObjects>
+  </PropertyGroup>
+  
+  <!-- Deploy -->
+  <Target Name="DspDeploy">
+
+    <SqlDeployTask
+      SourceModel="@(SourceModel)"
+      DeploymentManifest="@(DeploymentManifest)"
+      ConnectionString="$(FinalTargetConnectionString)"
+      DatabaseName="$(FinalTargetDatabase)"
+      DeployToScript="$(FinalDeployToScript)"
+      DeployScriptFile="$(DeployScriptFilePath)"
+      DeployToDatabase="$(FinalDeployToDatabase)"
+      
+      DeploymentExtensions="$(DeploymentExtensions)"
+      DeploymentConfigurationFile="$(FinalDeploymentConfigFile)"
+      SqlCommandVariablesFile="$(FinalSqlCommandVariablesFile)"
+      
+      SqlCommandVariableOverrides="@(SqlCommandVariableOverride)"
+      ContributorArguments="@(DeploymentContributorArgument)"
+      />
+    
+    </Target>
+
+  
+  <!-- Static Code Analysis -->
+  <Target Name="DspStaticCodeAnalysis">
+
+    <SqlStaticCodeAnalysisTask
+      DatabaseSchemaProviderName="$(DSP)"
+			Source="@(Build)"
+			ReferencePath="@(ReferencePath)"
+      CatalogPropertiesFile="$(CatalogPropertiesFile)"
+      ServerPropertiesFile="$(ServerPropertiesFile)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      SuppressWarnings="$(SuppressWarnings)"
+      CodeAnalysisRules="$(CodeAnalysisRules)"
+      ResultsFile="$(ResultsFile)"
+      StaticCodeAnalysisSucceededFile="$(StaticCodeAnalysisSucceededFile)"
+      ProjectFolder="$(MSBuildProjectDirectory)"
+      AllowServerObjects="$(AllowServerObjects)"
+      AllowDatabaseObjects="$(AllowDatabaseObjects)"
+      ModelCollation="$(ModelCollation)"
+		/>
+  </Target>
+  
+  
+  <!--Integrate with SourceFilesProjectOutputGroup in data common-->
+  <PropertyGroup>
+    <DspSourceFilesProjectOutputGroupDependsOn>
+      _SetupSqlBuildInputs;
+      SqlSourceFilesProjectOutputGroup
+    </DspSourceFilesProjectOutputGroupDependsOn>
+  </PropertyGroup>
+  <Target
+    Name="SqlSourceFilesProjectOutputGroup"
+    Outputs="@(AdditionalSourceFile)">
+
+    <CreateItem Include="@(__SqlBuildInputItem->'%(FullPath)')">
+      <Output TaskParameter="Include" ItemName="AdditionalSourceFile"/>
+    </CreateItem>
+  </Target>
+</Project>
+
