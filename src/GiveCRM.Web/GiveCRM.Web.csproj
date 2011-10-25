@@ -81,6 +81,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
+    <Compile Include="Controllers\ExcelImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
+    <Compile Include="Models\ExcelImportViewModel.cs" />
     <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
     <Compile Include="Models\Members\MemberSearchViewModel.cs" />
@@ -120,6 +122,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\GiveCRM-icon.png" />
+    <Content Include="Content\images\excel.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -230,6 +233,10 @@
       <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
       <Name>GiveCRM.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GiveCRM.ImportExportService\GiveCRM.ImportExportService.csproj">
+      <Project>{6442A87F-51D2-4694-B712-61D4512B162A}</Project>
+      <Name>GiveCRM.ImportExportService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
       <Name>GiveCRM.ImportExport</Name>
@@ -308,6 +315,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Setup\EditFacet.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ExcelImport\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
