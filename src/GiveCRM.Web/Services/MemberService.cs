@@ -5,7 +5,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.Web.Services
 {
-    public class MembersService: IMemberService
+    public class MemberService: IMemberService
     {
         private Members _membersDb = new Members();
 
