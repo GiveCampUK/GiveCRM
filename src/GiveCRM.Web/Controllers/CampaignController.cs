@@ -18,6 +18,7 @@ namespace GiveCRM.Web.Controllers
     public class CampaignController : Controller
     {
         private readonly IMailingListService _mailingListService;
+        private Campaigns campaignsRepo = new Campaigns();
 
         public CampaignController(IMailingListService mailingListService)
         {
@@ -26,7 +27,6 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult Index(bool showClosed = false)
         {
-            var campaignsRepo = new Campaigns();
             IEnumerable<Campaign> campaigns = showClosed ? campaignsRepo.AllClosed() : campaignsRepo.AllOpen();
 
             string title, linkText;
@@ -73,17 +73,15 @@ namespace GiveCRM.Web.Controllers
 
         private int InsertCampaign(Campaign campaign)
         {
-            Campaigns db = new Campaigns();
-            Campaign savedCampaign = db.Insert(campaign);
+            Campaign savedCampaign = campaignsRepo.Insert(campaign);
             return savedCampaign.Id;
         }
 
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var campaignRepo = new Campaigns();
             var memberSearchFilterRepo = new MemberSearchFilters();
-            var campaign = campaignRepo.Get(id);
+            var campaign = campaignsRepo.Get(id);
 
             var applicableMembers = new Search().RunCampaign(id);
 
@@ -115,7 +113,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(CampaignShowViewModel campaignViewModel)
         {
             Campaign campaign = campaignViewModel.Campaign;
-            new Campaigns().Update(campaign);
+            campaignsRepo.Update(campaign);
             return RedirectToAction("Show", new {id = campaign.Id});
         }
 
@@ -168,7 +166,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult CloseCampaign(int campaignId)
         {
-            var campaign = new Campaigns().Get(campaignId);
+            var campaign = campaignsRepo.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -180,17 +178,16 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
-            var campaigns = new Campaigns();
-            var campaign = campaigns.Get(viewModel.CampaignId);
+            var campaign = campaignsRepo.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
-            campaigns.Update(campaign);
+            campaignsRepo.Update(campaign);
             return RedirectToAction("Index", new {showClosed = true});
         }
 
         [HttpGet]
         public ActionResult CommitCampaign(int campaignId)
         {
-            var campaign = new Campaigns().Get(campaignId);
+            var campaign = campaignsRepo.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -224,10 +221,9 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Clone(int id)
         {
-            var campaignRepo = new Campaigns();
             var memberSearchFilterRepo = new MemberSearchFilters();
 
-            var campaign = campaignRepo.Get(id);
+            var campaign = campaignsRepo.Get(id);
             Campaign campaignClone = new Campaign
                                          {
                                              Id = 0,
@@ -237,7 +233,7 @@ namespace GiveCRM.Web.Controllers
                                              RunOn = null
                                          };
 
-            campaignClone = campaignRepo.Insert(campaignClone);
+            campaignClone = campaignsRepo.Insert(campaignClone);
 
             IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
 
