@@ -37,7 +37,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             var newMember = new Member
                 {
                     FirstName = firstName,
-                    LastName = random.PickFromList(NameData.Surnames),
+                    LastName = random.PickFromList(FamilyNames.Data),
                     Title = titleSalutation.Title,
                     Salutation = titleSalutation.Salutation,
                     City = random.PickFromList(AddressData.Cities),
@@ -151,11 +151,11 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private string GenerateEmailAddress(Member member)
         {
-            string sep = random.PickFromList(NameData.EmailSeparators);
+            string sep = random.PickFromList(FamilyNames.EmailSeparators);
 
             if (random.Percent(30))
             {
-                sep += random.Letter() + random.PickFromList(NameData.EmailSeparators);
+                sep += random.Letter() + random.PickFromList(FamilyNames.EmailSeparators);
             }
 
             string name;
@@ -174,14 +174,14 @@ namespace GiveCRM.DummyDataGenerator.Generation
                 name += this.random.Next(100).ToString();
             }
 
-            string domain = random.PickFromList(NameData.EmailDomains);
+            string domain = random.PickFromList(FamilyNames.EmailDomains);
 
             return name + "@" + domain;
         }
 
         private TitleData MakeTitleSalutation(bool isFemale)
         {
-            return isFemale ? random.PickFromList(NameData.FemaleTitles) : random.PickFromList(NameData.MaleTitles);
+            return isFemale ? random.PickFromList(FamilyNames.FemaleTitles) : random.PickFromList(FamilyNames.MaleTitles);
         }
 
         private string RandomMaleFirstName()

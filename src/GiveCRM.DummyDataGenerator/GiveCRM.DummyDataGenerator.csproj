@@ -76,7 +76,7 @@
     <Compile Include="Generation\DonationsGenerator.cs" />
     <Compile Include="Data\AddressData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
-    <Compile Include="Data\NameData.cs" />
+    <Compile Include="Data\FamilyNames.cs" />
     <Compile Include="Generation\RandomSource.cs" />
     <Compile Include="Data\TitleData.cs" />
     <Compile Include="Generator.cs" />
