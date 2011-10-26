@@ -18,18 +18,19 @@ namespace GiveCRM.Web.Controllers
     {
         private readonly IMailingListService _mailingListService;
         private readonly ISearchService _searchService;
-        private readonly Campaigns campaignsRepo = new Campaigns();
+        private readonly ICampaignService _campaignService;
         private readonly MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
 
-        public CampaignController(IMailingListService mailingListService, ISearchService searchService)
+        public CampaignController(IMailingListService mailingListService, ISearchService searchService, ICampaignService campaignService)
         {
             _mailingListService = mailingListService;
             _searchService = searchService;
+            _campaignService = campaignService;
         }
 
         public ActionResult Index(bool showClosed = false)
         {
-            IEnumerable<Campaign> campaigns = showClosed ? campaignsRepo.AllClosed() : campaignsRepo.AllOpen();
+            IEnumerable<Campaign> campaigns = showClosed ? _campaignService.AllClosed() : _campaignService.AllOpen();
 
             string title, linkText;
 
@@ -80,14 +81,14 @@ namespace GiveCRM.Web.Controllers
 
         private int InsertCampaign(Campaign campaign)
         {
-            var savedCampaign = campaignsRepo.Insert(campaign);
+            var savedCampaign = _campaignService.Insert(campaign);
             return savedCampaign.Id;
         }
 
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var campaign = campaignsRepo.Get(id);
+            var campaign = _campaignService.Get(id);
 
             var applicableMembers = _searchService.RunCampaign(id);
 
@@ -119,7 +120,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(CampaignShowViewModel campaignViewModel)
         {
             var campaign = campaignViewModel.Campaign;
-            campaignsRepo.Update(campaign);
+            _campaignService.Update(campaign);
             return RedirectToAction("Show", new { id = campaign.Id });
         }
 
@@ -170,7 +171,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult CloseCampaign(int campaignId)
         {
-            var campaign = campaignsRepo.Get(campaignId);
+            var campaign = _campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -182,16 +183,16 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
-            var campaign = campaignsRepo.Get(viewModel.CampaignId);
+            var campaign = _campaignService.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
-            campaignsRepo.Update(campaign);
+            _campaignService.Update(campaign);
             return RedirectToAction("Index", new { showClosed = true });
         }
 
         [HttpGet]
         public ActionResult CommitCampaign(int campaignId)
         {
-            var campaign = campaignsRepo.Get(campaignId);
+            var campaign = _campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -225,7 +226,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Clone(int id)
         {
-            var campaign = campaignsRepo.Get(id);
+            var campaign = _campaignService.Get(id);
             var campaignClone = new Campaign
                                          {
                                              Id = 0,
@@ -235,7 +236,7 @@ namespace GiveCRM.Web.Controllers
                                              RunOn = null
                                          };
 
-            campaignClone = campaignsRepo.Insert(campaignClone);
+            campaignClone = _campaignService.Insert(campaignClone);
 
             IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
 
