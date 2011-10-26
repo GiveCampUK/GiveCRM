@@ -41,7 +41,7 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void EditFacet_Action_Returns_View_With_A_Facet()
         {
-            _facetService.Get(1).ReceivedWithAnyArgs().Returns(new Facet());
+            _facetService.Get(1).Returns(new Facet());
 
             var controller = new SetupController(_facetService);
             var result = controller.AddFacet();
@@ -50,12 +50,37 @@ namespace GiveCRM.Web.Tests.controllers
         }
 
         [Test]
-        public void ListFacets_Action_Returns_View_With_A_ViewModel()
+        public void SaveFacet_Action_With_New_Facet_Inserts_And_Redirects_To_Action()
         {
-            _facetService.All().Received().Returns(new List<Facet>());
+            _facetService.Insert(new Facet());
 
             var controller = new SetupController(_facetService);
-            var result = controller.AddFacet();
+            var result = controller.SaveFacet(new Facet());
+
+            result.AssertActionRedirect();
+        }
+
+        [Test]
+        public void SaveFacet_Action_With_Exsting_Facet_Inserts_And_Redirects_To_Action()
+        {
+            _facetService.Insert(new Facet{Id = 20});
+
+            var controller = new SetupController(_facetService);
+            var result = controller.SaveFacet(new Facet
+                                                  {
+                                                      Id = 20
+                                                  });
+
+            result.AssertActionRedirect();
+        }
+
+        [Test]
+        public void ListFacets_Action_Returns_View_With_A_ViewModel()
+        {
+            _facetService.All().Returns(new List<Facet>());
+
+            var controller = new SetupController(_facetService);
+            var result = controller.ListFacets();
 
             result.AssertViewRendered().WithViewData<FacetListViewModel>();
         }
