@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
 using System.Web.Mvc;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
@@ -19,6 +18,8 @@ namespace GiveCRM.Web.Controllers
     {
         private readonly IMailingListService _mailingListService;
         private Campaigns campaignsRepo = new Campaigns();
+        private Search searchRepo = new Search();
+        private MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
 
         public CampaignController(IMailingListService mailingListService)
         {
@@ -67,7 +68,7 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            int newId = this.InsertCampaign(campaign);
+            int newId = InsertCampaign(campaign);
             return RedirectToAction("Show", new {id = newId});
         }
 
@@ -80,10 +81,9 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var memberSearchFilterRepo = new MemberSearchFilters();
             var campaign = campaignsRepo.Get(id);
 
-            var applicableMembers = new Search().RunCampaign(id);
+            var applicableMembers = searchRepo.RunCampaign(id);
 
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
@@ -120,7 +120,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult AddMembershipSearchFilter(int campaignId)
         {
-            var emptySearchCriteria = new Search().GetEmptySearchCriteria();
+            var emptySearchCriteria = searchRepo.GetEmptySearchCriteria();
             var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
             var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
 
@@ -136,12 +136,11 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
-            var searchCriteria = new Search().GetEmptySearchCriteria();
+            var searchCriteria = searchRepo.GetEmptySearchCriteria();
 
             // we have to find one
             var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
 
-            var memberSearchFilterRepo = new MemberSearchFilters();
             var memberSearchFilter = new MemberSearchFilter
                                              {
                                                 CampaignId = viewModel.CampaignId,
@@ -158,7 +157,6 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
-            var memberSearchFilterRepo = new MemberSearchFilters();
             memberSearchFilterRepo.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new {id = campaignId});
         }
@@ -221,8 +219,6 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Clone(int id)
         {
-            var memberSearchFilterRepo = new MemberSearchFilters();
-
             var campaign = campaignsRepo.Get(id);
             Campaign campaignClone = new Campaign
                                          {
