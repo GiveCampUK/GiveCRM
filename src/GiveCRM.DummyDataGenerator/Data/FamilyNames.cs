@@ -147,42 +147,5 @@
                 "Wright",
                 "Young"
             };
-
-        internal static List<TitleDataItem> MaleTitles = new List<TitleDataItem>
-            {
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Mr.", "Mr."),
-                new TitleDataItem("Dr.", "Doctor"),
-                new TitleDataItem("Rev.", "Reverend"),
-            };
-
-        internal static List<TitleDataItem> FemaleTitles = new List<TitleDataItem>
-            {
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Ms.", "Ms."),
-                new TitleDataItem("Mrs.", "Mrs."),
-                new TitleDataItem("Mrs.", "Mrs."),
-                new TitleDataItem("Mrs.", "Mrs."),
-                new TitleDataItem("Mrs.", "Mrs."),
-                new TitleDataItem("Dr.", "Doctor"),
-                new TitleDataItem("Rev.", "Reverend"),
-            };
-
-        internal static List<string> PhoneTypes = new List<string> { "Home", "Mobile", "Work" };
     }
 }

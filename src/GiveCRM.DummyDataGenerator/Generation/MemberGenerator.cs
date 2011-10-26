@@ -181,7 +181,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private TitleDataItem MakeTitleSalutation(bool isFemale)
         {
-            return isFemale ? random.PickFromList(FamilyNames.FemaleTitles) : random.PickFromList(FamilyNames.MaleTitles);
+            return isFemale ? random.PickFromList(TitleData.FemaleTitles) : random.PickFromList(TitleData.MaleTitles);
         }
 
         private string RandomMaleFirstName()
