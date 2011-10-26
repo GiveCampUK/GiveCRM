@@ -50,8 +50,7 @@ namespace GiveCRM.Web.Tests.controllers
             var controller = new MemberController(_donationsService, _memberService, _campaignService);
             var result = controller.Edit(1);
 
-            Assert.That(result.AssertViewRendered().ViewName == "Add");
-            result.AssertViewRendered().WithViewData<MemberEditViewModel>();
+            result.AssertViewRendered().ForView("Add").WithViewData<MemberEditViewModel>();
         }
 
         [Test]
@@ -87,6 +86,17 @@ namespace GiveCRM.Web.Tests.controllers
             var result = controller.SaveDonation(new Donation());
 
             result.AssertActionRedirect().ToAction("Index");
+        }
+
+        [Test]
+        public void TopDonors_Action_Returns_View_With_Model()
+        {
+            _memberService.All().Returns(new List<Member>());
+
+            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var result = controller.TopDonors();
+
+            result.AssertViewRendered().ForView("MembersList").WithViewData<IEnumerable<Member>>();
         }
     }
 }
