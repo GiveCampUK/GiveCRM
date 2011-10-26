@@ -148,60 +148,39 @@
                 "Young"
             };
 
-        internal static List<TitleData> MaleTitles = new List<TitleData>
+        internal static List<TitleDataItem> MaleTitles = new List<TitleDataItem>
             {
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Mr.", "Mr."),
-                new TitleData("Dr.", "Doctor"),
-                new TitleData("Rev.", "Reverend"),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Dr.", "Doctor"),
+                new TitleDataItem("Rev.", "Reverend"),
             };
 
-        internal static List<TitleData> FemaleTitles = new List<TitleData>
+        internal static List<TitleDataItem> FemaleTitles = new List<TitleDataItem>
             {
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Ms.", "Ms."),
-                new TitleData("Mrs.", "Mrs."),
-                new TitleData("Mrs.", "Mrs."),
-                new TitleData("Mrs.", "Mrs."),
-                new TitleData("Mrs.", "Mrs."),
-                new TitleData("Dr.", "Doctor"),
-                new TitleData("Rev.", "Reverend"),
-            };
-
-        internal static List<string> EmailSeparators = new List<string> { "", ".", "_" };
-
-        internal static List<string> EmailDomains = new List<string>
-            {
-                "fakemail.com",
-                "fakemail.net",
-                "not.com",
-                "not.net",
-                "notmail.com",
-                "notmail.net",
-                "coldmail.net",
-                "voidmail.net",
-                "voidmail.org",
-                "pmail.com",
-                "pmail.net",
-                "gahoo.com",
-                "gahoo.org",
-                "offthe.net",
-                "notonthe.net",
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Dr.", "Doctor"),
+                new TitleDataItem("Rev.", "Reverend"),
             };
 
         internal static List<string> PhoneTypes = new List<string> { "Home", "Mobile", "Work" };
