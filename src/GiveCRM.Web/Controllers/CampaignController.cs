@@ -17,18 +17,26 @@ namespace GiveCRM.Web.Controllers
     public class CampaignController : Controller
     {
         private readonly IMailingListService _mailingListService;
-        private Campaigns campaignsRepo = new Campaigns();
-        private Search searchRepo = new Search();
-        private MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
-
-        public CampaignController(IMailingListService mailingListService)
+        private readonly ISearchService _searchService;
+        private readonly ICampaignService _campaignService;
+        private readonly IMemberSearchFilterService _memberSearchFilterService;
+        private IMemberService _memberService;
+        private readonly CampaignRuns campaignRuns = new CampaignRuns();
+        
+        public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
+            ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService,
+            IMemberService memberService)
         {
             _mailingListService = mailingListService;
+            _searchService = searchService;
+            _campaignService = campaignService;
+            _memberSearchFilterService = memberSearchFilterService;
+            _memberService = memberService;
         }
 
         public ActionResult Index(bool showClosed = false)
         {
-            IEnumerable<Campaign> campaigns = showClosed ? campaignsRepo.AllClosed() : campaignsRepo.AllOpen();
+            IEnumerable<Campaign> campaigns = showClosed ? _campaignService.AllClosed() : _campaignService.AllOpen();
 
             string title, linkText;
 
@@ -60,44 +68,49 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign);
-            model.Campaign = new Campaign {Name = "New Campaign"};
+            var model = new CampaignShowViewModel(Resources.Literal_CreateCampaign)
+                            {
+                                Campaign = new Campaign
+                                               {
+                                                   Name = "New Campaign"
+                                               }
+                            };
             return View("Show", model);
         }
 
         [HttpPost]
         public ActionResult Create(Campaign campaign)
         {
-            int newId = InsertCampaign(campaign);
-            return RedirectToAction("Show", new {id = newId});
+            var newId = InsertCampaign(campaign);
+            return RedirectToAction("Show", new { id = newId });
         }
 
         private int InsertCampaign(Campaign campaign)
         {
-            Campaign savedCampaign = campaignsRepo.Insert(campaign);
+            var savedCampaign = _campaignService.Insert(campaign);
             return savedCampaign.Id;
         }
 
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var campaign = campaignsRepo.Get(id);
+            var campaign = _campaignService.Get(id);
 
-            var applicableMembers = searchRepo.RunCampaign(id);
+            var applicableMembers = _searchService.RunCampaign(id);
 
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = memberSearchFilterRepo.ForCampaign(id).Select(
-                                m => 
+                                SearchFilters = _memberSearchFilterService.ForCampaign(id).Select(
+                                m =>
                                     new MemberSearchFilterViewModel
                                         {
                                             MemberSearchFilterId = m.Id,
                                             CampaignId = campaign.Id,
                                             CriteriaDisplayText = SearchCriteria.Create(m.InternalName,
                                                                             m.DisplayName,
-                                                                            (SearchFieldType) m.FilterType,
-                                                                            (SearchOperator) m.SearchOperator,
+                                                                            (SearchFieldType)m.FilterType,
+                                                                            (SearchOperator)m.SearchOperator,
                                                                             m.Value
                                                                       ).ToFriendlyDisplayString()
                                         }).ToList(),
@@ -112,23 +125,23 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult Show(CampaignShowViewModel campaignViewModel)
         {
-            Campaign campaign = campaignViewModel.Campaign;
-            campaignsRepo.Update(campaign);
-            return RedirectToAction("Show", new {id = campaign.Id});
+            var campaign = campaignViewModel.Campaign;
+            _campaignService.Update(campaign);
+            return RedirectToAction("Show", new { id = campaign.Id });
         }
 
         [HttpGet]
         public ActionResult AddMembershipSearchFilter(int campaignId)
         {
-            var emptySearchCriteria = searchRepo.GetEmptySearchCriteria();
+            var emptySearchCriteria = _searchService.GetEmptySearchCriteria();
             var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
-            var searchOperators = ((SearchOperator[]) Enum.GetValues(typeof(SearchOperator)));
+            var searchOperators = ((SearchOperator[])Enum.GetValues(typeof(SearchOperator)));
 
             var model = new AddSearchFilterViewModel(Resources.Literal_AddSearchFilter)
                             {
                                 CampaignId = campaignId,
-                                CriteriaNames = criteriaNames.Select(s => new SelectListItem {Value = s, Text = s}),
-                                SearchOperators = searchOperators.Select(o => new SelectListItem {Value = o.ToString(), Text = o.ToFriendlyDisplayString()})
+                                CriteriaNames = criteriaNames.Select(s => new SelectListItem { Value = s, Text = s }),
+                                SearchOperators = searchOperators.Select(o => new SelectListItem { Value = o.ToString(), Text = o.ToFriendlyDisplayString() })
                             };
             return View("AddSearchFilter", model);
         }
@@ -136,35 +149,35 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
-            var searchCriteria = searchRepo.GetEmptySearchCriteria();
+            var searchCriteria = _searchService.GetEmptySearchCriteria();
 
             // we have to find one
             var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
 
             var memberSearchFilter = new MemberSearchFilter
                                              {
-                                                CampaignId = viewModel.CampaignId,
-                                                InternalName = searchCriterion.InternalName,
-                                                FilterType = (int) searchCriterion.Type,
-                                                DisplayName = viewModel.CriteriaName,
-                                                SearchOperator = (int) viewModel.SearchOperator,
-                                                Value = viewModel.Value
+                                                 CampaignId = viewModel.CampaignId,
+                                                 InternalName = searchCriterion.InternalName,
+                                                 FilterType = (int)searchCriterion.Type,
+                                                 DisplayName = viewModel.CriteriaName,
+                                                 SearchOperator = (int)viewModel.SearchOperator,
+                                                 Value = viewModel.Value
                                              };
-            memberSearchFilterRepo.Insert(memberSearchFilter);
-            return RedirectToAction("Show", new {id = viewModel.CampaignId});
+            _memberSearchFilterService.Insert(memberSearchFilter);
+            return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
         [HttpGet]
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
-            memberSearchFilterRepo.Delete(memberSearchFilterId);
-            return RedirectToAction("Show", new {id = campaignId});
+            _memberSearchFilterService.Delete(memberSearchFilterId);
+            return RedirectToAction("Show", new { id = campaignId });
         }
 
         [HttpGet]
         public ActionResult CloseCampaign(int campaignId)
         {
-            var campaign = campaignsRepo.Get(campaignId);
+            var campaign = _campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -176,16 +189,16 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
-            var campaign = campaignsRepo.Get(viewModel.CampaignId);
+            var campaign = _campaignService.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
-            campaignsRepo.Update(campaign);
-            return RedirectToAction("Index", new {showClosed = true});
+            _campaignService.Update(campaign);
+            return RedirectToAction("Index", new { showClosed = true });
         }
 
         [HttpGet]
         public ActionResult CommitCampaign(int campaignId)
         {
-            var campaign = campaignsRepo.Get(campaignId);
+            var campaign = _campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -197,14 +210,13 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
-            new CampaignRuns().Commit(viewModel.CampaignId);
-            return RedirectToAction("Show", new {id = viewModel.CampaignId});
+            campaignRuns.Commit(viewModel.CampaignId);
+            return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
         public FileResult DownloadMailingList(int id)
         {
-            var membersRepo = new Members();
-            var members = membersRepo.FromCampaignRun(id);
+            var members = _memberService.FromCampaignRun(id);
 
             byte[] filecontent;
             using (var stream = new MemoryStream())
@@ -219,8 +231,8 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Clone(int id)
         {
-            var campaign = campaignsRepo.Get(id);
-            Campaign campaignClone = new Campaign
+            var campaign = _campaignService.Get(id);
+            var campaignClone = new Campaign
                                          {
                                              Id = 0,
                                              Description = campaign.Description + " (" + Resources.Literal_Cloned + ")",
@@ -229,13 +241,13 @@ namespace GiveCRM.Web.Controllers
                                              RunOn = null
                                          };
 
-            campaignClone = campaignsRepo.Insert(campaignClone);
+            campaignClone = _campaignService.Insert(campaignClone);
 
-            IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
+            IEnumerable<MemberSearchFilter> memberSearchFilters = _memberSearchFilterService.ForCampaign(id);
 
             foreach (MemberSearchFilter memberSearchFilter in memberSearchFilters)
             {
-                memberSearchFilterRepo.Insert(new MemberSearchFilter
+                _memberSearchFilterService.Insert(new MemberSearchFilter
                                                   {
                                                       CampaignId = campaignClone.Id,
                                                       DisplayName = memberSearchFilter.DisplayName,
@@ -246,7 +258,7 @@ namespace GiveCRM.Web.Controllers
                                                   });
             }
 
-            return RedirectToAction("Show", new {id = campaignClone.Id});
+            return RedirectToAction("Show", new { id = campaignClone.Id });
         }
     }
 }
