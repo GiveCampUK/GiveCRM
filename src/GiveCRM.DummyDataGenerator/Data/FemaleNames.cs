@@ -127,7 +127,9 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Teresa",
                 "Tina",
                 "Virginia",
-                "Wanda"
+                "Wanda",
+                "Zara",
+                "Zaza"
             };
     }
 }
