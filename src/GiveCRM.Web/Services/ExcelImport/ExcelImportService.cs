@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using GiveCRM.ImportExport;
-using Simple.Data;
 
-namespace GiveCRM.ImportExportService
+namespace GiveCRM.Web.Services.ExcelImport
 {
     public class ExcelImportService : IExcelImportService
     {

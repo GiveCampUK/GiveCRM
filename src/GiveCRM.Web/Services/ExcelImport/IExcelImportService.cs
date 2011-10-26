@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace GiveCRM.ImportExportService
+namespace GiveCRM.Web.Services.ExcelImport
 {
     public interface IExcelImportService
     {

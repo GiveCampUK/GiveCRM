@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using GiveCRM.ImportExport;
-using GiveCRM.ImportExportService;
-using Moq;
+using GiveCRM.Web.Services.ExcelImport;
 using NUnit.Framework;
 
-namespace GiveCRM.Admin.BusinessLogic.Tests
+namespace GiveCRM.Web.Tests.Services.ExcelImport
 {
     [TestFixture]
     public class ExcelImportService_Import_Should
