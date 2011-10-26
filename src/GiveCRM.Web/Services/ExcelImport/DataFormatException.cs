@@ -1,6 +1,6 @@
 using System;
 
-namespace GiveCRM.ImportExportService
+namespace GiveCRM.Web.Services.ExcelImport
 {
     public class DataFormatException : Exception
     {

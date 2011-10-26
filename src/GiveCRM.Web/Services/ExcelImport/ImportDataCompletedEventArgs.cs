@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GiveCRM.ImportExportService
+namespace GiveCRM.Web.Services.ExcelImport
 {
     public class ImportDataCompletedEventArgs : EventArgs
     {
