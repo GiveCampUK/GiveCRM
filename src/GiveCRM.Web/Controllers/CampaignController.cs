@@ -20,6 +20,8 @@ namespace GiveCRM.Web.Controllers
         private readonly ISearchService _searchService;
         private readonly ICampaignService _campaignService;
         private readonly IMemberSearchFilterService _memberSearchFilterService;
+        private readonly CampaignRuns campaignRuns = new CampaignRuns();
+        private readonly Members membersRepo = new Members();
         
         public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
             ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService)
@@ -206,13 +208,12 @@ namespace GiveCRM.Web.Controllers
         [HttpPost]
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
-            new CampaignRuns().Commit(viewModel.CampaignId);
+            campaignRuns.Commit(viewModel.CampaignId);
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
         public FileResult DownloadMailingList(int id)
         {
-            var membersRepo = new Members();
             var members = membersRepo.FromCampaignRun(id);
 
             byte[] filecontent;
