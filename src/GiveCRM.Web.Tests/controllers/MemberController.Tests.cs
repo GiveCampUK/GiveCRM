@@ -1,4 +1,5 @@
-﻿using GiveCRM.Models;
+﻿using System.Collections.Generic;
+using GiveCRM.Models;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Models.Members;
 using GiveCRM.Web.Services;
@@ -61,6 +62,29 @@ namespace GiveCRM.Web.Tests.controllers
 
             var controller = new MemberController(_donationsService, _memberService, _campaignService);
             var result = controller.Delete(1);
+
+            result.AssertActionRedirect().ToAction("Index");
+        }
+
+        [Test]
+        public void Donate_Action_Returns_View_With_Model()
+        {
+            _memberService.Get(1).Returns(new Member());
+            _campaignService.AllOpen().Returns(new List<Campaign>());
+
+            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var result = controller.Donate(1);
+
+            result.AssertViewRendered().WithViewData<Donation>();
+        }
+
+        [Test]
+        public void QuickDonation_Action_RedirectsToAction()
+        {
+            _donationsService.QuickDonation(new Donation());
+
+            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var result = controller.SaveDonation(new Donation());
 
             result.AssertActionRedirect().ToAction("Index");
         }
