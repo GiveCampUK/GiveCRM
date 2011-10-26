@@ -186,12 +186,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private string RandomMaleFirstName()
         {
-            return random.PickFromList(NameData.MaleFirstNames);
+            return random.PickFromList(MaleNames.Data);
         }
 
         private string RandomFemaleFirstName()
         {
-            return random.PickFromList(NameData.FemaleFirstNames);
+            return random.PickFromList(FemaleNames.Data);
         }
     }
 }
