@@ -11,5 +11,6 @@ namespace GiveCRM.Web.Services
         void Insert(Member member);
         IEnumerable<Member> Search(string name, string postcode, string reference);
         IEnumerable<Member> Search(string criteria);
+        IEnumerable<Member> FromCampaignRun(int campaignId);
     }
 }

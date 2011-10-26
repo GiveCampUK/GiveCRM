@@ -20,16 +20,18 @@ namespace GiveCRM.Web.Controllers
         private readonly ISearchService _searchService;
         private readonly ICampaignService _campaignService;
         private readonly IMemberSearchFilterService _memberSearchFilterService;
+        private IMemberService _memberService;
         private readonly CampaignRuns campaignRuns = new CampaignRuns();
-        private readonly Members membersRepo = new Members();
         
         public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
-            ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService)
+            ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService,
+            IMemberService memberService)
         {
             _mailingListService = mailingListService;
             _searchService = searchService;
             _campaignService = campaignService;
             _memberSearchFilterService = memberSearchFilterService;
+            _memberService = memberService;
         }
 
         public ActionResult Index(bool showClosed = false)
@@ -214,7 +216,7 @@ namespace GiveCRM.Web.Controllers
 
         public FileResult DownloadMailingList(int id)
         {
-            var members = membersRepo.FromCampaignRun(id);
+            var members = _memberService.FromCampaignRun(id);
 
             byte[] filecontent;
             using (var stream = new MemoryStream())

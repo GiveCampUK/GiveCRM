@@ -47,6 +47,11 @@ namespace GiveCRM.Web.Services
             return results;
         }
 
+        public IEnumerable<Member> FromCampaignRun(int campaignId)
+        {
+            return _membersDb.FromCampaignRun(campaignId);
+        }
+
         private bool NameSearch(Member member, string criteria)
         {
             return GetForenameSurname(member).Contains(criteria) || GetSurnameForename(member).Contains(criteria) || GetInitialSurname(member).Contains(criteria);
