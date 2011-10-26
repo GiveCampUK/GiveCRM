@@ -70,6 +70,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\EmailData.cs" />
     <Compile Include="Data\FemaleNames.cs" />
     <Compile Include="Data\MaleNames.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Data\CampaignNames.cs" />
     <Compile Include="Data\FamilyNames.cs" />
     <Compile Include="Generation\RandomSource.cs" />
-    <Compile Include="Data\TitleData.cs" />
+    <Compile Include="Data\TitleDataItem.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
