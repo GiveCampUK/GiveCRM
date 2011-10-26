@@ -75,7 +75,7 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Save(Models.Members.MemberEditViewModel member)
+        public ActionResult Save(MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
             if(!ModelState.IsValid)

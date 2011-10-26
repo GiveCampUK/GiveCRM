@@ -116,6 +116,7 @@
     <Compile Include="Services\IMemberService.cs" />
     <Compile Include="Services\MailingListService.cs" />
     <Compile Include="Services\MemberService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
   <ItemGroup>
