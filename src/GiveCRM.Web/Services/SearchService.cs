@@ -22,10 +22,4 @@ namespace GiveCRM.Web.Services
             return searchRepo.GetEmptySearchCriteria();
         }
     }
-
-    public interface ISearchService
-    {
-        IEnumerable<Member> RunCampaign(int campaignId);
-        IEnumerable<SearchCriteria> GetEmptySearchCriteria();
-    }
 }

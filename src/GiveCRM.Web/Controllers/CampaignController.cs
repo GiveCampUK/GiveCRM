@@ -19,13 +19,15 @@ namespace GiveCRM.Web.Controllers
         private readonly IMailingListService _mailingListService;
         private readonly ISearchService _searchService;
         private readonly ICampaignService _campaignService;
-        private readonly MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
-
-        public CampaignController(IMailingListService mailingListService, ISearchService searchService, ICampaignService campaignService)
+        private readonly IMemberSearchFilterService _memberSearchFilterService;
+        
+        public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
+            ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService)
         {
             _mailingListService = mailingListService;
             _searchService = searchService;
             _campaignService = campaignService;
+            _memberSearchFilterService = memberSearchFilterService;
         }
 
         public ActionResult Index(bool showClosed = false)
@@ -95,7 +97,7 @@ namespace GiveCRM.Web.Controllers
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = memberSearchFilterRepo.ForCampaign(id).Select(
+                                SearchFilters = _memberSearchFilterService.ForCampaign(id).Select(
                                 m =>
                                     new MemberSearchFilterViewModel
                                         {
@@ -157,14 +159,14 @@ namespace GiveCRM.Web.Controllers
                                                  SearchOperator = (int)viewModel.SearchOperator,
                                                  Value = viewModel.Value
                                              };
-            memberSearchFilterRepo.Insert(memberSearchFilter);
+            _memberSearchFilterService.Insert(memberSearchFilter);
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
         [HttpGet]
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
-            memberSearchFilterRepo.Delete(memberSearchFilterId);
+            _memberSearchFilterService.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new { id = campaignId });
         }
 
@@ -238,11 +240,11 @@ namespace GiveCRM.Web.Controllers
 
             campaignClone = _campaignService.Insert(campaignClone);
 
-            IEnumerable<MemberSearchFilter> memberSearchFilters = memberSearchFilterRepo.ForCampaign(id);
+            IEnumerable<MemberSearchFilter> memberSearchFilters = _memberSearchFilterService.ForCampaign(id);
 
             foreach (MemberSearchFilter memberSearchFilter in memberSearchFilters)
             {
-                memberSearchFilterRepo.Insert(new MemberSearchFilter
+                _memberSearchFilterService.Insert(new MemberSearchFilter
                                                   {
                                                       CampaignId = campaignClone.Id,
                                                       DisplayName = memberSearchFilter.DisplayName,
