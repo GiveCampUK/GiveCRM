@@ -44,9 +44,9 @@ namespace GiveCRM.Web.Tests.controllers
             _facetService.Get(1).Returns(new Facet());
 
             var controller = new SetupController(_facetService);
-            var result = controller.AddFacet();
+            var result = controller.EditFacet(1);
 
-            result.AssertViewRendered().ForView("EditFacet").WithViewData<Facet>();
+            result.AssertViewRendered().WithViewData<Facet>();
         }
 
         [Test]

@@ -116,21 +116,7 @@ namespace GiveCRM.Web.Controllers
             return View("MembersList", members);
         }
 
-        #region helper methods
-
-        // todo: move these out!
-
-        private bool PostcodeSearch(Member member, string criteria)
-        {
-            return member.PostalCode == null ? false : member.PostalCode.ToLower().Replace(" ", "").Contains(criteria.Replace(" ", ""));
-        }
-
-        private bool ReferenceSearch(Member member, string criteria)
-        {
-            // TODO: We think member is missing a reference field
-            return member.Reference.ToLower().Contains(criteria);
-        }
-        
+        #region helper methods      
 
         private string GetFormattedName(Member member)
         {

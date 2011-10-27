@@ -89,6 +89,18 @@ namespace GiveCRM.Web.Tests.controllers
         }
 
         [Test]
+        public void AjaxSearch_Action_Returns_View_With_ViewModel()
+        {
+            _memberService.Search("string goes here").Returns(new List<Member>());
+
+            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var result = controller.AjaxSearch("string goes here");
+
+            result.AssertViewRendered().WithViewData<IEnumerable<Member>>();
+        }
+
+
+        [Test]
         public void TopDonors_Action_Returns_View_With_Model()
         {
             _memberService.All().Returns(new List<Member>());
