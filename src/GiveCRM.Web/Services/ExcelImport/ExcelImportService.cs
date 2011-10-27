@@ -67,9 +67,12 @@ namespace GiveCRM.Web.Services.ExcelImport
                 }
 
                 InvokeImportDataCompleted();
-            } 
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
+                // The only exception that is explicitly thrown by the underlying code is an InvalidOperationException.
+                // I would like to make this less catch-all, but there's probably a large number of exceptions that 
+                // could be thrown by the import code, none of which are declared in the code itself.
                 InvokeImportErrorFailed(ex);
             }
         }
