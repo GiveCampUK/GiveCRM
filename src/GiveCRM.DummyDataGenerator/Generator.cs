@@ -53,7 +53,7 @@ namespace GiveCRM.DummyDataGenerator
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
-            return string.Format("{0} members loaded in {1}", members.Count, elapsedTime); 
+            return string.Format("{0} members loaded in {1}", members.Count, ShowDuration(elapsedTime)); 
         }
 
         internal string GenerateCampaign()
@@ -78,7 +78,7 @@ namespace GiveCRM.DummyDataGenerator
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
             return string.Format("{0} donations inserted on campaign {1} in {2}", 
-                newDonations.Count, campaign.Name, elapsedTime);
+                newDonations.Count, campaign.Name, ShowDuration(elapsedTime));
         }
 
         private static void SaveDonations(IEnumerable<Donation> newDonations)
@@ -89,6 +89,16 @@ namespace GiveCRM.DummyDataGenerator
             {
                 donationDb.Insert(donation);
             }
+        }
+
+        private string ShowDuration(TimeSpan timeSpan)
+        {
+            TimeSpan oneMinute = new TimeSpan(0, 1, 0);
+            if (timeSpan >= oneMinute)
+            {
+                return timeSpan.ToString(@"m\:ss\.ff") + " minutes";
+            }
+            return timeSpan.ToString(@"s\.ff") + " seconds"; 
         }
     }
 }
