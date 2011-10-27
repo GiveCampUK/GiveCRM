@@ -117,9 +117,4 @@ namespace GiveCRM.Web.Services.ExcelImport
         #endregion
 
     }
-
-    public interface IMemberFactory
-    {
-        Member CreateMember(IDictionary<string, object> memberData);
-    }
 }
