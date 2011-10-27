@@ -16,6 +16,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Andrew",
                 "Anthony",
                 "Arthur",
+                "Barry",
                 "Ben",
                 "Benjamin",
                 "Bert",
@@ -133,7 +134,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Walter",
                 "Wayne",
                 "William",
-                "Zachary",
+                "Zachary"
             };
     }
 }

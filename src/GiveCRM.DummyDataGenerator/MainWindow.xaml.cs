@@ -1,4 +1,6 @@
-﻿namespace GiveCRM.DummyDataGenerator
+﻿using System.Configuration;
+
+namespace GiveCRM.DummyDataGenerator
 {
     using System.Windows;
 
@@ -12,6 +14,20 @@
         public Main()
         {
             InitializeComponent();
+            ShowDataseConnection();
+        }
+
+        private void ShowDataseConnection()
+        {
+            var connection = ConfigurationManager.ConnectionStrings["GiveCrm"];
+            if (connection == null)
+            {
+                databaseConnectionText.Text = "Database connection for GiveCRM was not found";
+            }
+            else
+            {
+                databaseConnectionText.Text = "Database is GiveCRM: " + connection.ConnectionString;                
+            }
         }
 
         private void GenerateMembers(object sender, RoutedEventArgs e)
@@ -24,28 +40,28 @@
             }
 
             int memberCountValue = int.Parse(memberCount.Text);
-            generationOutput.Text = generator.GenerateMembers(memberCountValue);
+            outputStatus.Text = generator.GenerateMembers(memberCountValue);
         }
 
         private void LoadMembers(object sender, RoutedEventArgs e)
         {
-            generationOutput.Text = generator.LoadMembers();
+            outputStatus.Text = generator.LoadMembers();
         }
 
         private void GenerateCampaign(object sender, RoutedEventArgs e)
         {
-            generationOutput.Text = generator.GenerateCampaign();
+            outputStatus.Text = generator.GenerateCampaign();
         }
 
         private void GenerateCampaignAndDonations(object sender, RoutedEventArgs e)
         {
-            generationOutput.Text = generator.GenerateCampaign();
-            generationOutput.Text = generator.GenerateDonations();
+            outputStatus.Text = generator.GenerateCampaign();
+            outputStatus.Text = generator.GenerateDonations();
         }
 
         private void GenerateDonations(object sender, RoutedEventArgs e)
         {
-            generationOutput.Text = generator.GenerateDonations();
+            outputStatus.Text = generator.GenerateDonations();
         }
     }
 }

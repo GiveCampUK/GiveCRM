@@ -7,6 +7,7 @@ namespace GiveCRM.DummyDataGenerator.Data
         internal static List<string> Data = new List<string>
             {
                 "Alice",
+                "Alison",
                 "Amanda",
                 "Amelia",
                 "Amy",
