@@ -13,7 +13,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
     public class ExcelImportService_Import_Should
     {
         [Test]
-        public void FiresImportCompletedWhenEverythingsFine()
+        public void FireImportCompletedWhenEverythingsFine()
         {
             var dataToImport = new List<IDictionary<string, object>>
                                    {
@@ -24,7 +24,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
                                            }
                                    };
             bool eventFired = false;
-            ExcelImportService importer = SetupImportService(dataToImport, (s,e) => eventFired = true);
+            ExcelImportService importer = SetupSuccessfulImportService(dataToImport, (s,e) => eventFired = true);
             var inputStream = Substitute.For<Stream>();
 
             importer.Import(inputStream);
@@ -33,10 +33,10 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
         }
 
         [Test]
-        public void FiresImportFailedWhenSomethingGoesWrong()
+        public void FireImportFailedWhenSomethingGoesWrong()
         {
             bool eventFired = false;
-            ExcelImportService importer = SetupImportService(new DataFormatException(), (s,e) => eventFired = true);
+            ExcelImportService importer = SetupFailingImportService(new DataFormatException(), (s,e) => eventFired = true);
             var inputStream = Substitute.For<Stream>();
 
             importer.Import(inputStream);
@@ -44,7 +44,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
             Assert.IsTrue(eventFired);
         }
 
-        private ExcelImportService SetupImportService(IEnumerable<IDictionary<string, object>> dataToImport, Action<object, ImportDataCompletedEventArgs> eventHandler = null)
+        private ExcelImportService SetupSuccessfulImportService(IEnumerable<IDictionary<string, object>> dataToImport, Action<object, ImportDataCompletedEventArgs> eventHandler = null)
         {
             var excelImporter = Substitute.For<IExcelImport>();
             excelImporter.GetRowsAsKeyValuePairs(0).ReturnsForAnyArgs(dataToImport);
@@ -55,7 +55,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
             return importService;
         }
 
-        private ExcelImportService SetupImportService(Exception exception, Action<object, ImportDataFailedEventArgs> eventHandler)
+        private ExcelImportService SetupFailingImportService(Exception exception, Action<object, ImportDataFailedEventArgs> eventHandler)
         {
             var excelImporter = Substitute.For<IExcelImport>();
             excelImporter.GetRowsAsKeyValuePairs(0).ReturnsForAnyArgs(_ => { throw exception; });
