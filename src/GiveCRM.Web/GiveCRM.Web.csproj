@@ -237,10 +237,6 @@
       <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
       <Name>GiveCRM.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GiveCRM.ImportExportService\GiveCRM.ImportExportService.csproj">
-      <Project>{6442A87F-51D2-4694-B712-61D4512B162A}</Project>
-      <Name>GiveCRM.ImportExportService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
       <Name>GiveCRM.ImportExport</Name>
