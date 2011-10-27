@@ -235,6 +235,18 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
 
             Member member = factory.CreateMember(data);
 
+            Assert.AreEqual(reference, member.Reference);
+            Assert.AreEqual(title, member.Title);
+            Assert.AreEqual(firstName, member.FirstName);
+            Assert.AreEqual(lastName, member.LastName);
+            Assert.AreEqual(salutation, member.Salutation);
+            Assert.AreEqual(emailAddress, member.EmailAddress);
+            Assert.AreEqual(addressLine1, member.AddressLine1);
+            Assert.AreEqual(addressLine2, member.AddressLine2);
+            Assert.AreEqual(city, member.City);
+            Assert.AreEqual(region, member.Region);
+            Assert.AreEqual(postalCode, member.PostalCode);
+            Assert.AreEqual(country, member.Country);
             Assert.AreEqual(archived, member.Archived);
         }
 
