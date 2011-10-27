@@ -63,12 +63,18 @@
     <Compile Include="controllers\MemberController.Tests.cs" />
     <Compile Include="controllers\SetUpController.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExcelImport\ExcelImportService_Import_Should.cs" />
+    <Compile Include="Services\ExcelImport\MemberFactory_CreateMember_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
+      <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
+      <Name>GiveCRM.ImportExport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>

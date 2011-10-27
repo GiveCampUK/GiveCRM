@@ -1,43 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using GiveCRM.ImportExport;
-using Simple.Data;
+using GiveCRM.Models;
 
-namespace GiveCRM.ImportExportService
+namespace GiveCRM.Web.Services.ExcelImport
 {
     public class ExcelImportService : IExcelImportService
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
-
-        //CREATE TABLE [dbo].[Member]
-        //(
-        //    ID int identity(1,1) NOT NULL PRIMARY KEY, 
-        //    Reference nvarchar(20) NOT NULL,
-        //    Title nvarchar(20) NULL,
-        //    FirstName nvarchar(50) NOT NULL,
-        //    LastName nvarchar(50) NOT NULL,
-        //    Salutation nvarchar(50) NOT NULL,
-        //    EmailAddress nvarchar(50) NULL,
-        //    AddressLine1 nvarchar(50) NULL,
-        //    AddressLine2 nvarchar(50) NULL,
-        //    Town nvarchar(50) NULL,
-        //    Region nvarchar(50) NULL,
-        //    PostalCode nvarchar(50) NULL,
-        //    Country nvarchar(50) NULL,
-        //    Archived bit NOT NULL
-        //)
-
         private readonly IExcelImport importer;
+        private readonly IMemberService memberService;
+        private readonly IMemberFactory memberFactory;
 
-        public ExcelImportService(IExcelImport importer)
+        public ExcelImportService(IExcelImport importer, IMemberService memberService, IMemberFactory memberFactory)
         {
             if (importer == null)
             {
                 throw new ArgumentNullException("importer");
             }
 
+            if (memberService == null)
+            {
+                throw new ArgumentNullException("memberService");
+            }
+
+            if (memberFactory == null)
+            {
+                throw new ArgumentNullException("memberFactory");
+            }
+
             this.importer = importer;
+            this.memberService = memberService;
+            this.memberFactory = memberFactory;
         }
 
         #region IExcelImportService
@@ -61,16 +56,23 @@ namespace GiveCRM.ImportExportService
                 importer.Open(file, fileType, hasHeaderRow: true);
 
                 const int sheetIndex = 0; // Hard-coded for now
-                IEnumerable<IDictionary<string, object>> rowsAsKeyValuePairs =
-                    importer.GetRowsAsKeyValuePairs(sheetIndex);
+                IList<IDictionary<string, object>> rowsAsKeyValuePairs =
+                    importer.GetRowsAsKeyValuePairs(sheetIndex).ToList();
 
                 AddArchivedFieldToData(rowsAsKeyValuePairs); // This is a non-null field
-                db.Members.Insert(rowsAsKeyValuePairs);
+
+                foreach (Member member in rowsAsKeyValuePairs.Select(memberData => memberFactory.CreateMember(memberData)))
+                {
+                    memberService.Insert(member);
+                }
 
                 InvokeImportDataCompleted();
-            } 
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
+                // The only exception that is explicitly thrown by the underlying code is an InvalidOperationException.
+                // I would like to make this less catch-all, but there's probably a large number of exceptions that 
+                // could be thrown by the import code, none of which are declared in the code itself.
                 InvokeImportErrorFailed(ex);
             }
         }
