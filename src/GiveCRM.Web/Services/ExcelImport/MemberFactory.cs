@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using AutoMapper;
 using GiveCRM.Models;
 
 namespace GiveCRM.Web.Services.ExcelImport
@@ -10,12 +10,28 @@ namespace GiveCRM.Web.Services.ExcelImport
 
         public Member CreateMember(IDictionary<string, object> memberData)
         {
-            Mapper.CreateMap<IDictionary<string, object>, Member>()
-                  .ForAllMembers(opt => opt.ResolveUsing(member => member.Keys));
-
-            return Mapper.Map<IDictionary<string, object>, Member>(memberData);
+            return DictionaryToMember.ToMember(memberData);
         }
 
         #endregion
+
+        internal static class DictionaryToMember
+        {
+            internal static Member ToMember(IDictionary<string, object> source)
+            {
+                var member = Activator.CreateInstance<Member>();
+                if (source == null)
+                {
+                    return member;
+                }
+
+                foreach (var property in source)
+                {
+                    member.GetType().GetProperty(property.Key).SetValue(member, property.Value, null);
+                }
+
+                return member;
+            }
+        }
     }
 }
