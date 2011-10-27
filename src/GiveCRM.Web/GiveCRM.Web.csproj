@@ -112,8 +112,10 @@
     <Compile Include="Services\ExcelImport\DataFormatException.cs" />
     <Compile Include="Services\ExcelImport\ExcelImportService.cs" />
     <Compile Include="Services\ExcelImport\IExcelImportService.cs" />
+    <Compile Include="Services\ExcelImport\IMemberFactory.cs" />
     <Compile Include="Services\ExcelImport\ImportDataCompletedEventArgs.cs" />
     <Compile Include="Services\ExcelImport\ImportDataFailedEventArgs.cs" />
+    <Compile Include="Services\ExcelImport\MemberFactory.cs" />
     <Compile Include="Services\FacetsService.cs" />
     <Compile Include="Services\ICampaignService.cs" />
     <Compile Include="Services\IDonationsService.cs" />
