@@ -112,7 +112,6 @@
     </Compile>
     <Compile Include="Services\CampaignService.cs" />
     <Compile Include="Services\DonationsService.cs" />
-    <Compile Include="Services\ExcelImport\DataFormatException.cs" />
     <Compile Include="Services\ExcelImport\ExcelImportService.cs" />
     <Compile Include="Services\ExcelImport\IExcelImportService.cs" />
     <Compile Include="Services\ExcelImport\IMemberFactory.cs" />

@@ -36,7 +36,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
         public void FireImportFailedWhenSomethingGoesWrong()
         {
             bool eventFired = false;
-            ExcelImportService importer = SetupFailingImportService(new DataFormatException(), (s,e) => eventFired = true);
+            ExcelImportService importer = SetupFailingImportService(new InvalidOperationException(), (s, e) => eventFired = true);
             var inputStream = Substitute.For<Stream>();
 
             importer.Import(inputStream);
