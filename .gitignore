@@ -23,4 +23,5 @@ src/GiveCRM.Database/sql/debug
 src/GiveCRM.Database/sql/release
 .DS_Store
 *.user
-
+*.crunchproject.local.xml
+*.crunchsolution.local.xml
