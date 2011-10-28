@@ -7,27 +7,26 @@
         <TabControl Height="180">
             <TabItem Header="Members">
                 <StackPanel>
-                    <Button Margin="2,2,2,12" Click="LoadMembers">Load existing members</Button>
+                    <Button Margin="2,2,2,12" Click="LoadMembers" Name="loadMembersButton">Load existing members</Button>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="2">Generate member count:</TextBlock>
                         <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
-                            Name="memberCount">10000</TextBox>
+                            Name="memberCountText">10000</TextBox>
                     </StackPanel>
-                    <Button Margin="2,2,2,2" Click="GenerateMembers">Generate members</Button>
+                    <Button Margin="2,2,2,2" Click="GenerateMembers" Name="generateMembersButton">Generate members</Button>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Campaigns and Donations">
                 <StackPanel>
-                    <Button Margin="2" Click="GenerateCampaignAndDonations">Generate campaign and donations</Button>
-                    <Button Margin="2" Click="GenerateCampaign">Generate bare campaign</Button>
-                    <Button Margin="2" Click="GenerateDonations">Generate donations on last campaign</Button>
+                    <Button Margin="2" Name="generateCampaignAndDonationsButton" Click="GenerateCampaignAndDonations">Generate campaign and donations</Button>
+                    <Button Margin="2" Click="GenerateCampaign" Name="generateCampaignButton">Generate bare campaign</Button>
+                    <Button Margin="2" Click="GenerateDonations" Name="generateDonationsButton">Generate donations on last campaign</Button>
                 </StackPanel>
             </TabItem>
         </TabControl>
         <Border BorderThickness="1" BorderBrush="Black" Margin="2" Padding="2">
             <StackPanel>
                 <TextBlock TextWrapping="Wrap" Name="outputStatus">Ready</TextBlock>
-                <TextBlock TextWrapping="Wrap" Name="outputLog"></TextBlock>
             </StackPanel>
         </Border>
     </StackPanel>

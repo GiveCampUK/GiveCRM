@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Threading;
 
 namespace GiveCRM.DummyDataGenerator
 {
@@ -15,6 +17,8 @@ namespace GiveCRM.DummyDataGenerator
         {
             InitializeComponent();
             ShowDataseConnection();
+
+            generator.Update += this.ShowUpdateOnUiThread;
         }
 
         private void ShowDataseConnection()
@@ -26,42 +30,56 @@ namespace GiveCRM.DummyDataGenerator
             }
             else
             {
-                databaseConnectionText.Text = "Database is GiveCRM: " + connection.ConnectionString;                
+                databaseConnectionText.Text = "Database is GiveCRM: " + connection.ConnectionString;
             }
         }
 
         private void GenerateMembers(object sender, RoutedEventArgs e)
         {
-            // default data size = 100 000 members
-            const string DefaultCountToGenerate = "10000";
-            if (string.IsNullOrEmpty(memberCount.Text))
-            {
-                memberCount.Text = DefaultCountToGenerate;
-            }
-
-            int memberCountValue = int.Parse(memberCount.Text);
-            outputStatus.Text = generator.GenerateMembers(memberCountValue);
+            int memberCountValue = ReadMemberCount();
+            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateMembers(memberCountValue));
         }
 
         private void LoadMembers(object sender, RoutedEventArgs e)
         {
-            outputStatus.Text = generator.LoadMembers();
+            ThreadPool.QueueUserWorkItem(o => this.generator.LoadMembers()); 
         }
 
         private void GenerateCampaign(object sender, RoutedEventArgs e)
         {
-            outputStatus.Text = generator.GenerateCampaign();
+            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateCampaign()); 
         }
 
         private void GenerateCampaignAndDonations(object sender, RoutedEventArgs e)
         {
-            outputStatus.Text = generator.GenerateCampaign();
-            outputStatus.Text = generator.GenerateDonations();
+            ThreadPool.QueueUserWorkItem(o =>
+                {
+                    generator.GenerateCampaign();
+                    generator.GenerateDonations();
+                }); 
         }
 
         private void GenerateDonations(object sender, RoutedEventArgs e)
         {
-            outputStatus.Text = generator.GenerateDonations();
+            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations()); 
+        }
+
+        private int ReadMemberCount()
+        {
+            // default data size = 100 000 members
+            const string DefaultCountToGenerate = "10000";
+            if (string.IsNullOrEmpty(this.memberCountText.Text))
+            {
+                this.memberCountText.Text = DefaultCountToGenerate;
+            }
+
+            return int.Parse(this.memberCountText.Text);
+        }
+
+        private void ShowUpdateOnUiThread(object sender, EventArgs<string> e)
+        {
+            Action update = () => outputStatus.Text = e.Data;
+            Dispatcher.Invoke(update);
         }
     }
 }
