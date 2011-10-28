@@ -13,6 +13,11 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return random.Next(max);
         }
 
+        public int Next(int min, int max)
+        {
+            return random.Next(min, max);
+        }
+
         public string PhoneDigits()
         {
             string prefix = "0" + random.Next(100) + " ";

@@ -52,28 +52,48 @@ namespace GiveCRM.DummyDataGenerator
 
         private void GenerateCampaignAndDonations(object sender, RoutedEventArgs e)
         {
+            int donationMinAmount = ReadDonationAmountMin();
+            int donationMaxAmount = ReadDonationAmountMax();
+
             ThreadPool.QueueUserWorkItem(o =>
                 {
                     generator.GenerateCampaign();
-                    generator.GenerateDonations();
+                    generator.GenerateDonations(donationMinAmount, donationMaxAmount);
                 }); 
         }
 
         private void GenerateDonations(object sender, RoutedEventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations()); 
+            int donationMinAmount = ReadDonationAmountMin();
+            int donationMaxAmount = ReadDonationAmountMax();
+
+            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations(donationMinAmount, donationMaxAmount)); 
         }
 
         private int ReadMemberCount()
         {
-            // default data size = 100 000 members
-            const string DefaultCountToGenerate = "10000";
-            if (string.IsNullOrEmpty(this.memberCountText.Text))
+            // default data size = 10 000 members
+            return this.StringToIntWithDefault(memberCountText.Text, 10000);
+        }
+
+        private int ReadDonationAmountMin()
+        {
+            return StringToIntWithDefault(donationAmountMinText.Text, 5);
+        }
+
+        private int ReadDonationAmountMax()
+        {
+            return StringToIntWithDefault(donationAmountMaxText.Text, 100);
+        }
+
+        private int StringToIntWithDefault(string stringValue, int defaultValue)
+        {
+            if (string.IsNullOrEmpty(stringValue))
             {
-                this.memberCountText.Text = DefaultCountToGenerate;
+                return defaultValue;
             }
 
-            return int.Parse(this.memberCountText.Text);
+            return int.Parse(stringValue);
         }
 
         private void ShowUpdateOnUiThread(object sender, EventArgs<string> e)
