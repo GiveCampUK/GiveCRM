@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -109,6 +112,12 @@
     </Compile>
     <Compile Include="Services\CampaignService.cs" />
     <Compile Include="Services\DonationsService.cs" />
+    <Compile Include="Services\ExcelImport\ExcelImportService.cs" />
+    <Compile Include="Services\ExcelImport\IExcelImportService.cs" />
+    <Compile Include="Services\ExcelImport\IMemberFactory.cs" />
+    <Compile Include="Services\ExcelImport\ImportDataCompletedEventArgs.cs" />
+    <Compile Include="Services\ExcelImport\ImportDataFailedEventArgs.cs" />
+    <Compile Include="Services\ExcelImport\MemberFactory.cs" />
     <Compile Include="Services\FacetsService.cs" />
     <Compile Include="Services\ICampaignService.cs" />
     <Compile Include="Services\IDonationsService.cs" />
@@ -236,10 +245,6 @@
     <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
       <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
       <Name>GiveCRM.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GiveCRM.ImportExportService\GiveCRM.ImportExportService.csproj">
-      <Project>{6442A87F-51D2-4694-B712-61D4512B162A}</Project>
-      <Name>GiveCRM.ImportExportService</Name>
     </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
