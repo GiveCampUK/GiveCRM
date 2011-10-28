@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="GiveCRM Dummy data generator" Height="300" Width="450">
     <StackPanel Margin="2">
-        <TextBlock Margin="2" Name="databaseConnectionText" TextWrapping="Wrap">Database is GiveCRM: </TextBlock>
+        <TextBlock Margin="4" Name="databaseConnectionText" TextWrapping="Wrap">Database is GiveCRM: </TextBlock>
         <TabControl Height="180">
             <TabItem Header="Members">
                 <StackPanel>
                     <Button Margin="2,2,2,12" Click="LoadMembers" Name="loadMembersButton">Load existing members</Button>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="2">
                         <TextBlock Margin="2">Generate member count:</TextBlock>
                         <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
                             Name="memberCountText">10000</TextBox>
@@ -21,6 +21,15 @@
                     <Button Margin="2" Name="generateCampaignAndDonationsButton" Click="GenerateCampaignAndDonations">Generate campaign and donations</Button>
                     <Button Margin="2" Click="GenerateCampaign" Name="generateCampaignButton">Generate bare campaign</Button>
                     <Button Margin="2" Click="GenerateDonations" Name="generateDonationsButton">Generate donations on last campaign</Button>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Margin="2">Donations range from </TextBlock>
+                        <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
+                            Name="donationAmountMinText">5</TextBox>
+                        <TextBlock Margin="2"> to </TextBlock>
+                        <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
+                            Name="donationAmountMaxText">100</TextBox>
+                    </StackPanel>
+
                 </StackPanel>
             </TabItem>
         </TabControl>

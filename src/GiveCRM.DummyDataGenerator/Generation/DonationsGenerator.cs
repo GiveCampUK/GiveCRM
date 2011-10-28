@@ -32,25 +32,35 @@ namespace GiveCRM.DummyDataGenerator.Generation
             donationRate = 33 + random.Next(33);
         }
 
-        internal IList<Donation> Generate()
+        internal IList<Donation> Generate(int minAmount, int maxAmount)
         {
+            if (minAmount <= 0)
+            {
+                throw new ArgumentException("Minimum donation amount must be positive");
+            }
+
+            if (maxAmount < minAmount)
+            {
+                throw new ArgumentException("Maximum donation amount is less than minimum amount");
+            } 
+            
             var donations = new List<Donation>();
 
             foreach (var member in members)
             {
                 if (random.Percent(donationRate))
                 {
-                    donations.Add(DonationForMember(member));
+                    donations.Add(DonationForMember(member, minAmount, maxAmount));
                 }   
             }
 
             return donations;
         }
 
-        private Donation DonationForMember(Member member)
+        private Donation DonationForMember(Member member, int minAmount, int maxAmount)
         {
             DateTime backDate = DateTime.Today.AddDays(-1 * random.Next(100));
-            decimal randomAmount = (decimal)5 + random.Next(96);
+            int randomAmount = random.Next(minAmount, maxAmount + 1);
             return new Donation
                 {
                     CampaignId = campaign.Id,
