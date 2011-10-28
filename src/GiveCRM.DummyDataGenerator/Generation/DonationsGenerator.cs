@@ -11,7 +11,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private readonly ICollection<Member> members;
 
         private readonly RandomSource random = new RandomSource();
-        private int donationRate;
+        private readonly int donationRate;
 
         public DonationsGenerator(Campaign campaign, ICollection<Member> members)
         {
