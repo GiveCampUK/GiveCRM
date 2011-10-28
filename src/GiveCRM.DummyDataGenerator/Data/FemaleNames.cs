@@ -18,6 +18,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Anne",
                 "Annie",
                 "Ashley",
+                "Audrey",
                 "Ava",
                 "Barbara",
                 "Betty",
@@ -47,7 +48,9 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Ella",
                 "Ellie",
                 "Emily",
+                "Esmerelda",
                 "Eve",
+                "Eva",
                 "Evelyn",
                 "Evie",
                 "Frances",
@@ -122,17 +125,21 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Sarah",
                 "Sharon",
                 "Shirley",
+                "Siobhain",
                 "Sophie",
                 "Stephanie",
                 "Susan",
                 "Tammy",
                 "Teresa",
+                "Theresa",
                 "Tina",
                 "Valerie",
                 "Virginia",
+                "Veronica",
                 "Wanda",
                 "Zara",
-                "Zaza"
+                "Zaza",
+                "Zelda"
             };
     }
 }
