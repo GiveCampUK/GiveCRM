@@ -83,6 +83,7 @@
     <Compile Include="Generation\RandomSource.cs" />
     <Compile Include="Data\TitleDataItem.cs" />
     <Compile Include="Generator.cs" />
+    <Compile Include="GenericEventArgs.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
