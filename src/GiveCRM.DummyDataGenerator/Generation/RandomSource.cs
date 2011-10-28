@@ -22,7 +22,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         public T PickFromList<T>(List<T> list)
         {
             var max = list.Count - 1;
-            var index = random.Next(max);
+            var index = random.Next(max + 1);
             return list[index];
         }
 
