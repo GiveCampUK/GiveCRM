@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using GiveCRM.Web.Models;
@@ -54,7 +55,7 @@ namespace GiveCRM.Web.Controllers
             }
 
             // Process the file
-            ImportAsync(file.InputStream);
+            Task.Factory.StartNew(() => ImportAsync(file.InputStream));
             
             return RedirectToAction("Index", "Member");
         }
