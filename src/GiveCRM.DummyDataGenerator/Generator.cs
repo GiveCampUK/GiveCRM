@@ -86,7 +86,7 @@ namespace GiveCRM.DummyDataGenerator
             OnUpdate(finalMessage);
         }
 
-        internal void GenerateDonations(int minAmount, int maxAmount)
+        internal void GenerateDonations(int minAmount, int maxAmount, int donationCountMax)
         {
             if ((members == null) || (members.Count == 0))
             {
@@ -97,7 +97,7 @@ namespace GiveCRM.DummyDataGenerator
             OnUpdate("Generating donations");
             DateTime startTime = DateTime.Now;
             DonationsGenerator generator = new DonationsGenerator(campaign, members);
-            IList<Donation> newDonations = generator.Generate(minAmount, maxAmount);
+            IList<Donation> newDonations = generator.Generate(minAmount, maxAmount, donationCountMax);
             string generateMessaged = string.Format("{0} donations generated", newDonations.Count);
             OnUpdate(generateMessaged);
 

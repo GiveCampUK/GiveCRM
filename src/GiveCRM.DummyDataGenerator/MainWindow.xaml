@@ -18,18 +18,22 @@
             </TabItem>
             <TabItem Header="Campaigns and Donations">
                 <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Margin="2">Donations range from</TextBlock>
+                        <TextBox Margin="2" MinWidth="50" HorizontalAlignment="Stretch" TextAlignment="Right" 
+                            Name="donationAmountMinText">5</TextBox>
+                        <TextBlock Margin="2"> to</TextBlock>
+                        <TextBox Margin="2" MinWidth="50" HorizontalAlignment="Stretch" TextAlignment="Right" 
+                            Name="donationAmountMaxText">100</TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="2">
+                        <TextBlock Margin="2">Maximum number of donations per member</TextBlock>
+                        <TextBox Margin="2" MinWidth="40" HorizontalAlignment="Stretch" TextAlignment="Right" 
+                            Name="donationCountMaxText">1</TextBox>
+                    </StackPanel>
                     <Button Margin="2" Name="generateCampaignAndDonationsButton" Click="GenerateCampaignAndDonations">Generate campaign and donations</Button>
                     <Button Margin="2" Click="GenerateCampaign" Name="generateCampaignButton">Generate bare campaign</Button>
                     <Button Margin="2" Click="GenerateDonations" Name="generateDonationsButton">Generate donations on last campaign</Button>
-                    <StackPanel Orientation="Horizontal" Margin="2">
-                        <TextBlock Margin="2">Donations range from </TextBlock>
-                        <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
-                            Name="donationAmountMinText">5</TextBox>
-                        <TextBlock Margin="2"> to </TextBlock>
-                        <TextBox Margin="2" MinWidth="60" HorizontalAlignment="Stretch" TextAlignment="Right" 
-                            Name="donationAmountMaxText">100</TextBox>
-                    </StackPanel>
-
                 </StackPanel>
             </TabItem>
         </TabControl>
