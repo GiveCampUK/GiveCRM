@@ -109,51 +109,5 @@
                 "Drive",
                 "Walk"
             };
-
-
-        internal static List<string> Cities = new List<string>
-            {
-                "London",
-                "Manchester",
-                "Birmingham",
-                "Bradford",
-                "Brighton",
-                "Cambridge",
-                "Derby",
-                "Leeds",
-                "Leicester",
-                "Liverpool",
-                "Newcastle",
-                "Norwich",
-                "Nottingham",
-                "Oxford",
-                "Plymouth",
-                "Sheffield",
-                "Southhampton",
-                "York",
-                "Edinburgh",
-                "Glasgow",
-                "Cardiff",
-                "Newport",
-                "Belfast",
-            };
-
-        internal static List<string> PostCodes = new List<string>
-            {
-                "N",
-                "S",
-                "E",
-                "W",
-                "NE",
-                "NW",
-                "SE",
-                "SW",
-                "YO",
-                "BR",
-                "AR",
-                "CD",
-                "DE",
-                "HI"
-            };
     }
 }

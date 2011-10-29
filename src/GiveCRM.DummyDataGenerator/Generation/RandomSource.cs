@@ -24,7 +24,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return prefix + random.Next(10000).ToString("0000") + random.Next(10000).ToString("0000");
         }
 
-        public T PickFromList<T>(List<T> list)
+        public T PickFromList<T>(IList<T> list)
         {
             if (list.Count == 0)
             {

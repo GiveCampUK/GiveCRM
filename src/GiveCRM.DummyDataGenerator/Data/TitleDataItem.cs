@@ -11,5 +11,10 @@
             this.Title = title;
             this.Salutation = salutation;
         }
+
+        public override string ToString()
+        {
+            return Title + " " + Salutation;
+        }
     }
 }
