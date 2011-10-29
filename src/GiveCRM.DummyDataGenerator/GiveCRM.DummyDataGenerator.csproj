@@ -76,6 +76,7 @@
     <Compile Include="Data\MaleNames.cs" />
     <Compile Include="Data\TitleData.cs" />
     <Compile Include="Data\TownData.cs" />
+    <Compile Include="Data\TownDataItem.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
     <Compile Include="Generation\DonationsGenerator.cs" />
     <Compile Include="Data\AddressData.cs" />

@@ -48,8 +48,6 @@ namespace GiveCRM.DummyDataGenerator.Generation
                     LastName = familyName,
                     Title = titleSalutation.Title,
                     Salutation = titleSalutation.Salutation,
-                    City = random.PickFromList(AddressData.Cities),
-                    Country = "United Kingdom"
                 };
 
             newMember.Reference = this.NextReference(newMember);
@@ -119,8 +117,13 @@ namespace GiveCRM.DummyDataGenerator.Generation
             generatedPostalAddresses.Add(streetAddress, true);
             member.AddressLine1 = streetAddress;
 
-            member.PostalCode = RandomPostalCode();
-            member.City = random.PickFromList(AddressData.Cities);
+            TownDataItem townData = random.PickFromList(TownData.Data);
+            string postCodePrefix = random.PickFromList(townData.PostalCodePrefixes);
+
+            member.PostalCode = RandomPostalCode(postCodePrefix);
+            member.City = townData.Town;
+            member.Region = townData.Region;
+            member.Country = townData.Country;
         }
 
         private string GenerateStreetAddress()
@@ -138,9 +141,9 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return streetNumber + " " + street;
         }
 
-        private string RandomPostalCode()
+        private string RandomPostalCode(string prefix)
         {
-            return random.PickFromList(AddressData.PostCodes) + random.Next(10) + " " +
+            return prefix + random.Next(10) + " " +
                 random.Next(10) + random.Letter() + random.Letter();
         }
 
