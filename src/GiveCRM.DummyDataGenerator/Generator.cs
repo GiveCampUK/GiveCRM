@@ -88,6 +88,12 @@ namespace GiveCRM.DummyDataGenerator
 
         internal void GenerateDonations(int minAmount, int maxAmount)
         {
+            if ((members == null) || (members.Count == 0))
+            {
+                OnUpdate("Cannot generate donations before members have been loaded or generated");
+                return;
+            }
+
             OnUpdate("Generating donations");
             DateTime startTime = DateTime.Now;
             DonationsGenerator generator = new DonationsGenerator(campaign, members);

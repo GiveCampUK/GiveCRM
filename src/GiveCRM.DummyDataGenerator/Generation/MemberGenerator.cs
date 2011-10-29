@@ -31,13 +31,21 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private Member GenerateMember()
         {
             bool isFemale = random.Bool();
-            string firstName = isFemale ? RandomFemaleFirstName() : RandomMaleFirstName();
+            string familyName = random.PickFromList(FamilyNames.Data);
+            // make first name different from Family name, ie.g. no "Scott Scott" or "Major Major"
+            string firstName;
+            do
+            {
+                firstName = isFemale ? RandomFemaleFirstName() : RandomMaleFirstName();
+            }
+            while(firstName == familyName);
+
             TitleDataItem titleSalutation = MakeTitleSalutation(isFemale);
 
             var newMember = new Member
                 {
                     FirstName = firstName,
-                    LastName = random.PickFromList(FamilyNames.Data),
+                    LastName = familyName,
                     Title = titleSalutation.Title,
                     Salutation = titleSalutation.Salutation,
                     City = random.PickFromList(AddressData.Cities),
