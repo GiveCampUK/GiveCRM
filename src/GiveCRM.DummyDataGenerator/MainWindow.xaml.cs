@@ -54,11 +54,12 @@ namespace GiveCRM.DummyDataGenerator
         {
             int donationMinAmount = ReadDonationAmountMin();
             int donationMaxAmount = ReadDonationAmountMax();
+            int donationCountMax = ReadDonationCountMax();
 
             ThreadPool.QueueUserWorkItem(o =>
                 {
                     generator.GenerateCampaign();
-                    generator.GenerateDonations(donationMinAmount, donationMaxAmount);
+                    generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax);
                 }); 
         }
 
@@ -66,8 +67,9 @@ namespace GiveCRM.DummyDataGenerator
         {
             int donationMinAmount = ReadDonationAmountMin();
             int donationMaxAmount = ReadDonationAmountMax();
+            int donationCountMax = ReadDonationCountMax();
 
-            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations(donationMinAmount, donationMaxAmount)); 
+            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax)); 
         }
 
         private int ReadMemberCount()
@@ -84,6 +86,11 @@ namespace GiveCRM.DummyDataGenerator
         private int ReadDonationAmountMax()
         {
             return StringToIntWithDefault(donationAmountMaxText.Text, 100);
+        }
+
+        private int ReadDonationCountMax()
+        {
+            return StringToIntWithDefault(donationCountMaxText.Text, 1);
         }
 
         private int StringToIntWithDefault(string stringValue, int defaultValue)
