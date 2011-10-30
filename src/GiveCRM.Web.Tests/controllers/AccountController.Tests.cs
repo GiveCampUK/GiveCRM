@@ -1,0 +1,191 @@
+﻿using System.Globalization;
+using System.Web.Mvc;
+using GiveCRM.Web.Controllers;
+using GiveCRM.Web.Models;
+using GiveCRM.Web.Services;
+using Moq;
+using MvcContrib.TestHelper;
+using NUnit.Framework;
+
+namespace GiveCRM.Web.Tests.controllers
+{
+    [TestFixture]
+    public class AccountControllerTests:AssertionHelper
+    {
+        private Mock<IMembershipService> mockMembershipService;
+        private Mock<IAuthenticationService> mockAuthenticationService;
+        private Mock<IUrlValidationService> mockUrlValidationService;
+
+        [SetUp]
+        public void SetUp()
+        {
+            mockMembershipService = new Mock<IMembershipService>();
+            mockAuthenticationService = new Mock<IAuthenticationService>();
+            mockUrlValidationService = new Mock<IUrlValidationService>();
+        }
+
+        private AccountController CreateController()
+        {
+            return new AccountController(mockMembershipService.Object,
+                mockAuthenticationService.Object,
+                mockUrlValidationService.Object);
+        }
+
+        [Test]
+        public void ShouldLogOnUserAndRedirectToHome()
+        {
+            var controller = CreateController();
+
+            
+            mockMembershipService.Setup(ms=>ms.ValidateUser("test","password")).Returns(true);
+            mockUrlValidationService.Setup(uvs=>uvs.IsRedirectable(controller,"")).Returns(false);
+            
+
+            var model = new LogOnModel();
+            model.UserName = "test";
+            model.Password = "password";
+            var url = string.Empty;
+
+            var actionResult = controller.LogOn(model, url);
+            Expect(controller.ModelState.IsValid, Is.True);
+            actionResult.AssertActionRedirect();
+        }
+
+        [Test]
+        public void ShouldLogOnUserAndRedirectToUrl()
+        {
+            var controller = CreateController();
+
+            mockMembershipService.Setup(ms => ms.ValidateUser("test", "password")).Returns(true);
+            mockUrlValidationService.Setup(uvs => uvs.IsRedirectable(controller, "testurl")).Returns(true);
+           
+            var model = new LogOnModel();
+            model.UserName = "test";
+            model.Password = "password";
+            var url = "testurl";
+
+            var actionResult = controller.LogOn(model, url);
+            Expect(controller.ModelState.IsValid, Is.True);
+            Expect(actionResult.AssertHttpRedirect().Url, Is.EqualTo(url));
+            actionResult.AssertHttpRedirect();
+        }
+
+        [Test]
+        public void ShouldNotLogOnForIncorrectCredentials()
+        {
+            var controller = CreateController();
+
+            mockMembershipService.Setup(ms => ms.ValidateUser("test", "password")).Returns(false);
+            
+            var model = new LogOnModel();
+            model.UserName = "test";
+            model.Password = "password";
+            var url = string.Empty;
+
+            var actionResult = controller.LogOn(model, url);
+            Expect(controller.ModelState.IsValid, Is.False);
+            Expect(controller.ModelState[""].Errors.Count,Is.EqualTo(1));
+            Expect(controller.ModelState[""].Errors[0].ErrorMessage,Is.EqualTo("The user name or password provided is incorrect."));
+            actionResult.AssertViewRendered().WithViewData<LogOnModel>();
+        }
+
+        [Test]
+        public void ShouldLogOff()
+        {
+            mockAuthenticationService.Setup(a => a.SignOut()).Verifiable();
+            var controller = CreateController();
+            var actionResult = controller.LogOff();
+            mockAuthenticationService.Verify();
+            actionResult.AssertActionRedirect();
+        }
+
+        [Test]
+        public void ShouldRegister()
+        {
+            var error = string.Empty;
+            mockMembershipService.Setup(s => s.CreateUser("test", "password", "a@a.a", out error)).Returns(true);
+            var controller = CreateController();
+            var model = new RegisterModel
+                            {
+                                UserName = "test",
+                                Password ="password",
+                                Email = "a@a.a"
+                            };
+            var actionResult = controller.Register(model);
+            actionResult.AssertActionRedirect();
+        }
+
+        [Test]
+        public void ShouldFailToRegister()
+        {
+            var error = string.Empty;
+            mockMembershipService.Setup(s => s.CreateUser("test", "password", "a@a.a", out error)).Returns(false);
+            var controller = CreateController();
+            var model = new RegisterModel
+            {
+                UserName = "test",
+                Password = "password",
+                Email = "a@a.a"
+            };
+            var actionResult = controller.Register(model);
+            actionResult.AssertViewRendered().WithViewData<RegisterModel>();
+        }
+
+        [Test]
+        public void ShouldChangePassword()
+        {
+            var model = new ChangePasswordModel
+                            {
+                                NewPassword = "Slartibartfast",
+                                OldPassword = "password",
+                                ConfirmPassword = "Slartibartfast"
+                            };
+            
+            mockMembershipService.Setup(s => s.ChangePassword(It.IsAny<string>(),"password","Slartibartfast")).Returns(true);
+            
+            var controller = CreateController();
+            
+            var actionResult = controller.ChangePassword(model);
+            Expect(controller.ModelState.IsValid,Is.True);
+            actionResult.AssertActionRedirect();
+        }
+
+        [Test]
+        public void ShouldNotChangePasswordInvalidModel()
+        {
+            var model = new ChangePasswordModel
+            {
+                NewPassword = "Slartibartfast",
+                OldPassword = "password",
+                ConfirmPassword = "ZaphodBeeblebrox"
+            };
+
+            var controller = CreateController();
+            controller.ModelState.AddModelError("NewPassword","The new password and confirmation password do not match.");
+            
+            var actionResult = controller.ChangePassword(model);
+            Expect(controller.ViewData.ModelState.IsValid, Is.False);
+            actionResult.AssertViewRendered().WithViewData<ChangePasswordModel>();
+        }
+
+        [Test]
+        public void ShouldNotChangePasswordIFailForChangePassword()
+        {
+            var model = new ChangePasswordModel
+            {
+                NewPassword = "Slartibartfast",
+                OldPassword = "password",
+                ConfirmPassword = "Slartibartfast"
+            };
+
+            mockMembershipService.Setup(s => s.ChangePassword(It.IsAny<string>(), "password", "Slartibartfast")).Returns(false);
+            var controller = CreateController();
+            
+            var actionResult = controller.ChangePassword(model);
+            Expect(controller.ViewData.ModelState.IsValid, Is.False);
+            Expect(controller.ModelState[""].Errors.Count,Is.EqualTo(1));
+            Expect(controller.ModelState[""].Errors[0].ErrorMessage, Is.EqualTo("The current password is incorrect or the new password is invalid."));
+            actionResult.AssertViewRendered().WithViewData<ChangePasswordModel>();
+        }
+    }
+}

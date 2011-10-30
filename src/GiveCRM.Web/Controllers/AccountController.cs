@@ -2,11 +2,23 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using GiveCRM.Web.Models;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
     public class AccountController : Controller
     {
+        private IMembershipService membershipService;
+        private IAuthenticationService authenticationService;
+        private IUrlValidationService urlValidationService;
+
+        public AccountController(IMembershipService membershipService, IAuthenticationService authenticationService, IUrlValidationService urlValidationService)
+        {
+            this.membershipService = membershipService;
+            this.authenticationService = authenticationService;
+            this.urlValidationService = urlValidationService;
+        }
+
 
         //
         // GET: /Account/LogOn
@@ -24,11 +36,12 @@ namespace GiveCRM.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                
+                if(membershipService.ValidateUser(model.UserName,model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    authenticationService.SetAuthorizationCredentials(model.UserName,model.RememberMe);
+                    
+                    if(urlValidationService.IsRedirectable(this,returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
@@ -52,8 +65,7 @@ namespace GiveCRM.Web.Controllers
 
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
-
+            authenticationService.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
@@ -73,19 +85,15 @@ namespace GiveCRM.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
-                if (createStatus == MembershipCreateStatus.Success)
+                var error = string.Empty;
+                if (membershipService.CreateUser(model.UserName,model.Password,model.Email,out error))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    authenticationService.SetAuthorizationCredentials(model.UserName,false);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
+                
+                ModelState.AddModelError("", error);
+                
             }
 
             // If we got this far, something failed, redisplay form
@@ -116,8 +124,8 @@ namespace GiveCRM.Web.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    string username = User == null ? string.Empty : User.Identity.Name;
+                    changePasswordSucceeded = membershipService.ChangePassword(username, model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
                 {
@@ -146,44 +154,6 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
-        #region Status Codes
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
-        {
-            // See http://go.microsoft.com/fwlink/?LinkID=177550 for
-            // a full list of status codes.
-            switch (createStatus)
-            {
-                case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
-
-                case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
-
-                case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
-
-                case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.ProviderError:
-                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                case MembershipCreateStatus.UserRejected:
-                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-            }
-        }
-        #endregion
+        
     }
 }
