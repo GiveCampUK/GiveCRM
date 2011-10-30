@@ -1,3 +1,4 @@
+using GiveCRM.Web.Services;
 using Ninject.Extensions.Conventions;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(GiveCRM.Web.App_Start.NinjectMVC3), "Start")]
@@ -56,7 +57,8 @@ namespace GiveCRM.Web.App_Start
                                 a.BindWithDefaultConventions();
                                 a.InRequestScope();
                             });
-            
+
+            kernel.Bind<IMembershipService>().To<MembershipService>();
         }        
     }
 }
