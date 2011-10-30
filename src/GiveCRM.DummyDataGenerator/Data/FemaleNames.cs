@@ -64,6 +64,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Helen",
                 "Hermione",
                 "Irene",
+                "Iris",
                 "Jacqueline",
                 "Jade",
                 "Jane",

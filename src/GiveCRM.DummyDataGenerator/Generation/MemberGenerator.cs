@@ -128,8 +128,8 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private string GenerateStreetAddress()
         {
-            string street = random.PickFromList(AddressData.StreetNamePrefix) + " " 
-                + random.PickFromList(AddressData.StreetNames) + " " + random.PickFromList(AddressData.StreetSuffix);
+            string street = random.PickFromList(StreetData.StreetNamePrefix) + " " 
+                + random.PickFromList(StreetData.StreetNames) + " " + random.PickFromList(StreetData.StreetSuffix);
             street = street.Trim();
             string streetNumber = (random.Next(200) + 1).ToString();
 

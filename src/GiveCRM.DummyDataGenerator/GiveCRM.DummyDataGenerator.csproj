@@ -79,7 +79,7 @@
     <Compile Include="Data\TownDataItem.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
     <Compile Include="Generation\DonationsGenerator.cs" />
-    <Compile Include="Data\AddressData.cs" />
+    <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
     <Compile Include="Data\FamilyNames.cs" />
     <Compile Include="Generation\RandomSource.cs" />
