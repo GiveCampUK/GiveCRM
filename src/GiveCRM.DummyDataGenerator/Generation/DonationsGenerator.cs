@@ -11,7 +11,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private readonly ICollection<Member> members;
 
         private readonly RandomSource random = new RandomSource();
-        private int donationRate;
+        private readonly int donationRate;
 
         public DonationsGenerator(Campaign campaign, ICollection<Member> members)
         {
@@ -32,32 +32,76 @@ namespace GiveCRM.DummyDataGenerator.Generation
             donationRate = 33 + random.Next(33);
         }
 
-        internal IList<Donation> Generate()
+        internal IList<Donation> Generate(int minAmount, int maxAmount, int donationCountMax)
         {
+            if (minAmount <= 0)
+            {
+                throw new ArgumentException("Minimum donation amount must be positive");
+            }
+
+            if (maxAmount < minAmount)
+            {
+                throw new ArgumentException("Maximum donation amount is less than minimum amount");
+            } 
+            
             var donations = new List<Donation>();
 
             foreach (var member in members)
             {
-                if (random.Percent(donationRate))
-                {
-                    donations.Add(DonationForMember(member));
-                }   
+                this.GenerateDonationsForMember(minAmount, maxAmount, donationCountMax, member, donations);
             }
 
             return donations;
         }
 
-        private Donation DonationForMember(Member member)
+        private void GenerateDonationsForMember(int minAmount, int maxAmount, int donationCountMax, 
+            Member member, List<Donation> donations)
+        {
+            for (int donationsForMember = 0; donationsForMember < donationCountMax; donationsForMember++)
+            {
+                if (this.random.Percent(this.donationRate))
+                {
+                    donations.Add(this.DonationForMember(member, minAmount, maxAmount));
+                }
+            }
+        }
+
+        private Donation DonationForMember(Member member, int minAmount, int maxAmount)
         {
             DateTime backDate = DateTime.Today.AddDays(-1 * random.Next(100));
-            decimal randomAmount = (decimal)5 + random.Next(96);
+            int amountInt = random.Next(minAmount, maxAmount + 1);
+
+            decimal donationAmount = amountInt;
+            if (donationAmount < maxAmount)
+            {
+                donationAmount += RandomFaction();
+            }
+            
             return new Donation
                 {
                     CampaignId = campaign.Id,
                     MemberId = member.Id,
                     Date = backDate,
-                    Amount = randomAmount
+                    Amount = donationAmount
                 };
+        }
+
+        private decimal RandomFaction()
+        {
+            // high cance that there is no factional amount
+            if (random.Percent(75))
+            {
+                return 0m;
+            }
+
+            // chance that it's a quarter, half or three quarters
+            if (random.Percent(50))
+            {
+                return (decimal)random.Next(4) / 4;
+            }
+
+            // random from .01 to 0.99
+            return (decimal)random.Next(100) / 100;
         }
     }
 }

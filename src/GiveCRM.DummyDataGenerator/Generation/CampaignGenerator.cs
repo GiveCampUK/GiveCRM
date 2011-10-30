@@ -12,7 +12,7 @@ namespace GiveCRM.DummyDataGenerator
 
         public Campaign Generate()
         {
-            string campaignName = random.PickFromList(NameData.FemaleFirstNames) + " " +
+            string campaignName = random.PickFromList(FemaleNames.Data) + " " +
                                   random.PickFromList(CampaignNames.CampaignSuffix);
             return new Campaign
                 {

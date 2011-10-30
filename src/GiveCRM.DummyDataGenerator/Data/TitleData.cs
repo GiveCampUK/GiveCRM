@@ -1,15 +1,43 @@
-﻿namespace GiveCRM.DummyDataGenerator.Data
+﻿using System.Collections.Generic;
+
+namespace GiveCRM.DummyDataGenerator.Data
 {
-    internal class TitleData
+    internal static class TitleData
     {
-        public string Title { get; set; }
+        internal static List<TitleDataItem> MaleTitles = new List<TitleDataItem>
+            {
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Mr.", "Mr."),
+                new TitleDataItem("Dr.", "Doctor")
+            };
 
-        public string Salutation { get; set; }
-
-        public TitleData(string title, string salutation)
-        {
-            this.Title = title;
-            this.Salutation = salutation;
-        }
+        internal static List<TitleDataItem> FemaleTitles = new List<TitleDataItem>
+            {
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Ms.", "Ms."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Mrs.", "Mrs."),
+                new TitleDataItem("Dr.", "Doctor")
+            };
     }
 }
