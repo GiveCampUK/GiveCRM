@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Services;
-using Moq;
+using NSubstitute;
 using NUnit.Framework;
 using System.Web.Routing;
 
@@ -33,23 +33,26 @@ namespace GiveCRM.Web.Tests.Services
         public void ShouldReturnTrueForValidUrl()
         {
             var routes = new RouteCollection(); 
-            MvcApplication.RegisterRoutes(routes); 
+            MvcApplication.RegisterRoutes(routes);
+
+            var request = Substitute.For<HttpRequestBase>();
+
+                
+            request.ApplicationPath.Returns("/"); 
+            request.Url.Returns(new Uri("http://localhost/Home", UriKind.Absolute)); 
+            request.ServerVariables.Returns(new System.Collections.Specialized.NameValueCollection());
+
+            var response = Substitute.For<HttpResponseBase>();
+                
+            response.ApplyAppPathModifier("/Home").Returns("http://localhost/Home"); 
  
-            var request = new Mock<HttpRequestBase>(MockBehavior.Strict); 
-            request.SetupGet(x => x.ApplicationPath).Returns("/"); 
-            request.SetupGet(x => x.Url).Returns(new Uri("http://localhost/Home", UriKind.Absolute)); 
-            request.SetupGet(x => x.ServerVariables).Returns(new System.Collections.Specialized.NameValueCollection()); 
- 
-            var response = new Mock<HttpResponseBase>(MockBehavior.Strict); 
-            response.Setup(x => x.ApplyAppPathModifier("/Home")).Returns("http://localhost/Home"); 
- 
-            var context = new Mock<HttpContextBase>(MockBehavior.Strict); 
-            context.SetupGet(x => x.Request).Returns(request.Object); 
-            context.SetupGet(x => x.Response).Returns(response.Object); 
+            var context = Substitute.For<HttpContextBase>(); 
+            context.Request.Returns(request); 
+            context.Response.Returns(response); 
  
             var controller = new AccountController(null,null,null);
-            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
-            controller.Url = new UrlHelper(new RequestContext(context.Object, new RouteData()), routes);
+            controller.ControllerContext = new ControllerContext(context, new RouteData(), controller);
+            controller.Url = new UrlHelper(new RequestContext(context, new RouteData()), routes);
             
             var service = CreateService();
             var result = service.IsRedirectable(controller, @"/Home");
@@ -62,21 +65,24 @@ namespace GiveCRM.Web.Tests.Services
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
 
-            var request = new Mock<HttpRequestBase>(MockBehavior.Strict);
-            request.SetupGet(x => x.ApplicationPath).Returns("/");
-            request.SetupGet(x => x.Url).Returns(new Uri("http://localhost/Home", UriKind.Absolute));
-            request.SetupGet(x => x.ServerVariables).Returns(new System.Collections.Specialized.NameValueCollection());
+            var request = Substitute.For<HttpRequestBase>();
 
-            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
-            response.Setup(x => x.ApplyAppPathModifier("/Home")).Returns("http://localhost/Home");
 
-            var context = new Mock<HttpContextBase>(MockBehavior.Strict);
-            context.SetupGet(x => x.Request).Returns(request.Object);
-            context.SetupGet(x => x.Response).Returns(response.Object);
+            request.ApplicationPath.Returns("/");
+            request.Url.Returns(new Uri("http://localhost/Home", UriKind.Absolute));
+            request.ServerVariables.Returns(new System.Collections.Specialized.NameValueCollection());
+
+            var response = Substitute.For<HttpResponseBase>();
+
+            response.ApplyAppPathModifier("/Home").Returns("http://localhost/Home");
+
+            var context = Substitute.For<HttpContextBase>();
+            context.Request.Returns(request);
+            context.Response.Returns(response); 
 
             var controller = new AccountController(null, null, null);
-            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
-            controller.Url = new UrlHelper(new RequestContext(context.Object, new RouteData()), routes);
+            controller.ControllerContext = new ControllerContext(context, new RouteData(), controller);
+            controller.Url = new UrlHelper(new RequestContext(context, new RouteData()), routes);
 
             var service = CreateService();
             var result = service.IsRedirectable(controller, string.Empty);
@@ -89,21 +95,24 @@ namespace GiveCRM.Web.Tests.Services
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
 
-            var request = new Mock<HttpRequestBase>(MockBehavior.Strict);
-            request.SetupGet(x => x.ApplicationPath).Returns("/");
-            request.SetupGet(x => x.Url).Returns(new Uri("http://localhost/Home", UriKind.Absolute));
-            request.SetupGet(x => x.ServerVariables).Returns(new System.Collections.Specialized.NameValueCollection());
+            var request = Substitute.For<HttpRequestBase>();
 
-            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
-            response.Setup(x => x.ApplyAppPathModifier("/Home")).Returns("http://localhost/Home");
 
-            var context = new Mock<HttpContextBase>(MockBehavior.Strict);
-            context.SetupGet(x => x.Request).Returns(request.Object);
-            context.SetupGet(x => x.Response).Returns(response.Object);
+            request.ApplicationPath.Returns("/");
+            request.Url.Returns(new Uri("http://localhost/Home", UriKind.Absolute));
+            request.ServerVariables.Returns(new System.Collections.Specialized.NameValueCollection());
+
+            var response = Substitute.For<HttpResponseBase>();
+
+            response.ApplyAppPathModifier("/Home").Returns("http://localhost/Home");
+
+            var context = Substitute.For<HttpContextBase>();
+            context.Request.Returns(request);
+            context.Response.Returns(response); 
 
             var controller = new AccountController(null, null, null);
-            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
-            controller.Url = new UrlHelper(new RequestContext(context.Object, new RouteData()), routes);
+            controller.ControllerContext = new ControllerContext(context, new RouteData(), controller);
+            controller.Url = new UrlHelper(new RequestContext(context, new RouteData()), routes);
 
             var service = CreateService();
             var result = service.IsRedirectable(controller, "muppet");
@@ -116,21 +125,23 @@ namespace GiveCRM.Web.Tests.Services
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
 
-            var request = new Mock<HttpRequestBase>(MockBehavior.Strict);
-            request.SetupGet(x => x.ApplicationPath).Returns("/");
-            request.SetupGet(x => x.Url).Returns(new Uri("http://localhost/Home", UriKind.Absolute));
-            request.SetupGet(x => x.ServerVariables).Returns(new System.Collections.Specialized.NameValueCollection());
+            var request = Substitute.For<HttpRequestBase>();
 
-            var response = new Mock<HttpResponseBase>(MockBehavior.Strict);
-            response.Setup(x => x.ApplyAppPathModifier("/Home")).Returns("http://localhost/Home");
 
-            var context = new Mock<HttpContextBase>(MockBehavior.Strict);
-            context.SetupGet(x => x.Request).Returns(request.Object);
-            context.SetupGet(x => x.Response).Returns(response.Object);
+            request.ApplicationPath.Returns("/");
+            request.Url.Returns(new Uri("http://localhost/Home", UriKind.Absolute));
+            request.ServerVariables.Returns(new System.Collections.Specialized.NameValueCollection());
 
+            var response = Substitute.For<HttpResponseBase>();
+
+            response.ApplyAppPathModifier("/Home").Returns("http://localhost/Home");
+
+            var context = Substitute.For<HttpContextBase>();
+            context.Request.Returns(request);
+            context.Response.Returns(response); 
             var controller = new AccountController(null, null, null);
-            controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
-            controller.Url = new UrlHelper(new RequestContext(context.Object, new RouteData()), routes);
+            controller.ControllerContext = new ControllerContext(context, new RouteData(), controller);
+            controller.Url = new UrlHelper(new RequestContext(context, new RouteData()), routes);
 
             var service = CreateService();
             var result = service.IsRedirectable(controller, "//muppet");
