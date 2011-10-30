@@ -11,6 +11,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 "Adam",
                 "Alan",
                 "Albert",
+                "Alexander",
                 "Alistair",
                 "Anders",
                 "Andrew",
