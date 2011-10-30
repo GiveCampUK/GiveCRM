@@ -3,8 +3,8 @@ using System.Web.Mvc;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Models;
 using GiveCRM.Web.Services;
-using Moq;
 using MvcContrib.TestHelper;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace GiveCRM.Web.Tests.controllers
@@ -12,23 +12,23 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class AccountControllerTests:AssertionHelper
     {
-        private Mock<IMembershipService> mockMembershipService;
-        private Mock<IAuthenticationService> mockAuthenticationService;
-        private Mock<IUrlValidationService> mockUrlValidationService;
+        private IMembershipService mockMembershipService;
+        private IAuthenticationService mockAuthenticationService;
+        private IUrlValidationService mockUrlValidationService;
 
         [SetUp]
         public void SetUp()
         {
-            mockMembershipService = new Mock<IMembershipService>();
-            mockAuthenticationService = new Mock<IAuthenticationService>();
-            mockUrlValidationService = new Mock<IUrlValidationService>();
+            mockMembershipService = Substitute.For<IMembershipService>();
+            mockAuthenticationService = Substitute.For<IAuthenticationService>();
+            mockUrlValidationService = Substitute.For<IUrlValidationService>();
         }
 
         private AccountController CreateController()
         {
-            return new AccountController(mockMembershipService.Object,
-                mockAuthenticationService.Object,
-                mockUrlValidationService.Object);
+            return new AccountController(mockMembershipService,
+                mockAuthenticationService,
+                mockUrlValidationService);
         }
 
         [Test]
@@ -36,9 +36,10 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var controller = CreateController();
 
+            mockMembershipService.ValidateUser("test","password").Returns(true);
             
-            mockMembershipService.Setup(ms=>ms.ValidateUser("test","password")).Returns(true);
-            mockUrlValidationService.Setup(uvs=>uvs.IsRedirectable(controller,"")).Returns(false);
+            
+            mockUrlValidationService.IsRedirectable(controller,"").Returns(false);
             
 
             var model = new LogOnModel();
@@ -56,8 +57,8 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var controller = CreateController();
 
-            mockMembershipService.Setup(ms => ms.ValidateUser("test", "password")).Returns(true);
-            mockUrlValidationService.Setup(uvs => uvs.IsRedirectable(controller, "testurl")).Returns(true);
+            mockMembershipService.ValidateUser("test", "password").Returns(true);
+            mockUrlValidationService.IsRedirectable(controller, "testurl").Returns(true);
            
             var model = new LogOnModel();
             model.UserName = "test";
@@ -75,7 +76,7 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var controller = CreateController();
 
-            mockMembershipService.Setup(ms => ms.ValidateUser("test", "password")).Returns(false);
+            mockMembershipService.ValidateUser("test", "password").Returns(false);
             
             var model = new LogOnModel();
             model.UserName = "test";
@@ -92,10 +93,10 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void ShouldLogOff()
         {
-            mockAuthenticationService.Setup(a => a.SignOut()).Verifiable();
+            
             var controller = CreateController();
             var actionResult = controller.LogOff();
-            mockAuthenticationService.Verify();
+            mockAuthenticationService.Received().SignOut();
             actionResult.AssertActionRedirect();
         }
 
@@ -103,7 +104,7 @@ namespace GiveCRM.Web.Tests.controllers
         public void ShouldRegister()
         {
             var error = string.Empty;
-            mockMembershipService.Setup(s => s.CreateUser("test", "password", "a@a.a", out error)).Returns(true);
+            mockMembershipService.CreateUser("test", "password", "a@a.a", out error).Returns(true);
             var controller = CreateController();
             var model = new RegisterModel
                             {
@@ -119,7 +120,7 @@ namespace GiveCRM.Web.Tests.controllers
         public void ShouldFailToRegister()
         {
             var error = string.Empty;
-            mockMembershipService.Setup(s => s.CreateUser("test", "password", "a@a.a", out error)).Returns(false);
+            mockMembershipService.CreateUser("test", "password", "a@a.a", out error).Returns(false);
             var controller = CreateController();
             var model = new RegisterModel
             {
@@ -141,7 +142,7 @@ namespace GiveCRM.Web.Tests.controllers
                                 ConfirmPassword = "Slartibartfast"
                             };
             
-            mockMembershipService.Setup(s => s.ChangePassword(It.IsAny<string>(),"password","Slartibartfast")).Returns(true);
+            mockMembershipService.ChangePassword(Arg.Any<string>(),"password","Slartibartfast").Returns(true);
             
             var controller = CreateController();
             
@@ -178,7 +179,7 @@ namespace GiveCRM.Web.Tests.controllers
                 ConfirmPassword = "Slartibartfast"
             };
 
-            mockMembershipService.Setup(s => s.ChangePassword(It.IsAny<string>(), "password", "Slartibartfast")).Returns(false);
+            mockMembershipService.ChangePassword(Arg.Any<string>(), "password", "Slartibartfast").Returns(false);
             var controller = CreateController();
             
             var actionResult = controller.ChangePassword(model);
