@@ -13,16 +13,30 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return random.Next(max);
         }
 
+        public int Next(int min, int max)
+        {
+            return random.Next(min, max);
+        }
+
         public string PhoneDigits()
         {
             string prefix = "0" + random.Next(100) + " ";
             return prefix + random.Next(10000).ToString("0000") + random.Next(10000).ToString("0000");
         }
 
-        public T PickFromList<T>(List<T> list)
+        public T PickFromList<T>(IList<T> list)
         {
-            var max = list.Count - 1;
-            var index = random.Next(max);
+            if (list.Count == 0)
+            {
+                return default(T);
+            }
+
+            if (list.Count == 1)
+            {
+                return list[0];
+            }
+
+            int index = random.Next(list.Count);
             return list[index];
         }
 

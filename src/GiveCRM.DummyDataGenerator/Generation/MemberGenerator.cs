@@ -31,17 +31,23 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private Member GenerateMember()
         {
             bool isFemale = random.Bool();
-            string firstName = isFemale ? RandomFemaleFirstName() : RandomMaleFirstName();
-            TitleData titleSalutation = MakeTitleSalutation(isFemale);
+            string familyName = random.PickFromList(FamilyNames.Data);
+            // make first name different from Family name, ie.g. no "Scott Scott" or "Major Major"
+            string firstName;
+            do
+            {
+                firstName = isFemale ? RandomFemaleFirstName() : RandomMaleFirstName();
+            }
+            while(firstName == familyName);
+
+            TitleDataItem titleSalutation = MakeTitleSalutation(isFemale);
 
             var newMember = new Member
                 {
                     FirstName = firstName,
-                    LastName = random.PickFromList(NameData.Surnames),
+                    LastName = familyName,
                     Title = titleSalutation.Title,
                     Salutation = titleSalutation.Salutation,
-                    City = random.PickFromList(AddressData.Cities),
-                    Country = "United Kingdom"
                 };
 
             newMember.Reference = this.NextReference(newMember);
@@ -111,14 +117,19 @@ namespace GiveCRM.DummyDataGenerator.Generation
             generatedPostalAddresses.Add(streetAddress, true);
             member.AddressLine1 = streetAddress;
 
-            member.PostalCode = RandomPostalCode();
-            member.City = random.PickFromList(AddressData.Cities);
+            TownDataItem townData = random.PickFromList(TownData.Data);
+            string postCodePrefix = random.PickFromList(townData.PostalCodePrefixes);
+
+            member.PostalCode = RandomPostalCode(postCodePrefix);
+            member.City = townData.Town;
+            member.Region = townData.Region;
+            member.Country = townData.Country;
         }
 
         private string GenerateStreetAddress()
         {
-            string street = random.PickFromList(AddressData.StreetNamePrefix) + " " 
-                + random.PickFromList(AddressData.StreetNames) + " " + random.PickFromList(AddressData.StreetSuffix);
+            string street = random.PickFromList(StreetData.StreetNamePrefix) + " " 
+                + random.PickFromList(StreetData.StreetNames) + " " + random.PickFromList(StreetData.StreetSuffix);
             street = street.Trim();
             string streetNumber = (random.Next(200) + 1).ToString();
 
@@ -130,9 +141,9 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return streetNumber + " " + street;
         }
 
-        private string RandomPostalCode()
+        private string RandomPostalCode(string prefix)
         {
-            return random.PickFromList(AddressData.PostCodes) + random.Next(10) + " " +
+            return prefix + random.Next(10) + " " +
                 random.Next(10) + random.Letter() + random.Letter();
         }
 
@@ -151,11 +162,11 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private string GenerateEmailAddress(Member member)
         {
-            string sep = random.PickFromList(NameData.EmailSeparators);
+            string sep = random.PickFromList(EmailData.Separators);
 
             if (random.Percent(30))
             {
-                sep += random.Letter() + random.PickFromList(NameData.EmailSeparators);
+                sep += random.Letter() + random.PickFromList(EmailData.Separators);
             }
 
             string name;
@@ -174,24 +185,24 @@ namespace GiveCRM.DummyDataGenerator.Generation
                 name += this.random.Next(100).ToString();
             }
 
-            string domain = random.PickFromList(NameData.EmailDomains);
+            string domain = random.PickFromList(EmailData.Domains);
 
             return name + "@" + domain;
         }
 
-        private TitleData MakeTitleSalutation(bool isFemale)
+        private TitleDataItem MakeTitleSalutation(bool isFemale)
         {
-            return isFemale ? random.PickFromList(NameData.FemaleTitles) : random.PickFromList(NameData.MaleTitles);
+            return isFemale ? random.PickFromList(TitleData.FemaleTitles) : random.PickFromList(TitleData.MaleTitles);
         }
 
         private string RandomMaleFirstName()
         {
-            return random.PickFromList(NameData.MaleFirstNames);
+            return random.PickFromList(MaleNames.Data);
         }
 
         private string RandomFemaleFirstName()
         {
-            return random.PickFromList(NameData.FemaleFirstNames);
+            return random.PickFromList(FemaleNames.Data);
         }
     }
 }

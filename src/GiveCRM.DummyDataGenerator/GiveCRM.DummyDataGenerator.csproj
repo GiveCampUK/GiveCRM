@@ -50,6 +50,7 @@
       <HintPath>..\packages\Simple.Data.SqlServer.0.9.8.2\lib\net40\Simple.Data.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,14 +71,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\EmailData.cs" />
+    <Compile Include="Data\FemaleNames.cs" />
+    <Compile Include="Data\MaleNames.cs" />
+    <Compile Include="Data\TitleData.cs" />
+    <Compile Include="Data\TownData.cs" />
+    <Compile Include="Data\TownDataItem.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
     <Compile Include="Generation\DonationsGenerator.cs" />
-    <Compile Include="Data\AddressData.cs" />
+    <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
-    <Compile Include="Data\NameData.cs" />
+    <Compile Include="Data\FamilyNames.cs" />
     <Compile Include="Generation\RandomSource.cs" />
-    <Compile Include="Data\TitleData.cs" />
+    <Compile Include="Data\TitleDataItem.cs" />
     <Compile Include="Generator.cs" />
+    <Compile Include="GenericEventArgs.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
