@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Services;
 using NSubstitute;
+using Moq;
 using NUnit.Framework;
 using System.Web.Routing;
 
@@ -33,7 +34,7 @@ namespace GiveCRM.Web.Tests.Services
         public void ShouldReturnTrueForValidUrl()
         {
             var routes = new RouteCollection(); 
-            MvcApplication.RegisterRoutes(routes);
+			MvcApplication.RegisterRoutes(routes);
 
             var request = Substitute.For<HttpRequestBase>();
 
@@ -64,8 +65,7 @@ namespace GiveCRM.Web.Tests.Services
         {
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
-
-            var request = Substitute.For<HttpRequestBase>();
+var request = Substitute.For<HttpRequestBase>();
 
 
             request.ApplicationPath.Returns("/");
@@ -94,8 +94,7 @@ namespace GiveCRM.Web.Tests.Services
         {
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
-
-            var request = Substitute.For<HttpRequestBase>();
+var request = Substitute.For<HttpRequestBase>();
 
 
             request.ApplicationPath.Returns("/");
@@ -125,7 +124,7 @@ namespace GiveCRM.Web.Tests.Services
             var routes = new RouteCollection();
             MvcApplication.RegisterRoutes(routes);
 
-            var request = Substitute.For<HttpRequestBase>();
+var request = Substitute.For<HttpRequestBase>();
 
 
             request.ApplicationPath.Returns("/");

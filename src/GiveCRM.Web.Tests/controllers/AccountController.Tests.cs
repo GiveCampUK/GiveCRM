@@ -10,7 +10,6 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class AccountControllerTests:AssertionHelper
     {
-
         private IMembershipService membershipService;
         private IAuthenticationService authenticationService;
         private IUrlValidationService urlValidationService;
@@ -34,11 +33,8 @@ namespace GiveCRM.Web.Tests.controllers
         public void ShouldLogOnUserAndRedirectToHome()
         {
             var controller = CreateController();
-
-            membershipService.ValidateUser("test","password").Returns(true);
+membershipService.ValidateUser("test","password").Returns(true);
             urlValidationService.IsRedirectable(controller,"").Returns(false);
-
-            
 
             var model = new LogOnModel();
             model.UserName = "test";
@@ -93,7 +89,8 @@ namespace GiveCRM.Web.Tests.controllers
         {
             authenticationService.SignOut();
             var controller = CreateController();
-            var actionResult = controller.LogOff();
+
+			var actionResult = controller.LogOff();
             authenticationService.Received();
             actionResult.AssertActionRedirect();
         }
@@ -119,7 +116,6 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var error = string.Empty;
             membershipService.CreateUser("test", "password", "a@a.a", out error).Returns(false);
-
             var controller = CreateController();
             var model = new RegisterModel
             {
@@ -142,9 +138,7 @@ namespace GiveCRM.Web.Tests.controllers
                                 ConfirmPassword = "Slartibartfast"
                             };
             
-
-            membershipService.ChangePassword("userName", "password","Slartibartfast").Returns(true);
-
+membershipService.ChangePassword("userName", "password","Slartibartfast").Returns(true);
             
             var controller = CreateController();
             
@@ -181,9 +175,7 @@ namespace GiveCRM.Web.Tests.controllers
                 ConfirmPassword = "Slartibartfast"
             };
 
-
-            membershipService.ChangePassword("userName", "password", "Slartibartfast").Returns(false);
-
+membershipService.ChangePassword("userName", "password", "Slartibartfast").Returns(false);
             var controller = CreateController();
             
             var actionResult = controller.ChangePassword(model);
