@@ -10,6 +10,7 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class AccountControllerTests:AssertionHelper
     {
+
         private IMembershipService membershipService;
         private IAuthenticationService authenticationService;
         private IUrlValidationService urlValidationService;
@@ -34,9 +35,9 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var controller = CreateController();
 
-            
             membershipService.ValidateUser("test","password").Returns(true);
             urlValidationService.IsRedirectable(controller,"").Returns(false);
+
             
 
             var model = new LogOnModel();
@@ -118,6 +119,7 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var error = string.Empty;
             membershipService.CreateUser("test", "password", "a@a.a", out error).Returns(false);
+
             var controller = CreateController();
             var model = new RegisterModel
             {
@@ -140,7 +142,9 @@ namespace GiveCRM.Web.Tests.controllers
                                 ConfirmPassword = "Slartibartfast"
                             };
             
+
             membershipService.ChangePassword("userName", "password","Slartibartfast").Returns(true);
+
             
             var controller = CreateController();
             
@@ -177,7 +181,9 @@ namespace GiveCRM.Web.Tests.controllers
                 ConfirmPassword = "Slartibartfast"
             };
 
+
             membershipService.ChangePassword("userName", "password", "Slartibartfast").Returns(false);
+
             var controller = CreateController();
             
             var actionResult = controller.ChangePassword(model);
