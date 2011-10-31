@@ -25,5 +25,5 @@ src/GiveCRM.Database/sql/release
 *.user
 *.crunchproject.local.xml
 *.crunchsolution.local.xml
-
-/team.txt
+team.txt
+*.orig
