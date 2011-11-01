@@ -68,6 +68,7 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_be_able_to_set_background_color_of_cell()
         {
+            _sampleData[0][0].BackgroundColor = Color.Gray;
             _target.WriteDataToSheet(_workBook.GetSheetAt(0), _sampleData);
 
             Row excelRow = Helper.GetRowData(_workBook, 0);
