@@ -2,7 +2,7 @@ param (
 	$Configuration = ''
 )
 
-import-module .\psake.psm1
+import-module .\psake\psake.psm1
 
 invoke-psake ./build.ps1
 
