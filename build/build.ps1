@@ -1,7 +1,6 @@
 properties {
 	$base_dir = resolve-path .
 	$sln_file_path = "$base_dir\..\src\GiveCRM.sln"
-    $package_dir = "$base_dir\..\package\"
 	$configuration = "debug"
 }
 Framework "4.0"
