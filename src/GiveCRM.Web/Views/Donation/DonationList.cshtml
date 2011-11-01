@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GiveCRM.Models.Donation>
+﻿@using System.Globalization
+@model IEnumerable<GiveCRM.Models.Donation>
 
 @{
     Layout = null;
@@ -13,7 +14,7 @@
 {
     <tr>
         <td>@donation.Date.ToLongDateString()</td>
-        <td>@donation.Amount</td>
+        <td>@donation.Amount.ToString("C2", NumberFormatInfo.CurrentInfo)</td>
     </tr>
 }
 

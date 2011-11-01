@@ -295,9 +295,6 @@
     <Content Include="Views\Donation\DonationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Donation\DonationList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_GlobFooter.cshtml" />
     <Content Include="Views\Shared\_GlobHeader.cshtml">
       <SubType>Code</SubType>
