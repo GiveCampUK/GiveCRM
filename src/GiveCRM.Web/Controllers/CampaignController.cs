@@ -235,7 +235,7 @@ namespace GiveCRM.Web.Controllers
             var campaignClone = new Campaign
                                          {
                                              Id = 0,
-                                             Description = campaign.Description + " (" + Resources.Literal_Cloned + ")",
+                                             Description = campaign.Description,
                                              IsClosed = "N",
                                              Name = campaign.Name + " (" + Resources.Literal_Cloned + ")",
                                              RunOn = null
