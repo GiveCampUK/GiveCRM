@@ -91,6 +91,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\IPagedList.cs" />
+    <Compile Include="Infrastructure\PagedList.cs" />
     <Compile Include="Infrastructure\SearchExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
@@ -102,7 +104,6 @@
     <Compile Include="Models\ExcelImportViewModel.cs" />
     <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
-    <Compile Include="Models\Members\MemberSearchViewModel.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
