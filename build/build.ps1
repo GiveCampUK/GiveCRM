@@ -17,6 +17,7 @@ $nunit_dir = "$src_folder\packages\NUnit.2.5.10.11092\tools"
 task default -depends Package
 
 task Clean {
+	New-Item $package_dir
     clean_directory $package_dir
 }
 
@@ -24,7 +25,7 @@ task Compile -depends Clean {
     run_msbuild "$src_folder\$sln_file_name"
 }
 
-task Test -depends Compile {
+task Test -depends Compile -continueonerror {
     run_nunit "$nunit_dir" “$src_folder”
 }
 
