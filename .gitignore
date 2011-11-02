@@ -27,3 +27,5 @@ src/GiveCRM.Database/sql/release
 *.crunchsolution.local.xml
 team.txt
 *.orig
+
+package
