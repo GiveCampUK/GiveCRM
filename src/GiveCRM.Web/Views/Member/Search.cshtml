@@ -1,4 +1,4 @@
-﻿@model GiveCRM.Web.Models.Members.MemberSearchViewModel
+﻿@model GiveCRM.Web.Infrastructure.IPagedList<GiveCRM.Models.Member>
 
 @{
     ViewBag.Title = "Search";
@@ -6,9 +6,4 @@
 
 <h2>Search</h2>
 
-@if (Model.AreMore)
-{
-    <h2>There are more than 25 results - please refine your search.</h2>
-}
-
-@{Html.RenderPartial("MembersList", Model.Results);}
+@{Html.RenderPartial("MembersList", Model);}

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.Models;
+using GiveCRM.Web.Infrastructure;
 using GiveCRM.Web.Models.Members;
 using GiveCRM.Web.Services;
 
@@ -9,11 +10,10 @@ namespace GiveCRM.Web.Controllers
 {
     public class MemberController : Controller
     {
-        private const int MaxResults = 25;
-
         private IDonationsService _donationsService;
         private IMemberService _memberService;
         private ICampaignService _campaignService;
+        private const int DefaultPageSize = 25;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
@@ -80,11 +80,11 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string name, string postcode, string reference, int start = 0)
+        public ActionResult Search(string name, string postcode, string reference, int page = 1, int pageSize = DefaultPageSize)
         {
             var results = _memberService.Search(name, postcode, reference);
 
-            return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
+            return View(new PagedList<Member>(results, page - 1, pageSize));
         }
 
         [HttpGet]
@@ -92,7 +92,7 @@ namespace GiveCRM.Web.Controllers
         {
             var results = _memberService.Search(criteria);
 
-            return View(results.Take(10));
+            return View(results.Take(DefaultPageSize));
         }
 
         public ActionResult TopDonors()

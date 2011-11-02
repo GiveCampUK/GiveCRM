@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GiveCRM.Models.Member>
+﻿@model GiveCRM.Web.Infrastructure.IPagedList<GiveCRM.Models.Member>
 
 @{
     Layout = null;
@@ -30,6 +30,18 @@
 }
 
 </table>
+
+<div class="pagingControls">
+    @if (Model.HasPreviousPage)
+    {
+        @Html.ActionLink("&lt;&nbsp;Previous", "Search")
+    }
+    
+    @if (Model.HasNextPage)
+    {
+        @Html.ActionLink("Next&nbsp;&gt;", "Search")
+    }
+</div>
 
 <script type="text/javascript" language="javascript">
     function CheckDelete(ref) {
