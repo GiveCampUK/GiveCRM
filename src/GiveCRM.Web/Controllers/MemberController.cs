@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Web.Mvc;
 using GiveCRM.Models;
-using GiveCRM.Web.Infrastructure;
 using GiveCRM.Web.Models.Members;
 using GiveCRM.Web.Services;
+using PagedList;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -79,15 +79,19 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public ActionResult Search(string name, string postcode, string reference, int page = 1, int pageSize = DefaultPageSize)
+        public ActionResult Search(MemberSearchViewModel model)
         {
-            var results = _memberService.Search(name, postcode, reference);
+            if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
+            {
+                return View(model);
+            }
 
-            return View(new PagedList<Member>(results, page - 1, pageSize));
+            var results = _memberService.Search(model.Name, model.PostCode, model.Reference);
+            model.Results = results.ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize);
+
+            return View(model);
         }
 
-        [HttpGet]
         public ActionResult AjaxSearch(string criteria)
         {
             var results = _memberService.Search(criteria);

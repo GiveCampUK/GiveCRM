@@ -1,4 +1,5 @@
-﻿@model GiveCRM.Web.Infrastructure.IPagedList<GiveCRM.Models.Member>
+﻿@model GiveCRM.Web.Models.Members.MemberSearchViewModel
+@using PagedList.Mvc
 
 @{
     Layout = null;
@@ -16,32 +17,36 @@
         <th>Email</th>
     </tr>
 
-@foreach (var member in Model)
+@if (Model.Results != null && Model.Results.Count > 0)
 {
+    foreach (var member in Model.Results)
+    {
+        <tr>
+            <td>@Html.ActionLink("Edit", "Edit", new {id = member.Id})</td>
+            <td>@Html.ActionLink("Delete", "Delete", new {id = member.Id}, new {onclick = "return CheckDelete('" + member.Reference + "');"})</td>
+            <td>@Html.ActionLink("Log Donation", "Donate", new {id = member.Id})</td>
+            <td>@member.Reference</td>
+            <td>@member.Salutation @member.FirstName @member.LastName</td>
+            <td>@member.AddressLine1 @member.AddressLine2 @member.City @member.PostalCode</td>
+            <td>@member.EmailAddress</td>
+        </tr>
+    }
+
     <tr>
-        <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
-        <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id }, new { onclick="return CheckDelete('" + member.Reference + "');" })</td>
-        <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
-        <td>@member.Reference</td>
-        <td>@member.Salutation @member.FirstName @member.LastName</td>
-        <td>@member.AddressLine1 @member.AddressLine2 @member.City @member.PostalCode</td>
-        <td>@member.EmailAddress</td>
+        <td>
+            @Html.PagedListPager(Model.Results, page => Url.Action("Index", new RouteValueDictionary()
+                                                                                {
+                                                                                    {"Page", page},
+                                                                                    {"Name", Model.Name},
+                                                                                    {"PostCode", Model.PostCode},
+                                                                                    {"Reference", Model.Reference}
+                                                                                }),
+                                 PagedListRenderOptions.PageNumbersOnly)
+        </td>
     </tr>
 }
 
 </table>
-
-<div class="pagingControls">
-    @if (Model.HasPreviousPage)
-    {
-        @Html.ActionLink("&lt;&nbsp;Previous", "Search")
-    }
-    
-    @if (Model.HasNextPage)
-    {
-        @Html.ActionLink("Next&nbsp;&gt;", "Search")
-    }
-</div>
 
 <script type="text/javascript" language="javascript">
     function CheckDelete(ref) {
