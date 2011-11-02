@@ -12,6 +12,7 @@ $base_dir = resolve-path .
 $package_dir = "$base_dir\..\package\"
 $src_folder = "$base_dir\..\src"
 $web_package_location = "$src_folder\GiveCRM.Web\obj\release\Package\PackageTmp"
+$nunit_dir = "$src_folder\packages\NUnit.2.5.10.11092\tools"
 
 task default -depends Package
 
@@ -23,7 +24,11 @@ task Compile -depends Clean {
     run_msbuild "$src_folder\$sln_file_name"
 }
 
-task Package -depends Compile {
+task Test -depends Compile {
+    run_nunit "$nunit_dir" “$src_folder”
+}
+
+task Package -depends Test {
     move_package $web_package_location $package_dir
     clean_up_pdb_files $package_dir
 }
