@@ -2,6 +2,8 @@
 	$release_dir = "c:\websites\test.givecrm.org.uk"
 }
 
+#Loading external functions file
+.\functions.ps1
 $package_dir = "$base_dir\..\package\"
 $src_folder = "$base_dir\..\src"
 
