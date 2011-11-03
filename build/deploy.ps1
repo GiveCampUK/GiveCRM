@@ -1,21 +1,16 @@
-properties {
-	$base_dir = resolve-path .
-	$sln_file_path = "$base_dir\..\src\GiveCRM.sln"
-	$configuration = "debug"
-}
-Framework "4.0"
-
-task default -depends Compile
-
-task Compile {
-    run_msbuild $sln_file_path 
+﻿properties {
+	$release_dir = "c:\websites\test.givecrm.org.uk"
 }
 
-#------------------------------------------------------------------------------------------------------------------#
-#----------------------------------------Global Functions----------------------------------------------------------#
-#------------------------------------------------------------------------------------------------------------------#
+$package_dir = "$base_dir\..\package\"
+$src_folder = "$base_dir\..\src"
 
-function global:run_msbuild ($solutionPath)
-{
-    exec { & msbuild $solutionPath "/t:rebuild" }
+task default -depends Deploy
+
+task Clean {
+    clean_directory $release_dir
+}
+
+task Deploy -depends Clean {
+    move_package $package_dir $release_dir
 }
