@@ -20,7 +20,7 @@ namespace GiveCRM.Web.Controllers
         private readonly ISearchService _searchService;
         private readonly ICampaignService _campaignService;
         private readonly IMemberSearchFilterService _memberSearchFilterService;
-        private IMemberService _memberService;
+        private readonly IMemberService _memberService;
         private readonly CampaignRuns campaignRuns = new CampaignRuns();
         
         public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
