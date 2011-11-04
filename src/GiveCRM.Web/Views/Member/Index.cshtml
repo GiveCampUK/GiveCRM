@@ -12,16 +12,7 @@
 </div>
 
 <div id="search">
-    @{Html.BeginForm(actionName: "Search", controllerName: "Member", method: FormMethod.Post);}
-    
-    <label>Lastname</label> @Html.TextBox("Name")<br />
-    <label>Postcode</label> @Html.TextBox("Postcode")<br />
-    <label>Reference</label> @Html.TextBox("Reference")<br />
-
-    <input type="submit" value="Search" />
-
-    @{Html.EndForm();}
-    
+    @{ Html.RenderAction("Search"); }
 </div>
 
 <div id="results">&nbsp;</div>
