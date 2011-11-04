@@ -15,7 +15,6 @@ $web_package_location = "$src_folder\GiveCRM.Web\obj\$configuration\Package\Pack
 task default -depends Package
 
 task Clean {
-	New-Item $package_dir
     clean_directory $package_dir
 }
 
