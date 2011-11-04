@@ -1,4 +1,5 @@
-﻿@model GiveCRM.Web.Models.Members.MemberSearchViewModel
+﻿@using GiveCRM.Web.Models.Members
+@model MemberSearchViewModel
 
 @{
     ViewBag.Title = "Search";
@@ -6,4 +7,18 @@
 
 <h2>Search</h2>
 
-@{Html.RenderPartial("MembersList", Model);}
+@using (Html.BeginForm(actionName: "Search", controllerName: "Member", method: FormMethod.Get))
+{
+    <div class="editor-label">@Html.LabelFor(model => model.Name)</div>
+    <div class="editor-field">@Html.EditorFor(model => model.Name)</div>
+        
+    <div class="editor-label">@Html.LabelFor(model => model.PostCode)</div>
+    <div class="editor-field">@Html.EditorFor(model => model.PostCode)</div>
+    
+    <div class="editor-label">@Html.LabelFor(model => model.Reference)</div>
+    <div class="editor-field">@Html.EditorFor(model => model.Reference)</div>
+
+    <input type="submit" value="Search" name="SearchButton" />
+}
+
+@{ Html.RenderPartial("MembersList", Model.Results, new ViewDataDictionary()); }

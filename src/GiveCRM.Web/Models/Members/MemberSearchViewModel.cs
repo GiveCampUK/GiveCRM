@@ -1,7 +1,4 @@
-﻿using GiveCRM.Models;
-using PagedList;
-
-namespace GiveCRM.Web.Models.Members
+﻿namespace GiveCRM.Web.Models.Members
 {
     public class MemberSearchViewModel
     {
@@ -9,7 +6,7 @@ namespace GiveCRM.Web.Models.Members
         public string Name { get; set; }
         public string PostCode { get; set; }
         public string Reference { get; set; }
-        public IPagedList<Member> Results { get; set; }
+        public PagedMemberListViewModel Results { get; set; }
         public string SearchButton { get; set; }
     }
 }

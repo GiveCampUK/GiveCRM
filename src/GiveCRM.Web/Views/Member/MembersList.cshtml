@@ -1,10 +1,13 @@
-﻿@model GiveCRM.Web.Models.Members.MemberSearchViewModel
+﻿@model PagedMemberListViewModel
+@using GiveCRM.Web.Models.Members
 @using PagedList.Mvc
 
 @{
     Layout = null;
 }
 
+@if (Model != null && Model.Count > 0)
+{
 <table>
 
     <tr>
@@ -17,14 +20,12 @@
         <th>Email</th>
     </tr>
 
-@if (Model.Results != null && Model.Results.Count > 0)
-{
-    foreach (var member in Model.Results)
+    @foreach (var member in Model)
     {
         <tr>
-            <td>@Html.ActionLink("Edit", "Edit", new {id = member.Id})</td>
-            <td>@Html.ActionLink("Delete", "Delete", new {id = member.Id}, new {onclick = "return CheckDelete('" + member.Reference + "');"})</td>
-            <td>@Html.ActionLink("Log Donation", "Donate", new {id = member.Id})</td>
+            <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id }, new { onclick = "return CheckDelete('" + member.Reference + "');" })</td>
+            <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
             <td>@member.Reference</td>
             <td>@member.Salutation @member.FirstName @member.LastName</td>
             <td>@member.AddressLine1 @member.AddressLine2 @member.City @member.PostalCode</td>
@@ -33,20 +34,27 @@
     }
 
     <tr>
-        <td>
-            @Html.PagedListPager(Model.Results, page => Url.Action("Index", new RouteValueDictionary()
-                                                                                {
-                                                                                    {"Page", page},
-                                                                                    {"Name", Model.Name},
-                                                                                    {"PostCode", Model.PostCode},
-                                                                                    {"Reference", Model.Reference}
-                                                                                }),
-                                 PagedListRenderOptions.PageNumbersOnly)
+        <td colspan="7" style="text-align: center">
+            <style type="text/css">
+              ul li
+              {
+                  display: inline;
+                  margin: 0 5px;
+              }
+          
+              .PagedList-currentPage { font-weight: bold; }
+              .PagedList-currentPage a { color: Black; }
+            </style>
+            @Html.PagedListPager(Model, Model.PagingFunction, PagedListRenderOptions.OnlyShowFivePagesAtATime)
         </td>
     </tr>
+</table>
+}
+else
+{
+    <p>Your search returned no results.</p>
 }
 
-</table>
 
 <script type="text/javascript" language="javascript">
     function CheckDelete(ref) {

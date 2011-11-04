@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 using GiveCRM.Models;
 using GiveCRM.Web.Models.Members;
 using GiveCRM.Web.Services;
@@ -83,11 +84,23 @@ namespace GiveCRM.Web.Controllers
         {
             if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
             {
+                model.Results = new PagedMemberListViewModel(_memberService.All().ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize), 
+                                                             page => Url.Action("Index", new RouteValueDictionary
+                                                             {
+                                                                 {"Page", page}
+                                                             }));
                 return View(model);
             }
 
             var results = _memberService.Search(model.Name, model.PostCode, model.Reference);
-            model.Results = results.ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize);
+            model.Results = new PagedMemberListViewModel(results.ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize),
+                                                         page => Url.Action("Index", new RouteValueDictionary
+                                                         {
+                                                             {"Page", page},
+                                                             {"Name", model.Name},
+                                                             {"PostCode", model.PostCode},
+                                                             {"Reference", model.Reference}
+                                                         }));
 
             return View(model);
         }
