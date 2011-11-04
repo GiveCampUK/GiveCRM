@@ -38,9 +38,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="MvcContrib.TestHelper">
       <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.90.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
@@ -65,6 +62,7 @@
     <Compile Include="controllers\AccountController.Tests.cs" />
     <Compile Include="controllers\CampaignController.Tests.cs" />
     <Compile Include="controllers\DonationController.Tests.cs" />
+    <Compile Include="controllers\ExcelImportController_Upload_Should.cs" />
     <Compile Include="controllers\HomeController.Tests.cs" />
     <Compile Include="controllers\MemberController.Tests.cs" />
     <Compile Include="controllers\SetUpController.Tests.cs" />
