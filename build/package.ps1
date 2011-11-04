@@ -10,7 +10,8 @@ Framework "4.0"
 $base_dir = resolve-path .
 $package_dir = "$base_dir\..\package\"
 $src_folder = "$base_dir\..\src"
-$web_package_location = "$src_folder\GiveCRM.Web\obj\$configuration\Package\PackageTmp"
+$web_package_location = "$src_folder\GiveCRM.Web\obj"
+$web_package_location_cont = "$configuration\Package\PackageTmp"
 
 task default -depends Package
 
@@ -19,6 +20,6 @@ task Clean {
 }
 
 task Package -depends Clean {
-    move_package $web_package_location $package_dir
+    move_package "$web_package_location\$web_package_location_cont" $package_dir
     clean_up_pdb_files $package_dir
 }
