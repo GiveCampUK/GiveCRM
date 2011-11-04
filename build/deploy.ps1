@@ -4,6 +4,7 @@
 
 #Loading external functions file
 .\functions.ps1
+$base_dir = resolve-path .
 $package_dir = "$base_dir\..\package\"
 $src_folder = "$base_dir\..\src"
 
