@@ -1,14 +1,11 @@
+
+####THIS RUNS THE BUILD
 import-module .\psake\psake.psm1
+invoke-psake ./build.ps1 -properties @ {configuration = "release"} 
+remove-module psake
 
-properties {
-	$Configuration = "release"
-	$run_type = "build"
-}
 
-switch($run_type)
-{
-	"deploy" { Invoke-psake ./deloy.ps1 }
-	default { Invoke-psake ./build.ps1 $Configuration }
-}
-
+####THIS RUNS THE DEPLOYMENT
+import-module .\psake\psake.psm1
+invoke-psake ./deploy.ps1
 remove-module psake
