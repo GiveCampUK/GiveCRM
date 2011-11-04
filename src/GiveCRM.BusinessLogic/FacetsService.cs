@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using GiveCRM.DataAccess;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services
+namespace GiveCRM.BusinessLogic
 {
-    public class FacetsService: IFacetsService
+    internal class FacetsService : IFacetsService
     {
         private readonly Facets _facetsDb = new Facets();
 

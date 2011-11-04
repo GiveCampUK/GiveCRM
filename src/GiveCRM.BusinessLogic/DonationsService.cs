@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.DataAccess;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services
+namespace GiveCRM.BusinessLogic
 {
-    public class DonationsService : IDonationsService
+    internal class DonationsService : IDonationsService
     {
         private Donations _donationsDb = new Donations();
 

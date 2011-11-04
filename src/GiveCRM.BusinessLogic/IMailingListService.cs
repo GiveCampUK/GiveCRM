@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services
+namespace GiveCRM.BusinessLogic
 {
     public interface IMailingListService
     {

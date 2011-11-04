@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services.ExcelImport
+namespace GiveCRM.BusinessLogic.ExcelImport
 {
-    public class MemberFactory : IMemberFactory
+    internal class MemberFactory : IMemberFactory
     {
         #region Implementation of IMemberFactory
 

@@ -1,4 +1,4 @@
-﻿namespace GiveCRM.Web.Services
+﻿namespace GiveCRM.BusinessLogic
 {
     public interface IMembershipService
     {

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GiveCRM.ImportExport;
 using GiveCRM.ImportExport.Cells;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services
+namespace GiveCRM.BusinessLogic
 {
-    public class MailingListService : IMailingListService
+    internal class MailingListService : IMailingListService
     {
         private readonly IExcelExport _excelExport;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GiveCRM.Models;
 
-namespace GiveCRM.Web.Services
+namespace GiveCRM.BusinessLogic
 {
     public interface IFacetsService
     {
