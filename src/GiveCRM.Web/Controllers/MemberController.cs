@@ -84,25 +84,26 @@ namespace GiveCRM.Web.Controllers
         {
             if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
             {
-                model.Results = new PagedMemberListViewModel(_memberService.All().ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize), 
-                                                             page => Url.Action("Index", new RouteValueDictionary
-                                                             {
-                                                                 {"Page", page}
-                                                             }));
+                model.Results = CreatePagedListOfSearchResults(_memberService.All(), model);
                 return View(model);
             }
 
-            var results = _memberService.Search(model.Name, model.PostCode, model.Reference);
-            model.Results = new PagedMemberListViewModel(results.ToPagedList(pageNumber: model.Page ?? 1, pageSize: DefaultPageSize),
-                                                         page => Url.Action("Index", new RouteValueDictionary
-                                                         {
-                                                             {"Page", page},
-                                                             {"Name", model.Name},
-                                                             {"PostCode", model.PostCode},
-                                                             {"Reference", model.Reference}
-                                                         }));
+            var searchResults = _memberService.Search(model.Name, model.PostCode, model.Reference);
+            model.Results = CreatePagedListOfSearchResults(searchResults, model);
 
             return View(model);
+        }
+
+        private PagedMemberListViewModel CreatePagedListOfSearchResults(IEnumerable<Member> searchResults, MemberSearchViewModel viewModel)
+        {
+            return new PagedMemberListViewModel(searchResults.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
+                                                page => Url.Action("Index", new RouteValueDictionary
+                                                                                {
+                                                                                    {"Page", page},
+                                                                                    {"Name", viewModel.Name},
+                                                                                    {"PostCode", viewModel.PostCode},
+                                                                                    {"Reference", viewModel.Reference}
+                                                                                }));
         }
 
         public ActionResult AjaxSearch(string criteria)
