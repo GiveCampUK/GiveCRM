@@ -84,19 +84,19 @@ namespace GiveCRM.Web.Controllers
         {
             if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
             {
-                model.Results = CreatePagedListOfSearchResults(_memberService.All(), model);
+                model.Results = CreatePagedListOfMembers(_memberService.All(), model);
                 return View(model);
             }
 
             var searchResults = _memberService.Search(model.Name, model.PostCode, model.Reference);
-            model.Results = CreatePagedListOfSearchResults(searchResults, model);
+            model.Results = CreatePagedListOfMembers(searchResults, model);
 
             return View(model);
         }
 
-        private PagedMemberListViewModel CreatePagedListOfSearchResults(IEnumerable<Member> searchResults, MemberSearchViewModel viewModel)
+        private PagedMemberListViewModel CreatePagedListOfMembers(IEnumerable<Member> memberList, MemberSearchViewModel viewModel)
         {
-            return new PagedMemberListViewModel(searchResults.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
+            return new PagedMemberListViewModel(memberList.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
                                                 page => Url.Action("Index", new RouteValueDictionary
                                                                                 {
                                                                                     {"Page", page},
