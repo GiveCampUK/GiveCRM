@@ -28,4 +28,5 @@ src/GiveCRM.Database/sql/release
 team.txt
 *.orig
 
-package
+packages
+!/src/packages/repositories.config
