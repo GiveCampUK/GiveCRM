@@ -1,121 +1,120 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using System.Web.Routing;
-using GiveCRM.Models;
-using GiveCRM.Web.Models.Members;
-using GiveCRM.Web.Services;
+﻿using System.Web.Routing;
 using PagedList;
 
 namespace GiveCRM.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using GiveCRM.Models;
+    using GiveCRM.Web.Models.Members;
+    using GiveCRM.Web.Services;
+
     public class MemberController : Controller
     {
-        private IDonationsService _donationsService;
-        private IMemberService _memberService;
-        private ICampaignService _campaignService;
-        private const int DefaultPageSize = 25;
+        private const int MaxResults = 25;
+
+        private IDonationsService donationsService;
+        private IMemberService memberService;
+        private ICampaignService campaignService;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
-            _donationsService = donationsService;
-            _memberService = memberService;
-            _campaignService = campaignService;
+            this.donationsService = donationsService;
+            this.memberService = memberService;
+            this.campaignService = campaignService;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult Add()
         {
             ViewBag.Title = "Add Member"; 
             return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             ViewBag.Title = "Edit Member";
-            var model = _memberService.Get(id);
-            if(model.PhoneNumbers == null) 
-               model.PhoneNumbers = new List<PhoneNumber>(); 
+            var model = this.memberService.Get(id);
+            if (model.PhoneNumbers == null)
+            {
+                model.PhoneNumbers = new List<PhoneNumber>();
+            }
+
             return View(viewName: "Add", model: MemberEditViewModel.ToViewModel(model));
         }
 
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            var member = _memberService.Get(id);
+            var member = this.memberService.Get(id);
 
-            _memberService.Delete(member); 
+            this.memberService.Delete(member); 
 
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Donate(int id)
         {
-            ViewBag.MemberName = _memberService.Get(id).ToString();
+            ViewBag.MemberName = this.memberService.Get(id).ToString();
 
-            ViewBag.Campaigns = _campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+            ViewBag.Campaigns = this.campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             return View(new Donation { MemberId = id });
         }
 
+        [HttpGet]
         public ActionResult SaveDonation(Donation donation)
         {
-            _donationsService.QuickDonation(donation);
+            this.donationsService.QuickDonation(donation);
 
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Save(MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
                 return View(viewName: "Add", model: member);
+            }
 
-            _memberService.Save(member.ToModel()); 
+            this.memberService.Save(member.ToModel()); 
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Search(MemberSearchViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Search(string name, string postcode, string reference, int start = 0)
         {
-            if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
-            {
-                model.Results = CreatePagedListOfMembers(_memberService.All(), model);
-                return View(model);
-            }
+            var results = this.memberService.Search(name, postcode, reference);
 
-            var searchResults = _memberService.Search(model.Name, model.PostCode, model.Reference);
-            model.Results = CreatePagedListOfMembers(searchResults, model);
-
-            return View(model);
-        }
-
-        private PagedMemberListViewModel CreatePagedListOfMembers(IEnumerable<Member> memberList, MemberSearchViewModel viewModel)
-        {
-            return new PagedMemberListViewModel(memberList.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
-                                                page => Url.Action("Index", new RouteValueDictionary
-                                                                                {
-                                                                                    {"Page", page},
-                                                                                    {"Name", viewModel.Name},
-                                                                                    {"PostCode", viewModel.PostCode},
-                                                                                    {"Reference", viewModel.Reference}
-                                                                                }));
+            return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
 
         public ActionResult AjaxSearch(string criteria)
         {
-            var results = _memberService.Search(criteria);
+            var results = this.memberService.Search(criteria);
 
-            return View(results.Take(DefaultPageSize));
+            return View(results.Take(MaxResults));
         }
 
+        [HttpGet]
         public ActionResult TopDonors()
         {
-            var members = _memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
+            var members = this.memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
             return View("MembersList", members);
         }

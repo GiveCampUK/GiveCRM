@@ -1,9 +1,11 @@
-﻿using System.Web.Mvc;
-
+﻿
 namespace GiveCRM.Web.Controllers
 {
+    using System.Web.Mvc;
+
     public class HomeController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to GiveCMS!";
@@ -11,6 +13,7 @@ namespace GiveCRM.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult About()
         {
             return View();
