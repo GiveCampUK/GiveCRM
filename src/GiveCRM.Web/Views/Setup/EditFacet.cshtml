@@ -7,7 +7,7 @@
 <h2>@pageTitle</h2>
 <div>
 @{Html.BeginForm("SaveFacet", "Setup", FormMethod.Post);}
-
+@Html.AntiForgeryToken()
 @Html.HiddenFor(f => f.Id)
 @Html.TextBoxFor(f => f.Name)
 

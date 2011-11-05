@@ -1,11 +1,11 @@
-﻿using System;
-using System.Web.Mvc;
-using System.Web.Security;
-using GiveCRM.Web.Models;
-using GiveCRM.Web.Services;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
+    using System;
+    using System.Web.Mvc;
+
+    using GiveCRM.Web.Models;
+    using GiveCRM.Web.Services;
+
     public class AccountController : Controller
     {
         private IMembershipService membershipService;
@@ -19,29 +19,23 @@ namespace GiveCRM.Web.Controllers
             this.urlValidationService = urlValidationService;
         }
 
-
-        //
-        // GET: /Account/LogOn
-
+        [HttpGet]
         public ActionResult LogOn()
         {
             return View();
         }
 
-        //
-        // POST: /Account/LogOn
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
-            {
-                
-                if(membershipService.ValidateUser(model.UserName,model.Password))
+            {                
+                if (this.membershipService.ValidateUser(model.UserName, model.Password))
                 {
-                    authenticationService.SetAuthorizationCredentials(model.UserName,model.RememberMe);
+                    this.authenticationService.SetAuthorizationCredentials(model.UserName, model.RememberMe);
                     
-                    if(urlValidationService.IsRedirectable(this,returnUrl))
+                    if (this.urlValidationService.IsRedirectable(this, returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
@@ -52,7 +46,7 @@ namespace GiveCRM.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                 }
             }
 
@@ -60,39 +54,33 @@ namespace GiveCRM.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/LogOff
-
+        [HttpGet]
         public ActionResult LogOff()
         {
-            authenticationService.SignOut();
+            this.authenticationService.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Register
-
+        [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                var error = string.Empty;
-                if (membershipService.CreateUser(model.UserName,model.Password,model.Email,out error))
+                string error;
+                if (this.membershipService.CreateUser(model.UserName, model.Password,model.Email, out error))
                 {
-                    authenticationService.SetAuthorizationCredentials(model.UserName,false);
+                    this.authenticationService.SetAuthorizationCredentials(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
                 
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(string.Empty, error);
                 
             }
 
@@ -100,20 +88,17 @@ namespace GiveCRM.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ChangePassword
 
         [Authorize]
+        [HttpGet]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
-        // POST: /Account/ChangePassword
-
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
@@ -125,7 +110,7 @@ namespace GiveCRM.Web.Controllers
                 try
                 {
                     string username = User == null ? string.Empty : User.Identity.Name;
-                    changePasswordSucceeded = membershipService.ChangePassword(username, model.OldPassword, model.NewPassword);
+                    changePasswordSucceeded = this.membershipService.ChangePassword(username, model.OldPassword, model.NewPassword);
                 }
                 catch (Exception)
                 {
@@ -138,7 +123,7 @@ namespace GiveCRM.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    ModelState.AddModelError(string.Empty, "The current password is incorrect or the new password is invalid.");
                 }
             }
 
@@ -146,14 +131,10 @@ namespace GiveCRM.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/ChangePasswordSuccess
-
+        [HttpGet]
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
-
-        
     }
 }
