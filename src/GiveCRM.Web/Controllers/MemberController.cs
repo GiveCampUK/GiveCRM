@@ -1,103 +1,120 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using GiveCRM.Models;
-using GiveCRM.Web.Models.Members;
-using GiveCRM.Web.Services;
+﻿using System.Web.Routing;
+using PagedList;
 
 namespace GiveCRM.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+
+    using GiveCRM.Models;
+    using GiveCRM.Web.Models.Members;
+    using GiveCRM.Web.Services;
+
     public class MemberController : Controller
     {
         private const int MaxResults = 25;
 
-        private IDonationsService _donationsService;
-        private IMemberService _memberService;
-        private ICampaignService _campaignService;
+        private IDonationsService donationsService;
+        private IMemberService memberService;
+        private ICampaignService campaignService;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
-            _donationsService = donationsService;
-            _memberService = memberService;
-            _campaignService = campaignService;
+            this.donationsService = donationsService;
+            this.memberService = memberService;
+            this.campaignService = campaignService;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult Add()
         {
             ViewBag.Title = "Add Member"; 
             return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             ViewBag.Title = "Edit Member";
-            var model = _memberService.Get(id);
-            if(model.PhoneNumbers == null) 
-               model.PhoneNumbers = new List<PhoneNumber>(); 
+            var model = this.memberService.Get(id);
+            if (model.PhoneNumbers == null)
+            {
+                model.PhoneNumbers = new List<PhoneNumber>();
+            }
+
             return View(viewName: "Add", model: MemberEditViewModel.ToViewModel(model));
         }
 
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            var member = _memberService.Get(id);
+            var member = this.memberService.Get(id);
 
-            _memberService.Delete(member); 
+            this.memberService.Delete(member); 
 
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Donate(int id)
         {
-            ViewBag.MemberName = _memberService.Get(id).ToString();
+            ViewBag.MemberName = this.memberService.Get(id).ToString();
 
-            ViewBag.Campaigns = _campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+            ViewBag.Campaigns = this.campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             return View(new Donation { MemberId = id });
         }
 
+        [HttpGet]
         public ActionResult SaveDonation(Donation donation)
         {
-            _donationsService.QuickDonation(donation);
+            this.donationsService.QuickDonation(donation);
 
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Save(MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
                 return View(viewName: "Add", model: member);
+            }
 
-            _memberService.Save(member.ToModel()); 
+            this.memberService.Save(member.ToModel()); 
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Search(string name, string postcode, string reference, int start = 0)
         {
-            var results = _memberService.Search(name, postcode, reference);
+            var results = this.memberService.Search(name, postcode, reference);
 
             return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
         }
 
-        [HttpGet]
         public ActionResult AjaxSearch(string criteria)
         {
-            var results = _memberService.Search(criteria);
+            var results = this.memberService.Search(criteria);
 
-            return View(results.Take(10));
+            return View(results.Take(MaxResults));
         }
 
+        [HttpGet]
         public ActionResult TopDonors()
         {
-            var members = _memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
+            var members = this.memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
             return View("MembersList", members);
         }

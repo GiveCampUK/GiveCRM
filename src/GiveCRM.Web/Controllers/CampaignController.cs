@@ -1,42 +1,48 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Infrastructure;
-using GiveCRM.Web.Models.Campaigns;
-using GiveCRM.Web.Models.Search;
-using GiveCRM.Web.Properties;
-using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web.Mvc;
+    
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Infrastructure;
+    using GiveCRM.Web.Models.Campaigns;
+    using GiveCRM.Web.Models.Search;
+    using GiveCRM.Web.Properties;
+    using GiveCRM.Web.Services;
+
     public class CampaignController : Controller
     {
-        private readonly IMailingListService _mailingListService;
-        private readonly ISearchService _searchService;
-        private readonly ICampaignService _campaignService;
-        private readonly IMemberSearchFilterService _memberSearchFilterService;
-        private readonly IMemberService _memberService;
+        private readonly IMailingListService mailingListService;
+        private readonly ISearchService searchService;
+        private readonly ICampaignService campaignService;
+        private readonly IMemberSearchFilterService memberSearchFilterService;
+        private readonly IMemberService memberService;
         private readonly CampaignRuns campaignRuns = new CampaignRuns();
         
-        public CampaignController(IMailingListService mailingListService, ISearchService searchService, 
-            ICampaignService campaignService, IMemberSearchFilterService memberSearchFilterService,
+        public CampaignController(
+            IMailingListService mailingListService, 
+            ISearchService searchService, 
+            ICampaignService campaignService, 
+            IMemberSearchFilterService memberSearchFilterService,
             IMemberService memberService)
         {
-            _mailingListService = mailingListService;
-            _searchService = searchService;
-            _campaignService = campaignService;
-            _memberSearchFilterService = memberSearchFilterService;
-            _memberService = memberService;
+            this.mailingListService = mailingListService;
+            this.searchService = searchService;
+            this.campaignService = campaignService;
+            this.memberSearchFilterService = memberSearchFilterService;
+            this.memberService = memberService;
         }
 
+        [HttpGet]
         public ActionResult Index(bool showClosed = false)
         {
-            IEnumerable<Campaign> campaigns = showClosed ? _campaignService.AllClosed() : _campaignService.AllOpen();
+            IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.AllClosed() : this.campaignService.AllOpen();
 
             string title, linkText;
 
@@ -79,29 +85,30 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Campaign campaign)
         {
-            var newId = InsertCampaign(campaign);
+            var newId = this.InsertCampaign(campaign);
             return RedirectToAction("Show", new { id = newId });
         }
 
         private int InsertCampaign(Campaign campaign)
         {
-            var savedCampaign = _campaignService.Insert(campaign);
+            var savedCampaign = this.campaignService.Insert(campaign);
             return savedCampaign.Id;
         }
 
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var campaign = _campaignService.Get(id);
+            var campaign = this.campaignService.Get(id);
 
-            var applicableMembers = _searchService.RunCampaign(id);
+            var applicableMembers = this.searchService.RunCampaign(id);
 
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = _memberSearchFilterService.ForCampaign(id).Select(
+                                SearchFilters = this.memberSearchFilterService.ForCampaign(id).Select(
                                 m =>
                                     new MemberSearchFilterViewModel
                                         {
@@ -123,19 +130,20 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Show(CampaignShowViewModel campaignViewModel)
         {
             var campaign = campaignViewModel.Campaign;
-            _campaignService.Update(campaign);
+            this.campaignService.Update(campaign);
             return RedirectToAction("Show", new { id = campaign.Id });
         }
 
         [HttpGet]
         public ActionResult AddMembershipSearchFilter(int campaignId)
         {
-            var emptySearchCriteria = _searchService.GetEmptySearchCriteria();
+            var emptySearchCriteria = this.searchService.GetEmptySearchCriteria();
             var criteriaNames = emptySearchCriteria.Select(c => c.DisplayName);
-            var searchOperators = ((SearchOperator[])Enum.GetValues(typeof(SearchOperator)));
+            var searchOperators = (SearchOperator[])Enum.GetValues(typeof(SearchOperator));
 
             var model = new AddSearchFilterViewModel(Resources.Literal_AddSearchFilter)
                             {
@@ -147,9 +155,10 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddMembershipSearchFilter(AddSearchFilterViewModel viewModel)
         {
-            var searchCriteria = _searchService.GetEmptySearchCriteria();
+            var searchCriteria = this.searchService.GetEmptySearchCriteria();
 
             // we have to find one
             var searchCriterion = searchCriteria.First(c => c.DisplayName == viewModel.CriteriaName);
@@ -163,21 +172,21 @@ namespace GiveCRM.Web.Controllers
                                                  SearchOperator = (int)viewModel.SearchOperator,
                                                  Value = viewModel.Value
                                              };
-            _memberSearchFilterService.Insert(memberSearchFilter);
+            this.memberSearchFilterService.Insert(memberSearchFilter);
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
         [HttpGet]
         public ActionResult DeleteMemberSearchFilter(int campaignId, int memberSearchFilterId)
         {
-            _memberSearchFilterService.Delete(memberSearchFilterId);
+            this.memberSearchFilterService.Delete(memberSearchFilterId);
             return RedirectToAction("Show", new { id = campaignId });
         }
 
         [HttpGet]
         public ActionResult CloseCampaign(int campaignId)
         {
-            var campaign = _campaignService.Get(campaignId);
+            var campaign = this.campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CloseCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -187,18 +196,19 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CloseCampaign(SimpleCampaignViewModel viewModel)
         {
-            var campaign = _campaignService.Get(viewModel.CampaignId);
+            var campaign = this.campaignService.Get(viewModel.CampaignId);
             campaign.IsClosed = "Y";
-            _campaignService.Update(campaign);
+            this.campaignService.Update(campaign);
             return RedirectToAction("Index", new { showClosed = true });
         }
 
         [HttpGet]
         public ActionResult CommitCampaign(int campaignId)
         {
-            var campaign = _campaignService.Get(campaignId);
+            var campaign = this.campaignService.Get(campaignId);
             var viewModel = new SimpleCampaignViewModel(Resources.Literal_CommitCampaign)
                                 {
                                     CampaignId = campaignId,
@@ -208,20 +218,22 @@ namespace GiveCRM.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
-            campaignRuns.Commit(viewModel.CampaignId);
+            this.campaignRuns.Commit(viewModel.CampaignId);
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
+        [HttpGet]
         public FileResult DownloadMailingList(int id)
         {
-            var members = _memberService.FromCampaignRun(id);
+            var members = this.memberService.FromCampaignRun(id);
 
             byte[] filecontent;
             using (var stream = new MemoryStream())
             {
-                _mailingListService.WriteToStream(members, stream, OutputFormat.XLS);
+                this.mailingListService.WriteToStream(members, stream, OutputFormat.XLS);
                 filecontent = stream.ToArray();
             }
 
@@ -231,7 +243,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Clone(int id)
         {
-            var campaign = _campaignService.Get(id);
+            var campaign = this.campaignService.Get(id);
             var campaignClone = new Campaign
                                          {
                                              Id = 0,
@@ -241,13 +253,13 @@ namespace GiveCRM.Web.Controllers
                                              RunOn = null
                                          };
 
-            campaignClone = _campaignService.Insert(campaignClone);
+            campaignClone = this.campaignService.Insert(campaignClone);
 
-            IEnumerable<MemberSearchFilter> memberSearchFilters = _memberSearchFilterService.ForCampaign(id);
+            IEnumerable<MemberSearchFilter> memberSearchFilters = this.memberSearchFilterService.ForCampaign(id);
 
             foreach (MemberSearchFilter memberSearchFilter in memberSearchFilters)
             {
-                _memberSearchFilterService.Insert(new MemberSearchFilter
+                this.memberSearchFilterService.Insert(new MemberSearchFilter
                                                   {
                                                       CampaignId = campaignClone.Id,
                                                       DisplayName = memberSearchFilter.DisplayName,

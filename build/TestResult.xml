@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Projects\GiveCRM\src\GiveCRM.DataAccess.Test\bin\Release\GiveCRM.DataAccess.Test.dll" total="20" errors="3" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2011-11-02" time="23:25:07">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.4963" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\Projects\GiveCRM\build" machine-name="STACK-LP" user="stack" user-domain="stack-LP" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Projects\GiveCRM\src\GiveCRM.DataAccess.Test\bin\Release\GiveCRM.DataAccess.Test.dll" executed="True" result="Failure" success="False" time="4.484" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="GiveCRM" executed="True" result="Failure" success="False" time="4.476" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="DataAccess" executed="True" result="Failure" success="False" time="4.475" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Test" executed="True" result="Failure" success="False" time="4.475" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="CampaignsTest" executed="True" result="Success" success="True" time="2.303" asserts="0">
+                    <results>
+                      <test-case name="GiveCRM.DataAccess.Test.CampaignsTest.InsertCampaign" executed="True" result="Success" success="True" time="1.244" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="FacetsTest" executed="True" result="Success" success="True" time="0.926" asserts="0">
+                    <results>
+                      <test-case name="GiveCRM.DataAccess.Test.FacetsTest.AllFacets" executed="True" result="Success" success="True" time="0.559" asserts="13" />
+                      <test-case name="GiveCRM.DataAccess.Test.FacetsTest.GetListFacet" executed="True" result="Success" success="True" time="0.184" asserts="10" />
+                      <test-case name="GiveCRM.DataAccess.Test.FacetsTest.InsertFreeTextFacet" executed="True" result="Success" success="True" time="0.100" asserts="3" />
+                      <test-case name="GiveCRM.DataAccess.Test.FacetsTest.InsertListFacet" executed="True" result="Success" success="True" time="0.079" asserts="10" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="MemberFacetsTest" executed="True" result="Success" success="True" time="0.661" asserts="0">
+                    <results>
+                      <test-case name="GiveCRM.DataAccess.Test.MemberFacetsTest.AllMemberFacets" executed="True" result="Success" success="True" time="0.392" asserts="3" />
+                      <test-case name="GiveCRM.DataAccess.Test.MemberFacetsTest.InsertMemberFacetFreeText" executed="True" result="Success" success="True" time="0.141" asserts="3" />
+                      <test-case name="GiveCRM.DataAccess.Test.MemberFacetsTest.InsertMemberFacetList" executed="True" result="Success" success="True" time="0.126" asserts="5" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="MembersTest" executed="True" result="Failure" success="False" time="0.363" asserts="0">
+                    <results>
+                      <test-case name="GiveCRM.DataAccess.Test.MembersTest.All" executed="True" result="Error" success="False" time="0.147" asserts="0">
+                        <failure>
+                          <message><![CDATA[Simple.Data.UnresolvableObjectException : Column not found
+  ----> Simple.Data.UnresolvableObjectException : Exception of type 'Simple.Data.UnresolvableObjectException' was thrown.]]></message>
+                          <stack-trace><![CDATA[at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+at Simple.Data.Ado.BulkInserterHelper.InsertRow(IDictionary`2 row, IDbCommand insertCommand, IDbCommand selectCommand)
+at Simple.Data.Ado.BulkInserterTransactionHelper.<>c__DisplayClass1.<InsertRowsWithSeparateStatements>b__0(IDictionary`2 row)
+at System.Linq.Enumerable.WhereSelectListIterator`2.MoveNext()
+at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+at Simple.Data.Ado.BulkInserterTransactionHelper.InsertRowsWithSeparateStatements(String insertSql, String selectSql)
+at Simple.Data.Ado.BulkInserter.InsertRowsAndReturn(AdoAdapter adapter, String identityFunction, BulkInserterHelper helper, String insertSql, Table table)
+at Simple.Data.Ado.BulkInserter.Insert(AdoAdapter adapter, String tableName, IEnumerable`1 data, IDbTransaction transaction)
+at Simple.Data.Ado.AdoAdapterInserter.InsertMany(String tableName, IEnumerable`1 data)
+at Simple.Data.Ado.AdoAdapter.InsertMany(String tableName, IEnumerable`1 data, IAdapterTransaction transaction)
+at Simple.Data.SimpleTransaction.Insert(String tableName, IEnumerable`1 data)
+at Simple.Data.Commands.InsertCommand.InsertEntity(Object entity, DataStrategy dataStrategy, String tableName)
+at Simple.Data.Commands.InsertCommand.Execute(DataStrategy dataStrategy, DynamicTable table, InvokeMemberBinder binder, Object[] args)
+at Simple.Data.DynamicTable.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at Simple.Data.ObjectReference.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at CallSite.Target(Closure , CallSite , Object , ICollection`1 )
+at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
+at GiveCRM.DataAccess.Members.InsertWithPhoneNumbers(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 133
+at GiveCRM.DataAccess.Members.Insert(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 108
+at GiveCRM.DataAccess.Test.MembersTest.All() in c:\Projects\GiveCRM\src\GiveCRM.DataAccess.Test\MembersTest.cs:line 94
+--UnresolvableObjectException
+at Simple.Data.Ado.Schema.ColumnCollection.Find(String columnName)
+at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="GiveCRM.DataAccess.Test.MembersTest.Get" executed="True" result="Error" success="False" time="0.073" asserts="0">
+                        <failure>
+                          <message><![CDATA[Simple.Data.UnresolvableObjectException : Column not found
+  ----> Simple.Data.UnresolvableObjectException : Exception of type 'Simple.Data.UnresolvableObjectException' was thrown.]]></message>
+                          <stack-trace><![CDATA[at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+at Simple.Data.Ado.BulkInserterHelper.InsertRow(IDictionary`2 row, IDbCommand insertCommand, IDbCommand selectCommand)
+at Simple.Data.Ado.BulkInserterTransactionHelper.<>c__DisplayClass1.<InsertRowsWithSeparateStatements>b__0(IDictionary`2 row)
+at System.Linq.Enumerable.WhereSelectListIterator`2.MoveNext()
+at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+at Simple.Data.Ado.BulkInserterTransactionHelper.InsertRowsWithSeparateStatements(String insertSql, String selectSql)
+at Simple.Data.Ado.BulkInserter.InsertRowsAndReturn(AdoAdapter adapter, String identityFunction, BulkInserterHelper helper, String insertSql, Table table)
+at Simple.Data.Ado.BulkInserter.Insert(AdoAdapter adapter, String tableName, IEnumerable`1 data, IDbTransaction transaction)
+at Simple.Data.Ado.AdoAdapterInserter.InsertMany(String tableName, IEnumerable`1 data)
+at Simple.Data.Ado.AdoAdapter.InsertMany(String tableName, IEnumerable`1 data, IAdapterTransaction transaction)
+at Simple.Data.SimpleTransaction.Insert(String tableName, IEnumerable`1 data)
+at Simple.Data.Commands.InsertCommand.InsertEntity(Object entity, DataStrategy dataStrategy, String tableName)
+at Simple.Data.Commands.InsertCommand.Execute(DataStrategy dataStrategy, DynamicTable table, InvokeMemberBinder binder, Object[] args)
+at Simple.Data.DynamicTable.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at Simple.Data.ObjectReference.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at CallSite.Target(Closure , CallSite , Object , ICollection`1 )
+at GiveCRM.DataAccess.Members.InsertWithPhoneNumbers(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 133
+at GiveCRM.DataAccess.Members.Insert(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 108
+at GiveCRM.DataAccess.Test.MembersTest.Get() in c:\Projects\GiveCRM\src\GiveCRM.DataAccess.Test\MembersTest.cs:line 66
+--UnresolvableObjectException
+at Simple.Data.Ado.Schema.ColumnCollection.Find(String columnName)
+at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                      <test-case name="GiveCRM.DataAccess.Test.MembersTest.InsertMember" executed="True" result="Success" success="True" time="0.059" asserts="1" />
+                      <test-case name="GiveCRM.DataAccess.Test.MembersTest.InsertMemberWithPhoneNumber" executed="True" result="Error" success="False" time="0.064" asserts="0">
+                        <failure>
+                          <message><![CDATA[Simple.Data.UnresolvableObjectException : Column not found
+  ----> Simple.Data.UnresolvableObjectException : Exception of type 'Simple.Data.UnresolvableObjectException' was thrown.]]></message>
+                          <stack-trace><![CDATA[at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+at Simple.Data.Ado.BulkInserterHelper.InsertRow(IDictionary`2 row, IDbCommand insertCommand, IDbCommand selectCommand)
+at Simple.Data.Ado.BulkInserterTransactionHelper.<>c__DisplayClass1.<InsertRowsWithSeparateStatements>b__0(IDictionary`2 row)
+at System.Linq.Enumerable.WhereSelectListIterator`2.MoveNext()
+at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+at Simple.Data.Ado.BulkInserterTransactionHelper.InsertRowsWithSeparateStatements(String insertSql, String selectSql)
+at Simple.Data.Ado.BulkInserter.InsertRowsAndReturn(AdoAdapter adapter, String identityFunction, BulkInserterHelper helper, String insertSql, Table table)
+at Simple.Data.Ado.BulkInserter.Insert(AdoAdapter adapter, String tableName, IEnumerable`1 data, IDbTransaction transaction)
+at Simple.Data.Ado.AdoAdapterInserter.InsertMany(String tableName, IEnumerable`1 data)
+at Simple.Data.Ado.AdoAdapter.InsertMany(String tableName, IEnumerable`1 data, IAdapterTransaction transaction)
+at Simple.Data.SimpleTransaction.Insert(String tableName, IEnumerable`1 data)
+at Simple.Data.Commands.InsertCommand.InsertEntity(Object entity, DataStrategy dataStrategy, String tableName)
+at Simple.Data.Commands.InsertCommand.Execute(DataStrategy dataStrategy, DynamicTable table, InvokeMemberBinder binder, Object[] args)
+at Simple.Data.DynamicTable.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at Simple.Data.ObjectReference.TryInvokeMember(InvokeMemberBinder binder, Object[] args, Object& result)
+at CallSite.Target(Closure , CallSite , Object , ICollection`1 )
+at GiveCRM.DataAccess.Members.InsertWithPhoneNumbers(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 133
+at GiveCRM.DataAccess.Members.Insert(Member member) in c:\Projects\GiveCRM\src\GiveCRM.DataAccess\Members.cs:line 108
+at GiveCRM.DataAccess.Test.MembersTest.InsertMemberWithPhoneNumber() in c:\Projects\GiveCRM\src\GiveCRM.DataAccess.Test\MembersTest.cs:line 139
+--UnresolvableObjectException
+at Simple.Data.Ado.Schema.ColumnCollection.Find(String columnName)
+at Simple.Data.Ado.Schema.Table.FindColumn(String columnName)
+]]></stack-trace>
+                        </failure>
+                      </test-case>
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="SearchTest" executed="True" result="Success" success="True" time="0.203" asserts="0">
+                    <results>
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.Campaign" executed="True" result="Success" success="True" time="0.028" asserts="7" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.DonationOnIndividualDonation" executed="True" result="Success" success="True" time="0.056" asserts="6" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.DonationOnLastDonationDate" executed="True" result="Success" success="True" time="0.041" asserts="8" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.DonationOnTotalDonation" executed="True" result="Success" success="True" time="0.014" asserts="7" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.Facet" executed="True" result="Success" success="True" time="0.040" asserts="16" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.LocationOnCity" executed="True" result="Success" success="True" time="0.013" asserts="4" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.LocationOnPartialPostalCode" executed="True" result="Success" success="True" time="0.001" asserts="7" />
+                      <test-case name="GiveCRM.DataAccess.Test.SearchTest.LocationOnRegion" executed="True" result="Success" success="True" time="0.003" asserts="4" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

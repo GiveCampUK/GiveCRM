@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using GiveCRM.BusinessLogic.ExcelImport;
-using GiveCRM.Web.Models;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+	using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.Web.Models;
+
     public class ExcelImportController : AsyncController
     {
         private const string ExcelFileExtension_OldFormat = ".xls";
@@ -31,6 +31,7 @@ namespace GiveCRM.Web.Controllers
             this.excelImporter = excelImporter;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
            return View(new ExcelImportViewModel());
@@ -60,6 +61,12 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index", "Member");
         }
 
+        [HttpGet]
+        public ActionResult ImportCompleted(IEnumerable<IDictionary<string, object>> data)
+        {
+            return RedirectToAction("Index", "Member");
+        }
+
         private ActionResult ErrorView(string message)
         {
             ViewBag.Error = message;
@@ -74,24 +81,19 @@ namespace GiveCRM.Web.Controllers
         private void ImportAsync(Stream file)
         {
             AsyncManager.OutstandingOperations.Increment();
-            excelImporter.ImportCompleted += (s, e) =>
+            this.excelImporter.ImportCompleted += (s, e) =>
             {
                 AsyncManager.Parameters["members"] = e.ImportedData;
                 AsyncManager.OutstandingOperations.Decrement();
             };
 
-            excelImporter.ImportFailed += (s, e) =>
+            this.excelImporter.ImportFailed += (s, e) =>
             {
                 AsyncManager.Parameters["exception"] = e.Exception;
                 AsyncManager.OutstandingOperations.Decrement();
             };
 
-            excelImporter.Import(file);
-        }
-
-        public ActionResult ImportCompleted(IEnumerable<IDictionary<string, object>> data)
-        {
-            return RedirectToAction("Index", "Member");
+            this.excelImporter.Import(file);
         }
     }
 }
