@@ -1,30 +1,30 @@
 ﻿using System.Collections.Generic;
-
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-    public class Campaigns
+    public class Campaigns : ICampaignRepository
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
-        public Campaign Get(int id)
+        public Campaign GetById(int id)
         {
             return _db.Campaigns.FindById(id);
         }
 
-        public IEnumerable<Campaign> All()
+        public IEnumerable<Campaign> GetAll()
         {
             return _db.Campaigns.All().OrderByRunOnDescending().Cast<Campaign>();
         }
 
-        public IEnumerable<Campaign> AllOpen()
+        public IEnumerable<Campaign> GetAllOpen()
         {
             return _db.Campaigns.FindAllByIsClosed('N').OrderByRunOnDescending().Cast<Campaign>();
         }
 
-        public IEnumerable<Campaign> AllClosed()
+        public IEnumerable<Campaign> GetAllClosed()
         {
             return _db.Campaigns.FindAllByIsClosed('Y').OrderByRunOnDescending().Cast<Campaign>();
         }

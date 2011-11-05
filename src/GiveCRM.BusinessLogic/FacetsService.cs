@@ -1,32 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
     internal class FacetsService : IFacetsService
     {
-        private readonly Facets _facetsDb = new Facets();
+        private readonly IRepository<Facet> _repository;
+
+        public FacetsService(IRepository<Facet> repository)
+        {
+            if (repository == null)
+            {
+                throw new ArgumentNullException("repository");
+            }
+
+            _repository = repository;
+        }
 
         public IEnumerable<Facet> All()
         {
-            var facets = _facetsDb.All();
+            var facets = _repository.GetAll();
             return facets;
         }
 
         public Facet Get(int id)
         {
-            var facet = _facetsDb.Get(id);
+            var facet = _repository.GetById(id);
             return facet;
         }
 
         public void Insert(Facet facet)
         {
-            _facetsDb.Insert(facet);             
+            _repository.Insert(facet);             
         }
 
         public void Update(Facet facet)
         {
-            _facetsDb.Update(facet);
+            _repository.Update(facet);
         }
     }
 

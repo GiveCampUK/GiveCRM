@@ -49,18 +49,22 @@
     <Compile Include="ExcelImport\ImportDataFailedEventArgs.cs" />
     <Compile Include="ExcelImport\MemberFactory.cs" />
     <Compile Include="FacetsService.cs" />
+    <Compile Include="ICampaignRepository.cs" />
     <Compile Include="ICampaignService.cs" />
+    <Compile Include="IDonationRepository.cs" />
     <Compile Include="IDonationsService.cs" />
     <Compile Include="IFacetsService.cs" />
     <Compile Include="IMailingListService.cs" />
+    <Compile Include="IMemberRepository.cs" />
+    <Compile Include="IMemberSearchFilterRepository.cs" />
     <Compile Include="IMemberSearchFilterService.cs" />
     <Compile Include="IMemberService.cs" />
     <Compile Include="IMembershipService.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="ISearchService.cs" />
     <Compile Include="MailingListService.cs" />
     <Compile Include="MemberSearchFilterService.cs" />
     <Compile Include="MemberService.cs" />
-    <Compile Include="MembershipService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchService.cs" />
   </ItemGroup>

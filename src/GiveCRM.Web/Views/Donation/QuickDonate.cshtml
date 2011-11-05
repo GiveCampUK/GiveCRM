@@ -10,7 +10,7 @@
 <div class="clearfix">
     <label for"CampaignId">Campaign</label>
     <div class="input">
-        @Html.DropDownList("CampaignId", campaignDb.AllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))
+        @Html.DropDownList("CampaignId", campaignDb.GetAllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))
     </div>
 </div>
 

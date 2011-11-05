@@ -4,8 +4,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using GiveCRM.BusinessLogic.ExcelImport;
 using GiveCRM.Web.Models;
-using GiveCRM.Web.Services.ExcelImport;
 
 namespace GiveCRM.Web.Controllers
 {

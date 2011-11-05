@@ -1,31 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class MemberService: IMemberService
+    internal class MemberService : IMemberService
     {
-        private Members _membersDb = new Members();
+        private readonly IMemberRepository _repository;
+
+        public MemberService(IMemberRepository repository)
+        {
+            if (repository == null)
+            {
+                throw new ArgumentNullException("repository");
+            }
+
+            _repository = repository;
+        }
 
         public IEnumerable<Member> All()
         {
-            return _membersDb.All();
+            return _repository.GetAll();
         }
 
         public Member Get(int id)
         {
-            var member = _membersDb.Get(id);
-            return member;
+            return _repository.GetById(id);
         }
 
         public void Update(Member member)
         {
-            _membersDb.Update(member);
+            _repository.Update(member);
         }
 
         public void Insert(Member member)
         {
-            _membersDb.Insert(member);
+            _repository.Insert(member);
         }
 
         public void Save(Member member)
@@ -46,29 +57,26 @@ namespace GiveCRM.BusinessLogic
 
             member.Archived = true;
 
-            _membersDb.Update(member);
+            _repository.Update(member);
         }
 
         public IEnumerable<Member> Search(string name, string postcode, string reference)
         {
-            var members = _membersDb.Search(name, postcode, reference);
+            var members = _repository.Search(name, postcode, reference);
             return members;
         }
 
         public IEnumerable<Member> Search(string criteria)
         {
-            var results = _membersDb
-                .All()
-                .Where(member =>
-                    !member.Archived &&
-                    (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
+            var results = _repository.GetAll()
+                                     .Where(member => !member.Archived && (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
 
             return results;
         }
 
         public IEnumerable<Member> FromCampaignRun(int campaignId)
         {
-            return _membersDb.FromCampaignRun(campaignId);
+            return _repository.GetByCampaignId(campaignId);
         }
 
         private bool NameSearch(Member member, string criteria)
@@ -90,8 +98,5 @@ namespace GiveCRM.BusinessLogic
         {
             return string.Format("{0} {1} {2}", member.Salutation, member.FirstName.Substring(0, 1), member.LastName).ToLower();
         }
-
-
-
     }
 }

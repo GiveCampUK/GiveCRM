@@ -1,27 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
     internal class DonationsService : IDonationsService
     {
-        private Donations _donationsDb = new Donations();
+        private readonly IDonationRepository _repository;
 
-        public  IEnumerable<Donation> GetTopDonations()
+        public DonationsService(IDonationRepository repository)
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Amount).Take(5);
+            if (repository == null)
+            {
+                throw new ArgumentNullException("repository");
+            }
+
+            _repository = repository;
+        }
+
+        public IEnumerable<Donation> GetTopDonations()
+        {
+            var donations = _repository.GetAll().OrderByDescending(d => d.Amount).Take(5);
             return donations;
         }
 
         public IEnumerable<Donation> GetLatestDonations()
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Date).Take(5);
+            var donations = _repository.GetAll().OrderByDescending(d => d.Date).Take(5);
             return donations;
         }
 
         public void QuickDonation(Donation donation)
         {
-            _donationsDb.Insert(donation);
+            _repository.Insert(donation);
         }
     }
 

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-    public class Members
+    public class Members : IMemberRepository
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
-        public Member Get(int id)
+        public Member GetById(int id)
         {
             var record = _db.Members.FindById(id);
             Member member = record;
@@ -19,7 +19,7 @@ namespace GiveCRM.DataAccess
             return member;
         }
 
-        public IEnumerable<Member> All()
+        public IEnumerable<Member> GetAll()
         {
             var query = _db.Members.All().OrderBy(_db.Members.Id);
             return RunMemberQueryWithPhoneNumbers(query);
@@ -47,7 +47,7 @@ namespace GiveCRM.DataAccess
             return query.ToList<Member>(); 
         }
 
-        public IEnumerable<Member> FromCampaignRun(int campaignId)
+        public IEnumerable<Member> GetByCampaignId(int campaignId)
         {
             var query = _db.Members.All()
                 .Where(_db.Members.CampaignRun.CampaignId == campaignId)

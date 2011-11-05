@@ -4,18 +4,18 @@ using GiveCRM.Models.Search;
 
 namespace GiveCRM.BusinessLogic
 {
-    public class SearchService: ISearchService
+    public class SearchService : ISearchService
     {
-        private Search searchRepo = new Search();
+        private readonly Search _repository = new Search();
 
         public IEnumerable<Member> RunCampaign(int campaignId)
         {
-            return searchRepo.RunCampaign(campaignId);
+            return _repository.RunCampaign(campaignId);
         }
 
         public IEnumerable<SearchCriteria> GetEmptySearchCriteria()
         {
-            return searchRepo.GetEmptySearchCriteria();
+            return _repository.GetEmptySearchCriteria();
         }
     }
 }
