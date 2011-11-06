@@ -18,9 +18,7 @@ namespace GiveCRM.Web
         {
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            routes.MapRoute("Elmah", "Elmah/{type}", new {action = "Index", controller = "Elmah", type=UrlParameter.Optional});
-
+            
             routes.MapRoute(
                 "DownloadMailingList",
                 "{controller}/DownloadMailingList/{id}/{name}",
