@@ -10,8 +10,9 @@ namespace GiveCRM.BusinessLogic
     {
         private readonly IMemberRepository _memberRepository;
         private readonly IMemberSearchFilterRepository _memberSearchFilterRepository;
+        private readonly ISearchQueryService searchQueryService;
 
-        public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository)
+        public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository, ISearchQueryService searchQueryService)
         {
             if (memberRepository == null)
             {
@@ -23,8 +24,14 @@ namespace GiveCRM.BusinessLogic
                 throw new ArgumentNullException("memberSearchFilterRepository");
             }
 
+            if (searchQueryService == null)
+            {
+                throw new ArgumentNullException("searchQueryService");
+            }
+
             _memberRepository = memberRepository;
             _memberSearchFilterRepository = memberSearchFilterRepository;
+            this.searchQueryService = searchQueryService;
         }
 
         public IEnumerable<Member> All()
@@ -92,7 +99,7 @@ namespace GiveCRM.BusinessLogic
                 return Enumerable.Empty<Member>();
             }
 
-            var query = CompileQuery(criteriaList);
+            var query = searchQueryService.CompileQuery(criteriaList);
 
             return query.Cast<Member>();
         }
@@ -101,21 +108,6 @@ namespace GiveCRM.BusinessLogic
         {
             var filters = _memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
             return Search(filters);
-        }
-
-        public IEnumerable<int> RunWithIdOnly(IEnumerable<SearchCriteria> criteria)
-        {
-            var criteriaList = criteria.ToList();
-
-            if (criteriaList.Count == 0)
-            {
-                // don't attempt to search if there are not criteria - don't want the whole database
-                return Enumerable.Empty<int>();
-            }
-
-            var query = CompileQuery(criteriaList);
-
-            return query.Select(_db.Members.Id).ToScalarList<int>();
         }
 
         public IEnumerable<Member> FromCampaignRun(int campaignId)

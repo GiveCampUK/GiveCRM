@@ -28,7 +28,7 @@ namespace GiveCRM.DataAccess.Test
         public void InsertFreeTextFacet()
         {
             var facet = FacetSetUpHelper.CreateFreeTextFacet();
-            facet = new Facets().Get(facet.Id);
+            facet = new Facets().GetById(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.FreeText, facet.Type);
             Assert.AreEqual("FreeTextTest", facet.Name);
@@ -56,7 +56,7 @@ namespace GiveCRM.DataAccess.Test
         {
             var facet = FacetSetUpHelper.CreateListFacet();
 
-            facet = new Facets().Get(facet.Id);
+            facet = new Facets().GetById(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.List, facet.Type);
             Assert.AreEqual("ListTest", facet.Name);
@@ -76,11 +76,11 @@ namespace GiveCRM.DataAccess.Test
             FacetSetUpHelper.CreateFreeTextFacet();
             FacetSetUpHelper.CreateListFacet();
 
-            var facet = new Facets().All().FirstOrDefault(f => f.Type == FacetType.FreeText);
+            var facet = new Facets().GetAll().FirstOrDefault(f => f.Type == FacetType.FreeText);
             Assert.IsNotNull(facet);
             Assert.AreEqual("FreeTextTest", facet.Name);
 
-            facet = new Facets().All().FirstOrDefault(f => f.Type == FacetType.List);
+            facet = new Facets().GetAll().FirstOrDefault(f => f.Type == FacetType.List);
             Assert.IsNotNull(facet);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.List, facet.Type);

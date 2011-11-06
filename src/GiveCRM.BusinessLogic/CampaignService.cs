@@ -1,47 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
     internal class CampaignService: ICampaignService
     {
-        private readonly ICampaignRepository _repository;
+        private readonly ICampaignRepository campaignRepository;
+        private readonly IMemberSearchFilterRepository memberSearchFilterRepository;
+        private readonly IMemberService memberService;
 
-        public CampaignService(ICampaignRepository repository)
+        public CampaignService(ICampaignRepository campaignRepository, IMemberSearchFilterRepository memberSearchFilterRepository, IMemberService memberService)
         {
-            if (repository == null)
+            if (campaignRepository == null)
             {
-                throw new ArgumentNullException("repository");
+                throw new ArgumentNullException("campaignRepository");
             }
 
-            _repository = repository;
+            if (memberSearchFilterRepository == null)
+            {
+                throw new ArgumentNullException("memberSearchFilterRepository");
+            }
+
+            if (memberService == null)
+            {
+                throw new ArgumentNullException("memberService");
+            }
+
+            this.campaignRepository = campaignRepository;
+            this.memberSearchFilterRepository = memberSearchFilterRepository;
+            this.memberService = memberService;
         }
 
-        public IEnumerable<Campaign> AllOpen()
+        public IEnumerable<Campaign> GetAllOpen()
         {
-            return _repository.GetAllOpen();
+            return campaignRepository.GetAllOpen();
         }
 
-        public IEnumerable<Campaign> AllClosed()
+        public IEnumerable<Campaign> GetAllClosed()
         {
-            return _repository.GetAllClosed();
+            return campaignRepository.GetAllClosed();
         }
 
         public Campaign Get(int id)
         {
-            return _repository.GetById(id);
+            return campaignRepository.GetById(id);
         }
 
         public Campaign Insert(Campaign campaign)
         {
-            return _repository.Insert(campaign);
+            return campaignRepository.Insert(campaign);
         }
 
         public void Update(Campaign campaign)
         {
-            _repository.Update(campaign);
+            campaignRepository.Update(campaign);
         }
 
+        public void Commit(int campaignId)
+        {
+            var filters = memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
+            var filteredMembers = memberService.Search(filters);
+            
+        }
     }
 }

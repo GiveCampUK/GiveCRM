@@ -87,7 +87,7 @@ namespace GiveCRM.Web.Controllers
         {
             ViewBag.MemberName = this.memberService.Get(id).ToString();
 
-            ViewBag.Campaigns = this.campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+            ViewBag.Campaigns = this.campaignService.GetAllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             return View(new Donation { MemberId = id });
         }

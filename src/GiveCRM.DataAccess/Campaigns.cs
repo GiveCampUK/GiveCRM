@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using Simple.Data;
@@ -34,9 +36,39 @@ namespace GiveCRM.DataAccess
             return _db.Campaigns.Insert(campaign);
         }
 
+        /// <summary>
+        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the item to delete.</param>
+        public void DeleteById(int id)
+        {
+            _db.Campaigns.Delete(id);
+        }
+
         public void Update(Campaign campaign)
         {
             _db.Campaigns.UpdateById(campaign);
+        }
+
+        public void Commit(int campaignId, IEnumerable<Member> campaignMembers)
+        {
+            var results = campaignMembers.Select(memberId => new { CampaignId = campaignId, MemberId = memberId });
+
+            using (var transaction = _db.BeginTransaction())
+            {
+                try
+                {
+                    transaction.Campaign.UpdateById(Id: campaignId, runOn: DateTime.Today);
+                    transaction.CampaignRuns.Insert(results);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+
         }
     }
 }

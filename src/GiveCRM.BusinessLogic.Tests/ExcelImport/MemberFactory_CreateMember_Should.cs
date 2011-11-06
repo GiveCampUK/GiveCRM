@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using GiveCRM.BusinessLogic.ExcelImport;
 using GiveCRM.Models;
-using GiveCRM.Web.Services.ExcelImport;
 using NUnit.Framework;
 
 namespace GiveCRM.Web.Tests.Services.ExcelImport
@@ -8,7 +8,7 @@ namespace GiveCRM.Web.Tests.Services.ExcelImport
     [TestFixture]
     public class MemberFactory_CreateMember_Should
     {
-        private MemberFactory factory;
+        private IMemberFactory factory;
 
         [SetUp]
         public void Setup()

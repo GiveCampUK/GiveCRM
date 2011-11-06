@@ -20,5 +20,12 @@ namespace GiveCRM.BusinessLogic
         /// </summary>
         /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Campaign"/>s.</returns>
         IEnumerable<Campaign> GetAllClosed();
+
+        /// <summary>
+        /// Commits the specified campaign id.  Once a campaign has been committed, its search criteria cannot be modified.
+        /// </summary>
+        /// <param name="campaignId">The campaign id.</param>
+        /// <param name="campaignMembers">The campaign members.</param>
+        void Commit(int campaignId, IEnumerable<Member> campaignMembers);
     }
 }

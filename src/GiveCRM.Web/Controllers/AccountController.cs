@@ -3,14 +3,15 @@
     using System;
     using System.Web.Mvc;
 
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Web.Models;
     using GiveCRM.Web.Services;
 
     public class AccountController : Controller
     {
-        private IMembershipService membershipService;
-        private IAuthenticationService authenticationService;
-        private IUrlValidationService urlValidationService;
+        private readonly IMembershipService membershipService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IUrlValidationService urlValidationService;
 
         public AccountController(IMembershipService membershipService, IAuthenticationService authenticationService, IUrlValidationService urlValidationService)
         {

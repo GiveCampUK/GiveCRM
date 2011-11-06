@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Search;
@@ -27,7 +28,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new Search().CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService().CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -50,7 +51,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new Search().CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService().CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -73,7 +74,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new Search().CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService().CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -102,7 +103,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new Search().CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService().CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNotNull(expr);
             Assert.IsNull(having);
@@ -130,7 +131,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new Search().CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService().CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -160,7 +161,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new Search().CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService().CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -189,7 +190,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new Search().CompileCampaignCriteria(criteria, null);
+            var expr = new SearchQueryService().CompileCampaignCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -205,7 +206,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void Facet()
         {
-            var search = new Search();
+            var search = new SearchQueryService();
             var criteria = new[]
                                {
                                    new FacetSearchCriteria
@@ -246,14 +247,14 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual(SimpleExpressionType.Function, second.Type);
         }
 
-        private class FacetsStub : IFacets
+        private class FacetsStub : IFacetRepository
         {
-            public Facet Get(int id)
+            public Facet GetById(int id)
             {
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<Facet> All()
+            public IEnumerable<Facet> GetAll()
             {
                 throw new NotImplementedException();
             }
@@ -263,12 +264,21 @@ namespace GiveCRM.DataAccess.Test
                 throw new NotImplementedException();
             }
 
+            /// <summary>
+            /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+            /// </summary>
+            /// <param name="id">The identifier of the item to delete.</param>
+            public void DeleteById(int id)
+            {
+                throw new NotImplementedException();
+            }
+
             public void Update(Facet facet)
             {
                 throw new NotImplementedException();
             }
 
-            public IEnumerable<Facet> AllFreeText()
+            public IEnumerable<Facet> GetAllFreeText()
             {
                 yield return new Facet {Id = 1, Name = "Test", Type = FacetType.FreeText};
             }

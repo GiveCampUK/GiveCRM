@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Models.Facets;
-using GiveCRM.Web.Services;
 using MvcContrib.TestHelper;
 using NSubstitute;
 using NUnit.Framework;

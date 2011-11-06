@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Models.Members;
-using GiveCRM.Web.Services;
 using MvcContrib.TestHelper;
 using NSubstitute;
 using NUnit.Framework;
@@ -70,7 +70,7 @@ namespace GiveCRM.Web.Tests.controllers
         public void Donate_Action_Returns_View_With_Model()
         {
             _memberService.Get(1).Returns(new Member());
-            _campaignService.AllOpen().Returns(new List<Campaign>());
+            _campaignService.GetAllOpen().Returns(new List<Campaign>());
 
             var controller = new MemberController(_donationsService, _memberService, _campaignService);
             var result = controller.Donate(1);

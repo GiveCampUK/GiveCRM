@@ -38,5 +38,14 @@ namespace GiveCRM.DataAccess
         {
             return _db.Donations.Insert(donation);
         }
+
+        /// <summary>
+        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the item to delete.</param>
+        public void DeleteById(int id)
+        {
+            _db.Donations.DeleteById(id);
+        }
     }
 }

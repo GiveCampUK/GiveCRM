@@ -33,8 +33,8 @@ namespace GiveCRM.DataAccess
         {
             return _db.MemberSearchFilters.Insert(memberSearchFilter);
         }
-
-        public void Delete(int id)
+        
+        public void DeleteById(int id)
         {
             _db.MemberSearchFilters.DeleteById(id);
         }

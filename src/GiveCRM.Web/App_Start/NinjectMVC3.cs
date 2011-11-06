@@ -57,8 +57,6 @@ namespace GiveCRM.Web.App_Start
                                 a.BindWithDefaultConventions();
                                 a.InRequestScope();
                             });
-
-            kernel.Bind<IMembershipService>().To<MembershipService>();
         }        
     }
 }

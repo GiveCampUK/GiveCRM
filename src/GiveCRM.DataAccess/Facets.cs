@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
+using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
 using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-    public interface IFacets
-    {
-        Facet Get(int id);
-        IEnumerable<Facet> All();
-        Facet Insert(Facet facet);
-        void Update(Facet facet);
-        IEnumerable<Facet> AllFreeText();
-    }
-
-    public class Facets : IFacets
+    public class Facets : IFacetRepository
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
-        public Facet Get(int id)
+        public Facet GetById(int id)
         {
             var record = _db.Facets.FindById(id);
             Facet facet = record;
@@ -28,7 +19,7 @@ namespace GiveCRM.DataAccess
             return facet;
         }
 
-        public IEnumerable<Facet> All()
+        public IEnumerable<Facet> GetAll()
         {
             var query = _db.Facets.All()
                 .Select(_db.Facets.Id, _db.Facets.Type, _db.Facets.Name,
@@ -69,6 +60,15 @@ namespace GiveCRM.DataAccess
             }
             var record = _db.Facets.Insert(facet);
             return record;
+        }
+
+        /// <summary>
+        /// Deletes the <see cref="Facet"/> identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the Facet to delete.</param>
+        public void DeleteById(int id)
+        {
+            _db.Facets.DeleteById(id);
         }
 
         public void Update(Facet facet)
@@ -135,7 +135,7 @@ namespace GiveCRM.DataAccess
             }
         }
 
-        public IEnumerable<Facet> AllFreeText()
+        public IEnumerable<Facet> GetAllFreeText()
         {
             return _db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }

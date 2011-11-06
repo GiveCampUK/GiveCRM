@@ -110,6 +110,15 @@ namespace GiveCRM.DataAccess
             return _db.Members.Insert(member);
         }
 
+        /// <summary>
+        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the item to delete.</param>
+        public void DeleteById(int id)
+        {
+            _db.Members.DeleteById(id);
+        }
+
         private Member InsertWithPhoneNumbers(Member member)
         {
             using (var transaction = _db.BeginTransaction())
