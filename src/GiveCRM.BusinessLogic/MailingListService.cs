@@ -7,7 +7,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class MailingListService : IMailingListService
+    public class MailingListService : IMailingListService
     {
         private readonly IExcelExport _excelExport;
 

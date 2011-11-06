@@ -3,7 +3,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class MemberSearchFilterService : IMemberSearchFilterService
+    public class MemberSearchFilterService : IMemberSearchFilterService
     {
         private readonly IMemberSearchFilterRepository _repository;
 

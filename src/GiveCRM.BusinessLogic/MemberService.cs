@@ -6,7 +6,7 @@ using GiveCRM.Models.Search;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class MemberService : IMemberService
+    public class MemberService : IMemberService
     {
         private readonly IMemberRepository _memberRepository;
         private readonly IMemberSearchFilterRepository _memberSearchFilterRepository;

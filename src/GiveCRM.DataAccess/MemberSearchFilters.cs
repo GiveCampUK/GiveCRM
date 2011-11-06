@@ -5,7 +5,7 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-    public class MemberSearchFilters : IRepository<MemberSearchFilter>
+    public class MemberSearchFilters : IMemberSearchFilterRepository
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
@@ -37,6 +37,17 @@ namespace GiveCRM.DataAccess
         public void DeleteById(int id)
         {
             _db.MemberSearchFilters.DeleteById(id);
+        }
+
+        /// <summary>
+        /// Gets a list of all the <see cref="MemberSearchFilter"/>s associated with the specified <see cref="Campaign"/>.
+        /// </summary>
+        /// <param name="id">The campaign identifier.</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="MemberSearchFilter"/> used in the 
+        /// specified <see cref="Campaign"/>.</returns>
+        public IEnumerable<MemberSearchFilter> GetByCampaignId(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

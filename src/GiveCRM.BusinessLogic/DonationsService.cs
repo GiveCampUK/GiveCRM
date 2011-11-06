@@ -5,7 +5,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class DonationsService : IDonationsService
+    public class DonationsService : IDonationsService
     {
         private readonly IDonationRepository _repository;
 

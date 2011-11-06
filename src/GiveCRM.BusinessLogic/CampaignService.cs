@@ -5,7 +5,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class CampaignService: ICampaignService
+    public class CampaignService: ICampaignService
     {
         private readonly ICampaignRepository campaignRepository;
         private readonly IMemberSearchFilterRepository memberSearchFilterRepository;

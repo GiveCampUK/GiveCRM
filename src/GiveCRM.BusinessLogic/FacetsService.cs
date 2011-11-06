@@ -4,7 +4,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic
 {
-    internal class FacetsService : IFacetsService
+    public class FacetsService : IFacetsService
     {
         private readonly IRepository<Facet> _repository;
 
