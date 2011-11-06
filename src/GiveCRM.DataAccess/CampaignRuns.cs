@@ -8,7 +8,7 @@ namespace GiveCRM.DataAccess
 {
     public class CampaignRuns
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public void Commit(int campaignId)
         {
@@ -16,7 +16,7 @@ namespace GiveCRM.DataAccess
             var filters = memberSearchFilterRepo.ForCampaign(campaignId).Select(msf => msf.ToSearchCriteria());
             var results = new Search().RunWithIdOnly(filters).Select(memberId => new {CampaignId = campaignId, MemberId = memberId});
 
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {

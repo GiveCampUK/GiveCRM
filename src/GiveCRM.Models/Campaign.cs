@@ -14,11 +14,11 @@ namespace GiveCRM.Models
             get { return RunOn.HasValue; }
         }
 
-        private string _isClosed = "N";
+        private string isClosed = "N";
         public string IsClosed
         {
-            get { return _isClosed; }
-            set { _isClosed = value; }
+            get { return isClosed; }
+            set { isClosed = value; }
         }
 
         public override string ToString()

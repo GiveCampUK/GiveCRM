@@ -18,7 +18,10 @@ namespace GiveCRM.Web.Services
             error = string.Empty;
             MembershipCreateStatus createStatus;
             Membership.CreateUser(userName, password, email, null, null, true, null, out createStatus);
-            if (createStatus == MembershipCreateStatus.Success) return true;
+            if (createStatus == MembershipCreateStatus.Success)
+            {
+                return true;
+            }
 
             error = ErrorCodeToString(createStatus);
             return false;

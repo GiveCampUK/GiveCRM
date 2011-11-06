@@ -12,22 +12,22 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class MemberControllerTests
     {
-        private IDonationsService _donationsService;
-        private IMemberService _memberService;
-        private ICampaignService _campaignService;
+        private IDonationsService donationsService;
+        private IMemberService memberService;
+        private ICampaignService campaignService;
 
         [SetUp]
         public void SetUp()
         {
-            _campaignService = Substitute.For<ICampaignService>();
-            _donationsService = Substitute.For<IDonationsService>();
-            _memberService = Substitute.For<IMemberService>();
+            campaignService = Substitute.For<ICampaignService>();
+            donationsService = Substitute.For<IDonationsService>();
+            memberService = Substitute.For<IMemberService>();
         }
 
         [Test]
         public void Index_Action_Returns_View()
         {
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.Index();
 
             result.AssertViewRendered();
@@ -36,7 +36,7 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void Add_Action_Returns_View_With_ViewModel()
         {
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.Add();
 
             result.AssertViewRendered().WithViewData<MemberEditViewModel>();
@@ -45,9 +45,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void Edit_Action_Returns_Named_View_With_ViewModel()
         {
-            _memberService.Get(1).Returns(new Member());
+            memberService.Get(1).Returns(new Member());
 
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.Edit(1);
 
             Assert.That(result.AssertViewRendered().ViewName == "Add");
@@ -57,10 +57,10 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void Delete_Action_Returns_RedirectToAction()
         {
-            _memberService.Get(1).Returns(new Member());
-            _memberService.Update(new Member());
+            memberService.Get(1).Returns(new Member());
+            memberService.Update(new Member());
 
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.Delete(1);
 
             result.AssertActionRedirect().ToAction("Index");
@@ -69,10 +69,10 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void Donate_Action_Returns_View_With_Model()
         {
-            _memberService.Get(1).Returns(new Member());
-            _campaignService.AllOpen().Returns(new List<Campaign>());
+            memberService.Get(1).Returns(new Member());
+            campaignService.AllOpen().Returns(new List<Campaign>());
 
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.Donate(1);
 
             result.AssertViewRendered().WithViewData<Donation>();
@@ -81,9 +81,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void QuickDonation_Action_RedirectsToAction()
         {
-            _donationsService.QuickDonation(new Donation());
+            donationsService.QuickDonation(new Donation());
 
-            var controller = new MemberController(_donationsService, _memberService, _campaignService);
+            var controller = new MemberController(donationsService, memberService, campaignService);
             var result = controller.SaveDonation(new Donation());
 
             result.AssertActionRedirect().ToAction("Index");
