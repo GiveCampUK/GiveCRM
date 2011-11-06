@@ -8,7 +8,6 @@ namespace GiveCRM.Web.Controllers
     using System.Web.Mvc;
 
     using GiveCRM.BusinessLogic;
-    using GiveCRM.DataAccess;
     using GiveCRM.Models;
     using GiveCRM.Models.Search;
     using GiveCRM.Web.Infrastructure;

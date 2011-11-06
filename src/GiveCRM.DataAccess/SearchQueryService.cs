@@ -11,8 +11,10 @@ namespace GiveCRM.DataAccess
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
-        public dynamic CompileQuery(List<SearchCriteria> criteriaList)
+        public dynamic CompileQuery(IEnumerable<SearchCriteria> criteria)
         {
+            var criteriaList = criteria.ToList();
+
             var expr = CompileLocationCriteria(criteriaList.OfType<LocationSearchCriteria>(), null);
             SimpleExpression having = null;
             CompileDonationCriteria(criteriaList.OfType<DonationSearchCriteria>(), ref expr, ref having);

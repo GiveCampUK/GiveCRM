@@ -62,7 +62,7 @@ namespace GiveCRM.BusinessLogic
         {
             var filters = memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
             var filteredMembers = memberService.Search(filters);
-            
+            this.campaignRepository.Commit(campaignId, filteredMembers);
         }
     }
 }

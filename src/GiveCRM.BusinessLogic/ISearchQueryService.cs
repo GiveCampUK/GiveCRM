@@ -5,6 +5,6 @@ namespace GiveCRM.BusinessLogic
 {
     public interface ISearchQueryService
     {
-        dynamic CompileQuery(List<SearchCriteria> criteriaList);
+        dynamic CompileQuery(IEnumerable<SearchCriteria> criteriaList);
     }
 }

@@ -52,7 +52,7 @@ namespace GiveCRM.DataAccess
 
         public void Commit(int campaignId, IEnumerable<Member> campaignMembers)
         {
-            var results = campaignMembers.Select(memberId => new { CampaignId = campaignId, MemberId = memberId });
+            var results = campaignMembers.Select(member => new { CampaignId = campaignId, MemberId = member.Id });
 
             using (var transaction = _db.BeginTransaction())
             {
