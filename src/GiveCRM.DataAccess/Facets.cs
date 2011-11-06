@@ -18,11 +18,11 @@ namespace GiveCRM.DataAccess
 
     public class Facets : IFacets
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public Facet Get(int id)
         {
-            var record = _db.Facets.FindById(id);
+            var record = db.Facets.FindById(id);
             Facet facet = record;
             facet.Values = record.FacetValues.ToList<FacetValue>();
             return facet;
@@ -30,10 +30,10 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Facet> All()
         {
-            var query = _db.Facets.All()
-                .Select(_db.Facets.Id, _db.Facets.Type, _db.Facets.Name,
-                _db.Facets.FacetValues.Id.As("FacetValueId"), _db.Facets.FacetValues.FacetId, _db.Facets.FacetValues.Value)
-                .OrderBy(_db.Facets.Id);
+            var query = db.Facets.All()
+                .Select(db.Facets.Id, db.Facets.Type, db.Facets.Name,
+                db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
+                .OrderBy(db.Facets.Id);
 
             Facet facet = null;
 
@@ -45,7 +45,10 @@ namespace GiveCRM.DataAccess
                 }
                 if (row.FacetId == facet.Id)
                 {
-                    if (facet.Values == null) facet.Values = new List<FacetValue>();
+                    if (facet.Values == null)
+                    {
+                        facet.Values = new List<FacetValue>();
+                    }
                     facet.Values.Add(new FacetValue { FacetId = row.Id, Id = row.FacetValueId, Value = row.Value });
                 }
                 else
@@ -67,7 +70,7 @@ namespace GiveCRM.DataAccess
             {
                 return InsertWithValues(facet);
             }
-            var record = _db.Facets.Insert(facet);
+            var record = db.Facets.Insert(facet);
             return record;
         }
 
@@ -79,13 +82,13 @@ namespace GiveCRM.DataAccess
             }
             else
             {
-                _db.Facets.UpdateById(facet);
+                db.Facets.UpdateById(facet);
             }
         }
 
         private void UpdateWithValues(Facet facet)
         {
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {
@@ -114,7 +117,7 @@ namespace GiveCRM.DataAccess
 
         private Facet InsertWithValues(Facet facet)
         {
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {
@@ -137,7 +140,7 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Facet> AllFreeText()
         {
-            return _db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
+            return db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }
     }
 }

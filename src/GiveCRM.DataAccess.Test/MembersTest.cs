@@ -13,16 +13,16 @@ namespace GiveCRM.DataAccess.Test
         [SetUp]
         public void SetUp()
         {
-            _db.Donations.DeleteAll();
-            _db.CampaignRuns.DeleteAll();
-            _db.Campaigns.DeleteAll();
-            _db.PhoneNumbers.DeleteAll();
-            _db.MemberFacetValues.DeleteAll();
-            _db.MemberFacets.DeleteAll();
-            _db.Members.DeleteAll();
+            db.Donations.DeleteAll();
+            db.CampaignRuns.DeleteAll();
+            db.Campaigns.DeleteAll();
+            db.PhoneNumbers.DeleteAll();
+            db.MemberFacetValues.DeleteAll();
+            db.MemberFacets.DeleteAll();
+            db.Members.DeleteAll();
         }
 
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         private static Member CreateAliceWithPhoneNumber()
         {
