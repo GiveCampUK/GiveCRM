@@ -10,18 +10,18 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_reading_data_as_key_value_pairs_from_Xlsx
     {
-        private string _testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
+        private string testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
 
         private ExcelImport import;
-        private Dictionary<string, object> _firstRowDictionary;
-        private Dictionary<string, object> _lastRowDictionary;
+        private Dictionary<string, object> firstRowDictionary;
+        private Dictionary<string, object> lastRowDictionary;
 
         [SetUp]
         public void SetUp()
         {
             import = new ExcelImport();
 
-            _firstRowDictionary = new Dictionary<string, object>
+            firstRowDictionary = new Dictionary<string, object>
                                                       {
                                                           {"ID", "1"},
                                                           {"Title","Mr"},
@@ -30,7 +30,7 @@ namespace GiveCRM.ImportExport.Test
                                                           {"Salutation","Bob"},
                                                           {"EmailAddress","bob@give.com"},
                                                           {"AddressLine1", "1 Short Street"},
-                                                          {"AddressLine2", ""},
+                                                          {"AddressLine2", string.Empty},
                                                           {"City","London"},
                                                           {"Region","SouthEast"},
                                                           {"PostalCode","W1 1QP"},
@@ -44,7 +44,7 @@ namespace GiveCRM.ImportExport.Test
                                                           {"ContactByPost","N"}
                                                       };
 
-            _lastRowDictionary = new Dictionary<string, object>
+            lastRowDictionary = new Dictionary<string, object>
                                                       {
                                                           {"ID", "5"},
                                                           {"Title","Mr"},
@@ -53,7 +53,7 @@ namespace GiveCRM.ImportExport.Test
                                                           {"Salutation","Brian"},
                                                           {"EmailAddress","brian@give.com"},
                                                           {"AddressLine1", "5 Short Street"},
-                                                          {"AddressLine2", ""},
+                                                          {"AddressLine2", string.Empty},
                                                           {"City","London"},
                                                           {"Region","SouthEast"},
                                                           {"PostalCode","W1 5QP"},
@@ -74,7 +74,7 @@ namespace GiveCRM.ImportExport.Test
         {
             import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, false);
 
@@ -87,7 +87,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
@@ -101,14 +101,14 @@ namespace GiveCRM.ImportExport.Test
         {
             IList<IDictionary<string, object>> resultSet;
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
                 resultSet = import.GetRowsAsKeyValuePairs(0).ToList();
             }
 
-            CollectionAssert.AreEquivalent(_firstRowDictionary, resultSet[0]);
+            CollectionAssert.AreEquivalent(firstRowDictionary, resultSet[0]);
         }
 
 
@@ -117,14 +117,14 @@ namespace GiveCRM.ImportExport.Test
         {
             IList<IDictionary<string, object>> resultSet;
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
                 resultSet = import.GetRowsAsKeyValuePairs(0).ToList();
             }
 
-            CollectionAssert.AreEquivalent(_lastRowDictionary, resultSet[4]);
+            CollectionAssert.AreEquivalent(lastRowDictionary, resultSet[4]);
         }
     }
 }

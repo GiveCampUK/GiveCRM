@@ -38,7 +38,7 @@ namespace GiveCRM.Web.Views
 
             if (classList.Count == 0)
             {
-                return new MvcHtmlString("");
+                return new MvcHtmlString(string.Empty);
             }
 
             return new MvcHtmlString("class=\"" + JoinString(classList) + "\"");

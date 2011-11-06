@@ -9,11 +9,14 @@ namespace GiveCRM.ImportExport
     public class ExcelXlsImporter : IExcelImporter
     {
         internal HSSFWorkbook Workbook;
-        private bool _disposed;
+        private bool disposed;
 
         public void Open(Stream stream)
         {
-            if (stream == null) throw new ArgumentNullException("stream");
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
             Workbook = new HSSFWorkbook(stream);
         }
 
@@ -109,10 +112,10 @@ namespace GiveCRM.ImportExport
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!disposed)
             {
                 Workbook.Dispose();
-                _disposed = true;
+                disposed = true;
             }
         }
     }

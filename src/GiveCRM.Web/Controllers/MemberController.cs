@@ -118,5 +118,11 @@ namespace GiveCRM.Web.Controllers
 
             return View("MembersList", members);
         }
+
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return View(new MemberSearchViewModel { Results = null, AreMore = false });
+        }
     }
 }

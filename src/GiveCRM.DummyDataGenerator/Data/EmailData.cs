@@ -4,7 +4,7 @@ namespace GiveCRM.DummyDataGenerator.Data
 {
     internal static class EmailData
     {
-        internal static List<string> Separators = new List<string> { "", ".", "_" };
+        internal static List<string> Separators = new List<string> { string.Empty, ".", "_" };
 
         /// <summary>
         /// It's better if these aren't popular emial providers

@@ -7,7 +7,7 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_using_ExcelXlsImporter
     {
-        private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
+        private string testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
 
         [Test]
         public void Should_throw_exception_if_file_stream_null()
@@ -20,7 +20,7 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_set_workbook_from_stream()
         {
-            using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXls, FileMode.Open, FileAccess.Read))
             {
                 var importer = new ExcelXlsImporter();
                 importer.Open(stream);
