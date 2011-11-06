@@ -48,9 +48,18 @@ namespace GiveCRM.Models.Search
         public static SearchCriteria Create(string internalName, string displayName, SearchFieldType filterType, SearchOperator searchOperator, string value)
         {
             SearchCriteria criteria = null;
-            if (CampaignSearchCriteria.IsCampaignSearchCriteria(internalName)) criteria = new CampaignSearchCriteria();
-            else if (LocationSearchCriteria.IsLocationSearchCriteria(internalName)) criteria = new LocationSearchCriteria();
-            else if (DonationSearchCriteria.IsDonationSearchCriteria(internalName)) criteria = new DonationSearchCriteria();
+            if (CampaignSearchCriteria.IsCampaignSearchCriteria(internalName))
+            {
+                criteria = new CampaignSearchCriteria();
+            }
+            else if (LocationSearchCriteria.IsLocationSearchCriteria(internalName))
+                {
+                    criteria = new LocationSearchCriteria();
+                }
+            else if (DonationSearchCriteria.IsDonationSearchCriteria(internalName))
+            {
+                criteria = new DonationSearchCriteria();
+            }
             else
             {
                 if (internalName.StartsWith("freeTextFacet_"))

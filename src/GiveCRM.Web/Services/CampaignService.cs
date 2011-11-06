@@ -6,31 +6,31 @@ namespace GiveCRM.Web.Services
 {
     public class CampaignService: ICampaignService
     {
-        private readonly Campaigns _campaignsDb = new Campaigns();
+        private readonly Campaigns campaignsDb = new Campaigns();
 
         public IEnumerable<Campaign> AllOpen()
         {
-            return _campaignsDb.AllOpen();
+            return campaignsDb.AllOpen();
         }
 
         public IEnumerable<Campaign> AllClosed()
         {
-            return _campaignsDb.AllClosed();
+            return campaignsDb.AllClosed();
         }
 
         public Campaign Get(int id)
         {
-            return _campaignsDb.Get(id);
+            return campaignsDb.Get(id);
         }
 
         public Campaign Insert(Campaign campaign)
         {
-            return _campaignsDb.Insert(campaign);
+            return campaignsDb.Insert(campaign);
         }
 
         public void Update(Campaign campaign)
         {
-            _campaignsDb.Update(campaign);
+            campaignsDb.Update(campaign);
         }
 
     }

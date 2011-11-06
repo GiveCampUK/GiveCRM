@@ -7,23 +7,23 @@ namespace GiveCRM.Web.Services
 {
     public class DonationsService : IDonationsService
     {
-        private Donations _donationsDb = new Donations();
+        private Donations donationsDb = new Donations();
 
         public  IEnumerable<Donation> GetTopDonations()
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Amount).Take(5);
+            var donations = donationsDb.All().OrderByDescending(d => d.Amount).Take(5);
             return donations;
         }
 
         public IEnumerable<Donation> GetLatestDonations()
         {
-            var donations = _donationsDb.All().OrderByDescending(d => d.Date).Take(5);
+            var donations = donationsDb.All().OrderByDescending(d => d.Date).Take(5);
             return donations;
         }
 
         public void QuickDonation(Donation donation)
         {
-            _donationsDb.Insert(donation);
+            donationsDb.Insert(donation);
         }
     }
 

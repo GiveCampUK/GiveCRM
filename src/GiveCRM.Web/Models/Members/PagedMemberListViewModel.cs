@@ -30,8 +30,6 @@ namespace GiveCRM.Web.Models.Members
 
         public Func<int, string> PagingFunction { get; private set; }
 
-        #region Implementation of IPagedList
-
         /// <summary>
         /// Total number of subsets within the superset.
         /// </summary>
@@ -142,10 +140,7 @@ namespace GiveCRM.Web.Models.Members
             get { return pagedMemberList.LastItemOnPage; }
         }
 
-        #endregion
-
-        #region Implementation of IEnumerable
-
+        
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
@@ -170,9 +165,7 @@ namespace GiveCRM.Web.Models.Members
             return GetEnumerator();
         }
 
-        #endregion
-
-        #region Implementation of IPagedList<out Member>
+        
 
         /// <summary>
         /// Gets a non-enumerable copy of this paged list.
@@ -202,6 +195,6 @@ namespace GiveCRM.Web.Models.Members
             get { return pagedMemberList.Count; }
         }
 
-        #endregion
+        
     }
 }

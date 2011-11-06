@@ -11,18 +11,18 @@ namespace GiveCRM.Web.Services
 {
     public class MailingListService : IMailingListService
     {
-        private readonly IExcelExport _excelExport;
+        private readonly IExcelExport excelExport;
 
         public MailingListService(IExcelExport excelExport)
         {
-            _excelExport = excelExport;
+            this.excelExport = excelExport;
         }
 
         public void WriteToStream(IEnumerable<Member> members, Stream stream, OutputFormat outputFormat)
         {
             var rows = GetHeaderRows().Concat(GetDataRows(members));
-            _excelExport.WriteDataToExport(rows, new CellFormatter(), ExcelFileType.XLS);
-            _excelExport.ExportToStream(stream);
+            excelExport.WriteDataToExport(rows, new CellFormatter(), ExcelFileType.XLS);
+            excelExport.ExportToStream(stream);
         }
 
         private List<List<Cell>> GetDataRows(IEnumerable<Member> members)
@@ -50,7 +50,7 @@ namespace GiveCRM.Web.Services
         private string FirstTelephoneNumber(Member member, PhoneNumberType phoneNumberType)
         {
             PhoneNumber phoneNumber = member.PhoneNumbers.FirstOrDefault(number => number.PhoneNumberType == phoneNumberType);
-            return phoneNumber != null ? phoneNumber.Number : "";
+            return phoneNumber != null ? phoneNumber.Number : string.Empty;
         }
 
         private List<List<Cell>> GetHeaderRows()
