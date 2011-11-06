@@ -43,7 +43,7 @@ namespace GiveCRM.Web.Areas.Admin.Controllers {
     }
 
     internal class ElmahResult : ActionResult {
-        private readonly string _resouceType;
+        private readonly string resouceType;
 
         public ElmahResult()
             : this(null) {
@@ -51,14 +51,14 @@ namespace GiveCRM.Web.Areas.Admin.Controllers {
         }
 
         public ElmahResult(string resouceType) {
-            _resouceType = resouceType;
+            this.resouceType = resouceType;
         }
 
         public override void ExecuteResult(ControllerContext context) {
             var factory = new Elmah.ErrorLogPageFactory();
 
-            if (!string.IsNullOrEmpty(_resouceType)) {
-                var pathInfo = "/" + _resouceType;
+            if (!string.IsNullOrEmpty(resouceType)) {
+                var pathInfo = "/" + resouceType;
                 context.HttpContext.RewritePath(FilePath(context), pathInfo, context.HttpContext.Request.QueryString.ToString());
             }
 
@@ -81,8 +81,8 @@ namespace GiveCRM.Web.Areas.Admin.Controllers {
         }
 
         private string FilePath(ControllerContext context) {
-            return _resouceType != "stylesheet" ?
-                context.HttpContext.Request.Path.Replace(String.Format("/{0}", _resouceType), string.Empty) : context.HttpContext.Request.Path;
+            return resouceType != "stylesheet" ?
+                context.HttpContext.Request.Path.Replace(String.Format("/{0}", resouceType), string.Empty) : context.HttpContext.Request.Path;
         }
     }
 }

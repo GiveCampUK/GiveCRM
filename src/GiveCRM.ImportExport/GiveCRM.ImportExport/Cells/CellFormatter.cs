@@ -10,12 +10,15 @@ namespace GiveCRM.ImportExport.Cells
 {
     public class CellFormatter
     {
-        private Sheet _sheet;
+        private Sheet sheet;
 
         public virtual void WriteDataToSheet(Sheet sheet, IEnumerable<IEnumerable<Cell>> rowData)
         {
-            if (sheet == null) throw new ArgumentNullException("sheet");
-            _sheet = sheet;
+            if (sheet == null)
+            {
+                throw new ArgumentNullException("sheet");
+            }
+            this.sheet = sheet;
 
             if (rowData != null)
             {
@@ -29,7 +32,7 @@ namespace GiveCRM.ImportExport.Cells
 
             foreach (var row in rowData)
             {
-                Row currentRow = _sheet.CreateRow(rowOrdinal);
+                Row currentRow = sheet.CreateRow(rowOrdinal);
                 CreateRow(row, currentRow);
 
                 rowOrdinal++;
@@ -38,11 +41,11 @@ namespace GiveCRM.ImportExport.Cells
 
         private int GetNextRowIndex()
         {
-            if (_sheet.PhysicalNumberOfRows == 0)
+            if (sheet.PhysicalNumberOfRows == 0)
             {
                 return 0;
             }
-            return _sheet.PhysicalNumberOfRows;
+            return sheet.PhysicalNumberOfRows;
         }
 
         private void CreateRow(IEnumerable<Cell> row, Row currentRow)
@@ -58,13 +61,16 @@ namespace GiveCRM.ImportExport.Cells
                     for (int i = 0; i < cell.ColumnSpan; i++)
                     {
                         NPOI.SS.UserModel.Cell current = CreateCell(cell, currentRow, columnOrdinal);
-                        if (i == 0) current.SetCellValue(cell.Value);
+                        if (i == 0)
+                        {
+                            current.SetCellValue(cell.Value);
+                        }
                         columnOrdinal++;
                     }
 
                     var cra = new CellRangeAddress(currentRow.RowNum, currentRow.RowNum, rangeStartColumn,
                                                    rangeStartColumn + (cell.ColumnSpan - 1));
-                    _sheet.AddMergedRegion(cra);
+                    sheet.AddMergedRegion(cra);
                 }
                 else
                 {
@@ -76,15 +82,15 @@ namespace GiveCRM.ImportExport.Cells
 
         private NPOI.SS.UserModel.Cell CreateCell(Cell cell, Row currentRow, int columnOrdinal)
         {
-            var nCell = currentRow.CreateCell(columnOrdinal, CellType.STRING);
-            nCell.CellStyle = GetCellStyle(cell);
+            var newCell = currentRow.CreateCell(columnOrdinal, CellType.STRING);
+            newCell.CellStyle = GetCellStyle(cell);
 
-            return nCell;
+            return newCell;
         }
 
         private CellStyle GetCellStyle(Cell cell)
         {
-            CellStyle style = _sheet.Workbook.CreateCellStyle();
+            CellStyle style = sheet.Workbook.CreateCellStyle();
 
             SetBold(cell, style);
 
@@ -144,7 +150,7 @@ namespace GiveCRM.ImportExport.Cells
         {
             if (cell.IsBold)
             {
-                Font font = _sheet.Workbook.CreateFont();
+                Font font = sheet.Workbook.CreateFont();
                 font.Boldweight = (short)FontBoldWeight.BOLD;
                 style.SetFont(font);                
             }

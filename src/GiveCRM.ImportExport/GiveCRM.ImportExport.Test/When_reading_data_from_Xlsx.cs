@@ -10,15 +10,15 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_reading_data_from_Xlsx
     {
-        private string _testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
-        private string _testDataTypesXlsx = Directory.GetCurrentDirectory() + "/TestData/TestDataTypes.xlsx";
+        private string testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
+        private string testDataTypesXlsx = Directory.GetCurrentDirectory() + "/TestData/TestDataTypes.xlsx";
 
         [Test]
         public void Should_throw_ArgumentExcetion_if_asking_for_header_row_when_file_does_not_have_header_row()
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, false);
 
@@ -31,7 +31,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
@@ -45,7 +45,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
@@ -59,7 +59,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
@@ -78,7 +78,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testDataTypesXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testDataTypesXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
@@ -98,7 +98,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testDataTypesXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testDataTypesXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
