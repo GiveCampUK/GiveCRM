@@ -9,7 +9,7 @@ namespace GiveCRM.DataAccess
     {
         private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
 
-        public IEnumerable<MemberSearchFilter> ForCampaign(int campaignId)
+        public IEnumerable<MemberSearchFilter> GetByCampaignId(int campaignId)
         {
             return _db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
         }
@@ -37,17 +37,6 @@ namespace GiveCRM.DataAccess
         public void DeleteById(int id)
         {
             _db.MemberSearchFilters.DeleteById(id);
-        }
-
-        /// <summary>
-        /// Gets a list of all the <see cref="MemberSearchFilter"/>s associated with the specified <see cref="Campaign"/>.
-        /// </summary>
-        /// <param name="id">The campaign identifier.</param>
-        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="MemberSearchFilter"/> used in the 
-        /// specified <see cref="Campaign"/>.</returns>
-        public IEnumerable<MemberSearchFilter> GetByCampaignId(int id)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
