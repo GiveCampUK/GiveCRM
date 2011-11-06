@@ -14,6 +14,8 @@ namespace GiveCRM.DataAccess
         {
             var memberSearchFilterRepo = new MemberSearchFilters();
             var filters = memberSearchFilterRepo.ForCampaign(campaignId).Select(msf => msf.ToSearchCriteria());
+
+            // Use IMemberService.Search(IEnumerable<SearchCriteria> criteria)
             var results = new Search().RunWithIdOnly(filters).Select(memberId => new {CampaignId = campaignId, MemberId = memberId});
 
             using (var transaction = _db.BeginTransaction())

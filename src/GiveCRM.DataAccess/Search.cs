@@ -33,43 +33,6 @@ namespace GiveCRM.DataAccess
             }
         }
 
-        public IEnumerable<Member> RunCampaign(int campaignId)
-        {
-            var memberSearchFilterRepo = new MemberSearchFilters();
-            var filters = memberSearchFilterRepo.ForCampaign(campaignId).Select(msf => msf.ToSearchCriteria());
-            return Run(filters);
-        }
-
-        public IEnumerable<Member> Run(IEnumerable<SearchCriteria> criteria)
-        {
-            var criteriaList = criteria.ToList();
-
-            if (criteriaList.Count == 0)
-            {
-                // don't attempt to search if there are not criteria - don't want the whole database
-                return Enumerable.Empty<Member>();
-            }
-            
-            var query = CompileQuery(criteriaList);
-
-            return query.Cast<Member>();
-        }
-
-        public IEnumerable<int> RunWithIdOnly(IEnumerable<SearchCriteria> criteria)
-        {
-            var criteriaList = criteria.ToList();
-
-            if (criteriaList.Count == 0)
-            {
-                // don't attempt to search if there are not criteria - don't want the whole database
-                return Enumerable.Empty<int>();
-            }
-
-            var query = CompileQuery(criteriaList);
-
-            return query.Select(_db.Members.Id).ToScalarList<int>();
-        }
-
         private dynamic CompileQuery(List<SearchCriteria> criteriaList)
         {
             var expr = CompileLocationCriteria(criteriaList.OfType<LocationSearchCriteria>(), null);

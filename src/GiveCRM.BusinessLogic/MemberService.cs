@@ -2,41 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.Models;
+using GiveCRM.Models.Search;
 
 namespace GiveCRM.BusinessLogic
 {
     internal class MemberService : IMemberService
     {
-        private readonly IMemberRepository _repository;
+        private readonly IMemberRepository _memberRepository;
+        private readonly IMemberSearchFilterRepository _memberSearchFilterRepository;
 
-        public MemberService(IMemberRepository repository)
+        public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository, ISearchService)
         {
-            if (repository == null)
+            if (memberRepository == null)
             {
-                throw new ArgumentNullException("repository");
+                throw new ArgumentNullException("memberRepository");
+            }
+            
+            if (memberSearchFilterRepository == null)
+            {
+                throw new ArgumentNullException("memberSearchFilterRepository");
             }
 
-            _repository = repository;
+            _memberRepository = memberRepository;
+            _memberSearchFilterRepository = memberSearchFilterRepository;
         }
 
         public IEnumerable<Member> All()
         {
-            return _repository.GetAll();
+            return _memberRepository.GetAll();
         }
 
         public Member Get(int id)
         {
-            return _repository.GetById(id);
+            return _memberRepository.GetById(id);
         }
 
         public void Update(Member member)
         {
-            _repository.Update(member);
+            _memberRepository.Update(member);
         }
 
         public void Insert(Member member)
         {
-            _repository.Insert(member);
+            _memberRepository.Insert(member);
         }
 
         public void Save(Member member)
@@ -57,26 +65,62 @@ namespace GiveCRM.BusinessLogic
 
             member.Archived = true;
 
-            _repository.Update(member);
+            _memberRepository.Update(member);
         }
 
         public IEnumerable<Member> Search(string name, string postcode, string reference)
         {
-            var members = _repository.Search(name, postcode, reference);
+            var members = _memberRepository.Search(name, postcode, reference);
             return members;
         }
 
         public IEnumerable<Member> Search(string criteria)
         {
-            var results = _repository.GetAll()
+            var results = _memberRepository.GetAll()
                                      .Where(member => !member.Archived && (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
 
             return results;
         }
 
+        public IEnumerable<Member> Search(IEnumerable<SearchCriteria> criteria)
+        {
+            var criteriaList = criteria.ToList();
+
+            if (criteriaList.Count == 0)
+            {
+                // don't attempt to search if there are not criteria - don't want the whole database
+                return Enumerable.Empty<Member>();
+            }
+
+            var query = CompileQuery(criteriaList);
+
+            return query.Cast<Member>();
+        }
+
+        public IEnumerable<Member> SearchByCampaignId(int campaignId)
+        {
+            var filters = _memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
+            return Search(filters);
+        }
+
+        public IEnumerable<int> RunWithIdOnly(IEnumerable<SearchCriteria> criteria)
+        {
+            var criteriaList = criteria.ToList();
+
+            if (criteriaList.Count == 0)
+            {
+                // don't attempt to search if there are not criteria - don't want the whole database
+                return Enumerable.Empty<int>();
+            }
+
+            var query = CompileQuery(criteriaList);
+
+            return query.Select(_db.Members.Id).ToScalarList<int>();
+        }
+
         public IEnumerable<Member> FromCampaignRun(int campaignId)
         {
-            return _repository.GetByCampaignId(campaignId);
+            return _memberRepository.GetByCampaignId(campaignId);
         }
 
         private bool NameSearch(Member member, string criteria)

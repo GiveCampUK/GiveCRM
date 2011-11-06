@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{44C66FBA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.Web.Tests", "GiveCRM.Web.Tests\GiveCRM.Web.Tests.csproj", "{F67701A2-8F3E-41B0-910E-7DF0874133AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.BusinessLogic", "GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj", "{03CBFC3C-70A7-4345-BA77-8A121ACC445E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,16 @@ Global
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Release|Mixed Platforms.Build.0 = Release|x86
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Release|x86.ActiveCfg = Release|x86
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Release|x86.Build.0 = Release|x86
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{03CBFC3C-70A7-4345-BA77-8A121ACC445E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
