@@ -11,7 +11,7 @@ namespace GiveCRM.BusinessLogic
         private readonly IMemberRepository _memberRepository;
         private readonly IMemberSearchFilterRepository _memberSearchFilterRepository;
 
-        public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository, ISearchService)
+        public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository)
         {
             if (memberRepository == null)
             {
