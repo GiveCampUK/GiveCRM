@@ -1,5 +1,7 @@
-﻿using System.Web.Routing;
-using PagedList;
+﻿
+
+using System;
+using GiveCRM.BusinessLogic;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -11,16 +13,34 @@ namespace GiveCRM.Web.Controllers
     using GiveCRM.Web.Models.Members;
     using GiveCRM.Web.Services;
 
+    using System.Web.Routing;
+    using PagedList;
+
     public class MemberController : Controller
     {
         private const int MaxResults = 25;
 
-        private IDonationsService donationsService;
-        private IMemberService memberService;
-        private ICampaignService campaignService;
+        private readonly IDonationsService donationsService;
+        private readonly IMemberService memberService;
+        private readonly ICampaignService campaignService;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
+            if (donationsService == null)
+            {
+                throw new ArgumentNullException("donationsService");
+            }
+
+            if (memberService == null)
+            {
+                throw new ArgumentNullException("memberService");
+            }
+            
+            if (campaignService == null)
+            {
+                throw new ArgumentNullException("campaignService");
+            }
+            
             this.donationsService = donationsService;
             this.memberService = memberService;
             this.campaignService = campaignService;
