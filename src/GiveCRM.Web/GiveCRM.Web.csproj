@@ -234,6 +234,8 @@
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\PagedList\PagedList.Mvc.js" />
     <Content Include="Scripts\PagedList\PagedList.Mvc.Template.html" />
+    <Content Include="Scripts\ViewScripts\EditFacet.js" />
+    <Content Include="Scripts\ViewScripts\MemberList.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -348,6 +350,7 @@
   <ItemGroup>
     <Content Include="Views\ExcelImport\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
