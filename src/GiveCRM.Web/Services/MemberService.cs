@@ -7,35 +7,39 @@ namespace GiveCRM.Web.Services
 {
     public class MemberService: IMemberService
     {
-        private Members _membersDb = new Members();
+        private Members membersDb = new Members();
 
         public IEnumerable<Member> All()
         {
-            return _membersDb.All();
+            return membersDb.All();
         }
 
         public Member Get(int id)
         {
-            var member = _membersDb.Get(id);
+            var member = membersDb.Get(id);
             return member;
         }
 
         public void Update(Member member)
         {
-            _membersDb.Update(member);
+            membersDb.Update(member);
         }
 
         public void Insert(Member member)
         {
-            _membersDb.Insert(member);
+            membersDb.Insert(member);
         }
 
         public void Save(Member member)
         {
             if (member.Id == 0)
-                this.Insert(member);
+            {
+                Insert(member);
+            }
             else
-                this.Update(member);
+            {
+                Update(member);
+            }
         }
 
         public void Delete(Member member)
@@ -48,18 +52,18 @@ namespace GiveCRM.Web.Services
 
             member.Archived = true;
 
-            _membersDb.Update(member);
+            membersDb.Update(member);
         }
 
         public IEnumerable<Member> Search(string name, string postcode, string reference)
         {
-            var members = _membersDb.Search(name, postcode, reference);
+            var members = membersDb.Search(name, postcode, reference);
             return members;
         }
 
         public IEnumerable<Member> Search(string criteria)
         {
-            var results = _membersDb
+            var results = membersDb
                 .All()
                 .Where(member =>
                     !member.Archived &&
@@ -70,7 +74,7 @@ namespace GiveCRM.Web.Services
 
         public IEnumerable<Member> FromCampaignRun(int campaignId)
         {
-            return _membersDb.FromCampaignRun(campaignId);
+            return membersDb.FromCampaignRun(campaignId);
         }
 
         private bool NameSearch(Member member, string criteria)

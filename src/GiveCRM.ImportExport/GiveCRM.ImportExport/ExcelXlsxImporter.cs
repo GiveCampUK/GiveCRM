@@ -11,11 +11,14 @@ namespace GiveCRM.ImportExport
     {
         internal ExcelWorkbook Workbook;
         internal ExcelPackage Package;
-        private bool _disposed;
+        private bool disposed;
 
         public void Open(Stream stream)
         {
-            if (stream == null) throw new ArgumentNullException("stream");
+            if (stream == null)
+            {
+                throw new ArgumentNullException("stream");
+            }
             Package = new ExcelPackage(stream);
             if (Package.Workbook == null)
             {
@@ -92,13 +95,13 @@ namespace GiveCRM.ImportExport
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!disposed)
             {
                 if (Package != null)
                 {
                     Package.Dispose(); 
                 }
-                _disposed = true;
+                disposed = true;
             }
         }
     }

@@ -12,16 +12,16 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_using_ExcelExport
     {
-        private Workbook _workBook;
-        private List<List<Cell>> _sampleData;
+        private Workbook workBook;
+        private List<List<Cell>> sampleData;
 
         [SetUp]
         public void Setup()
         {
 
-            _workBook = Helper.CreateWorkBookWithSheet();
+            workBook = Helper.CreateWorkBookWithSheet();
 
-            _sampleData = new List<List<Cell>> 
+            sampleData = new List<List<Cell>> 
                               {
                                   new List<Cell>
                                   {
@@ -68,7 +68,7 @@ namespace GiveCRM.ImportExport.Test
             ExcelExport target = new ExcelExport();
              CellFormatter formatter = new CellFormatter();
 
-            target.WriteDataToExport(_sampleData, formatter,ExcelFileType.XLS);
+            target.WriteDataToExport(sampleData, formatter,ExcelFileType.XLS);
 
             target.ExportToStream(outputStream);
 

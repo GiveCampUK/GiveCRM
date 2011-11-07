@@ -34,7 +34,7 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var controller = CreateController();
 membershipService.ValidateUser("test","password").Returns(true);
-            urlValidationService.IsRedirectable(controller,"").Returns(false);
+            urlValidationService.IsRedirectable(controller,string.Empty).Returns(false);
 
             var model = new LogOnModel();
             model.UserName = "test";
@@ -79,8 +79,8 @@ membershipService.ValidateUser("test","password").Returns(true);
 
             var actionResult = controller.LogOn(model, url);
             Expect(controller.ModelState.IsValid, Is.False);
-            Expect(controller.ModelState[""].Errors.Count,Is.EqualTo(1));
-            Expect(controller.ModelState[""].Errors[0].ErrorMessage,Is.EqualTo("The user name or password provided is incorrect."));
+            Expect(controller.ModelState[string.Empty].Errors.Count, Is.EqualTo(1));
+            Expect(controller.ModelState[string.Empty].Errors[0].ErrorMessage,Is.EqualTo("The user name or password provided is incorrect."));
             actionResult.AssertViewRendered().WithViewData<LogOnModel>();
         }
 
@@ -98,7 +98,7 @@ membershipService.ValidateUser("test","password").Returns(true);
         [Test]
         public void ShouldRegister()
         {
-            var error = string.Empty;
+            string error;
             membershipService.CreateUser("test", "password", "a@a.a", out error).Returns(true);
             var controller = CreateController();
             var model = new RegisterModel
@@ -180,8 +180,8 @@ membershipService.ChangePassword("userName", "password", "Slartibartfast").Retur
             
             var actionResult = controller.ChangePassword(model);
             Expect(controller.ViewData.ModelState.IsValid, Is.False);
-            Expect(controller.ModelState[""].Errors.Count,Is.EqualTo(1));
-            Expect(controller.ModelState[""].Errors[0].ErrorMessage, Is.EqualTo("The current password is incorrect or the new password is invalid."));
+            Expect(controller.ModelState[string.Empty].Errors.Count,Is.EqualTo(1));
+            Expect(controller.ModelState[string.Empty].Errors[0].ErrorMessage, Is.EqualTo("The current password is incorrect or the new password is invalid."));
             actionResult.AssertViewRendered().WithViewData<ChangePasswordModel>();
         }
     }

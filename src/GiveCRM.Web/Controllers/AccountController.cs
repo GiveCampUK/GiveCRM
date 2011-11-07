@@ -74,9 +74,9 @@
             if (ModelState.IsValid)
             {
                 string error;
-                if (this.membershipService.CreateUser(model.UserName, model.Password,model.Email, out error))
+                if (membershipService.CreateUser(model.UserName, model.Password,model.Email, out error))
                 {
-                    this.authenticationService.SetAuthorizationCredentials(model.UserName, false);
+                    authenticationService.SetAuthorizationCredentials(model.UserName, false);
                     return RedirectToAction("Index", "Home");
                 }
                 

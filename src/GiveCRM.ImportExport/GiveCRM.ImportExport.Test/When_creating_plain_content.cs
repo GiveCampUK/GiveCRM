@@ -12,18 +12,18 @@ namespace GiveCRM.ImportExport.Test
     {
         private ExcelExport sut;
 
-        private List<List<Cell>> _sampleData;
-        private CellFormatter _formatter;
-        private Workbook _workBook;
+        private List<List<Cell>> sampleData;
+        private CellFormatter formatter;
+        private Workbook workBook;
 
         [SetUp]
         public void Setup()
         {
             sut = new ExcelExport();
-            _formatter = new CellFormatter();
-            _workBook = Helper.CreateWorkBookWithSheet();
+            formatter = new CellFormatter();
+            workBook = Helper.CreateWorkBookWithSheet();
 
-            _sampleData = new List<List<Cell>> 
+            sampleData = new List<List<Cell>> 
                               {
                                   new List<Cell>
                                   {
@@ -45,33 +45,33 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_output_data()
         {
-            _formatter.WriteDataToSheet(_workBook.GetSheetAt(0),_sampleData);
+            formatter.WriteDataToSheet(workBook.GetSheetAt(0),sampleData);
 
-            Row row = Helper.GetRowData(_workBook, 0);
-            Helper.CompareCellData(row, _sampleData[0]);            
+            Row row = Helper.GetRowData(workBook, 0);
+            Helper.CompareCellData(row, sampleData[0]);            
         }
         
         [Test]
         public void Should_output_multiple_rows_of_data()
         {
-            _formatter.WriteDataToSheet(_workBook.GetSheetAt(0), _sampleData);
+            formatter.WriteDataToSheet(workBook.GetSheetAt(0), sampleData);
 
-            for (int i = 0; i < _sampleData.Count; i++)
+            for (int i = 0; i < sampleData.Count; i++)
             {
-                Row row = Helper.GetRowData(_workBook, 0);
-                Helper.CompareCellData(row, _sampleData[i]);
+                Row row = Helper.GetRowData(workBook, 0);
+                Helper.CompareCellData(row, sampleData[i]);
             }
         }
 
         [Test]
         public void Should_output_cell_that_spans_2_columns_at_the_beginning_of_the_row()
         {
-            _sampleData[0][0].ColumnSpan = 2;
+            sampleData[0][0].ColumnSpan = 2;
 
-            _formatter.WriteDataToSheet(_workBook.GetSheetAt(0), _sampleData);
+            formatter.WriteDataToSheet(workBook.GetSheetAt(0), sampleData);
 
-            Sheet sheet = _workBook.GetSheetAt(0);
-            Row row = Helper.GetRowData(_workBook, 0);
+            Sheet sheet = workBook.GetSheetAt(0);
+            Row row = Helper.GetRowData(workBook, 0);
 
             CellRangeAddress mergedRegion= sheet.GetMergedRegion(0);
 
@@ -83,12 +83,12 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_output_cell_that_spans_2_columns_in_the_middle_of_the_row()
         {
-            _sampleData[0][1].ColumnSpan = 2;
+            sampleData[0][1].ColumnSpan = 2;
 
-            _formatter.WriteDataToSheet(_workBook.GetSheetAt(0), _sampleData);
+            formatter.WriteDataToSheet(workBook.GetSheetAt(0), sampleData);
 
-            Sheet sheet = _workBook.GetSheetAt(0);
-            Row row = Helper.GetRowData(_workBook, 0);
+            Sheet sheet = workBook.GetSheetAt(0);
+            Row row = Helper.GetRowData(workBook, 0);
 
             CellRangeAddress mergedRegion = sheet.GetMergedRegion(0);
 
@@ -101,12 +101,12 @@ namespace GiveCRM.ImportExport.Test
         [Test]
         public void Should_output_cell_that_spans_2_columns_at_the_end_of_the_row()
         {
-            _sampleData[0][3].ColumnSpan = 2;
+            sampleData[0][3].ColumnSpan = 2;
 
-            _formatter.WriteDataToSheet(_workBook.GetSheetAt(0), _sampleData);
+            formatter.WriteDataToSheet(workBook.GetSheetAt(0), sampleData);
 
-            Sheet sheet = _workBook.GetSheetAt(0);
-            Row row = Helper.GetRowData(_workBook, 0);
+            Sheet sheet = workBook.GetSheetAt(0);
+            Row row = Helper.GetRowData(workBook, 0);
 
             CellRangeAddress mergedRegion = sheet.GetMergedRegion(0);
 

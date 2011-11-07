@@ -35,7 +35,7 @@ namespace GiveCRM.Web.Services.ExcelImport
             this.memberFactory = memberFactory;
         }
 
-        #region IExcelImportService
+        
 
         public event Action<object, ImportDataCompletedEventArgs> ImportCompleted;
         public event Action<object, ImportDataFailedEventArgs> ImportFailed;
@@ -52,12 +52,12 @@ namespace GiveCRM.Web.Services.ExcelImport
             try
             {
                 // Hard-coded for now - FIX THIS!!!
-                const ExcelFileType fileType = ExcelFileType.XLS;
-                importer.Open(file, fileType, hasHeaderRow: true);
+                const ExcelFileType FileType = ExcelFileType.XLS;
+                importer.Open(file, FileType, hasHeaderRow: true);
 
-                const int sheetIndex = 0; // Hard-coded for now
+                const int SheetIndex = 0; // Hard-coded for now
                 IList<IDictionary<string, object>> rowsAsKeyValuePairs =
-                    importer.GetRowsAsKeyValuePairs(sheetIndex).ToList();
+                    importer.GetRowsAsKeyValuePairs(SheetIndex).ToList();
 
                 AddArchivedFieldToData(rowsAsKeyValuePairs); // This is a non-null field
 
@@ -77,8 +77,7 @@ namespace GiveCRM.Web.Services.ExcelImport
             }
         }
 
-        #endregion
-
+        
         private static void AddArchivedFieldToData(IEnumerable<IDictionary<string, object>> rowsAsKeyValuePairs)
         {
             foreach (var row in rowsAsKeyValuePairs)
@@ -91,7 +90,6 @@ namespace GiveCRM.Web.Services.ExcelImport
             }
         }
 
-        #region Invoke Events
 
         private void InvokeImportDataCompleted()
         {
@@ -117,7 +115,6 @@ namespace GiveCRM.Web.Services.ExcelImport
             }
         }
 
-        #endregion
 
     }
 }

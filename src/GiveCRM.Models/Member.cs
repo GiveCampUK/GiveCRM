@@ -6,8 +6,8 @@ namespace GiveCRM.Models
 {
     public class Member
     {
-        private decimal _totalDonations;
-        private Lazy<ICollection<Donation>> _lazyDonations;
+        private decimal totalDonations;
+        private Lazy<ICollection<Donation>> lazyDonations;
         public int Id { get; set; }
 
         public string Reference { get; set; }
@@ -24,31 +24,31 @@ namespace GiveCRM.Models
         public string Country { get; set; }
         public bool Archived { get; set; }
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        private ICollection<Donation> _donations;
+        private ICollection<Donation> donations;
         public ICollection<Donation> Donations
         {
-            get { return _donations ?? (_donations = _lazyDonations != null ? _lazyDonations.Value : null); }
-            set { _donations = value; }
+            get { return donations ?? (donations = lazyDonations != null ? lazyDonations.Value : null); }
+            set { donations = value; }
         }
 
         public decimal TotalDonations
         {
             get {
-                if (_donations != null)
+                if (donations != null)
                 {
-                    return _donations.Sum(d => d.Amount);
+                    return donations.Sum(d => d.Amount);
                 }
                 else
                 {
-                    return _totalDonations;
+                    return totalDonations;
                 }
             }
-            set { _totalDonations = value; }
+            set { totalDonations = value; }
         }
 
         public void SetLazyDonations(Lazy<ICollection<Donation>> lazyDonations)
         {
-            _lazyDonations = lazyDonations;
+            this.lazyDonations = lazyDonations;
         }
 
         public override string ToString()

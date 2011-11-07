@@ -7,8 +7,8 @@ namespace GiveCRM.ImportExport.Test
     [TestFixture]
     public class When_opening_file_from_stream
     {
-        private string _testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
-        private string _testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
+        private string testFileXlsx = Directory.GetCurrentDirectory() + "/TestData/MemberData.xlsx";
+        private string testFileXls = Directory.GetCurrentDirectory() + "/TestData/MemberData.xls";
 
         [Test]
         public void Should_throw_exception_if_file_stream_for_xlsx_null()
@@ -31,7 +31,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
             
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
             }
@@ -42,7 +42,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXls, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLS, true);
             }
@@ -53,7 +53,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXls, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXls, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLS, true);
 
@@ -66,7 +66,7 @@ namespace GiveCRM.ImportExport.Test
         {
             var import = new ExcelImport();
 
-            using (FileStream stream = new FileStream(_testFileXlsx, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(testFileXlsx, FileMode.Open, FileAccess.Read))
             {
                 import.Open(stream, ExcelFileType.XLSX, true);
 
