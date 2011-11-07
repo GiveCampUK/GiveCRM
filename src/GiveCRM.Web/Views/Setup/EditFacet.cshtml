@@ -32,7 +32,7 @@
         foreach (var option in Model.Values)
         {
             <label for="Values[@i].ValueBox">@option.Value</label>
-            <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" disabled value="@option.Value" />
+            <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" value="@option.Value" />
             <br />
             <input type="hidden" name="Values[@i].Id" value="@option.Id" />
             <input type="hidden" name="Values[@i].FacetId" class="facetCount" value="@option.FacetId" />
