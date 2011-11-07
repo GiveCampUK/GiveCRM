@@ -132,7 +132,7 @@
         {
             var members = this.memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
-            return View("MembersList", new PagedMemberListViewModel(members.ToPagedList(pageNumber: 1, pageSize: DefaultPageSize), page => string.Empty));
+            return View("TopDonors", members);
         }
     }
 }
