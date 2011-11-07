@@ -32,7 +32,7 @@
     {
         <tr>
             <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
-            <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id } new { title = "ref_" + member.Reference })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
             <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
             <td>@member.Reference</td>
             <td>@member.Salutation @member.FirstName @member.LastName</td>
