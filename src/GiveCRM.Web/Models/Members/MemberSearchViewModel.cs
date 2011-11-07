@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.Web.Models.Members
+﻿namespace GiveCRM.Web.Models.Members
 {
     public class MemberSearchViewModel
     {
-        public IEnumerable<GiveCRM.Models.Member> Results { get; set; }
-        public bool AreMore { get; set; }
+        public int? Page { get; set; }
+        public string Name { get; set; }
+        public string PostCode { get; set; }
+        public string Reference { get; set; }
+        public PagedMemberListViewModel Results { get; set; }
+        public string SearchButton { get; set; }
     }
 }
