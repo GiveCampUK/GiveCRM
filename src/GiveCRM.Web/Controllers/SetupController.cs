@@ -45,7 +45,7 @@ namespace GiveCRM.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveFacet(Facet facet)
         {
-            CleanFacet(facet);
+            //CleanFacet(facet);
 
             if (facet.Id > 0)
             {
