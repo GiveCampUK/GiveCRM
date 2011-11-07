@@ -3,14 +3,14 @@
 }
 
 <div class="donations">
-	<div class="row">
-		<div class="span16">
+    <div class="row">
+        <div class="span16">
 <h1>Donations</h1>
-		</div>
-	</div>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="maincol span-two-thirds">
+    <div class="row">
+        <div class="maincol span-two-thirds">
 
 <h3>Top Donations</h3>
 
@@ -24,12 +24,13 @@
 
 @{Html.RenderAction("TopDonors", "Member");}
 
-		</div>
+        </div>
 
-		<div class="sidebar span-one-third">
-			<h2>Quick Donate</h2>
-		
-            @{Html.BeginForm("AjaxSearch", "Members", FormMethod.Post, new { name = "AjaxSearch", id = "AjaxSearch" });}
+        <div class="sidebar span-one-third">
+            <h2>Quick Donate</h2>
+        
+            @using (Html.BeginForm("AjaxSearch", "Member", FormMethod.Get, new { name = "AjaxSearch", id = "AjaxSearch" })) 
+            { 
             <div class="clearfix">
                 @Html.Label("SearchCriteria", "Search Criteria")
                 <div class="input">
@@ -40,13 +41,13 @@
             <div class="actions">
                     <a class="btn primary" href="javascript:DoSearch();">Search</a>
             </div>
-            @{Html.EndForm();}
+            }
 
             <div id="QuickResults">&nbsp;</div>
 
             <div id="AddDonation">&nbsp</div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
