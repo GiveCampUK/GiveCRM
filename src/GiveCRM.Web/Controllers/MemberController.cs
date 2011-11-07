@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-	using System.Web.Routing;
+    using System.Web.Routing;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Members;
     using GiveCRM.Web.Services;
-	using PagedList;
+    using PagedList;
 
     public class MemberController : Controller
     {
@@ -97,7 +97,7 @@
         {
             if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
             {
-                model.Results = CreatePagedListOfMembers(_memberService.All(), model);
+                model.Results = CreatePagedListOfMembers(this.memberService.All(), model);
                 return View(model);
             }
 
