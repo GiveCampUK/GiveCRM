@@ -7,11 +7,11 @@ namespace GiveCRM.DataAccess
 {
     public class Donations : IDonationRepository
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public Donation GetById(int id)
         {
-            return _db.Donations.FindById(id);
+            return db.Donations.FindById(id);
         }
 
         public void Update(Donation item)
@@ -21,22 +21,22 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Donation> GetAll()
         {
-            return _db.Donations.All().Cast<Donation>();
+            return db.Donations.All().Cast<Donation>();
         }
 
         public IEnumerable<Donation> GetByMemberId(int memberId)
         {
-            return _db.Donations.FindByMemberId(memberId).Cast<Donation>();
+            return db.Donations.FindByMemberId(memberId).Cast<Donation>();
         }
 
         public IEnumerable<Donation> GetByCampaignId(int campaignId)
         {
-            return _db.Donations.FindByCampaignId(campaignId).Cast<Donation>();
+            return db.Donations.FindByCampaignId(campaignId).Cast<Donation>();
         }
 
         public Donation Insert(Donation donation)
         {
-            return _db.Donations.Insert(donation);
+            return db.Donations.Insert(donation);
         }
 
         /// <summary>

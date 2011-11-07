@@ -8,9 +8,9 @@ using GiveCRM.ImportExport.Cells;
 
 namespace GiveCRM.App
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Please enter the cell values, separated by commas.");
             Console.WriteLine("To create merged cells, add : and col span value after cell value");

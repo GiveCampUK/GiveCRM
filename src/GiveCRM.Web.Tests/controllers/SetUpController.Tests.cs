@@ -12,18 +12,18 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class SetUpControllerTests
     {
-        private IFacetsService _facetService;
+        private IFacetsService facetService;
 
         [SetUp]
         public void SetUp()
         {
-            _facetService = Substitute.For<IFacetsService>();
+            facetService = Substitute.For<IFacetsService>();
         }
 
         [Test]
         public void Index_Action_Returns_View()
         {
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.Index();
 
             result.AssertViewRendered();
@@ -32,7 +32,7 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void AddFacet_Action_Returns_View_With_A_Facet()
         {
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.AddFacet();
 
             result.AssertViewRendered().ForView("EditFacet").WithViewData<Facet>();
@@ -41,9 +41,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void EditFacet_Action_Returns_View_With_A_Facet()
         {
-            _facetService.Get(1).Returns(new Facet());
+            facetService.Get(1).Returns(new Facet());
 
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.AddFacet();
 
             result.AssertViewRendered().ForView("EditFacet").WithViewData<Facet>();
@@ -52,9 +52,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void SaveFacet_Action_With_New_Facet_Inserts_And_Redirects_To_Action()
         {
-            _facetService.Insert(new Facet());
+            facetService.Insert(new Facet());
 
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.SaveFacet(new Facet());
 
             result.AssertActionRedirect();
@@ -63,9 +63,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void SaveFacet_Action_With_Exsting_Facet_Inserts_And_Redirects_To_Action()
         {
-            _facetService.Insert(new Facet{Id = 20});
+            facetService.Insert(new Facet{Id = 20});
 
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.SaveFacet(new Facet
                                                   {
                                                       Id = 20
@@ -77,9 +77,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void ListFacets_Action_Returns_View_With_A_ViewModel()
         {
-            _facetService.All().Returns(new List<Facet>());
+            facetService.All().Returns(new List<Facet>());
 
-            var controller = new SetupController(_facetService);
+            var controller = new SetupController(facetService);
             var result = controller.ListFacets();
 
             result.AssertViewRendered().WithViewData<FacetListViewModel>();

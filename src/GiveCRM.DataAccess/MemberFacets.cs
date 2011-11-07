@@ -8,16 +8,16 @@ namespace GiveCRM.DataAccess
 {
     public class MemberFacets
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public IEnumerable<MemberFacet> ForMember(int memberId)
         {
-            var query = _db.MemberFacets.FindAllByMemberId(memberId)
-                .Select(_db.MemberFacets.ID, _db.MemberFacets.FacetId, _db.MemberFacets.FreeTextValue,
-                        _db.MemberFacets.MemberFacetValue.FacetValueId,
-                        _db.MemberFacets.MemberFacetValue.FacetValue.Value,
-                        _db.MemberFacets.MemberFacetValue.Id.As("MemberFacetValueId"),
-                        _db.MemberFacets.Facet.Type, _db.MemberFacets.Facet.Name);
+            var query = db.MemberFacets.FindAllByMemberId(memberId)
+                .Select(db.MemberFacets.ID, db.MemberFacets.FacetId, db.MemberFacets.FreeTextValue,
+                        db.MemberFacets.MemberFacetValue.FacetValueId,
+                        db.MemberFacets.MemberFacetValue.FacetValue.Value,
+                        db.MemberFacets.MemberFacetValue.Id.As("MemberFacetValueId"),
+                        db.MemberFacets.Facet.Type, db.MemberFacets.Facet.Name);
 
             var listCache = new Dictionary<int, MemberFacetList>();
 
@@ -77,12 +77,12 @@ namespace GiveCRM.DataAccess
 
         public MemberFacetFreeText Insert(MemberFacetFreeText facet)
         {
-            return _db.MemberFacets.Insert(facet);
+            return db.MemberFacets.Insert(facet);
         }
 
         public MemberFacetList Insert(MemberFacetList facet)
         {
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {

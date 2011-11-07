@@ -7,36 +7,36 @@ namespace GiveCRM.DataAccess
 {
     public class MemberSearchFilters : IMemberSearchFilterRepository
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public IEnumerable<MemberSearchFilter> GetByCampaignId(int campaignId)
         {
-            return _db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
+            return db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
         }
 
         public IEnumerable<MemberSearchFilter> GetAll()
         {
-            return _db.MemberSearchFilters.All();
+            return db.MemberSearchFilters.All();
         }
 
         public MemberSearchFilter GetById(int id)
         {
-            return _db.MemberSearchFilters.FindById(id);
+            return db.MemberSearchFilters.FindById(id);
         }
 
         public void Update(MemberSearchFilter item)
         {
-            _db.MemberSearchFilters.UpdateById(item);
+            db.MemberSearchFilters.UpdateById(item);
         }
 
         public MemberSearchFilter Insert(MemberSearchFilter memberSearchFilter)
         {
-            return _db.MemberSearchFilters.Insert(memberSearchFilter);
+            return db.MemberSearchFilters.Insert(memberSearchFilter);
         }
         
         public void DeleteById(int id)
         {
-            _db.MemberSearchFilters.DeleteById(id);
+            db.MemberSearchFilters.DeleteById(id);
         }
     }
 }

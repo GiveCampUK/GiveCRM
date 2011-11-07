@@ -8,11 +8,11 @@ namespace GiveCRM.DataAccess
 {
     public class Members : IMemberRepository
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public Member GetById(int id)
         {
-            var record = _db.Members.FindById(id);
+            var record = db.Members.FindById(id);
             Member member = record;
             member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
             member.Donations = record.Donations.ToList<Donation>();
@@ -21,27 +21,27 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> GetAll()
         {
-            var query = _db.Members.All().OrderBy(_db.Members.Id);
+            var query = db.Members.All().OrderBy(db.Members.Id);
             return RunMemberQueryWithPhoneNumbers(query);
         }
 
         public IEnumerable<Member> Search(string lastName, string postalCode, string reference)
         {
-            var query = _db.Members.All();
+            var query = db.Members.All();
 
             if(!String.IsNullOrWhiteSpace(lastName))
             {
-                query = query.Where(_db.Members.LastName.Like(lastName + "%"));
+                query = query.Where(db.Members.LastName.Like(lastName + "%"));
             }
 
             if(!String.IsNullOrWhiteSpace(postalCode))
             {
-                query = query.Where(_db.Members.PostalCode.Like(postalCode + "%")); 
+                query = query.Where(db.Members.PostalCode.Like(postalCode + "%")); 
             }
 
             if(!String.IsNullOrWhiteSpace(reference)) 
             {
-                query = query.Where(_db.Members.Reference.Like(reference + "%")); 
+                query = query.Where(db.Members.Reference.Like(reference + "%")); 
             }
 
             return query.ToList<Member>(); 
@@ -49,24 +49,24 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> GetByCampaignId(int campaignId)
         {
-            var query = _db.Members.All()
-                .Where(_db.Members.CampaignRun.CampaignId == campaignId)
-                .OrderBy(_db.Members.Id);
+            var query = db.Members.All()
+                .Where(db.Members.CampaignRun.CampaignId == campaignId)
+                .OrderBy(db.Members.Id);
             return RunMemberQueryWithPhoneNumbers(query);
         }
 
         private IEnumerable<Member> RunMemberQueryWithPhoneNumbers(dynamic query)
         {
-            query = query.Select(_db.Members.Id, _db.Members.Reference, _db.Members.Title, _db.Members.FirstName,
-                                 _db.Members.LastName, _db.Members.Salutation, _db.Members.EmailAddress,
-                                 _db.Members.AddressLine1, _db.Members.AddressLine2, _db.Members.City,
-                                 _db.Members.Region,
-                                 _db.Members.PostalCode, _db.Members.Country,
-                                 _db.Members.Archived,
-                                 _db.Members.PhoneNumbers.Id.As("PhoneNumberId"),
-                                 _db.Members.PhoneNumbers.PhoneNumberType,
-                                 _db.Members.PhoneNumbers.Number,
-                                 _db.Members.Donations.Amount.Sum().As("TotalDonations"));
+            query = query.Select(db.Members.Id, db.Members.Reference, db.Members.Title, db.Members.FirstName,
+                                 db.Members.LastName, db.Members.Salutation, db.Members.EmailAddress,
+                                 db.Members.AddressLine1, db.Members.AddressLine2, db.Members.City,
+                                 db.Members.Region,
+                                 db.Members.PostalCode, db.Members.Country,
+                                 db.Members.Archived,
+                                 db.Members.PhoneNumbers.Id.As("PhoneNumberId"),
+                                 db.Members.PhoneNumbers.PhoneNumberType,
+                                 db.Members.PhoneNumbers.Number,
+                                 db.Members.Donations.Amount.Sum().As("TotalDonations"));
 
             Member member = null;
 
@@ -107,7 +107,7 @@ namespace GiveCRM.DataAccess
             {
                 return InsertWithPhoneNumbers(member);
             }
-            return _db.Members.Insert(member);
+            return db.Members.Insert(member);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace GiveCRM.DataAccess
 
         private Member InsertWithPhoneNumbers(Member member)
         {
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {
@@ -148,7 +148,7 @@ namespace GiveCRM.DataAccess
         {
             bool refetchPhoneNumbers = false;
 
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {
@@ -165,7 +165,7 @@ namespace GiveCRM.DataAccess
 
             if (refetchPhoneNumbers)
             {
-                var newNos = _db.PhoneNumbers.FindAllByMemberId(member.Id);
+                var newNos = db.PhoneNumbers.FindAllByMemberId(member.Id);
                 member.PhoneNumbers = newNos.ToList<PhoneNumber>();
             }
 

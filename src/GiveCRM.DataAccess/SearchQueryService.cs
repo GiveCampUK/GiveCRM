@@ -9,7 +9,7 @@ namespace GiveCRM.DataAccess
 {
     public class SearchQueryService : ISearchQueryService
     {
-        private readonly dynamic _db = Database.OpenNamedConnection("GiveCRM");
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
         public dynamic CompileQuery(IEnumerable<SearchCriteria> criteria)
         {
@@ -19,7 +19,7 @@ namespace GiveCRM.DataAccess
             SimpleExpression having = null;
             CompileDonationCriteria(criteriaList.OfType<DonationSearchCriteria>(), ref expr, ref having);
 
-            var query = _db.Members.All();
+            var query = db.Members.All();
 
             if (expr != null)
             {
@@ -37,7 +37,7 @@ namespace GiveCRM.DataAccess
         {
             foreach (var criterion in criteria)
             {
-                var facetReference = _db.Member.MemberFacet.As(criterion.InternalName);
+                var facetReference = db.Member.MemberFacet.As(criterion.InternalName);
                 var facetExpr = facetReference.FacetId == criterion.FacetId &&
                                 CompileStringExpression(facetReference.FreeTextValue, criterion);
                 expr = Combine(expr, facetExpr);
@@ -49,8 +49,11 @@ namespace GiveCRM.DataAccess
         internal SimpleExpression CompileCampaignCriteria(IEnumerable<CampaignSearchCriteria> criteria, SimpleExpression expr)
         {
             var criterion = criteria.FirstOrDefault();
-            if (criterion == null) return expr;
-            return Combine(expr, CompileStringExpression(_db.Members.Campaign.Name, criterion));
+            if (criterion == null)
+            {
+                return expr;
+            }
+            return Combine(expr, CompileStringExpression(db.Members.Campaign.Name, criterion));
         }
 
         internal void CompileDonationCriteria(IEnumerable<DonationSearchCriteria> criteria, ref SimpleExpression expr, ref SimpleExpression having)
@@ -76,25 +79,34 @@ namespace GiveCRM.DataAccess
 
         private SimpleExpression CompileIndividualDonationCriteria(DonationSearchCriteria donationCriteria)
         {
-            var column = _db.Members.Donations.Amount;
+            var column = db.Members.Donations.Amount;
             decimal amount;
-            if (!decimal.TryParse(donationCriteria.Value, out amount)) throw new InvalidOperationException("Cannot convert value to decimal.");
+            if (!decimal.TryParse(donationCriteria.Value, out amount))
+            {
+                throw new InvalidOperationException("Cannot convert value to decimal.");
+            }
             return CompileExpression(donationCriteria, amount, column);
         }
 
         private SimpleExpression CompileTotalDonationCriteria(DonationSearchCriteria donationCriteria)
         {
-            var column = _db.Members.Donations.Amount.Total();
+            var column = db.Members.Donations.Amount.Total();
             decimal amount;
-            if (!decimal.TryParse(donationCriteria.Value, out amount)) throw new InvalidOperationException("Cannot convert value to decimal.");
+            if (!decimal.TryParse(donationCriteria.Value, out amount))
+            {
+                throw new InvalidOperationException("Cannot convert value to decimal.");
+            }
             return CompileExpression(donationCriteria, amount, column);
         }
 
         private SimpleExpression CompileLastDonationDate(DonationSearchCriteria donationCriteria)
         {
-            var column = _db.Members.Donations.Date.Max();
+            var column = db.Members.Donations.Date.Max();
             DateTime date;
-            if (!DateTime.TryParse(donationCriteria.Value, out date)) throw new InvalidOperationException("Cannot convert value to date.");
+            if (!DateTime.TryParse(donationCriteria.Value, out date))
+            {
+                throw new InvalidOperationException("Cannot convert value to date.");
+            }
             return CompileExpression(donationCriteria, date, column);
         }
 
@@ -124,7 +136,7 @@ namespace GiveCRM.DataAccess
         {
             foreach (var locationCriteria in criteria)
             {
-                var column = _db.Members[locationCriteria.InternalName];
+                var column = db.Members[locationCriteria.InternalName];
                 var expr = CompileStringExpression(column, locationCriteria);
 
                 current = Combine(current, expr);
@@ -161,8 +173,14 @@ namespace GiveCRM.DataAccess
 
         private static SimpleExpression Combine(SimpleExpression first, SimpleExpression second)
         {
-            if (ReferenceEquals(first, null)) return second;
-            if (ReferenceEquals(second, null)) return first;
+            if (ReferenceEquals(first, null))
+            {
+                return second;
+            }
+            if (ReferenceEquals(second, null))
+            {
+                return first;
+            }
             return first && second;
         }
     }

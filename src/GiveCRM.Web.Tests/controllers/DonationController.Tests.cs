@@ -12,18 +12,18 @@ namespace GiveCRM.Web.Tests.controllers
     [TestFixture]
     public class DonationControllerTests
     {
-        private IDonationsService _donationsService;
+        private IDonationsService donationsService;
 
         [SetUp]
         public void SetUp()
         {
-            _donationsService = Substitute.For<IDonationsService>();
+            donationsService = Substitute.For<IDonationsService>();
         }
 
         [Test]
         public void Index_Action_Returns_View()
         {
-            var controller = new DonationController(_donationsService);
+            var controller = new DonationController(donationsService);
             var result = controller.Index();
 
             result.AssertViewRendered();
@@ -32,9 +32,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void TopDonations_Action_Returns_View_With_A_List_Donations()
         {
-            _donationsService.GetTopDonations().Received().Returns(new List<Donation>());
+            donationsService.GetTopDonations().Received().Returns(new List<Donation>());
 
-            var controller = new DonationController(_donationsService);
+            var controller = new DonationController(donationsService);
             var result = controller.TopDonations();
 
             result.AssertViewRendered().WithViewData<IEnumerable<Donation>>();
@@ -44,9 +44,9 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void LatestDonations_Action_Returns_View_With_A_List_Donations()
         {
-            _donationsService.GetLatestDonations().Received().Returns(new List<Donation>());
+            donationsService.GetLatestDonations().Received().Returns(new List<Donation>());
 
-            var controller = new DonationController(_donationsService);
+            var controller = new DonationController(donationsService);
             var result = controller.LatestDonations();
 
             result.AssertViewRendered().WithViewData<IEnumerable<Donation>>();
@@ -58,7 +58,7 @@ namespace GiveCRM.Web.Tests.controllers
         {
             var id = 1;
 
-            var controller = new DonationController(_donationsService);
+            var controller = new DonationController(donationsService);
             var result = controller.QuickDonate(id);
 
             result.AssertViewRendered().WithViewData<int>();
@@ -72,7 +72,7 @@ namespace GiveCRM.Web.Tests.controllers
             var date = "10/11/2011";
             int campaignId = 14;
 
-            var controller = new DonationController(_donationsService);
+            var controller = new DonationController(donationsService);
             var result = controller.DoQuickDonate(id, amount, date, campaignId);
 
             result.AssertViewRendered();
