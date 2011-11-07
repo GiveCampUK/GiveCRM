@@ -45,8 +45,6 @@ namespace GiveCRM.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveFacet(Facet facet)
         {
-            //CleanFacet(facet);
-
             if (facet.Id > 0)
             {
                 this.facetService.Update(facet);
@@ -69,19 +67,6 @@ namespace GiveCRM.Web.Controllers
             };
 
             return View(viewModel);
-        }
-
-        /// <summary>
-        /// bad Hack because the form is going wrong and values are not working
-        /// discard the null ones
-        /// </summary>
-        /// <param name="facet"></param>
-        private void CleanFacet(Facet facet)
-        {
-            if (facet.Values != null)
-            {
-                facet.Values = facet.Values.Where(fc => ! string.IsNullOrEmpty(fc.Value)).ToList();
-            }
         }
     }
 }
