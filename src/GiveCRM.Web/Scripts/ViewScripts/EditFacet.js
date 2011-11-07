@@ -28,15 +28,15 @@
                 if (value.trim() === '')
                     return;
                 $('#FacetOptions').append(
-                '<label for="Values[' + index + '].ValueBox">Value</label>' +
-                '<input id="Values[' + index + '].ValueBox" name="Values[' + index + '].Value" type="text" disabled value="' + value + '" /><br />' +
+                '<input id="Values[' + index + '].ValueBox" name="Values[' + index + '].Value" type="text" value="' + value + '" /><br />' +
                 '<input type="hidden" name="Values[' + index + '].Id" value="0" />' +
                 '<input type="hidden" name="Values[' + index + '].FacetId" class="facetCount" value="0" />');
 
+                $('input#AddValue_Value').focus();
             });
 
             showHideFacetOptions();
-            
+
             $("#Type").change(showHideFacetOptions);
         }
     }
