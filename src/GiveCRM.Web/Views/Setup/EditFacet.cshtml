@@ -26,25 +26,27 @@
             new SelectListItem { Text = "Lookup", Value="List" }
         })
 
-<div id="FacetOptions">
-    @{
-        int i = 0;
-        foreach (var option in Model.Values)
-        {
-            <label for="Values[@i].ValueBox">@option.Value</label>
-            <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" value="@option.Value" />
-            <br />
-            <input type="hidden" name="Values[@i].Id" value="@option.Id" />
-            <input type="hidden" name="Values[@i].FacetId" class="facetCount" value="@option.FacetId" />
-            i += 1;
+    <div id="FacetOptions">
+        @{
+            int i = 0;
+            foreach (var option in Model.Values)
+            {
+                <div class="input">
+                <input id="Values[@i].ValueBox" name="Values[@i].Value" type="text" value="@option.Value" />
+                <input type="hidden" name="Values[@i].Id" value="@option.Id" />
+                <input type="hidden" name="Values[@i].FacetId" class="facetCount" value="@option.FacetId" />
+                </div>
+                <br />
+                i += 1;
+            }
         }
-    }
-</div>
+    </div>
 
-<div id="AddOption">
-    <label for="AddValue_Value">Value</label><input id="AddValue_Value" name="value" type="text" />
-    <input id="AddValue_Button" type="button" value="Add Value"  /><br />
-</div>
+    <div id="ddOption" class="input">
+        <input id="AddValue_Value" name="value" type="text" />
+        <input id="AddValue_Button" type="button" value="Add Value" /><br />
+    </div>
+
 <div style="clear:both;margin:4px;">
 <input type="submit" value="Save" />
 </div>
