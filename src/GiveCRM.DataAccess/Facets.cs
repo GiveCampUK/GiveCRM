@@ -100,6 +100,10 @@ namespace GiveCRM.DataAccess
                             facetValue.FacetId = facet.Id;
                             transaction.FacetValues.Insert(facetValue);
                         }
+                        else if (string.IsNullOrWhiteSpace(facetValue.Value))
+                        {
+                            transaction.FacetValues.DeleteById(facetValue.Id);
+                        }
                         else
                         {
                             transaction.FacetValues.UpdateById(facetValue);
