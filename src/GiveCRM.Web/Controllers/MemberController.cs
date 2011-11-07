@@ -1,23 +1,20 @@
-﻿using System.Web.Routing;
-using PagedList;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-
+    using System.Web.Routing;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Members;
     using GiveCRM.Web.Services;
+    using PagedList;
 
     public class MemberController : Controller
     {
-        private const int MaxResults = 25;
-
         private IDonationsService donationsService;
         private IMemberService memberService;
         private ICampaignService campaignService;
+        private const int DefaultPageSize = 25;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
@@ -95,20 +92,39 @@ namespace GiveCRM.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Search(string name, string postcode, string reference, int start = 0)
+        [HttpGet]
+        public ActionResult Search(MemberSearchViewModel model)
         {
-            var results = this.memberService.Search(name, postcode, reference);
+            if (string.IsNullOrEmpty(model.SearchButton) && !model.Page.HasValue)
+            {
+                model.Results = CreatePagedListOfMembers(this.memberService.All(), model);
+                return View(model);
+            }
 
-            return View(new MemberSearchViewModel { Results = results.Take(MaxResults), AreMore = results.Count() > MaxResults });
+            var searchResults = this.memberService.Search(model.Name, model.PostCode, model.Reference);
+            model.Results = CreatePagedListOfMembers(searchResults, model);
+
+            return View(model);
         }
 
+        private PagedMemberListViewModel CreatePagedListOfMembers(IEnumerable<Member> memberList, MemberSearchViewModel viewModel)
+        {
+            return new PagedMemberListViewModel(memberList.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
+                                                page => Url.Action("Index", new RouteValueDictionary
+                                                                                {
+                                                                                    {"Page", page},
+                                                                                    {"Name", viewModel.Name},
+                                                                                    {"PostCode", viewModel.PostCode},
+                                                                                    {"Reference", viewModel.Reference}
+                                                                                }));
+        }
+
+        [HttpGet]
         public ActionResult AjaxSearch(string criteria)
         {
             var results = this.memberService.Search(criteria);
 
-            return View(results.Take(MaxResults));
+            return View(results.Take(DefaultPageSize));
         }
 
         [HttpGet]
@@ -117,12 +133,6 @@ namespace GiveCRM.Web.Controllers
             var members = this.memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
             return View("MembersList", members);
-        }
-
-        [HttpGet]
-        public ActionResult Search()
-        {
-            return View(new MemberSearchViewModel { Results = null, AreMore = false });
         }
     }
 }
