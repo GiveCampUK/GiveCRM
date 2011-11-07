@@ -1,26 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using GiveCRM.Models;
-using GiveCRM.Web.Models.Facets;
-using GiveCRM.Web.Services;
-
+﻿
 namespace GiveCRM.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    
+    using GiveCRM.Models;
+    using GiveCRM.Web.Models.Facets;
+    using GiveCRM.Web.Services;
+
     public class SetupController : Controller
     {
-        private IFacetsService _facetService;
+        private IFacetsService facetService;
 
         public SetupController(IFacetsService facetsService)
         {
-            _facetService = facetsService;
+            this.facetService = facetsService;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public ActionResult AddFacet()
         {
             var facet = new Facet
@@ -30,27 +34,41 @@ namespace GiveCRM.Web.Controllers
             return View("EditFacet", facet);
         }
 
+        [HttpGet]
         public ActionResult EditFacet(int id)
         {
-            var facet = _facetService.Get(id);
+            var facet = this.facetService.Get(id);
             return View("EditFacet", facet);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SaveFacet(Facet facet)
         {
             CleanFacet(facet);
 
             if (facet.Id > 0)
             {
-                _facetService.Update(facet);
+                this.facetService.Update(facet);
             }
             else
             {
-                _facetService.Insert(facet);            
+                this.facetService.Insert(facet);            
             }
 
             return RedirectToAction("ListFacets");
+        }
+
+        [HttpGet]
+        public ActionResult ListFacets()
+        {
+            var facets = new List<Facet>(this.facetService.All());
+            var viewModel = new FacetListViewModel
+            {
+                Facets = facets
+            };
+
+            return View(viewModel);
         }
 
         /// <summary>
@@ -64,17 +82,6 @@ namespace GiveCRM.Web.Controllers
             {
                 facet.Values = facet.Values.Where(fc => ! string.IsNullOrEmpty(fc.Value)).ToList();
             }
-        }
-
-        public ActionResult ListFacets()
-        {
-            var facets = new List<Facet>(_facetService.All());
-            var viewModel = new FacetListViewModel
-                {
-                    Facets = facets
-                };
-
-            return View(viewModel);
         }
     }
 }

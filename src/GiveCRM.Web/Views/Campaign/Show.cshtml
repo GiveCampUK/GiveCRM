@@ -4,67 +4,68 @@
 
 @{
     ViewBag.Title = Model.Title;
-	string formWidthClass = "span4";
+    string formWidthClass = "span4";
 }
 
 <div class="campaign">
-	<div class="row">
-		<div class="span16">
-			<h1>@Model.Title</h1>
-		</div>
-	</div>
+    <div class="row">
+        <div class="span16">
+            <h1>@Model.Title</h1>
+        </div>
+    </div>
 
-	<div class="row">
-		<div class="maincol span-two-thirds">
-		@using (Html.BeginForm())
-		{
-			@Html.ValidationSummary(true)
-			<h2>General Details</h2>
-			<fieldset>
-				@Html.HiddenFor(m => m.Campaign.Id)
+    <div class="row">
+        <div class="maincol span-two-thirds">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <h2>General Details</h2>
+            <fieldset>
+                @Html.HiddenFor(m => m.Campaign.Id)
 
-				<div class="clearfix">
-					@Html.LabelFor(m => m.Campaign.Name)
-					<div class="input">
-						@Html.TextBoxFor(m => m.Campaign.Name, new { @class = formWidthClass })
-					</div>
-				</div>
+                <div class="clearfix">
+                    @Html.LabelFor(m => m.Campaign.Name)
+                    <div class="input">
+                        @Html.TextBoxFor(m => m.Campaign.Name, new { @class = formWidthClass })
+                    </div>
+                </div>
 
-				<div class="clearfix">
-					@Html.LabelFor(m => m.Campaign.Description)
-					<div class="input">
-						@Html.TextAreaFor(m => m.Campaign.Description, 5, 80, new { @class = formWidthClass })
-					</div>
-				</div>
-			</fieldset>
-				
-			<h2>Recipient Listing</h2>
-			
-			@* TODO(BS) Build logic to create recipient list generation *@
-			<h3>Search Filters</h3>				
-			<ul>
-				@if (Model.SearchFilters.Any() == false) {
-					@Model.NoSearchFiltersText;
-				}
-				else {
-					foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
-						<li>
-							@filterViewModel.CriteriaDisplayText
-							@Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {
-								campaignId = filterViewModel.CampaignId,
-								memberSearchFilterId = filterViewModel.MemberSearchFilterId
-							})
-						</li>
-					}
-				}
+                <div class="clearfix">
+                    @Html.LabelFor(m => m.Campaign.Description)
+                    <div class="input">
+                        @Html.TextAreaFor(m => m.Campaign.Description, 5, 80, new { @class = formWidthClass })
+                    </div>
+                </div>
+            </fieldset>
+                
+            <h2>Recipient Listing</h2>
+            
+            @* TODO(BS) Build logic to create recipient list generation *@
+            <h3>Search Filters</h3>				
+            <ul>
+                @if (Model.SearchFilters.Any() == false) {
+                    @Model.NoSearchFiltersText;
+                }
+                else {
+                    foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
+                        <li>
+                            @filterViewModel.CriteriaDisplayText
+                            @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {
+                                campaignId = filterViewModel.CampaignId,
+                                memberSearchFilterId = filterViewModel.MemberSearchFilterId
+                            })
+                        </li>
+                    }
+                }
 
                             @if (Model.Campaign.Id > 0) {
-				<li>@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })</li>
+                <li>@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })</li>
                             }
-			</ul>
+            </ul>
 
-			<h3>Matched Recipient Listing</h3>
-	
+            <h3>Matched Recipient Listing</h3>
+    
                          if (Model.ApplicableMembers.Count() == 0)
                          {
                              @Model.NoMatchingMembersText
@@ -80,15 +81,15 @@
                          }
                          
                         <div class="actions clearfix">
-				<input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
-			</div>
+                <input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
+            </div>
                 }
-		</div>
-	
-		<div class="sidebar span-one-third">
-			<h2>Quick Links</h2>
-		
-			<ul class="toolbar">                            
+        </div>
+    
+        <div class="sidebar span-one-third">
+            <h2>Quick Links</h2>
+        
+            <ul class="toolbar">                            
                             @if (Model.Campaign.Id > 0) {
 
                                 if (Model.Campaign.IsCommitted == true && Model.Campaign.IsClosed == "N") {
@@ -103,9 +104,9 @@
                                 
                                 <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
                             }
-			</ul>
-		</div>
-	</div>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <!-- TODO(BS) pull these in from http://www.asp.net/ajaxlibrary/cdn.ashx#ASPNET_MVC_Releases_on_the_CDN_9 with local fallback -->
