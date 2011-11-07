@@ -1,12 +1,13 @@
 ﻿namespace GiveCRM.Web.Controllers
 {
+    using System;
+    using GiveCRM.BusinessLogic;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Members;
-    using GiveCRM.Web.Services;
     using PagedList;
 
     public class MemberController : Controller
