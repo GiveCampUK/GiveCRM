@@ -111,12 +111,12 @@ namespace GiveCRM.DataAccess
         }
 
         /// <summary>
-        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// Deletes the Member identified by the specified identifier.  
         /// </summary>
-        /// <param name="id">The identifier of the item to delete.</param>
+        /// <param name="id">The identifier of the member to delete.</param>
         public void DeleteById(int id)
         {
-            _db.Members.DeleteById(id);
+            db.Members.DeleteById(id);
         }
 
         private Member InsertWithPhoneNumbers(Member member)
@@ -146,8 +146,7 @@ namespace GiveCRM.DataAccess
 
         public void Update(Member member)
         {
-            bool refetchPhoneNumbers = false;
-
+            bool refetchPhoneNumbers;
             using (var transaction = db.BeginTransaction())
             {
                 try

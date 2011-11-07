@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using GiveCRM.BusinessLogic;
 using GiveCRM.Models;
@@ -23,7 +22,7 @@ namespace GiveCRM.DataAccess
         {
             var query = db.Facets.All()
                 .Select(db.Facets.Id, db.Facets.Type, db.Facets.Name,
-                db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
+                        db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
                 .OrderBy(db.Facets.Id);
 
             Facet facet = null;
@@ -71,7 +70,7 @@ namespace GiveCRM.DataAccess
         /// <param name="id">The identifier of the Facet to delete.</param>
         public void DeleteById(int id)
         {
-            _db.Facets.DeleteById(id);
+            db.Facets.DeleteById(id);
         }
 
         public void Update(Facet facet)

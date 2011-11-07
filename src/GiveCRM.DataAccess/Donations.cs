@@ -16,7 +16,7 @@ namespace GiveCRM.DataAccess
 
         public void Update(Donation item)
         {
-            _db.Donations.UpdateById(item);
+            db.Donations.UpdateById(item);
         }
 
         public IEnumerable<Donation> GetAll()
@@ -40,12 +40,12 @@ namespace GiveCRM.DataAccess
         }
 
         /// <summary>
-        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// Deletes the donation identified by the specified identifier.  
         /// </summary>
-        /// <param name="id">The identifier of the item to delete.</param>
+        /// <param name="id">The identifier of the donation to delete.</param>
         public void DeleteById(int id)
         {
-            _db.Donations.DeleteById(id);
+            db.Donations.DeleteById(id);
         }
     }
 }

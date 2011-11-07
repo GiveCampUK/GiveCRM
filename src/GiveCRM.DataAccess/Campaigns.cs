@@ -37,12 +37,12 @@ namespace GiveCRM.DataAccess
         }
 
         /// <summary>
-        /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
+        /// Deletes the campaign identified by the specified identifier.  
         /// </summary>
-        /// <param name="id">The identifier of the item to delete.</param>
+        /// <param name="id">The identifier of the campaign to delete.</param>
         public void DeleteById(int id)
         {
-            _db.Campaigns.Delete(id);
+            db.Campaigns.Delete(id);
         }
 
         public void Update(Campaign campaign)
@@ -54,7 +54,7 @@ namespace GiveCRM.DataAccess
         {
             var results = campaignMembers.Select(member => new { CampaignId = campaignId, MemberId = member.Id });
 
-            using (var transaction = _db.BeginTransaction())
+            using (var transaction = db.BeginTransaction())
             {
                 try
                 {
