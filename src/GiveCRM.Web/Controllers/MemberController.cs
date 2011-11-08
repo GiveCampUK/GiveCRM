@@ -148,7 +148,7 @@
         {
             var members = this.memberService.All().OrderByDescending(m => m.TotalDonations).Take(5);
 
-            return View("MembersList", members);
+            return View("TopDonors", members);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using GiveCRM.Models;
 using PagedList;
 
@@ -28,6 +26,9 @@ namespace GiveCRM.Web.Models.Members
             PagingFunction = pagingFunction;
         }
 
+        /// <summary>
+        /// Gets the function used to generate the URLs used in the pager controls.
+        /// </summary>
         public Func<int, string> PagingFunction { get; private set; }
 
         /// <summary>
@@ -194,7 +195,5 @@ namespace GiveCRM.Web.Models.Members
         {
             get { return pagedMemberList.Count; }
         }
-
-        
     }
 }
