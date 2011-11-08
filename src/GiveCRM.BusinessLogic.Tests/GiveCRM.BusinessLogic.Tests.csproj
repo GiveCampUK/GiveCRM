@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignService.Tests.cs" />
+    <Compile Include="DonationsService.Tests.cs" />
     <Compile Include="ExcelImport\ExcelImportService_Import_Should.cs" />
     <Compile Include="ExcelImport\MemberFactory_CreateMember_Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -32,7 +32,7 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void TopDonations_Action_Returns_View_With_A_List_Donations()
         {
-            donationsService.GetTopDonations().Received().Returns(new List<Donation>());
+            donationsService.GetTopDonations(5).Received().Returns(new List<Donation>());
 
             var controller = new DonationController(donationsService);
             var result = controller.TopDonations();
@@ -44,7 +44,7 @@ namespace GiveCRM.Web.Tests.controllers
         [Test]
         public void LatestDonations_Action_Returns_View_With_A_List_Donations()
         {
-            donationsService.GetLatestDonations().Received().Returns(new List<Donation>());
+            donationsService.GetLatestDonations(5).Received().Returns(new List<Donation>());
 
             var controller = new DonationController(donationsService);
             var result = controller.LatestDonations();

@@ -24,7 +24,7 @@
         [HttpGet]
         public ActionResult TopDonations()
         {
-            var donations = this.donationsService.GetTopDonations();
+            var donations = this.donationsService.GetTopDonations(5);
 
             return View("DonationList", donations);
         }
@@ -32,7 +32,7 @@
         [HttpGet]
         public ActionResult LatestDonations()
         {
-            var donations = this.donationsService.GetLatestDonations();
+            var donations = this.donationsService.GetLatestDonations(5);
 
             return View("DonationList", donations);
         }

@@ -5,8 +5,8 @@ namespace GiveCRM.BusinessLogic
 {
     public interface IDonationsService
     {
-        IEnumerable<Donation> GetTopDonations();
-        IEnumerable<Donation> GetLatestDonations();
+        IEnumerable<Donation> GetTopDonations(int count);
+        IEnumerable<Donation> GetLatestDonations(int count);
         void QuickDonation(Donation donation);
     }
 }

@@ -19,15 +19,15 @@ namespace GiveCRM.BusinessLogic
             _repository = repository;
         }
 
-        public IEnumerable<Donation> GetTopDonations()
+        public IEnumerable<Donation> GetTopDonations(int count)
         {
-            var donations = _repository.GetAll().OrderByDescending(d => d.Amount).Take(5);
+            var donations = _repository.GetAll().OrderByDescending(d => d.Amount).Take(count);
             return donations;
         }
 
-        public IEnumerable<Donation> GetLatestDonations()
+        public IEnumerable<Donation> GetLatestDonations(int count)
         {
-            var donations = _repository.GetAll().OrderByDescending(d => d.Date).Take(5);
+            var donations = _repository.GetAll().OrderByDescending(d => d.Date).Take(count);
             return donations;
         }
 
