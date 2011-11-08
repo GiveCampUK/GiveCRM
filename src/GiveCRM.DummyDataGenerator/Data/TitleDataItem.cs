@@ -2,9 +2,8 @@
 {
     internal class TitleDataItem
     {
-        public string Title { get; set; }
-
-        public string Salutation { get; set; }
+        public string Title{get;set;}
+        public string Salutation{get;set;}
 
         public TitleDataItem(string title, string salutation)
         {

@@ -1,0 +1,6 @@
+refactor:
+	Generator.cs
+	CampaignGenerator.cs
+	DonationsGenerator.cs
+
+migrate the old UI over to the new one

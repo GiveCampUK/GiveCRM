@@ -11,14 +11,14 @@ namespace GiveCRM.DummyDataGenerator
     /// </summary>
     public partial class Main : Window
     {
-        private readonly Generator generator = new Generator();
+//        private readonly Generator generator = new Generator();
 
         public Main()
         {
             InitializeComponent();
             ShowDataseConnection();
 
-            generator.Update += this.ShowUpdateOnUiThread;
+//            generator.Update += this.ShowUpdateOnUiThread;
         }
 
         private void ShowDataseConnection()
@@ -37,17 +37,17 @@ namespace GiveCRM.DummyDataGenerator
         private void GenerateMembers(object sender, RoutedEventArgs e)
         {
             int memberCountValue = ReadMemberCount();
-            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateMembers(memberCountValue));
+//            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateMembers(memberCountValue));
         }
 
         private void LoadMembers(object sender, RoutedEventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(o => this.generator.LoadMembers()); 
+//            ThreadPool.QueueUserWorkItem(o => this.generator.LoadMembers()); 
         }
 
         private void GenerateCampaign(object sender, RoutedEventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateCampaign()); 
+//            ThreadPool.QueueUserWorkItem(o => this.generator.GenerateCampaign()); 
         }
 
         private void GenerateCampaignAndDonations(object sender, RoutedEventArgs e)
@@ -58,8 +58,8 @@ namespace GiveCRM.DummyDataGenerator
 
             ThreadPool.QueueUserWorkItem(o =>
                 {
-                    generator.GenerateCampaign();
-                    generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax);
+//                    generator.GenerateCampaign();
+//                    generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax);
                 }); 
         }
 
@@ -69,7 +69,7 @@ namespace GiveCRM.DummyDataGenerator
             int donationMaxAmount = ReadDonationAmountMax();
             int donationCountMax = ReadDonationCountMax();
 
-            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax)); 
+//            ThreadPool.QueueUserWorkItem(o => generator.GenerateDonations(donationMinAmount, donationMaxAmount, donationCountMax)); 
         }
 
         private int ReadMemberCount()
@@ -103,9 +103,9 @@ namespace GiveCRM.DummyDataGenerator
             return int.Parse(stringValue);
         }
 
-        private void ShowUpdateOnUiThread(object sender, EventArgs<string> e)
+        private void ShowUpdateOnUiThread(string text)
         {
-            Action update = () => outputStatus.Text = e.Data;
+            Action update = () => outputStatus.Text = text;
             Dispatcher.Invoke(update);
         }
     }

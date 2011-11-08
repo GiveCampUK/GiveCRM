@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using GiveCRM.DataAccess;
 using GiveCRM.Models;
 using GiveCRM.DummyDataGenerator.Generation;
+using System.Linq;
 
 namespace GiveCRM.DummyDataGenerator
 {
+/*
     internal class Generator
     {
         private const int UpdateFromLoopFrequency = 100;
@@ -14,47 +16,52 @@ namespace GiveCRM.DummyDataGenerator
         private Campaign campaign;
         private List<Member> members;
 
-        internal EventHandler<EventArgs<string>> Update;
+        internal Action<string> Update;
+
+        public Generator()
+        {
+            members = new List<Member>();
+        }
 
         internal void GenerateMembers(int countToGenerate)
         {
-            OnUpdate("Generating members");
-            DateTime startTime = DateTime.Now;
-            MemberGenerator generator = new MemberGenerator();
-            
-            if (members == null)
-            {
-                members = new List<Member>();
-            }
+            OnUpdate("Generating members...");
             members.Clear();
             members.Capacity = countToGenerate;
 
+            MemberGenerator generator = new MemberGenerator();
             List<Member> newMembers = generator.Generate(countToGenerate);
             string generateMessaged = string.Format("{0} members generated", newMembers.Count);
             OnUpdate(generateMessaged);
 
             SaveMembers(newMembers);
-
-            DateTime endTime = DateTime.Now;
-            TimeSpan elapsedTime = endTime - startTime;
-            string finalMessage = string.Format("{0} members saved in {1}", newMembers.Count, ShowDuration(elapsedTime));
-            OnUpdate(finalMessage);
         }
 
-        private void SaveMembers(IList<Member> newMembers)
+        private void SaveMembers(ICollection<Member> newMembers)
         {
+            OnUpdate("Saving members...");
             Members membersDb = new Members();
-            for (int index = 0; index < newMembers.Count; index++)
+            int lastLoggedPercent = 0;
+            Stopwatch timer = Stopwatch.StartNew();
+
+            foreach (var memberInfo in newMembers.Select((member, index) => new {Member = member, Index = index}))
             {
-                Member saved = membersDb.Insert(newMembers[index]);
+                Member saved = membersDb.Insert(memberInfo.Member);
                 this.members.Add(saved);
 
-                if (index % UpdateFromLoopFrequency == 0)
+                int percentComplete = Convert.ToInt32((memberInfo.Index * 1.0 / newMembers.Count) * 100);
+
+                if (percentComplete % 10 == 0 && lastLoggedPercent != percentComplete)
                 {
-                    string generateMessaged = string.Format("{0} members saved", index);
-                    OnUpdate(generateMessaged);                    
+                    string generatedMessage = string.Format("{0}% complete...", percentComplete);
+                    OnUpdate(generatedMessage);
+                    lastLoggedPercent = percentComplete;
                 }
             }
+
+            timer.Stop();
+            string message = string.Format("{0} members saved in {1}", newMembers.Count, ShowDuration(timer.Elapsed));
+            OnUpdate(message);
         }
 
         internal void LoadMembers()
@@ -63,14 +70,12 @@ namespace GiveCRM.DummyDataGenerator
             DateTime startTime = DateTime.Now;
 
             Members membersDb = new Members();
-
             members = new List<Member>(membersDb.All());
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;
             string finalMessage = string.Format("{0} members loaded in {1}", members.Count, ShowDuration(elapsedTime));
             OnUpdate(finalMessage);
-
         }
 
         internal void GenerateCampaign()
@@ -130,20 +135,24 @@ namespace GiveCRM.DummyDataGenerator
         private string ShowDuration(TimeSpan timeSpan)
         {
             TimeSpan oneMinute = new TimeSpan(0, 1, 0);
+            
             if (timeSpan >= oneMinute)
             {
                 return timeSpan.ToString(@"m\:ss\.ff") + " minutes";
             }
+            
             return timeSpan.ToString(@"s\.ff") + " seconds"; 
         }
 
         private void OnUpdate(string message)
         {
             var handler = Update;
+
             if (handler != null)
             {
-                handler(this, new EventArgs<string>(message));
+                handler(message);
             }
         }
     }
+ */
 }

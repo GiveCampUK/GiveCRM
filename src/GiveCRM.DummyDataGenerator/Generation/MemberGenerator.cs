@@ -1,10 +1,27 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
+﻿using System;
+using Simple.Data;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
-    using GiveCRM.DummyDataGenerator.Data;
+    internal class MemberGenerator
+    {
+        private readonly dynamic db;
+        private readonly Action<string> logAction;
 
+        public MemberGenerator(string connectionString, Action<string> logAction)
+        {
+            this.db = Database.OpenConnection(connectionString);
+            this.logAction = logAction;
+        }
+
+        public void GenerateMembers(int numberToGenerate)
+        {
+            logAction("Generating......");
+        }
+
+
+
+/*
     internal class MemberGenerator
     {
         private readonly RandomSource random = new RandomSource();
@@ -204,5 +221,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         {
             return random.PickFromList(FemaleNames.Data);
         }
+    }
+ */
     }
 }

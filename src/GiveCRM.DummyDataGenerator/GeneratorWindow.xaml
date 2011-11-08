@@ -1,0 +1,78 @@
+﻿<Window x:Class="GiveCRM.DummyDataGenerator.GeneratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GiveCRM Sample Data Generator" Width="640" Height="480" Icon="app.ico">
+    <DockPanel Margin="5">
+        <DockPanel Name="ConnectionDockPanel" DockPanel.Dock="Top">
+            <Label DockPanel.Dock="Left" Height="28" Content="Database" />
+            <Button DockPanel.Dock="Right" Width="60" Height="23" Content="Connect" Click="ConnectButton_Click"/>
+            <TextBox DockPanel.Dock="Left" Height="23" Margin="5,0,5,0" Name="DatbaseConnectionStringTextBox" />
+        </DockPanel>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            
+            <TabControl Grid.Row="0" Name="TabControl" Margin="0,5,0,0" IsEnabled="False">
+                <TabItem Header="Just Do It">
+                    <DockPanel Margin="5">
+                        <TextBlock DockPanel.Dock="Top" Text="Use this pane to generate random data from an empty database." />
+                        <TextBlock DockPanel.Dock="Top" Margin="0,15,0,0" Text="WARNING: the entire contents of the database will be replaced" FontWeight="Bold" />
+
+                        <Button Width="150" Height="40" Content="Generate Database" Click="GenerateAllButton_Click"/>
+                    </DockPanel>
+                </TabItem>
+                
+                <TabItem Header="Stats">
+                    <DockPanel LastChildFill="False">
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Width="50" Height="23" Content="Refresh" Click="RefreshButton_Click"/>
+                        </StackPanel>
+
+                        <DockPanel DockPanel.Dock="Top">
+                            <Label DockPanel.Dock="Left" Content="Number of Members:" />
+                            <Label DockPanel.Dock="Left" Name="NumberOfMembersLabel" />
+                        </DockPanel>
+
+                        <DockPanel DockPanel.Dock="Top">
+                            <Label DockPanel.Dock="Left" Content="Number of Campaigns:" />
+                            <Label DockPanel.Dock="Left" Name="NumberOfCampaignsLabel" />
+                        </DockPanel>
+
+                        <DockPanel DockPanel.Dock="Top">
+                            <Label DockPanel.Dock="Left" Content="Number of Donations:" />
+                            <Label DockPanel.Dock="Left" Name="NumberOfDonationsLabel" />
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem>
+                
+                <TabItem Header="Members">
+                    <StackPanel>
+                        <DockPanel LastChildFill="False">
+                            <Label DockPanel.Dock="Left" Content="Number of Members" />
+                            <TextBox DockPanel.Dock="Left" Width="150" VerticalAlignment="Bottom" Name="NumberOfMembersTextBox" Text="10000" />
+                            <Button DockPanel.Dock="Right" Height="23" Content="Generate Members" Click="GenerateMembersButton_Click"/>
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+                
+                <TabItem Header="Campaigns">
+                    
+                </TabItem>
+            </TabControl>
+
+            <GridSplitter Grid.Row="1" Margin="0,2,0,2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+            
+            <DockPanel Grid.Row="2">
+                <TextBox Name="logArea" IsReadOnly="True"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         ScrollViewer.CanContentScroll="True" 
+                         Text="Press the 'Connect' button to get started..." />
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+</Window>
