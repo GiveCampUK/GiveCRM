@@ -3,7 +3,7 @@ using GiveCRM.BusinessLogic.ExcelImport;
 using GiveCRM.Models;
 using NUnit.Framework;
 
-namespace GiveCRM.Web.Tests.Services.ExcelImport
+namespace GiveCRM.BusinessLogic.Tests.ExcelImport
 {
     [TestFixture]
     public class MemberFactory_CreateMember_Should
