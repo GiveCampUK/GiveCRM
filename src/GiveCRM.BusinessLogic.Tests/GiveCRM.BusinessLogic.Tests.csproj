@@ -56,6 +56,7 @@
     <Compile Include="DonationsService.Tests.cs" />
     <Compile Include="ExcelImport\ExcelImportService_Import_Should.cs" />
     <Compile Include="ExcelImport\MemberFactory_CreateMember_Should.cs" />
+    <Compile Include="FacetsService.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
