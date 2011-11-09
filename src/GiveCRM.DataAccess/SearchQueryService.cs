@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GiveCRM.BusinessLogic;
@@ -11,7 +12,7 @@ namespace GiveCRM.DataAccess
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
-        public dynamic CompileQuery(IEnumerable<SearchCriteria> criteria)
+        public IEnumerable CompileQuery(IEnumerable<SearchCriteria> criteria)
         {
             var criteriaList = criteria.ToList();
 

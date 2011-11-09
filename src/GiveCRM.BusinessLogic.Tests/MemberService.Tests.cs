@@ -108,7 +108,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var searchCriteria = new[] { surnameSearchCriteria };
 
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            SubstituteExtensions.Returns(searchQueryService.CompileQuery(searchCriteria), searchResults);
+            searchQueryService.CompileQuery(searchCriteria).Returns(searchResults);
             
             var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
@@ -116,7 +116,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
             var results = memberService.Search(searchCriteria);
 
-            CollectionAssert.AreEqual(searchResults, results);
+            CollectionAssert.AreEqual(searchResults, results.ToArray());
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var searchCriteria = new[] { surnameSearchCriteria };
 
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            SubstituteExtensions.Returns(searchQueryService.CompileQuery(searchCriteria), searchResults);
+            searchQueryService.CompileQuery(searchCriteria).Returns(searchResults);
 
             var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
