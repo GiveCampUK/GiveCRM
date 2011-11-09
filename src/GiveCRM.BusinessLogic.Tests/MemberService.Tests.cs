@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using GiveCRM.Models;
 using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Search;
@@ -135,6 +132,79 @@ namespace GiveCRM.BusinessLogic.Tests
             var results = memberService.Search(searchCriteria);
 
             CollectionAssert.AreEqual(searchResults, results);
+        }
+
+        [Test]
+        public void Search_ShouldReturnAnEmptyList_WhenThereAreNoSearchCriteria()
+        {
+            var memberRepository = Substitute.For<IMemberRepository>();
+            var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
+            var searchQueryService = Substitute.For<ISearchQueryService>();
+
+            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
+            var results = memberService.Search(Enumerable.Empty<SearchCriteria>());
+
+            CollectionAssert.AreEqual(Enumerable.Empty<Member>(), results);
+        }
+
+        [Test]
+        public void SearchByCampaignId_ShouldReturnAListOfMembers_WhenThereAreMembersInTheCampaign()
+        {
+            const int campaignId = 1;
+            
+            var membersInCampaign1 = new[] { member1, member2 };
+
+            var memberRepository = Substitute.For<IMemberRepository>();
+            var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
+            var searchQueryService = Substitute.For<ISearchQueryService>();
+
+            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
+            
+            var results = memberService.SearchByCampaignId(campaignId);
+
+            CollectionAssert.AreEqual(membersInCampaign1, results);
+        }
+
+        [Test]
+        public void SearchByCampaignId_ShouldReturnAnEmptyList_WhenThereAreNoMembersInTheCampaign()
+        {
+            const int campaignId = 2;
+
+            var membersInCampaign2 = Enumerable.Empty<Member>();
+
+            var memberRepository = Substitute.For<IMemberRepository>();
+            var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
+            var searchQueryService = Substitute.For<ISearchQueryService>();
+
+            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
+
+            var results = memberService.SearchByCampaignId(campaignId);
+
+            CollectionAssert.AreEqual(membersInCampaign2, results);
+        }
+
+        [Test]
+        public void SearchByCampaignId_ShouldReturnAnEmptyList_WhenThereAreNoMembersAtAll()
+        {
+            const int campaignId = 3;
+
+            var membersInCampaign3 = Enumerable.Empty<Member>();
+
+            var memberRepository = Substitute.For<IMemberRepository>();
+            var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
+            var searchQueryService = Substitute.For<ISearchQueryService>();
+
+            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
+
+            var results = memberService.SearchByCampaignId(campaignId);
+
+            CollectionAssert.AreEqual(membersInCampaign3, results);
+        }
+
+        [Test]
+        public void FromCampaignRun_Should()
+        {
+            // Duplicate SearchByCampaignId??
         }
     }
 }
