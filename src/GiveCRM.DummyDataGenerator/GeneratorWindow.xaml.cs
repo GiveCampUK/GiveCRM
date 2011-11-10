@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using GiveCRM.DummyDataGenerator.Generation;
 using Simple.Data;
+using GiveCRM.DummyDataGenerator.Generation;
 
 namespace GiveCRM.DummyDataGenerator
 {
@@ -30,10 +29,8 @@ namespace GiveCRM.DummyDataGenerator
             Task.Factory.StartNew(() =>
                                       {
                                           Log("Connecting to database...");
-                                          DebugPause();
                                           db = Database.OpenConnection(connectionString);
                                           Log("Connected to database successfully");
-                                          DebugPause();
                                       }, TaskCreationOptions.LongRunning)
                         .ContinueWith(_ => RefreshStats(uiContext))
                         .ContinueWith(_ =>
@@ -54,7 +51,6 @@ namespace GiveCRM.DummyDataGenerator
             Task.Factory.StartNew(() => Log("Refreshing database statistics..."), CancellationToken.None, TaskCreationOptions.None, uiContext)
                         .ContinueWith(t =>
                                           {
-                                              DebugPause();
                                               return new DatabaseStatisticsLoader().Load(db);
                                           }, TaskContinuationOptions.LongRunning)
                         .ContinueWith(t =>
@@ -70,8 +66,7 @@ namespace GiveCRM.DummyDataGenerator
         private void GenerateMembersButton_Click(object sender, RoutedEventArgs e)
         {
             int numberOfMembersToGenerate = Convert.ToInt32(NumberOfMembersTextBox.Text);
-            string connectionString = DatbaseConnectionStringTextBox.Text;
-            var generator = new MemberGenerator(connectionString, Log);
+            var generator = new MemberGenerator(Log);
 
             TaskScheduler uiContext = TaskScheduler.FromCurrentSynchronizationContext();
             Task.Factory.StartNew(() => generator.GenerateMembers(numberOfMembersToGenerate), TaskCreationOptions.LongRunning)
@@ -81,8 +76,7 @@ namespace GiveCRM.DummyDataGenerator
         
         private void GenerateAllButton_Click(object sender, RoutedEventArgs e)
         {
-            string connectionString = DatbaseConnectionStringTextBox.Text;
-            var generator = new DatabaseGenerator(connectionString, Log);
+            var generator = new DatabaseGenerator(Log);
 
             TaskScheduler uiContext = TaskScheduler.FromCurrentSynchronizationContext();
             Task.Factory.StartNew(generator.Generate)
@@ -102,17 +96,10 @@ namespace GiveCRM.DummyDataGenerator
         {
             Action logAction = () =>
                                    {
-                                       logArea.Text += text + Environment.NewLine;
+                                       logArea.Text += Environment.NewLine + text;
                                        logArea.ScrollToEnd();
                                    };
             Dispatcher.Invoke(logAction);
-        }
-
-        [Conditional("DEBUG")]
-        private void DebugPause()
-        {
-            Log("Pause...");
-            Thread.Sleep(3000);
         }
     }
 }

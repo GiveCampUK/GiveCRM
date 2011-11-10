@@ -6,8 +6,10 @@
         <DockPanel Name="ConnectionDockPanel" DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" Height="28" Content="Database" />
             <Button DockPanel.Dock="Right" Width="60" Height="23" Content="Connect" Click="ConnectButton_Click"/>
-            <TextBox DockPanel.Dock="Left" Height="23" Margin="5,0,5,0" Name="DatbaseConnectionStringTextBox" />
+            <TextBox DockPanel.Dock="Left" Height="23" Margin="5,0,5,0" Name="DatbaseConnectionStringTextBox" IsReadOnly="True" />
         </DockPanel>
+
+        <TextBlock DockPanel.Dock="Top" Margin="65,0,0,2" Text="Change this connection string by editing app.config" FontStyle="Italic" FontWeight="ExtraLight"/>
 
         <Grid>
             <Grid.RowDefinitions>

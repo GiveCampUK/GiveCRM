@@ -1,227 +1,128 @@
 ﻿using System;
-using Simple.Data;
+using System.Collections.Generic;
+using GiveCRM.DataAccess;
+using GiveCRM.DummyDataGenerator.Data;
+using GiveCRM.Models;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
     internal class MemberGenerator
     {
-        private readonly dynamic db;
+        private readonly RandomSource random = new RandomSource();
+        private readonly EmailAddressGenerator emailGenerator = new EmailAddressGenerator();
+        private readonly AddressGenerator addressGenerator = new AddressGenerator();
+
         private readonly Action<string> logAction;
 
-        public MemberGenerator(string connectionString, Action<string> logAction)
+        private int lastReferenceNumber;
+
+        public MemberGenerator(Action<string> logAction)
         {
-            this.db = Database.OpenConnection(connectionString);
             this.logAction = logAction;
         }
 
         public void GenerateMembers(int numberToGenerate)
         {
-            logAction("Generating......");
-        }
+            logAction(string.Format("Generating {0} members...", numberToGenerate));
+            var members = new List<Member>(numberToGenerate);
 
-
-
-/*
-    internal class MemberGenerator
-    {
-        private readonly RandomSource random = new RandomSource();
-
-        // these are used to check for and avoid generating duplicate values
-        // use dictionary not list since contains checking is faster
-        private readonly Dictionary<string, bool> generatedEmails = new Dictionary<string, bool>();
-        private readonly Dictionary<string, bool> generatedPostalAddresses = new Dictionary<string, bool>();
-
-        private int lastReferenceIndex = 0;
-
-        public List<Member> Generate(int count)
-        {
-            List<Member> result = new List<Member>(count);
-
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < numberToGenerate; i++)
             {
-                result.Add(GenerateMember());
+                var member = GenerateMember();
+                members.Add(member);
             }
 
-            return result;
+            logAction(numberToGenerate + " members generated successfully");
+            logAction("Saving members...");
+            Members membersDb = new Members();
+            ProgressReporter reporter = new ProgressReporter(numberToGenerate);
+            reporter.ReportProgress(members, m => membersDb.Insert(m), percent => logAction(percent + "% complete"));
+            logAction(numberToGenerate + " members saved successfully");
         }
 
         private Member GenerateMember()
         {
             bool isFemale = random.Bool();
             string familyName = random.PickFromList(FamilyNames.Data);
+
             // make first name different from Family name, ie.g. no "Scott Scott" or "Major Major"
             string firstName;
+            
             do
             {
-                firstName = isFemale ? RandomFemaleFirstName() : RandomMaleFirstName();
+                var namesList = isFemale ? FemaleNames.Data : MaleNames.Data;
+                firstName = random.PickFromList(namesList);
             }
-            while(firstName == familyName);
+            while (firstName == familyName);
 
-            TitleDataItem titleSalutation = MakeTitleSalutation(isFemale);
+            var titlesList = isFemale ? TitleData.FemaleTitles : TitleData.MaleTitles;
+            TitleDataItem titleSalutation = random.PickFromList(titlesList);
 
-            var newMember = new Member
-                {
-                    FirstName = firstName,
-                    LastName = familyName,
-                    Title = titleSalutation.Title,
-                    Salutation = titleSalutation.Salutation,
-                };
+            var member = new Member
+                                {
+                                            FirstName = firstName,
+                                            LastName = familyName,
+                                            Title = titleSalutation.Title,
+                                            Salutation = titleSalutation.Salutation,
+                                };
 
-            newMember.Reference = this.NextReference(newMember);
-            MakeEmailAddress(newMember);
-            MakeStreetAddress(newMember);
+            member.Reference = this.NextReference(member);
+            member.EmailAddress = emailGenerator.GenerateEmailAddress(member.FirstName, member.LastName);
 
-            MakePhoneNumbers(newMember);
+            var addressData = addressGenerator.GenerateStreetAddress();
+            member.AddressLine1 = addressData.Address;
+            member.City = addressData.City;
+            member.Region = addressData.Region;
+            member.PostalCode = addressData.PostalCode;
+            member.Country = addressData.Country;
 
-            return newMember;
+            MakePhoneNumbers(member);
+            return member;
         }
 
         private string NextReference(Member member)
         {
-            lastReferenceIndex++;
-
+            lastReferenceNumber++;
             string namePrefix = member.FirstName.Substring(0, 1) + member.LastName.Substring(0, 1);
-            return namePrefix + lastReferenceIndex.ToString("000000");
-
+            return namePrefix + lastReferenceNumber.ToString("000000");
         }
 
         private void MakePhoneNumbers(Member member)
         {
             member.PhoneNumbers = new List<PhoneNumber>();
+
             if (random.Percent(10))
             {
                 // 10% have no phone numbers
                 return;
             }
 
-            if(random.Percent(60))
+            if (random.Percent(60))
             {
                 member.PhoneNumbers.Add(new PhoneNumber
-                    {
-                        PhoneNumberType = PhoneNumberType.Home,
-                        Number = random.PhoneDigits()
-                    });
+                                            {
+                                                        PhoneNumberType = PhoneNumberType.Home,
+                                                        Number = random.PhoneDigits()
+                                            });
             }
 
             if (random.Percent(60))
             {
                 member.PhoneNumbers.Add(new PhoneNumber
-                {
-                    PhoneNumberType = PhoneNumberType.Work,
-                    Number = random.PhoneDigits()
-                });
+                                            {
+                                                        PhoneNumberType = PhoneNumberType.Work,
+                                                        Number = random.PhoneDigits()
+                                            });
             }
 
             if (random.Percent(60))
             {
                 member.PhoneNumbers.Add(new PhoneNumber
-                {
-                    PhoneNumberType = PhoneNumberType.Mobile,
-                    Number = random.PhoneDigits()
-                });
+                                            {
+                                                        PhoneNumberType = PhoneNumberType.Mobile,
+                                                        Number = random.PhoneDigits()
+                                            });
             }
         }
-
-        private void MakeStreetAddress(Member member)
-        {
-            string streetAddress = GenerateStreetAddress();
-            while (generatedPostalAddresses.ContainsKey(streetAddress))
-            {
-                // duplicate! try again
-                streetAddress = GenerateStreetAddress();
-            }
-
-            generatedPostalAddresses.Add(streetAddress, true);
-            member.AddressLine1 = streetAddress;
-
-            TownDataItem townData = random.PickFromList(TownData.Data);
-            string postCodePrefix = random.PickFromList(townData.PostalCodePrefixes);
-
-            member.PostalCode = RandomPostalCode(postCodePrefix);
-            member.City = townData.Town;
-            member.Region = townData.Region;
-            member.Country = townData.Country;
-        }
-
-        private string GenerateStreetAddress()
-        {
-            string street = random.PickFromList(StreetData.StreetNamePrefix) + " " 
-                + random.PickFromList(StreetData.StreetNames) + " " + random.PickFromList(StreetData.StreetSuffix);
-            street = street.Trim();
-            string streetNumber = (random.Next(200) + 1).ToString();
-
-            if (random.Percent(20))
-            {
-                streetNumber += random.Bool() ? "A" : "B";
-            }
-
-            return streetNumber + " " + street;
-        }
-
-        private string RandomPostalCode(string prefix)
-        {
-            return prefix + random.Next(10) + " " +
-                random.Next(10) + random.Letter() + random.Letter();
-        }
-
-        private void MakeEmailAddress(Member member)
-        {
-            string newEmailAddress = GenerateEmailAddress(member);
-            while (generatedEmails.ContainsKey(newEmailAddress))
-            {
-                // duplicate! regenerate it.
-               newEmailAddress = GenerateEmailAddress(member);
-            }
-            generatedEmails.Add(newEmailAddress, true);
-
-            member.EmailAddress = newEmailAddress;
-        }
-
-        private string GenerateEmailAddress(Member member)
-        {
-            string sep = random.PickFromList(EmailData.Separators);
-
-            if (random.Percent(30))
-            {
-                sep += random.Letter() + random.PickFromList(EmailData.Separators);
-            }
-
-            string name;
-
-            if (random.Percent(30))
-            {
-                name = member.LastName + sep + member.FirstName;
-            }
-            else
-            {
-                name = member.FirstName + sep + member.LastName;
-            }
-
-            if (random.Bool())
-            {
-                name += this.random.Next(100).ToString();
-            }
-
-            string domain = random.PickFromList(EmailData.Domains);
-
-            return name + "@" + domain;
-        }
-
-        private TitleDataItem MakeTitleSalutation(bool isFemale)
-        {
-            return isFemale ? random.PickFromList(TitleData.FemaleTitles) : random.PickFromList(TitleData.MaleTitles);
-        }
-
-        private string RandomMaleFirstName()
-        {
-            return random.PickFromList(MaleNames.Data);
-        }
-
-        private string RandomFemaleFirstName()
-        {
-            return random.PickFromList(FemaleNames.Data);
-        }
-    }
- */
     }
 }

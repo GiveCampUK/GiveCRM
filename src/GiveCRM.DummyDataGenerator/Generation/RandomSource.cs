@@ -51,9 +51,8 @@ namespace GiveCRM.DummyDataGenerator.Generation
             var offset = random.Next(25);
             var index = 'A' + offset;
 
-            var letter = (char)index;
-
-            return new string(new[] { letter });
+            var letter = (char) index;
+            return new string(new[] {letter});
         }
 
         public bool Bool()

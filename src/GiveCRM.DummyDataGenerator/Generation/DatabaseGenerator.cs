@@ -5,12 +5,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
 {
     internal class DatabaseGenerator
     {
-        private readonly dynamic db;
+        private readonly RandomSource random = new RandomSource();
+        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
         private readonly Action<string> logAction;
 
-        public DatabaseGenerator(string connectionString, Action<string> logAction)
+        public DatabaseGenerator(Action<string> logAction)
         {
-            this.db = Database.OpenConnection(connectionString);
             this.logAction = logAction;
         }
 
@@ -40,7 +40,9 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private void GenerateMembers()
         {
-            logAction("Generating members...");
+            MemberGenerator generator = new MemberGenerator(logAction);
+            var numberToGenerate = random.Next(1000, 10000);
+            generator.GenerateMembers(numberToGenerate);
         }
 
         private void GenerateCampaigns()
