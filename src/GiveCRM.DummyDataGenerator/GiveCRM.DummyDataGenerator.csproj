@@ -84,11 +84,15 @@
     <Compile Include="Data\TitleData.cs" />
     <Compile Include="Data\TownData.cs" />
     <Compile Include="Data\TownDataItem.cs" />
+    <Compile Include="Data\AddressData.cs" />
+    <Compile Include="Generation\AddressGenerator.cs" />
     <Compile Include="Generation\DatabaseGenerator.cs" />
     <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
     <Compile Include="Data\FamilyNames.cs" />
+    <Compile Include="Generation\EmailAddressGenerator.cs" />
     <Compile Include="Generation\MemberGenerator.cs" />
+    <Compile Include="Generation\ProgressReporter.cs" />
     <Compile Include="Generation\RandomSource.cs" />
     <Compile Include="Data\TitleDataItem.cs" />
     <Compile Include="Generator.cs">
