@@ -8,21 +8,21 @@
     var campaignDb = new GiveCRM.DataAccess.Campaigns();
 }
 <div class="clearfix">
-    <label for"CampaignId">Campaign</label>
+    <label for="CampaignId">Campaign</label>
     <div class="input">
         @Html.DropDownList("CampaignId", campaignDb.GetAllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))
     </div>
 </div>
 
 <div class="clearfix">
-    <label for"Date">Date Donated</label>
+    <label for="Date">Date Donated</label>
     <div class="input">
         @Html.TextBox("Date", DateTime.Now.ToShortDateString())
     </div>
 </div>
 
 <div class="clearfix">
-    <label for"Amount">Amount</label>
+    <label for="Amount">Amount</label>
     <div class="input">
         @Html.TextBox("Amount", 0)
     </div>
