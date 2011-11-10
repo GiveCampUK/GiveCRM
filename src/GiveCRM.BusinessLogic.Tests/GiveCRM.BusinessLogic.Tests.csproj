@@ -60,6 +60,7 @@
     <Compile Include="MemberSearchFilterService.Tests.cs" />
     <Compile Include="MemberService.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchService.Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
