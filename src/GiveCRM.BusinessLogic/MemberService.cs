@@ -8,8 +8,8 @@ namespace GiveCRM.BusinessLogic
 {
     public class MemberService : IMemberService
     {
-        private readonly IMemberRepository _memberRepository;
-        private readonly IMemberSearchFilterRepository _memberSearchFilterRepository;
+        private readonly IMemberRepository memberRepository;
+        private readonly IMemberSearchFilterRepository memberSearchFilterRepository;
         private readonly ISearchQueryService searchQueryService;
 
         public MemberService(IMemberRepository memberRepository, IMemberSearchFilterRepository memberSearchFilterRepository, ISearchQueryService searchQueryService)
@@ -29,29 +29,29 @@ namespace GiveCRM.BusinessLogic
                 throw new ArgumentNullException("searchQueryService");
             }
 
-            _memberRepository = memberRepository;
-            _memberSearchFilterRepository = memberSearchFilterRepository;
+            this.memberRepository = memberRepository;
+            this.memberSearchFilterRepository = memberSearchFilterRepository;
             this.searchQueryService = searchQueryService;
         }
 
         public IEnumerable<Member> All()
         {
-            return _memberRepository.GetAll();
+            return memberRepository.GetAll();
         }
 
         public Member Get(int id)
         {
-            return _memberRepository.GetById(id);
+            return memberRepository.GetById(id);
         }
 
         public void Update(Member member)
         {
-            _memberRepository.Update(member);
+            memberRepository.Update(member);
         }
 
         public void Insert(Member member)
         {
-            _memberRepository.Insert(member);
+            memberRepository.Insert(member);
         }
 
         public void Save(Member member)
@@ -72,18 +72,18 @@ namespace GiveCRM.BusinessLogic
 
             member.Archived = true;
 
-            _memberRepository.Update(member);
+            memberRepository.Update(member);
         }
 
         public IEnumerable<Member> Search(string name, string postcode, string reference)
         {
-            var members = _memberRepository.Search(name, postcode, reference);
+            var members = memberRepository.Search(name, postcode, reference);
             return members;
         }
 
         public IEnumerable<Member> Search(string criteria)
         {
-            var results = _memberRepository.GetAll()
+            var results = memberRepository.GetAll()
                                      .Where(member => !member.Archived && (criteria == string.Empty || NameSearch(member, criteria.ToLower())));
 
             return results;
@@ -106,13 +106,13 @@ namespace GiveCRM.BusinessLogic
 
         public IEnumerable<Member> SearchByCampaignId(int campaignId)
         {
-            var filters = _memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
+            var filters = memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
             return Search(filters);
         }
 
         public IEnumerable<Member> FromCampaignRun(int campaignId)
         {
-            return _memberRepository.GetByCampaignId(campaignId);
+            return memberRepository.GetByCampaignId(campaignId);
         }
 
         private bool NameSearch(Member member, string criteria)
