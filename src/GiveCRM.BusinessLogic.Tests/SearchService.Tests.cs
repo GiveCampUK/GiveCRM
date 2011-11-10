@@ -33,9 +33,9 @@ namespace GiveCRM.BusinessLogic.Tests
             var expectedEmptySearchCriteria = GetExpectedEmptySearchCriteria(new[] { bigFeetFacet, smellyFeetFacet});
 
             var searchService = new SearchService(facetRepository);
-            var actualEmptySearchCriteria = searchService.GetEmptySearchCriteria().ToArray();
+            var actualEmptySearchCriteria = searchService.GetEmptySearchCriteria();
 
-            CollectionAssert.AreEqual(expectedEmptySearchCriteria, actualEmptySearchCriteria);
+            CollectionAssert.AreEqual(expectedEmptySearchCriteria.ToArray(), actualEmptySearchCriteria.ToArray());
         }
 
         private static IEnumerable<SearchCriteria> GetExpectedEmptySearchCriteria(IEnumerable<Facet> freeTextFacets)

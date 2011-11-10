@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GiveCRM.Models;
 using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Search;
@@ -105,7 +106,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var searchCriteria = new[] { surnameSearchCriteria };
 
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            searchQueryService.CompileQuery(searchCriteria).Returns(searchResults);
+            searchQueryService.CompileQuery(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(searchResults);
             
             var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
@@ -154,15 +155,24 @@ namespace GiveCRM.BusinessLogic.Tests
             
             var membersInCampaign1 = new[] { member1, member2 };
 
-            var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
+            memberSearchFilterRepository.GetByCampaignId(campaignId).Returns(new[]
+                                                                                 {
+                                                                                     new MemberSearchFilter
+                                                                                         {
+                                                                                             CampaignId = 1,
+                                                                                             DisplayName = "Previously donated to acampaign",
+                                                                                             InternalName = "donatedToCampaign"
+                                                                                         }
+                                                                                 });
+            var memberRepository = Substitute.For<IMemberRepository>();
             var searchQueryService = Substitute.For<ISearchQueryService>();
-
-            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
+            searchQueryService.CompileQuery(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(membersInCampaign1);
             
+            var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
             var results = memberService.SearchByCampaignId(campaignId);
 
-            CollectionAssert.AreEqual(membersInCampaign1, results);
+            CollectionAssert.AreEqual(membersInCampaign1, results.ToArray());
         }
 
         [Test]
