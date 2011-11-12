@@ -8,6 +8,9 @@ EndProject
 Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "GiveCRM.Database", "GiveCRM.Database\GiveCRM.Database.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.Web", "GiveCRM.Web\GiveCRM.Web.csproj", "{4BFCD2B3-0EF2-4770-994F-D563AEFFB90B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BAB645DD-6283-4C15-BF97-8700A01FC526} = {BAB645DD-6283-4C15-BF97-8700A01FC526}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiveCRM.DataAccess.Test", "GiveCRM.DataAccess.Test\GiveCRM.DataAccess.Test.csproj", "{F773E096-3736-4DC7-AD44-367D058A5340}"
 EndProject

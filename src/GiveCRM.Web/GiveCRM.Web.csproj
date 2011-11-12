@@ -343,9 +343,15 @@
   <Target Name="BeforeBuild">
     <Exec Command="&quot;$(SolutionDir)Tools\NuGet&quot; install &quot;$(ProjectDir)packages.config&quot; -o 			&quot;$(SolutionDir)packages&quot;" />
   </Target>
-  <!-- <Target Name="AfterBuild">
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <GiveCRMDataAccessOutputPath>$(ProjectDir)..\GiveCRM.DataAccess\bin\$(Configuration)\</GiveCRMDataAccessOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <GiveCRMDataAccessBinaries Include="$(GiveCRMDataAccessOutputPath)*.dll;$(GiveCRMDataAccessOutputPath)*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GiveCRMDataAccessBinaries)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
   </Target>
-  -->
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
