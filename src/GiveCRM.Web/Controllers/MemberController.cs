@@ -85,7 +85,7 @@
             return View(new Donation { MemberId = id });
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult SaveDonation(Donation donation)
         {
             this.donationsService.QuickDonation(donation);
@@ -93,7 +93,7 @@
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult Save(MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";
