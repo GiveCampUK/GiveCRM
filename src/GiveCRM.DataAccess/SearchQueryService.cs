@@ -91,7 +91,7 @@ namespace GiveCRM.DataAccess
 
         private SimpleExpression CompileTotalDonationCriteria(DonationSearchCriteria donationCriteria)
         {
-            var column = db.Members.Donations.Amount.Total();
+            var column = db.Members.Donations.Amount.Sum();
             decimal amount;
             if (!decimal.TryParse(donationCriteria.Value, out amount))
             {
