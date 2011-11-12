@@ -112,6 +112,7 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
+    <Compile Include="Models\Donation\QuickDonateViewModel.cs" />
     <Compile Include="Models\ExcelImportViewModel.cs" />
     <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
@@ -251,10 +252,6 @@
     <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
       <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
       <Name>GiveCRM.BusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
-      <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
-      <Name>GiveCRM.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>

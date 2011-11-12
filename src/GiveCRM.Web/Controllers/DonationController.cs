@@ -1,4 +1,7 @@
-﻿namespace GiveCRM.Web.Controllers
+﻿using System.Linq;
+using GiveCRM.Web.Models.Donation;
+
+namespace GiveCRM.Web.Controllers
 {
     using System;
     using System.Web.Mvc;
@@ -9,12 +12,24 @@
     public class DonationController : Controller
     {
         private readonly IDonationsService donationsService;
+        private readonly ICampaignService campaignService;
 
-        public DonationController(IDonationsService donationsService)
+        public DonationController(IDonationsService donationsService, ICampaignService campaignService)
         {
+            if (donationsService == null)
+            {
+                throw new ArgumentNullException("donationsService");
+            }
+
+            if (campaignService == null)
+            {
+                throw new ArgumentNullException("campaignService");
+            }
+            
             this.donationsService = donationsService;
+            this.campaignService = campaignService;
         }
-        
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -40,7 +55,10 @@
         [HttpGet]
         public ActionResult QuickDonate(int id)
         {
-            return View(id);
+            var campaigns = this.campaignService.GetAllOpen();
+            var viewModel = new QuickDonateViewModel(id, campaigns);
+
+            return View(viewModel);
         }
 
         [HttpGet]
