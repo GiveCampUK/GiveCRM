@@ -30,3 +30,13 @@ team.txt
 
 packages
 !/src/packages/repositories.config
+/src/GiveCRM.DataAccess/StyleCop.Cache
+/src/GiveCRM.Database/StyleCop.Cache
+/src/GiveCRM.DummyDataGenerator/StyleCop.Cache
+/src/GiveCRM.ImportExport/GiveCRM.ImportExport.Test/StyleCop.Cache
+/src/GiveCRM.ImportExport/GiveCRM.ImportExport.TestApp/StyleCop.Cache
+/src/GiveCRM.ImportExport/GiveCRM.ImportExport/StyleCop.Cache
+/src/GiveCRM.Models/StyleCop.Cache
+/src/GiveCRM.Web.Tests/StyleCop.Cache
+/src/GiveCRM.Web/StyleCop.Cache
+/src/StyleCop.Cache

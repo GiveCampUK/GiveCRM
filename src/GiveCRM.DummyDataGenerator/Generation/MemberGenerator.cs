@@ -12,6 +12,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         // use dictionary not list since contains checking is faster
         private readonly Dictionary<string, bool> generatedEmails = new Dictionary<string, bool>();
         private readonly Dictionary<string, bool> generatedPostalAddresses = new Dictionary<string, bool>();
+        private readonly TitleData titleData = new TitleData();
 
         private int lastReferenceIndex;
 
@@ -191,7 +192,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private TitleDataItem MakeTitleSalutation(bool isFemale)
         {
-            return isFemale ? random.PickFromList(TitleData.FemaleTitles) : random.PickFromList(TitleData.MaleTitles);
+            return isFemale ? random.PickFromList(titleData.FemaleTitles) : random.PickFromList(titleData.MaleTitles);
         }
 
         private string RandomMaleFirstName()
