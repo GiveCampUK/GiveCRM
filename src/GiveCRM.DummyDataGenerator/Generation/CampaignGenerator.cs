@@ -1,10 +1,9 @@
-namespace GiveCRM.DummyDataGenerator
+namespace GiveCRM.DummyDataGenerator.Generation
 {
     using System;
 
     using GiveCRM.DummyDataGenerator.Data;
     using GiveCRM.Models;
-    using GiveCRM.DummyDataGenerator.Generation;
 
     internal class CampaignGenerator
     { 

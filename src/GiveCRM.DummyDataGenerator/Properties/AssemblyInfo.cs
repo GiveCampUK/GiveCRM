@@ -5,12 +5,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DummyDataGenerator")]
+[assembly: AssemblyTitle("GiveCRM DummyDataGenerator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("GiveCamp")]
+[assembly: AssemblyCompany("GiveCRM")]
 [assembly: AssemblyProduct("DummyDataGenerator")]
-[assembly: AssemblyCopyright("Copyright © GiveCamp 2011")]
+[assembly: AssemblyCopyright("Copyright © GiveCRM 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

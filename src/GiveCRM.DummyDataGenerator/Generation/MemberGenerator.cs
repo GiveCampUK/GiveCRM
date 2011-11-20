@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
     using GiveCRM.DummyDataGenerator.Data;
 
     internal class MemberGenerator
@@ -14,7 +13,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private readonly Dictionary<string, bool> generatedEmails = new Dictionary<string, bool>();
         private readonly Dictionary<string, bool> generatedPostalAddresses = new Dictionary<string, bool>();
 
-        private int lastReferenceIndex = 0;
+        private int lastReferenceIndex;
 
         public List<Member> Generate(int count)
         {

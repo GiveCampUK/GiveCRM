@@ -4,7 +4,7 @@ namespace GiveCRM.DummyDataGenerator.Data
 {
     internal static class TitleData
     {
-        internal static List<TitleDataItem> MaleTitles = new List<TitleDataItem>
+        internal static readonly IList<TitleDataItem> MaleTitles = new List<TitleDataItem>
             {
                 new TitleDataItem("Mr.", "Mr."),
                 new TitleDataItem("Mr.", "Mr."),
@@ -22,7 +22,7 @@ namespace GiveCRM.DummyDataGenerator.Data
                 new TitleDataItem("Dr.", "Doctor")
             };
 
-        internal static List<TitleDataItem> FemaleTitles = new List<TitleDataItem>
+        internal static readonly IList<TitleDataItem> FemaleTitles = new List<TitleDataItem>
             {
                 new TitleDataItem("Ms.", "Ms."),
                 new TitleDataItem("Ms.", "Ms."),

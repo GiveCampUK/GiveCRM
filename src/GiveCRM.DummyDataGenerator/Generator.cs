@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
-using GiveCRM.DummyDataGenerator.Generation;
-
-namespace GiveCRM.DummyDataGenerator
+﻿namespace GiveCRM.DummyDataGenerator
 {
+    using System;
+    using System.Collections.Generic;
+
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+    using GiveCRM.DummyDataGenerator.Generation;
+
+    public delegate void GeneratorUpdate(object sender, EventArgs<string> eventArgs);
+
     internal class Generator
     {
         private const int UpdateFromLoopFrequency = 100;
 
         private Campaign campaign;
         private List<Member> members;
-
-        internal EventHandler<EventArgs<string>> Update;
+        public event GeneratorUpdate Update;
 
         internal void GenerateMembers(int countToGenerate)
         {
@@ -139,7 +140,7 @@ namespace GiveCRM.DummyDataGenerator
 
         private void OnUpdate(string message)
         {
-            var handler = Update;
+            GeneratorUpdate handler = Update;
             if (handler != null)
             {
                 handler(this, new EventArgs<string>(message));

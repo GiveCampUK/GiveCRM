@@ -7,7 +7,7 @@ namespace GiveCRM.DummyDataGenerator.Data
         /// <summary>
         /// The largest ccities in the UK
         /// </summary>
-        internal static List<TownDataItem> Data = new List<TownDataItem>
+        internal static readonly IList<TownDataItem> Data = new List<TownDataItem>
             {
                 new TownDataItem 
                 { 
