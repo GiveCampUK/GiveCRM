@@ -7,15 +7,13 @@
     using GiveCRM.Models;
     using GiveCRM.DummyDataGenerator.Generation;
 
-    public delegate void GeneratorUpdate(object sender, EventArgs<string> eventArgs);
-
     internal class Generator
     {
         private const int UpdateFromLoopFrequency = 100;
 
         private Campaign campaign;
         private List<Member> members;
-        public event GeneratorUpdate Update;
+        public event Action<object, EventArgs<string>> Update;
 
         internal void GenerateMembers(int countToGenerate)
         {
@@ -140,7 +138,7 @@
 
         private void OnUpdate(string message)
         {
-            GeneratorUpdate handler = Update;
+            var handler = Update;
             if (handler != null)
             {
                 handler(this, new EventArgs<string>(message));

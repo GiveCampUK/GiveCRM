@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Models.Search;
+    using Simple.Data;
+
     public class Search
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");

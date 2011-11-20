@@ -1,10 +1,10 @@
-﻿using System.Text.RegularExpressions;
-using System.Threading;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Properties;
-
-namespace GiveCRM.Web.Infrastructure
+﻿namespace GiveCRM.Web.Infrastructure
 {
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Properties;
+
     internal static class SearchExtensions
     {
         internal static string ToFriendlyDisplayString(this SearchCriteria searchCriteria)

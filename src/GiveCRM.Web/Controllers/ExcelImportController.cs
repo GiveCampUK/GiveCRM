@@ -1,5 +1,4 @@
-﻿
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -12,8 +11,8 @@ namespace GiveCRM.Web.Controllers
 
     public class ExcelImportController : AsyncController
     {
-        private const string ExcelFileExtension_OldFormat = ".xls";
-        private const string ExcelFileExtension_NewFormat = ".xlsx";
+        private const string ExcelFileExtensionOldFormat = ".xls";
+        private const string ExcelFileExtensionNewFormat = ".xlsx";
 
         private readonly IExcelImportService excelImporter;
         
@@ -76,23 +75,23 @@ namespace GiveCRM.Web.Controllers
 
         private bool IsValidFileExtension(string fileName)
         {
-            return fileName.EndsWith(ExcelFileExtension_OldFormat) || fileName.EndsWith(ExcelFileExtension_NewFormat);
+            return fileName.EndsWith(ExcelFileExtensionOldFormat) || fileName.EndsWith(ExcelFileExtensionNewFormat);
         }
 
         private void ImportAsync(Stream file)
         {
             AsyncManager.OutstandingOperations.Increment();
             this.excelImporter.ImportCompleted += (s, e) =>
-            {
-                AsyncManager.Parameters["members"] = e.ImportedData;
-                AsyncManager.OutstandingOperations.Decrement();
-            };
+                {
+                    AsyncManager.Parameters["members"] = e.ImportedData;
+                    AsyncManager.OutstandingOperations.Decrement();
+                };
 
             this.excelImporter.ImportFailed += (s, e) =>
-            {
-                AsyncManager.Parameters["exception"] = e.Exception;
-                AsyncManager.OutstandingOperations.Decrement();
-            };
+                {
+                    AsyncManager.Parameters["exception"] = e.Exception;
+                    AsyncManager.OutstandingOperations.Decrement();
+                };
 
             this.excelImporter.Import(file);
         }

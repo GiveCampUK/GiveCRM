@@ -1,8 +1,6 @@
-﻿
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
     
     using GiveCRM.Models;
@@ -11,7 +9,7 @@ namespace GiveCRM.Web.Controllers
 
     public class SetupController : Controller
     {
-        private IFacetsService facetService;
+        private readonly IFacetsService facetService;
 
         public SetupController(IFacetsService facetsService)
         {
