@@ -32,7 +32,6 @@
               .PagedList-currentPage { font-weight: bold; }
               .PagedList-currentPage a { color: Black; }
             </style>
-           @* what's a "ShowPager"? - caused an error if (Model.ShowPager) { *@
            @Html.PagedListPager(Model, Model.PagingFunction, PagedListRenderOptions.OnlyShowFivePagesAtATime)
         </td>
     </tr>
