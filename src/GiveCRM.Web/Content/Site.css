@@ -14,3 +14,11 @@
 .itemlist > li {
 	margin-bottom: 1em;
 }
+
+.editor-label > label {
+  margin-right: 2px;
+}
+
+.editor-field {
+  padding: 2px;
+}
