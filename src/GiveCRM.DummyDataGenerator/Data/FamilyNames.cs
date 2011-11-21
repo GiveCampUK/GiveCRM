@@ -4,7 +4,7 @@
 
     internal static class FamilyNames
     {
-        internal static List<string> Data = new List<string>
+        internal static readonly IList<string> Data = new List<string>
             {
                 "Abbott",
                 "Adams",

@@ -1,5 +1,4 @@
-﻿
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System.Web.Mvc;
 

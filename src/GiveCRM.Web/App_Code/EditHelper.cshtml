@@ -1,0 +1,28 @@
+﻿@using System.Linq.Expressions
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+
+@* see http://weblogs.asp.net/scottgu/archive/2011/05/12/asp-net-mvc-3-and-the-helper-syntax-within-razor.aspx *@
+
+@functions
+{
+    public static HelperResult Field<TModel, TProperty>(HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expr)
+    {
+        return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.EditorFor(expr), null);
+    }
+
+    public static HelperResult FieldWithValidation<TModel, TProperty>(HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expr)
+    {
+        return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.EditorFor(expr), htmlHelper.ValidationMessageFor(expr));
+    }
+}
+
+@helper FieldFormat(MvcHtmlString labelData, MvcHtmlString fieldData, MvcHtmlString validationMessage)
+{
+    <div class="editor-label">@labelData</div>
+    <div class="editor-field">@fieldData</div>
+    if (validationMessage != null)
+    {
+            @validationMessage
+    }
+}

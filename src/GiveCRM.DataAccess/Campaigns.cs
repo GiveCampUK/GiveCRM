@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-
-using GiveCRM.Models;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System.Collections.Generic;
+
+    using GiveCRM.Models;
+    using Simple.Data;
+
     public class Campaigns
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");

@@ -6,7 +6,7 @@ namespace GiveCRM.Web.Services
 {
     public class MemberSearchFilterService : IMemberSearchFilterService
     {
-        private MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
+        private readonly MemberSearchFilters memberSearchFilterRepo = new MemberSearchFilters();
 
         public IEnumerable<MemberSearchFilter> ForCampaign(int id)
         {

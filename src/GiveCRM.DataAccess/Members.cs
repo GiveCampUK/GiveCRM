@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+
+    using GiveCRM.Models;
+    using Simple.Data;
+
     public class Members
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
@@ -137,7 +137,7 @@ namespace GiveCRM.DataAccess
 
         public void Update(Member member)
         {
-            bool refetchPhoneNumbers = false;
+            bool refetchPhoneNumbers;
 
             using (var transaction = db.BeginTransaction())
             {

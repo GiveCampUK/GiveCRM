@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.DummyDataGenerator.Data
+﻿namespace GiveCRM.DummyDataGenerator.Data
 {
+    using System.Collections.Generic;
+
     internal static class FemaleNames
     {
-        internal static List<string> Data = new List<string>
+        internal static readonly IList<string> Data = new List<string>
             {
                 "Alice",
                 "Alison",

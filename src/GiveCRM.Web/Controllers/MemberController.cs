@@ -11,10 +11,11 @@
 
     public class MemberController : Controller
     {
-        private IDonationsService donationsService;
-        private IMemberService memberService;
-        private ICampaignService campaignService;
         private const int DefaultPageSize = 25;
+
+        private readonly IDonationsService donationsService;
+        private readonly IMemberService memberService;
+        private readonly ICampaignService campaignService;
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
@@ -33,7 +34,10 @@
         public ActionResult Add()
         {
             ViewBag.Title = "Add Member"; 
-            return View(new MemberEditViewModel() { PhoneNumbers = new List<PhoneNumber>() });
+            return View(new MemberEditViewModel
+                {
+                    PhoneNumbers = new List<PhoneNumber>()
+                });
         }
 
         [HttpGet]
@@ -46,7 +50,7 @@
                 model.PhoneNumbers = new List<PhoneNumber>();
             }
 
-            return View(viewName: "Add", model: MemberEditViewModel.ToViewModel(model));
+            return View("Add", MemberEditViewModel.ToViewModel(model));
         }
 
         [HttpGet]
@@ -84,7 +88,7 @@
 
             if (!ModelState.IsValid)
             {
-                return View(viewName: "Add", model: member);
+                return View("Add", member);
             }
 
             this.memberService.Save(member.ToModel()); 
@@ -109,7 +113,7 @@
 
         private PagedMemberListViewModel CreatePagedListOfMembers(IEnumerable<Member> memberList, MemberSearchViewModel viewModel)
         {
-            return new PagedMemberListViewModel(memberList.ToPagedList(pageNumber: viewModel.Page ?? 1, pageSize: DefaultPageSize), 
+            return new PagedMemberListViewModel(memberList.ToPagedList(viewModel.Page ?? 1, DefaultPageSize), 
                                                 page => Url.Action("Index", new RouteValueDictionary
                                                                                 {
                                                                                     {"Page", page},

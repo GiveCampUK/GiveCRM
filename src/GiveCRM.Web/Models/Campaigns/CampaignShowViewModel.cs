@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-
-namespace GiveCRM.Web.Models.Campaigns
+﻿namespace GiveCRM.Web.Models.Campaigns
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Models;
+
     public class CampaignShowViewModel : ViewModelBase
     {
         public Campaign Campaign { get; set; }

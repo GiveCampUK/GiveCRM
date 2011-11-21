@@ -1,7 +1,7 @@
-﻿using System.Web;
-
-namespace GiveCRM.Web.Models
+﻿namespace GiveCRM.Web.Models
 {
+    using System.Web;
+
     public class ExcelImportViewModel : ViewModelBase
     {
         public readonly string ExcelTemplatePath = "~/Content/files/GiveCRM_Template.xls";

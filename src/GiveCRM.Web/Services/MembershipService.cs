@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
+﻿using System.Web.Security;
 
 namespace GiveCRM.Web.Services
 {
@@ -30,6 +26,10 @@ namespace GiveCRM.Web.Services
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
             MembershipUser currentUser = Membership.GetUser(userName, true);
+            if (currentUser == null)
+            {
+                return false;
+            }
             return currentUser.ChangePassword(oldPassword, newPassword);
         }
 

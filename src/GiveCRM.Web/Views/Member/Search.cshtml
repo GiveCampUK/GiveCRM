@@ -9,15 +9,10 @@
 
 @using (Html.BeginForm(actionName: "Search", controllerName: "Member", method: FormMethod.Get))
 {
-    <div class="editor-label">@Html.LabelFor(model => model.Name)</div>
-    <div class="editor-field">@Html.EditorFor(model => model.Name)</div>
+    @EditHelper.Field(Html, model => model.Name)
+    @EditHelper.Field(Html, model => model.PostCode)
+    @EditHelper.Field(Html, model => model.Reference)
         
-    <div class="editor-label">@Html.LabelFor(model => model.PostCode)</div>
-    <div class="editor-field">@Html.EditorFor(model => model.PostCode)</div>
-    
-    <div class="editor-label">@Html.LabelFor(model => model.Reference)</div>
-    <div class="editor-field">@Html.EditorFor(model => model.Reference)</div>
-
     <input type="submit" value="Search" name="SearchButton" />
 }
 
