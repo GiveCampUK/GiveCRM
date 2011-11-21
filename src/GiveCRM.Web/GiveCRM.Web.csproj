@@ -13,7 +13,7 @@
     <RootNamespace>GiveCRM.Web</RootNamespace>
     <AssemblyName>GiveCRM.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -94,6 +94,7 @@
     <Compile Include="App_Start\NinjectMVC3.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ElmahResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
