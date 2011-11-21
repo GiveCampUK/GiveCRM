@@ -1,20 +1,5 @@
-﻿@using System.Linq.Expressions
-@using GiveCRM.Web.Models.Members;
+﻿@using GiveCRM.Web.Models.Members;
 @model MemberEditViewModel 
-
-@functions
-{
-    public HelperResult LayoutField<TProperty>(Expression<Func<MemberEditViewModel, TProperty>> expr)
-    {
-        return FieldFormat(Html.LabelFor(expr), Html.EditorFor(expr), Html.ValidationMessageFor(expr));
-    }
-}
-@helper FieldFormat(MvcHtmlString label, MvcHtmlString field, MvcHtmlString validationMessage)
-    {
-    <div class="editor-label">@label</div>
-    <div class="editor-field">@field</div>
-    @validationMessage
-}
 
 <h2>@ViewBag.Title</h2>
 
@@ -25,18 +10,18 @@
 
 @Html.HiddenFor(m => m.Id)
 
-@LayoutField(m => m.Reference)
-@LayoutField(m => m.Title)
-@LayoutField(m => m.Salutation)
-@LayoutField(m => m.FirstName)
-@LayoutField(m => m.LastName)
-@LayoutField(m => m.AddressLine1)
-@LayoutField(m => m.AddressLine2)
-@LayoutField(m => m.City)
-@LayoutField(m => m.PostalCode)
-@LayoutField(m => m.Region)
-@LayoutField(m => m.Country)
-@LayoutField(m => m.EmailAddress)
+@EditHelper.FieldWithValidation(Html, m => m.Reference)
+@EditHelper.FieldWithValidation(Html, m => m.Title)
+@EditHelper.FieldWithValidation(Html, m => m.Salutation)
+@EditHelper.FieldWithValidation(Html, m => m.FirstName)
+@EditHelper.FieldWithValidation(Html, m => m.LastName)
+@EditHelper.FieldWithValidation(Html, m => m.AddressLine1)
+@EditHelper.FieldWithValidation(Html, m => m.AddressLine2)
+@EditHelper.FieldWithValidation(Html, m => m.City)
+@EditHelper.FieldWithValidation(Html, m => m.PostalCode)
+@EditHelper.FieldWithValidation(Html, m => m.Region)
+@EditHelper.FieldWithValidation(Html, m => m.Country)
+@EditHelper.FieldWithValidation(Html, m => m.EmailAddress)
 
 <div id="PhoneNumbers">
 @{
@@ -48,7 +33,7 @@
         <input type="hidden" name="PhoneNumbers[@i].MemberId" value="@phone.MemberId" />
         <input type="hidden" name="PhoneNumbers[@i].Id" value="@phone.Id" />
         <input type="hidden" class="numbertype" name="PhoneNumbers[@i].PhoneNumberType" value="@phone.PhoneNumberType" />
-        i += 1;
+        i++;
     }
 }
 </div>
