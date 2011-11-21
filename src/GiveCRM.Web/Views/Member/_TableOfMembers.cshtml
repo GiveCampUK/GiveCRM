@@ -15,10 +15,10 @@
         <tr>
             <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
             <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
-            <td>@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
+            <td class="wideEnough">@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
             <td>@member.Reference</td>
             <td>@member.Salutation @member.FirstName @member.LastName</td>
-            <td>@member.AddressLine1 @member.AddressLine2 @member.City @member.PostalCode</td>
+            <td>@member.AddressLine1 @member.AddressLine2 <br />@member.City @member.PostalCode</td>
             <td>@member.EmailAddress</td>
         </tr>
     }

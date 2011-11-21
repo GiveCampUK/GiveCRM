@@ -22,3 +22,7 @@
 .editor-field {
   padding: 2px;
 }
+
+.wideEnough {
+  min-width: 80px;
+}
