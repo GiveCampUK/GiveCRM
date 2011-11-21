@@ -40,3 +40,4 @@ packages
 /src/GiveCRM.Web.Tests/StyleCop.Cache
 /src/GiveCRM.Web/StyleCop.Cache
 /src/StyleCop.Cache
+/src/GiveCRM.DataAccess.Test/StyleCop.Cache
