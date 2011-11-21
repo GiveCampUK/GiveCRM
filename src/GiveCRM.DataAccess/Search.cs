@@ -213,18 +213,23 @@
                 case SearchOperator.EqualTo:
                     expr = column == criteria.Value;
                     break;
+
                 case SearchOperator.NotEqualTo:
                     expr = column != criteria.Value;
                     break;
+
                 case SearchOperator.StartsWith:
                     expr = column.Like(criteria.Value + "%");
                     break;
+
                 case SearchOperator.EndsWith:
                     expr = column.Like("%" + criteria.Value);
                     break;
+
                 case SearchOperator.Contains:
                     expr = column.Like("%" + criteria.Value + "%");
                     break;
+
                 default:
                     throw new InvalidOperationException("Operator not valid with String value.");
             }
