@@ -1,14 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations; 
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc; 
-
-using GiveCRM.Models; 
-
-namespace GiveCRM.Web.Models.Members
+﻿namespace GiveCRM.Web.Models.Members
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+
+    using GiveCRM.Models;
+    
     public class MemberEditViewModel
     {
         public MemberEditViewModel()
@@ -57,7 +53,7 @@ namespace GiveCRM.Web.Models.Members
 
         public Member ToModel()
         {
-            return new Member()
+            return new Member
             {
                 Id = this.Id, 
                 Reference = this.Reference, 
@@ -78,7 +74,7 @@ namespace GiveCRM.Web.Models.Members
 
         public static MemberEditViewModel ToViewModel(Member member)
         {
-            return new MemberEditViewModel()
+            return new MemberEditViewModel
             {
                 Id = member.Id,
                 Reference = member.Reference,

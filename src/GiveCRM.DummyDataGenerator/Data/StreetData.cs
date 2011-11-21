@@ -4,7 +4,7 @@
 
     internal static class StreetData
     {
-        internal static List<string> StreetNamePrefix = new List<string>
+        internal static readonly IList<string> StreetNamePrefix = new List<string>
             {
                 string.Empty,
                 string.Empty,
@@ -23,7 +23,7 @@
                 "Old"
             };
 
-        internal static List<string> StreetNames = new List<string>
+        internal static readonly IList<string> StreetNames = new List<string>
             {
                 "Abbey",
                 "Albert",
@@ -132,7 +132,7 @@
                 "York"
             };
 
-        internal static List<string> StreetSuffix = new List<string>
+        internal static readonly IList<string> StreetSuffix = new List<string>
             {
                 "Street",
                 "Road",

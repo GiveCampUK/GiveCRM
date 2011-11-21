@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using GiveCRM.Models.Search;
-
-namespace GiveCRM.Web.Models.Campaigns
+﻿namespace GiveCRM.Web.Models.Campaigns
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using GiveCRM.Models.Search;
+
     public class AddSearchFilterViewModel : ViewModelBase
     {
         public int CampaignId { get; set; }

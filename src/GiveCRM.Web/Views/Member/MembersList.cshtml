@@ -32,10 +32,7 @@
               .PagedList-currentPage { font-weight: bold; }
               .PagedList-currentPage a { color: Black; }
             </style>
-            @if (Model.ShowPager)
-            {
-                @Html.PagedListPager(Model, Model.PagingFunction, PagedListRenderOptions.OnlyShowFivePagesAtATime)
-            }
+           @Html.PagedListPager(Model, Model.PagingFunction, PagedListRenderOptions.OnlyShowFivePagesAtATime)
         </td>
     </tr>
 </table>

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
-namespace GiveCRM.Web.Models
+﻿namespace GiveCRM.Web.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public class ChangePasswordModel
     {

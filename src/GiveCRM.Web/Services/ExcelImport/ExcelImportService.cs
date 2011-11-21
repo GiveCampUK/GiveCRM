@@ -35,8 +35,6 @@ namespace GiveCRM.Web.Services.ExcelImport
             this.memberFactory = memberFactory;
         }
 
-        
-
         public event Action<object, ImportDataCompletedEventArgs> ImportCompleted;
         public event Action<object, ImportDataFailedEventArgs> ImportFailed;
 
@@ -114,7 +112,5 @@ namespace GiveCRM.Web.Services.ExcelImport
                 handler(this, new ImportDataFailedEventArgs(exception));
             }
         }
-
-
     }
 }
