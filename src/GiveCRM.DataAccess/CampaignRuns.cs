@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Linq;
+
+    using Simple.Data;
+
     public class CampaignRuns
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
@@ -29,8 +28,7 @@ namespace GiveCRM.DataAccess
                     transaction.Rollback();
                     throw;
                 }
-            }
-            
+            }           
         }
     }
 }

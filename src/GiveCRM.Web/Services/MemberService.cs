@@ -7,7 +7,7 @@ namespace GiveCRM.Web.Services
 {
     public class MemberService: IMemberService
     {
-        private Members membersDb = new Members();
+        private readonly Members membersDb = new Members();
 
         public IEnumerable<Member> All()
         {

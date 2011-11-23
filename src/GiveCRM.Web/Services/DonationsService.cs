@@ -7,7 +7,7 @@ namespace GiveCRM.Web.Services
 {
     public class DonationsService : IDonationsService
     {
-        private Donations donationsDb = new Donations();
+        private readonly Donations donationsDb = new Donations();
 
         public  IEnumerable<Donation> GetTopDonations()
         {
@@ -26,6 +26,4 @@ namespace GiveCRM.Web.Services
             donationsDb.Insert(donation);
         }
     }
-
-
 }

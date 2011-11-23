@@ -8,9 +8,9 @@
 
     public class AccountController : Controller
     {
-        private IMembershipService membershipService;
-        private IAuthenticationService authenticationService;
-        private IUrlValidationService urlValidationService;
+        private readonly IMembershipService membershipService;
+        private readonly IAuthenticationService authenticationService;
+        private readonly IUrlValidationService urlValidationService;
 
         public AccountController(IMembershipService membershipService, IAuthenticationService authenticationService, IUrlValidationService urlValidationService)
         {
@@ -30,7 +30,7 @@
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 if (this.membershipService.ValidateUser(model.UserName, model.Password))
                 {
                     this.authenticationService.SetAuthorizationCredentials(model.UserName, model.RememberMe);
@@ -39,15 +39,11 @@
                     {
                         return Redirect(returnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    
+                    return this.RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
-                }
+
+                this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
             }
 
             // If we got this far, something failed, redisplay form
@@ -121,10 +117,7 @@
                 {
                     return RedirectToAction("ChangePasswordSuccess");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "The current password is incorrect or the new password is invalid.");
-                }
+                this.ModelState.AddModelError(string.Empty, "The current password is incorrect or the new password is invalid.");
             }
 
             // If we got this far, something failed, redisplay form

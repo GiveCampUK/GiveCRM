@@ -2,12 +2,12 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("DummyDataGenerator")]
+[assembly: AssemblyTitle("GiveCRM DummyDataGenerator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("GiveCamp")]
+[assembly: AssemblyCompany("GiveCRM")]
 [assembly: AssemblyProduct("DummyDataGenerator")]
-[assembly: AssemblyCopyright("Copyright © GiveCamp 2011")]
+[assembly: AssemblyCopyright("Copyright © GiveCRM 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

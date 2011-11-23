@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using GiveCRM.Models;
-using PagedList;
-
-namespace GiveCRM.Web.Models.Members
+﻿namespace GiveCRM.Web.Models.Members
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+    using PagedList;
+
     public class PagedMemberListViewModel : IPagedList<Member>
     {
         private readonly IPagedList<Member> pagedMemberList;

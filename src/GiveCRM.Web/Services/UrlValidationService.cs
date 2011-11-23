@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web;
 
 namespace GiveCRM.Web.Services
 {
-    public interface IUrlValidationService
-    {
-        bool IsRedirectable(Controller controller,string url);
-    }
-
     public class UrlValidationService : IUrlValidationService
     {
-        private IEnumerable<IAmAUrlValidationRule> rules;
+        private readonly IEnumerable<IAmAUrlValidationRule> rules;
 
         public UrlValidationService(IEnumerable<IAmAUrlValidationRule>rules)
         {
@@ -22,27 +14,23 @@ namespace GiveCRM.Web.Services
 
         public bool IsRedirectable(Controller controller, string url)
         {
-            var result = true;
             foreach(var rule in rules)
             {
                 if(!rule.IsValid(controller,url))
                 {
-                    result = false;
-                    break;
+                    return false;
                 }
             }
-            return result;
+            return true;
         }
     }
-
-
 
     public interface IAmAUrlValidationRule
     {
         bool IsValid(Controller controller, string url);
     }
 
-    public class IsLocal:IAmAUrlValidationRule
+    public class IsLocal: IAmAUrlValidationRule
     {
 
         public bool IsValid(Controller controller, string url)

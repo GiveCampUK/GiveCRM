@@ -1,10 +1,9 @@
-﻿using System;
-using System.Configuration;
-using System.Threading;
-
-namespace GiveCRM.DummyDataGenerator
+﻿namespace GiveCRM.DummyDataGenerator
 {
+    using System;
     using System.Windows;
+    using System.Configuration;
+    using System.Threading;
 
     /// <summary>
     /// Interaction logic for Main.xaml

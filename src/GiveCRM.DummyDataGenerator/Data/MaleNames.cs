@@ -4,7 +4,7 @@ namespace GiveCRM.DummyDataGenerator.Data
 {
     internal static class MaleNames
     {
-        internal static List<string> Data = new List<string>
+        internal static readonly IList<string> Data = new List<string>
                                                 {
                                                             "Aaron",
                                                             "Abraham",

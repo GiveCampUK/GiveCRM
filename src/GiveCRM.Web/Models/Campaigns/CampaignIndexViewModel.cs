@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using GiveCRM.Models;
-
-namespace GiveCRM.Web.Models.Campaigns
+﻿namespace GiveCRM.Web.Models.Campaigns
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public class CampaignIndexViewModel : ViewModelBase
     {
         public bool ShowClosed { get; set; }
