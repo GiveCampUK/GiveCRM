@@ -9,6 +9,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
     internal class MemberGenerator
     {
         private readonly RandomSource random = new RandomSource();
+        private readonly TitleGenerator titleGenerator = new TitleGenerator();
         private readonly EmailAddressGenerator emailGenerator = new EmailAddressGenerator();
         private readonly AddressGenerator addressGenerator = new AddressGenerator();
 
@@ -55,8 +56,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             }
             while (firstName == familyName);
 
-            var titlesList = isFemale ? TitleData.FemaleTitles : TitleData.MaleTitles;
-            TitleDataItem titleSalutation = random.PickFromList(titlesList);
+            TitleDataItem titleSalutation = isFemale ? titleGenerator.GenerateFemaleTitle() : titleGenerator.GenerateMaleTitle();
 
             var member = new Member
                                 {
