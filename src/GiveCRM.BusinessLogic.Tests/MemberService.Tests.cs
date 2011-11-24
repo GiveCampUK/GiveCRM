@@ -106,7 +106,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var searchCriteria = new[] { surnameSearchCriteria };
 
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            searchQueryService.CompileQuery(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(searchResults);
+            searchQueryService.CompileQuery<Member>(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(searchResults);
             
             var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
@@ -124,7 +124,7 @@ namespace GiveCRM.BusinessLogic.Tests
             var searchCriteria = new[] { surnameSearchCriteria };
 
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            searchQueryService.CompileQuery(searchCriteria).Returns(searchResults);
+            searchQueryService.CompileQuery<Member>(searchCriteria).Returns(searchResults);
 
             var memberRepository = Substitute.For<IMemberRepository>();
             var memberSearchFilterRepository = Substitute.For<IMemberSearchFilterRepository>();
@@ -167,7 +167,7 @@ namespace GiveCRM.BusinessLogic.Tests
                                                                                  });
             var memberRepository = Substitute.For<IMemberRepository>();
             var searchQueryService = Substitute.For<ISearchQueryService>();
-            searchQueryService.CompileQuery(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(membersInCampaign1);
+            searchQueryService.CompileQuery<Member>(Arg.Any<IEnumerable<SearchCriteria>>()).Returns(membersInCampaign1);
             
             var memberService = new MemberService(memberRepository, memberSearchFilterRepository, searchQueryService);
             var results = memberService.SearchByCampaignId(campaignId);

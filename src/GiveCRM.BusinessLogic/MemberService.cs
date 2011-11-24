@@ -99,9 +99,7 @@ namespace GiveCRM.BusinessLogic
                 return Enumerable.Empty<Member>();
             }
 
-            var query = searchQueryService.CompileQuery(criteriaList);
-
-            return query.Cast<Member>();
+            return searchQueryService.CompileQuery<Member>(criteriaList);
         }
 
         public IEnumerable<Member> SearchByCampaignId(int campaignId)

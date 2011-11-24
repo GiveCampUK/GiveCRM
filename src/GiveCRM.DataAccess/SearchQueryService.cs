@@ -1,10 +1,9 @@
 ﻿namespace GiveCRM.DataAccess
 {
     using System;
-	using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-	using GiveCRM.BusinessLogic;
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Models.Search;
     using Simple.Data;
 
@@ -12,7 +11,7 @@
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
-        public IEnumerable CompileQuery(IEnumerable<SearchCriteria> criteria)
+        public IEnumerable<T> CompileQuery<T>(IEnumerable<SearchCriteria> criteria)
         {
             var criteriaList = criteria.ToList();
 
@@ -31,7 +30,8 @@
             {
                 query = query.Having(having);
             }
-            return query;
+
+            return query.Cast<T>();
         }
 
         internal SimpleExpression CompileFacetCriteria(IEnumerable<FacetSearchCriteria> criteria, SimpleExpression expr)
