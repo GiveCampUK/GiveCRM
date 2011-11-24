@@ -69,7 +69,7 @@ namespace GiveCRM.DummyDataGenerator
             var generator = new MemberGenerator(Log);
 
             TaskScheduler uiContext = TaskScheduler.FromCurrentSynchronizationContext();
-            Task.Factory.StartNew(() => generator.GenerateMembers(numberOfMembersToGenerate), TaskCreationOptions.LongRunning)
+            Task.Factory.StartNew(() => generator.Generate(numberOfMembersToGenerate), TaskCreationOptions.LongRunning)
                         .ContinueWith(_ => RefreshStats(uiContext))
                         .ContinueWith(LogTaskExceptions, TaskContinuationOptions.OnlyOnFaulted);
         }

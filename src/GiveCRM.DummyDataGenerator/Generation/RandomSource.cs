@@ -23,6 +23,9 @@
             return prefix + random.Next(10000).ToString("0000") + random.Next(10000).ToString("0000");
         }
 
+        /// <summary>
+        /// Returns a random element from the specified list.
+        /// </summary>
         public T PickFromList<T>(IList<T> list)
         {
             if (list.Count == 0)
@@ -39,12 +42,19 @@
             return list[index];
         }
 
+        /// <summary>
+        /// Returns <c>true</c> if a random percentage is less than or 
+        /// equal to the supplied value, otherwise <c>false</c>.
+        /// </summary>
         public bool Percent(int passPercent)
         {
             var value = random.Next(100);
-            return value < passPercent;
+            return value <= passPercent;
         }
 
+        /// <summary>
+        /// Returns a random (uppercase) letter.
+        /// </summary>
         public string Letter()
         {
             var offset = random.Next(25);

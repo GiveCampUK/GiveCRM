@@ -13,6 +13,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         internal string GenerateEmailAddress(string firstName, string lastName)
         {
+            if (random.Percent(5))
+            {
+                // 5% of people haven't supplied an email address
+                return null;
+            }
+
             string emailAddress;
 
             do

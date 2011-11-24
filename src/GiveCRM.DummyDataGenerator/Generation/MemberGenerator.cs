@@ -6,39 +6,24 @@ using GiveCRM.Models;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
-    internal class MemberGenerator
+    internal class MemberGenerator : BaseGenerator
     {
+        internal override string GeneratedItemType{get {return "members";}}
+
         private readonly RandomSource random = new RandomSource();
         private readonly TitleGenerator titleGenerator = new TitleGenerator();
         private readonly EmailAddressGenerator emailGenerator = new EmailAddressGenerator();
         private readonly AddressGenerator addressGenerator = new AddressGenerator();
 
-        private readonly Action<string> logAction;
-
         private int lastReferenceNumber;
 
-        public MemberGenerator(Action<string> logAction)
+        internal MemberGenerator(Action<string> logAction) : base(logAction)
+        {}
+
+        internal override void Generate(int numberToGenerate)
         {
-            this.logAction = logAction;
-        }
-
-        public void GenerateMembers(int numberToGenerate)
-        {
-            logAction(string.Format("Generating {0} members...", numberToGenerate));
-            var members = new List<Member>(numberToGenerate);
-
-            for (int i = 0; i < numberToGenerate; i++)
-            {
-                var member = GenerateMember();
-                members.Add(member);
-            }
-
-            logAction(numberToGenerate + " members generated successfully");
-            logAction("Saving members...");
             Members membersDb = new Members();
-            ProgressReporter reporter = new ProgressReporter(numberToGenerate);
-            reporter.ReportProgress(members, m => membersDb.Insert(m), percent => logAction(percent + "% complete"));
-            logAction(numberToGenerate + " members saved successfully");
+            GenerateMultiple(numberToGenerate, GenerateMember, m => membersDb.Insert(m));
         }
 
         private Member GenerateMember()

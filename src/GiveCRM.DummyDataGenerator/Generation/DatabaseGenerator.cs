@@ -40,19 +40,24 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private void GenerateMembers()
         {
-            MemberGenerator generator = new MemberGenerator(logAction);
-            var numberToGenerate = random.Next(1000, 10000);
-            generator.GenerateMembers(numberToGenerate);
+            Generate(new MemberGenerator(logAction), 1000, 10000);
         }
 
         private void GenerateCampaigns()
         {
-            logAction("Generating campaigns...");
+            Generate(new CampaignGenerator(logAction), 15, 100);
         }
 
         private void GenerateDonations()
         {
             logAction("Generating donations...");
+        }
+
+        private void Generate(BaseGenerator generator, int minNumber, int maxNumber)
+        {
+            logAction(string.Format("Generating {0}...", generator.GeneratedItemType));
+            var numberToGenerate = random.Next(minNumber, maxNumber);
+            generator.Generate(numberToGenerate);
         }
     }
 }
