@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System.Collections.Generic;
+	using GiveCRM.BusinessLogic;
+    using GiveCRM.Models;
+    using Simple.Data;
+
     public class MemberSearchFilters : IMemberSearchFilterRepository
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");

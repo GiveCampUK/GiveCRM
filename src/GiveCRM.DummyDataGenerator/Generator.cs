@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
-using GiveCRM.DummyDataGenerator.Generation;
-
-namespace GiveCRM.DummyDataGenerator
+﻿namespace GiveCRM.DummyDataGenerator
 {
+    using System;
+    using System.Collections.Generic;
+
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+    using GiveCRM.DummyDataGenerator.Generation;
+
     internal class Generator
     {
         private const int UpdateFromLoopFrequency = 100;
 
         private Campaign campaign;
         private List<Member> members;
-
-        internal EventHandler<EventArgs<string>> Update;
+        public event Action<object, EventArgs<string>> Update;
 
         internal void GenerateMembers(int countToGenerate)
         {

@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
     using System.Collections.Generic;
 
     internal class RandomSource

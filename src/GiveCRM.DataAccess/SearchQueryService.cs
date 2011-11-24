@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models.Search;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+	using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+	using GiveCRM.BusinessLogic;
+    using GiveCRM.Models.Search;
+    using Simple.Data;
+
     public class SearchQueryService : ISearchQueryService
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
@@ -154,18 +154,23 @@ namespace GiveCRM.DataAccess
                 case SearchOperator.EqualTo:
                     expr = column == criteria.Value;
                     break;
+
                 case SearchOperator.NotEqualTo:
                     expr = column != criteria.Value;
                     break;
+
                 case SearchOperator.StartsWith:
                     expr = column.Like(criteria.Value + "%");
                     break;
+
                 case SearchOperator.EndsWith:
                     expr = column.Like("%" + criteria.Value);
                     break;
+
                 case SearchOperator.Contains:
                     expr = column.Like("%" + criteria.Value + "%");
                     break;
+
                 default:
                     throw new InvalidOperationException("Operator not valid with String value.");
             }

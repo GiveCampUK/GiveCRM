@@ -1,8 +1,6 @@
-﻿
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Mvc;
 
     using GiveCRM.BusinessLogic;

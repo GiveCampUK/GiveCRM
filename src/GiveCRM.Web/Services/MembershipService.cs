@@ -27,6 +27,10 @@
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
             MembershipUser currentUser = Membership.GetUser(userName, true);
+            if (currentUser == null)
+            {
+                return false;
+            }
             return currentUser.ChangePassword(oldPassword, newPassword);
         }
 

@@ -1,13 +1,14 @@
-﻿using System.Linq;
-using GiveCRM.Web.Models.Donation;
-
+﻿
 namespace GiveCRM.Web.Controllers
 {
     using System;
+	using System.Linq;
     using System.Web.Mvc;
 
-    using GiveCRM.BusinessLogic;
+	using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
+	using GiveCRM.Web.Models.Donation;
+    
 
     public class DonationController : Controller
     {

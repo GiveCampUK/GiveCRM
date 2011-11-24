@@ -1,4 +1,3 @@
-
 namespace GiveCRM.Web.Controllers
 {
     using System;

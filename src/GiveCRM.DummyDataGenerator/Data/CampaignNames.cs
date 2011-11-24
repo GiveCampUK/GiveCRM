@@ -4,14 +4,14 @@
 
     internal static class CampaignNames
     {
-        internal static List<string> CharitySuffix = new List<string>
+        internal static readonly IList<string> CharitySuffix = new List<string>
             {
                 "Trust",
                 "Foundation",
                 "Fund",
             };
 
-        internal static List<string> CampaignSuffix = new List<string>
+        internal static readonly IList<string> CampaignSuffix = new List<string>
             {
                 "Appeal",
                 "Drive",
