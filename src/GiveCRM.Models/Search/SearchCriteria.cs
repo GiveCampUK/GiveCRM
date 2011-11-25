@@ -15,28 +15,57 @@ namespace GiveCRM.Models.Search
 
         protected bool Evaluate(object lhs)
         {
-            object rhs = null;
+            object rhs;
+
             switch (this.Type)
             {
-                case SearchFieldType.String: rhs=this.Value; break;
-                case SearchFieldType.Int: rhs=int.Parse(this.Value); break;
-                case SearchFieldType.Double: rhs = double.Parse(this.Value); break;
-                case SearchFieldType.Date: rhs = DateTime.Parse(this.Value); break;
-                default: rhs=this.Value; break;
+                case SearchFieldType.String:
+                    rhs = this.Value;
+                    break;
+                case SearchFieldType.Int:
+                    rhs = int.Parse(this.Value);
+                    break;
+                case SearchFieldType.Double:
+                    rhs = double.Parse(this.Value);
+                    break;
+                case SearchFieldType.Date:
+                    rhs = DateTime.Parse(this.Value);
+                    break;
+                default:
+                    rhs = this.Value;
+                    break;
             }
 
             switch (this.SearchOperator)
             {
-                case SearchOperator.EqualTo: return lhs == rhs;
-                case SearchOperator.NotEqualTo: return lhs != rhs;
-                case SearchOperator.LessThan: return (this.Type == SearchFieldType.Int && (int)lhs < (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs < (double)rhs);
-                case SearchOperator.GreaterThan: return (this.Type == SearchFieldType.Int && (int)lhs > (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs > (double)rhs);
-                case SearchOperator.LessThanOrEqualTo: return (this.Type == SearchFieldType.Int && (int)lhs <= (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs <= (double)rhs);
-                case SearchOperator.GreaterThanOrEqualTo: return (this.Type == SearchFieldType.Int && (int)lhs > (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs > (double)rhs);
-                case SearchOperator.StartsWith: return (this.Type == SearchFieldType.Int && (int)lhs >= (int)rhs) || (this.Type == SearchFieldType.Double && (double)lhs >= (double)rhs);
-                case SearchOperator.EndsWith: return lhs.ToString().EndsWith(rhs.ToString());
-                case SearchOperator.Contains: return lhs.ToString().Contains(rhs.ToString());
-                default: return false;
+                case SearchOperator.EqualTo:
+                    return lhs == rhs;
+                case SearchOperator.NotEqualTo:
+                    return lhs != rhs;
+                case SearchOperator.LessThan:
+                    return (this.Type == SearchFieldType.Int && (int) lhs < (int) rhs)
+                           || (this.Type == SearchFieldType.Double && (double) lhs < (double) rhs)
+                           || (this.Type == SearchFieldType.Date && (DateTime) lhs < (DateTime) rhs);
+                case SearchOperator.GreaterThan:
+                    return (this.Type == SearchFieldType.Int && (int) lhs > (int) rhs)
+                           || (this.Type == SearchFieldType.Double && (double) lhs > (double) rhs)
+                           || (this.Type == SearchFieldType.Date && (DateTime) lhs > (DateTime) rhs);
+                case SearchOperator.LessThanOrEqualTo:
+                    return (this.Type == SearchFieldType.Int && (int) lhs <= (int) rhs)
+                           || (this.Type == SearchFieldType.Double && (double) lhs <= (double) rhs)
+                           || (this.Type == SearchFieldType.Date && (DateTime) lhs <= (DateTime) rhs);
+                case SearchOperator.GreaterThanOrEqualTo:
+                    return (this.Type == SearchFieldType.Int && (int) lhs >= (int) rhs)
+                           || (this.Type == SearchFieldType.Double && (double) lhs >= (double) rhs)
+                           || (this.Type == SearchFieldType.Date && (DateTime) lhs >= (DateTime) rhs);
+                case SearchOperator.StartsWith:
+                    return lhs.ToString().StartsWith(rhs.ToString());
+                case SearchOperator.EndsWith:
+                    return lhs.ToString().EndsWith(rhs.ToString());
+                case SearchOperator.Contains:
+                    return lhs.ToString().Contains(rhs.ToString());
+                default:
+                    return false;
             }
         }
 
