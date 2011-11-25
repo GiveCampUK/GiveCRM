@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Donate";
 }
-
 <h2>Add Donation for @ViewBag.MemberName</h2>
 
 @{Html.BeginForm(actionName: "SaveDonation", controllerName: "Member");}
@@ -19,4 +18,4 @@
     $(function () {
         $("#Date").datepicker({ dateFormat: 'dd/mm/yy' });
     });
-	</script>
+</script>

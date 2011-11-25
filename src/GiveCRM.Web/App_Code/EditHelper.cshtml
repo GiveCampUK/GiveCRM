@@ -11,17 +11,17 @@
         return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.EditorFor(expr), null);
     }
 
-    public static HelperResult DropdownFor<TModel, TProperty>(HtmlHelper<TModel> htmlHelper, 
-        Expression<Func<TModel, TProperty>> expr,
-        IEnumerable<System.Web.Mvc.SelectListItem> items)
-    {
-        return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.DropDownListFor(expr, items),  null);
-    }
-
-
     public static HelperResult FieldWithValidation<TModel, TProperty>(HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expr)
     {
         return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.EditorFor(expr), htmlHelper.ValidationMessageFor(expr));
+    }
+
+    public static HelperResult DropdownFor<TModel, TProperty>(
+        HtmlHelper<TModel> htmlHelper,
+        Expression<Func<TModel, TProperty>> expr,
+        IEnumerable<System.Web.Mvc.SelectListItem> items)
+    {
+        return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.DropDownListFor(expr, items), null);
     }
 }
 
