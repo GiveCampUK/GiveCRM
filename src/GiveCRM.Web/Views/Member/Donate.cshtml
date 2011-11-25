@@ -9,19 +9,10 @@
 @{Html.BeginForm(actionName: "SaveDonation", controllerName: "Member");}
 
 @Html.HiddenFor(d => d.MemberId)
-
-@Html.LabelFor(d=>d.CampaignId)
-
-@Html.DropDownListFor(
-    d => d.CampaignId, 
-    (IEnumerable<SelectListItem>)ViewBag.Campaigns)<br />
-
-@Html.LabelFor(d=>d.Date) @Html.TextBoxFor(d=>d.Date)<br />
-
-@Html.LabelFor(d=>d.Amount) @Html.TextBoxFor(d=>d.Amount)<br />
-
+@EditHelper.DropdownFor(d => d.CampaignId, (IEnumerable<SelectListItem>)ViewBag.Campaigns))
+@EditHelper.Field(Html, d=> d.Date)
+@EditHelper.Field(Html, d => d.Amount)
 <input type="submit" value="Save" />
-
 @{Html.EndForm();}
 
 <script type="text/javascript" language="javascript">
