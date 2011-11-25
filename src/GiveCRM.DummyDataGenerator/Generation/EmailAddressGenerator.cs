@@ -44,7 +44,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
             if (random.Bool())
             {
-                name += this.random.Next(100).ToString();
+                name += this.random.NextInt(100).ToString();
             }
 
             string domain = random.PickFromList(EmailData.Domains);

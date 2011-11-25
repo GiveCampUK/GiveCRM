@@ -10,6 +10,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         internal override string GeneratedItemType{get {return "campaigns";}}
 
         private readonly RandomSource random = new RandomSource();
+        private readonly MemberSearchFilterGenerator memberSearchFilterGenerator = new MemberSearchFilterGenerator();
 
         public CampaignGenerator(Action<string> logAction) : base(logAction)
         {}
@@ -17,7 +18,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
         internal override void Generate(int numberToGenerate)
         {
             Campaigns campaigns = new Campaigns();
-            GenerateMultiple(numberToGenerate, GenerateCampaign, m => campaigns.Insert(m));
+            GenerateMultiple(numberToGenerate, () =>
+                                                   {
+                                                       var campaign = GenerateCampaign();
+                                                       campaign = campaigns.Insert(campaign);
+                                                       memberSearchFilterGenerator.GenerateMemberSearchFilters(campaign.Id);
+                                                   });
         }
 
         private Campaign GenerateCampaign()
@@ -38,7 +44,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
                                            RunOn = runOn
                                };
 
-            //TODO: add random search criteria to campaigns, and add members if the campaign has been run
+            //TODO: add members if the campaign has been run
             return campaign;
         }
     }

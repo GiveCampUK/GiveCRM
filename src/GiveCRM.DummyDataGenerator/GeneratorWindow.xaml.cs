@@ -49,16 +49,14 @@ namespace GiveCRM.DummyDataGenerator
         private void RefreshStats(TaskScheduler uiContext)
         {
             Task.Factory.StartNew(() => Log("Refreshing database statistics..."), CancellationToken.None, TaskCreationOptions.None, uiContext)
-                        .ContinueWith(t =>
-                                          {
-                                              return new DatabaseStatisticsLoader().Load(db);
-                                          }, TaskContinuationOptions.LongRunning)
+                        .ContinueWith(t => new DatabaseStatisticsLoader().Load(db), TaskContinuationOptions.LongRunning)
                         .ContinueWith(t =>
                                           {
                                               DatabaseStatistics dbStats = t.Result;
                                               Log("Database statistics refreshed successfully");
                                               NumberOfMembersLabel.Content = dbStats.NumberOfMembers.ToString();
                                               NumberOfCampaignsLabel.Content = dbStats.NumberOfCampaigns.ToString();
+                                              NumberOfSearchFiltersLabel.Content = dbStats.NumberOfSearchFilters.ToString();
                                               NumberOfDonationsLabel.Content = dbStats.NumberOfDonations.ToString();
                                           }, CancellationToken.None, TaskContinuationOptions.None, uiContext);
         }

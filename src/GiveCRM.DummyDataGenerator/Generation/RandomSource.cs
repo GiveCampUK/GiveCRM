@@ -1,20 +1,34 @@
-﻿namespace GiveCRM.DummyDataGenerator.Generation
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace GiveCRM.DummyDataGenerator.Generation
+{
     internal class RandomSource
     {
         private readonly Random random = new Random();
 
-        public int Next(int max)
+        public int NextInt(int max)
         {
             return random.Next(max);
         }
 
-        public int Next(int min, int max)
+        public int NextInt(int min, int max)
         {
             return random.Next(min, max);
+        }
+
+        public double NextDouble(int max)
+        {
+            return max * random.NextDouble();
+        }
+
+        public DateTime NextDateTime()
+        {
+            DateTime start = new DateTime(1995, 1, 1);
+            Random gen = new Random();
+
+            int range = (DateTime.Today - start).Days;           
+            return start.AddDays(gen.Next(range));            
         }
 
         public string PhoneDigits()

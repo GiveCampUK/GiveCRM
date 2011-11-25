@@ -75,6 +75,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DatabaseStatistics.cs" />
     <Compile Include="DatabaseStatisticsLoader.cs" />
     <Compile Include="Data\EmailData.cs" />
     <Compile Include="Data\FemaleNames.cs" />
@@ -85,12 +86,15 @@
     <Compile Include="Data\AddressData.cs" />
     <Compile Include="Generation\AddressGenerator.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
+    <Compile Include="Data\CriterionData.cs" />
     <Compile Include="Generation\DatabaseGenerator.cs" />
     <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
     <Compile Include="Data\FamilyNames.cs" />
+    <Compile Include="Generation\DonationGenerator.cs" />
     <Compile Include="Generation\EmailAddressGenerator.cs" />
     <Compile Include="Generation\BaseGenerator.cs" />
+    <Compile Include="Generation\MemberSearchFilterGenerator.cs" />
     <Compile Include="Generation\MemberGenerator.cs" />
     <Compile Include="Generation\ProgressReporter.cs" />
     <Compile Include="Generation\RandomSource.cs" />
@@ -102,7 +106,6 @@
     <Compile Include="GeneratorWindow.xaml.cs">
       <DependentUpon>GeneratorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GenericEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

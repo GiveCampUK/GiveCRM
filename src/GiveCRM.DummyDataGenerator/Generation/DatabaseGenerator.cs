@@ -28,9 +28,9 @@ namespace GiveCRM.DummyDataGenerator.Generation
             logAction("Emptying database...");
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
+            db.MemberSearchFilters.DeleteAll();
             db.Campaigns.DeleteAll();
             db.PhoneNumbers.DeleteAll();
-            db.MemberSearchFilters.DeleteAll();
             db.MemberFacetValues.DeleteAll();
             db.MemberFacets.DeleteAll();
             db.Members.DeleteAll();
@@ -40,7 +40,8 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private void GenerateMembers()
         {
-            Generate(new MemberGenerator(logAction), 1000, 10000);
+            //Generate(new MemberGenerator(logAction), 1000, 10000);
+            Generate(new MemberGenerator(logAction), 100, 1000);
         }
 
         private void GenerateCampaigns()
@@ -50,13 +51,11 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private void GenerateDonations()
         {
-            logAction("Generating donations...");
         }
 
         private void Generate(BaseGenerator generator, int minNumber, int maxNumber)
         {
-            logAction(string.Format("Generating {0}...", generator.GeneratedItemType));
-            var numberToGenerate = random.Next(minNumber, maxNumber);
+            var numberToGenerate = random.NextInt(minNumber, maxNumber);
             generator.Generate(numberToGenerate);
         }
     }

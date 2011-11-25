@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
@@ -15,14 +13,14 @@ namespace GiveCRM.DummyDataGenerator.Generation
             percentInterval = totalItems <= 1000 ? 10 : 1;
         }
 
-        public void ReportProgress<T>(IEnumerable<T> items, Action<T> actionToPerform, Action<int> percentCompleteCallback)
+        public void ReportProgress(Action actionToPerform, Action<int> percentCompleteCallback)
         {
             int lastPercentComplete = 0;
 
-            foreach (var iteration in items.Select((item, index) => new {Item = item, Index = index}))
+            for (int i = 0; i < totalItems; i++)
             {
-                actionToPerform(iteration.Item);
-                int percentComplete = (int) Math.Floor(((iteration.Index * 1.0) / totalItems) * 100);
+                actionToPerform();
+                int percentComplete = (int) Math.Floor(((i * 1.0) / totalItems) * 100);
 
                 if (percentComplete - lastPercentComplete >= percentInterval)
                 {

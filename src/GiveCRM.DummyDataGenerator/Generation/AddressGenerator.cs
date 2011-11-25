@@ -40,7 +40,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
             string street = string.Format("{0} {1} {2}", random.PickFromList(StreetData.StreetNamePrefix), 
                                             random.PickFromList(StreetData.StreetNames), 
                                             random.PickFromList(StreetData.StreetSuffix)).Trim();
-            string streetNumber = (random.Next(200) + 1).ToString();
+            string streetNumber = (random.NextInt(200) + 1).ToString();
 
             if (random.Percent(20))
             {
@@ -50,10 +50,17 @@ namespace GiveCRM.DummyDataGenerator.Generation
             return string.Format("{0} {1}", streetNumber, street);
         }
 
+        internal string RandomPostalCode()
+        {
+            TownDataItem townData = random.PickFromList(TownData.Data);
+            string postCodePrefix = random.PickFromList(townData.PostalCodePrefixes);
+            return RandomPostalCode(postCodePrefix);
+        }
+
         private string RandomPostalCode(string prefix)
         {
-            string firstHalf = prefix + random.Next(10);
-            string secondHalf = random.Next(10) + random.Letter() + random.Letter();
+            string firstHalf = prefix + random.NextInt(10);
+            string secondHalf = random.NextInt(10) + random.Letter() + random.Letter();
             return string.Format("{0} {1}", firstHalf, secondHalf);
         }
     }

@@ -45,6 +45,11 @@
                         </DockPanel>
 
                         <DockPanel DockPanel.Dock="Top">
+                            <Label DockPanel.Dock="Left" Content="Number of Search Filters:" />
+                            <Label DockPanel.Dock="Left" Name="NumberOfSearchFiltersLabel" />
+                        </DockPanel>
+
+                        <DockPanel DockPanel.Dock="Top">
                             <Label DockPanel.Dock="Left" Content="Number of Donations:" />
                             <Label DockPanel.Dock="Left" Name="NumberOfDonationsLabel" />
                         </DockPanel>
