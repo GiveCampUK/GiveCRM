@@ -1,0 +1,64 @@
+================
+* Introduction *
+================
+This project is the .NET port of POI project at http://poi.apache.org/. POI is an open source java project 
+which can help you read/write xls, doc, ppt files. It has a wide application. For example, you can use it 
+to generate a Excel report without Microsoft Office suite installed on your server and more efficient than 
+call Microsoft Excel ActiveX at background; you can also use it to extract text from Office documents to 
+help you implement full-text indexing feature (most of time this feature is used to create search engines).
+
+==================
+*  NPOI Website *
+==================
+http://npoi.googlecode.com (Since June, 2011)
+http://npoi.codeplex.com (Obselete)
+http://tonyqus.sinaapp.com (Official Tutorial in Chinese)
+
+======================
+* System Requirement *
+======================
+VS2005 or VS2008 with .NET 2.0 Runtime (SP1) 
+vs2003 with .NET 1.1 
+medium trust environment in ASP.NET
+
+=================
+*  NPOI on SNS  *
+=================
+QQÈº: 124527967, 116053476, 78142590
+Twitter: http://twitter.com/tonyqus 
+ÐÂÀËÎ¢²©: http://t.sina.com.cn/npoi 
+
+================
+* Team Members *
+================
+Tony Qu
+-------
+From: Shanghai, China
+Role: project coordinator, developer
+Participated since Sep, 2008
+Time Zone: GMT+8
+Blog: tonyqus.cnblogs.com
+LinkedIn: http://www.linkedin.com/in/tonyqus
+
+H¨¹seyin T¨¹fekcilerli
+--------------------
+From: Istanbul, Turkey
+Role: developer
+Participated since Nov, 2008
+Time Zone: GMT+2
+Main Contribution: POIFS Browser 1.0
+Blog: huseyint.com
+
+aTao Xiang
+-----------
+From: China
+Role: Technical writer
+Participated since Aug, 2009
+Time Zone: GMT+8
+Main Contribution: NPOI 1.2 Chinese Tutorial
+Blog: atao.cnblogs.com
+
+==================
+* How to join us *
+==================
+If you are interested in this project and want to join me, please write mail to tonyqus (at) gmail.com

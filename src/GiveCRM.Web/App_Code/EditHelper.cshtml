@@ -15,6 +15,14 @@
     {
         return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.EditorFor(expr), htmlHelper.ValidationMessageFor(expr));
     }
+
+    public static HelperResult DropdownFor<TModel, TProperty>(
+        HtmlHelper<TModel> htmlHelper,
+        Expression<Func<TModel, TProperty>> expr,
+        IEnumerable<System.Web.Mvc.SelectListItem> items)
+    {
+        return FieldFormat(htmlHelper.LabelFor(expr), htmlHelper.DropDownListFor(expr, items), null);
+    }
 }
 
 @helper FieldFormat(MvcHtmlString labelData, MvcHtmlString fieldData, MvcHtmlString validationMessage)

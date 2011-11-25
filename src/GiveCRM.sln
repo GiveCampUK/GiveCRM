@@ -131,8 +131,8 @@ Global
 		{22B010C8-32B8-43EB-818F-893648F1A11A}.Release|x86.ActiveCfg = Release|x86
 		{22B010C8-32B8-43EB-818F-893648F1A11A}.Release|x86.Build.0 = Release|x86
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|x86.ActiveCfg = Debug|x86
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Debug|x86.Build.0 = Debug|x86
 		{F67701A2-8F3E-41B0-910E-7DF0874133AD}.Release|Any CPU.ActiveCfg = Release|x86

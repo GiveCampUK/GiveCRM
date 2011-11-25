@@ -1,24 +1,24 @@
 ﻿@model IEnumerable<GiveCRM.Models.Member>
 
-    <tr>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>Reference</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Email</th>
-    </tr>
+<tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>Reference</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Email</th>
+</tr>
 
-    @foreach (var member in Model)
-    {
-        <tr>
-            <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
-            <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
-            <td class="wideEnough">@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
-            <td>@member.Reference</td>
-            <td>@member.Salutation @member.FirstName @member.LastName</td>
-            <td>@member.AddressLine1 @member.AddressLine2 <br />@member.City @member.PostalCode</td>
-            <td><a href="mailto:@member.EmailAddress">@member.EmailAddress</a></td>
-        </tr>
-    }
+@foreach (var member in Model)
+{
+    <tr>
+        <td>@Html.ActionLink("Edit", "Edit", new { id = member.Id })</td>
+        <td>@Html.ActionLink("Delete", "Delete", new { id = member.Id })</td>
+        <td class="wideEnough">@Html.ActionLink("Log Donation", "Donate", new { id = member.Id })</td>
+        <td>@member.Reference</td>
+        <td>@member.Salutation @member.FirstName @member.LastName</td>
+        <td>@member.AddressLine1 @member.AddressLine2 <br />@member.City @member.PostalCode</td>
+        <td><a href="mailto:@member.EmailAddress">@member.EmailAddress</a></td>
+    </tr>
+}

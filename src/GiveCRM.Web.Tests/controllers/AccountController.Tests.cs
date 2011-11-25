@@ -33,7 +33,7 @@ namespace GiveCRM.Web.Tests.controllers
         public void ShouldLogOnUserAndRedirectToHome()
         {
             var controller = CreateController();
-membershipService.ValidateUser("test","password").Returns(true);
+            membershipService.ValidateUser("test","password").Returns(true);
             urlValidationService.IsRedirectable(controller,string.Empty).Returns(false);
 
             var model = new LogOnModel();
