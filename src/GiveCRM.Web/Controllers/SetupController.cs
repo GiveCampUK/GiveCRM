@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    
+
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Facets;
-    using GiveCRM.Web.Services;
-
+    
     public class SetupController : Controller
     {
         private readonly IFacetsService facetService;

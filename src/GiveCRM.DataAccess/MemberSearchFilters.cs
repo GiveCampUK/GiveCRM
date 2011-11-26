@@ -1,24 +1,40 @@
 ﻿namespace GiveCRM.DataAccess
 {
     using System.Collections.Generic;
+	using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using Simple.Data;
 
-    public class MemberSearchFilters
+    public class MemberSearchFilters : IMemberSearchFilterRepository
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
-        public IEnumerable<MemberSearchFilter> ForCampaign(int campaignId)
+        public IEnumerable<MemberSearchFilter> GetByCampaignId(int campaignId)
         {
             return db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
         }
 
-        public void Insert(MemberSearchFilter memberSearchFilter)
+        public IEnumerable<MemberSearchFilter> GetAll()
         {
-            db.MemberSearchFilters.Insert(memberSearchFilter);
+            return db.MemberSearchFilters.All();
         }
 
-        public void Delete(int id)
+        public MemberSearchFilter GetById(int id)
+        {
+            return db.MemberSearchFilters.FindById(id);
+        }
+
+        public void Update(MemberSearchFilter item)
+        {
+            db.MemberSearchFilters.UpdateById(item);
+        }
+
+        public MemberSearchFilter Insert(MemberSearchFilter memberSearchFilter)
+        {
+            return db.MemberSearchFilters.Insert(memberSearchFilter);
+        }
+        
+        public void DeleteById(int id)
         {
             db.MemberSearchFilters.DeleteById(id);
         }

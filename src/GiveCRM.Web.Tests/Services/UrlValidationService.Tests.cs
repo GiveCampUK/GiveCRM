@@ -31,7 +31,7 @@ namespace GiveCRM.Web.Tests.Services
         public void ShouldReturnTrueForValidUrl()
         {
             var routes = new RouteCollection(); 
-			MvcApplication.RegisterRoutes(routes);
+            MvcApplication.RegisterRoutes(routes);
 
             var request = Substitute.For<HttpRequestBase>();
 

@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CampaignRuns.cs" />
     <Compile Include="Campaigns.cs" />
     <Compile Include="Donations.cs" />
     <Compile Include="Facets.cs" />
@@ -60,9 +59,13 @@
     <Compile Include="Members.cs" />
     <Compile Include="MemberSearchFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search.cs" />
+    <Compile Include="SearchQueryService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
+      <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
+      <Name>GiveCRM.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>

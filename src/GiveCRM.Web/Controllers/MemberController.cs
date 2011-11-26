@@ -1,12 +1,13 @@
 ﻿namespace GiveCRM.Web.Controllers
 {
+    using System;
+    using GiveCRM.BusinessLogic;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Members;
-    using GiveCRM.Web.Services;
     using PagedList;
 
     public class MemberController : Controller
@@ -19,6 +20,21 @@
 
         public MemberController(IDonationsService donationsService, IMemberService memberService, ICampaignService campaignService)
         {
+            if (donationsService == null)
+            {
+                throw new ArgumentNullException("donationsService");
+            }
+
+            if (memberService == null)
+            {
+                throw new ArgumentNullException("memberService");
+            }
+            
+            if (campaignService == null)
+            {
+                throw new ArgumentNullException("campaignService");
+            }
+            
             this.donationsService = donationsService;
             this.memberService = memberService;
             this.campaignService = campaignService;
@@ -68,12 +84,12 @@
         {
             ViewBag.MemberName = this.memberService.Get(id).ToString();
 
-            ViewBag.Campaigns = this.campaignService.AllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+            ViewBag.Campaigns = this.campaignService.GetAllOpen().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             return View(new Donation { MemberId = id });
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult SaveDonation(Donation donation)
         {
             this.donationsService.QuickDonation(donation);
@@ -81,7 +97,7 @@
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult Save(MemberEditViewModel member)
         {
             ViewBag.Title = member.Id == 0 ? "Add Member" : "Edit Member";

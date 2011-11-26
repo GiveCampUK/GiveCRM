@@ -65,7 +65,7 @@ namespace GiveCRM.DataAccess.Test
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
 
-            member = members.Get(member.Id);
+            member = members.GetById(member.Id);
             Assert.AreEqual("ABC", member.Reference);
             Assert.AreEqual("Ms", member.Title);
             Assert.AreEqual("Alice", member.FirstName);
@@ -96,7 +96,7 @@ namespace GiveCRM.DataAccess.Test
             donations.Insert(new Donation {MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today});
             donations.Insert(new Donation { MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today.Subtract(TimeSpan.FromDays(1)) });
 
-            var list = members.All().ToList();
+            var list = members.GetAll().ToList();
             Assert.IsNotNull(list);
             Assert.AreEqual(1, list.Count);
             member = list.FirstOrDefault();

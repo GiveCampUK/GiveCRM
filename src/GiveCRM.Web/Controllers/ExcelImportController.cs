@@ -6,8 +6,8 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+	using GiveCRM.BusinessLogic.ExcelImport;
     using GiveCRM.Web.Models;
-    using GiveCRM.Web.Services.ExcelImport;
 
     public class ExcelImportController : AsyncController
     {
