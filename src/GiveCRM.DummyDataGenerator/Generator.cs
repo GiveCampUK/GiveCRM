@@ -63,7 +63,7 @@
 
             Members membersDb = new Members();
 
-            members = new List<Member>(membersDb.All());
+            members = new List<Member>(membersDb.GetAll());
 
             DateTime endTime = DateTime.Now;
             TimeSpan elapsedTime = endTime - startTime;

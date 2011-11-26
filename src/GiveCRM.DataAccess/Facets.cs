@@ -2,24 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
-
+	using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using Simple.Data;
 
-    public interface IFacets
-    {
-        Facet Get(int id);
-        IEnumerable<Facet> All();
-        Facet Insert(Facet facet);
-        void Update(Facet facet);
-        IEnumerable<Facet> AllFreeText();
-    }
-
-    public class Facets : IFacets
+    public class Facets : IFacetRepository
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
-        public Facet Get(int id)
+        public Facet GetById(int id)
         {
             var record = db.Facets.FindById(id);
             Facet facet = record;
@@ -27,11 +18,11 @@
             return facet;
         }
 
-        public IEnumerable<Facet> All()
+        public IEnumerable<Facet> GetAll()
         {
             var query = db.Facets.All()
                 .Select(db.Facets.Id, db.Facets.Type, db.Facets.Name,
-                db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
+                        db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
                 .OrderBy(db.Facets.Id);
 
             Facet facet = null;
@@ -71,6 +62,15 @@
             }
             var record = db.Facets.Insert(facet);
             return record;
+        }
+
+        /// <summary>
+        /// Deletes the <see cref="Facet"/> identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the Facet to delete.</param>
+        public void DeleteById(int id)
+        {
+            db.Facets.DeleteById(id);
         }
 
         public void Update(Facet facet)
@@ -141,7 +141,7 @@
             }
         }
 
-        public IEnumerable<Facet> AllFreeText()
+        public IEnumerable<Facet> GetAllFreeText()
         {
             return db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }

@@ -2,15 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
-
+	using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using Simple.Data;
 
-    public class Members
+    public class Members : IMemberRepository
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
 
-        public Member Get(int id)
+        public Member GetById(int id)
         {
             var record = db.Members.FindById(id);
             Member member = record;
@@ -19,7 +19,7 @@
             return member;
         }
 
-        public IEnumerable<Member> All()
+        public IEnumerable<Member> GetAll()
         {
             var query = db.Members.All().OrderBy(db.Members.Id);
             return RunMemberQueryWithPhoneNumbers(query);
@@ -47,7 +47,7 @@
             return query.ToList<Member>(); 
         }
 
-        public IEnumerable<Member> FromCampaignRun(int campaignId)
+        public IEnumerable<Member> GetByCampaignId(int campaignId)
         {
             var query = db.Members.All()
                 .Where(db.Members.CampaignRun.CampaignId == campaignId)
@@ -110,6 +110,15 @@
             return db.Members.Insert(member);
         }
 
+        /// <summary>
+        /// Deletes the Member identified by the specified identifier.  
+        /// </summary>
+        /// <param name="id">The identifier of the member to delete.</param>
+        public void DeleteById(int id)
+        {
+            db.Members.DeleteById(id);
+        }
+
         private Member InsertWithPhoneNumbers(Member member)
         {
             using (var transaction = db.BeginTransaction())
@@ -138,7 +147,6 @@
         public void Update(Member member)
         {
             bool refetchPhoneNumbers;
-
             using (var transaction = db.BeginTransaction())
             {
                 try

@@ -1,5 +1,4 @@
-using GiveCRM.Web.Services;
-using Ninject.Extensions.Conventions;
+using GiveCRM.BusinessLogic;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(GiveCRM.Web.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(GiveCRM.Web.App_Start.NinjectMVC3), "Stop")]
@@ -9,6 +8,7 @@ namespace GiveCRM.Web.App_Start
     using System.Reflection;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
+    using Ninject.Extensions.Conventions;
     using Ninject.Web.Mvc;
 
     public static class NinjectMVC3 
@@ -55,10 +55,10 @@ namespace GiveCRM.Web.App_Start
                                 a.FromCallingAssembly();
                                 a.FromAssembliesMatching("GiveCRM.*.dll");
                                 a.BindWithDefaultConventions();
+                                a.BindWith(new RegexBindingGenerator("(I)(?<name>.+)(Repository)"));
+                                a.BindWith(new GenericBindingGenerator(typeof(IRepository<>)));
                                 a.InRequestScope();
                             });
-
-            kernel.Bind<IMembershipService>().To<MembershipService>();
-        }        
+        }
     }
 }

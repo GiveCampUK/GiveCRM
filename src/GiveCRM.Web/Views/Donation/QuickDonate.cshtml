@@ -1,30 +1,26 @@
-﻿@model int
+﻿@model GiveCRM.Web.Models.Donation.QuickDonateViewModel
 
 <form onsubmit="DoDonate();return false;" class="form-stacked">
 
-@Html.Hidden("DonorId", Model)
-
-@{
-    var campaignDb = new GiveCRM.DataAccess.Campaigns();
-}
+@Html.Hidden("DonorId", Model.DonorId)
 <div class="clearfix">
-    <label for"CampaignId">Campaign</label>
+    <label for="CampaignId">Campaign</label>
     <div class="input">
-        @Html.DropDownList("CampaignId", campaignDb.AllOpen().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name }))
+        @Html.DropDownList("CampaignId", Model.Campaigns)
     </div>
 </div>
 
 <div class="clearfix">
-    <label for"Date">Date Donated</label>
+    <label for="Date">Date Donated</label>
     <div class="input">
-        @Html.TextBox("Date", DateTime.Now.ToShortDateString())
+        @Html.TextBox("Date", Model.DateDonated)
     </div>
 </div>
 
 <div class="clearfix">
-    <label for"Amount">Amount</label>
+    <label for="Amount">Amount</label>
     <div class="input">
-        @Html.TextBox("Amount", 0)
+        @Html.TextBox("Amount", Model.AmountDonated)
     </div>
 </div>
 
