@@ -77,16 +77,16 @@
         {
             AsyncManager.OutstandingOperations.Increment();
             this.excelImporter.ImportCompleted += (s, e) =>
-                {
-                    AsyncManager.Parameters["members"] = e.ImportedData;
-                    AsyncManager.OutstandingOperations.Decrement();
-                };
+            {
+                AsyncManager.Parameters["members"] = e.ImportedData;
+                AsyncManager.OutstandingOperations.Decrement();
+            };
 
             this.excelImporter.ImportFailed += (s, e) =>
-                {
-                    AsyncManager.Parameters["exception"] = e.Exception;
-                    AsyncManager.OutstandingOperations.Decrement();
-                };
+            {
+                AsyncManager.Parameters["exception"] = e.Exception;
+                AsyncManager.OutstandingOperations.Decrement();
+            };
 
             this.excelImporter.Import(file);
         }
