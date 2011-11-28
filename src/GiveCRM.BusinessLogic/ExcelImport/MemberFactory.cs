@@ -11,9 +11,9 @@ namespace GiveCRM.BusinessLogic.ExcelImport
             return DictionaryToMember.ToMember(memberData);
         }
 
-        internal static class DictionaryToMember
+        private static class DictionaryToMember
         {
-            internal static Member ToMember(IDictionary<string, object> source)
+            internal static Member ToMember(IEnumerable<KeyValuePair<string, object>> source)
             {
                 var member = Activator.CreateInstance<Member>();
                 if (source == null)
