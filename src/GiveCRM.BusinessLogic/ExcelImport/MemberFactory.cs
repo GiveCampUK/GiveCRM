@@ -4,16 +4,16 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
-    internal class MemberFactory : IMemberFactory
+    public class MemberFactory : IMemberFactory
     {
         public Member CreateMember(IDictionary<string, object> memberData)
         {
             return DictionaryToMember.ToMember(memberData);
         }
 
-        internal static class DictionaryToMember
+        private static class DictionaryToMember
         {
-            internal static Member ToMember(IDictionary<string, object> source)
+            internal static Member ToMember(IEnumerable<KeyValuePair<string, object>> source)
             {
                 var member = Activator.CreateInstance<Member>();
                 if (source == null)

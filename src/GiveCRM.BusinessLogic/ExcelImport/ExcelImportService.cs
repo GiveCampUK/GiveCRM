@@ -7,7 +7,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
-    internal class ExcelImportService : IExcelImportService
+    public class ExcelImportService : IExcelImportService
     {
         private readonly IExcelImport importer;
         private readonly IMemberService memberService;
