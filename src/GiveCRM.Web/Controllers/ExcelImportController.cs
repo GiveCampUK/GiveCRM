@@ -23,11 +23,6 @@
                 throw new ArgumentNullException("excelImporter");
             }
 
-            if (excelImporter == null)
-            {
-                throw new ArgumentNullException("excelImporter");
-            }
-
             this.excelImporter = excelImporter;
         }
 
