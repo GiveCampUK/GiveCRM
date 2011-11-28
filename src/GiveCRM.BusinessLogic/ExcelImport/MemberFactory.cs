@@ -4,7 +4,7 @@ using GiveCRM.Models;
 
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
-    internal class MemberFactory : IMemberFactory
+    public class MemberFactory : IMemberFactory
     {
         public Member CreateMember(IDictionary<string, object> memberData)
         {
