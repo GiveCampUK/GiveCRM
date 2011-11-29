@@ -12,6 +12,7 @@
         public string NoSearchFiltersText { get; set; }
         public string NoMatchingMembersText { get; set; }
         public IList<string> QuickLinks { get; set; }
+        public bool IsReadonly { get; set; }
 
         public CampaignShowViewModel() : this(string.Empty)
         {}
