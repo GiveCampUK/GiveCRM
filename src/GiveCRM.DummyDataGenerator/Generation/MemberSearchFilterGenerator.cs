@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GiveCRM.BusinessLogic;
 using GiveCRM.DataAccess;
 using GiveCRM.DummyDataGenerator.Data;
 using GiveCRM.Models;
@@ -13,7 +14,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
     {
         private readonly RandomSource random = new RandomSource();
         private readonly MemberSearchFilters searchFilters = new MemberSearchFilters();
-        private readonly Search searchRepo = new Search();
+        private readonly SearchService searchRepo = new SearchService(new Facets());
 
         private readonly Dictionary<SearchFieldType, IList<SearchOperator>> fieldTypeToOperatorMap;
 

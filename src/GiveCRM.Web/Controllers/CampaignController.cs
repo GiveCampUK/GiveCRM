@@ -99,7 +99,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(int id)
         {
             var campaign = this.campaignService.Get(id);
-            var applicableMembers = this.searchService.RunCampaign(id).ToList();
+            var applicableMembers = this.memberService.SearchByCampaignId(id).ToList();
             var searchFilters = this.memberSearchFilterService.ForCampaign(id)
                                     .Select(m =>
                                         {
