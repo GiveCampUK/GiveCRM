@@ -100,9 +100,6 @@
     <Compile Include="Generation\RandomSource.cs" />
     <Compile Include="Data\TitleDataItem.cs" />
     <Compile Include="Generation\TitleGenerator.cs" />
-    <Compile Include="Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GeneratorWindow.xaml.cs">
       <DependentUpon>GeneratorWindow.xaml</DependentUpon>
     </Compile>
