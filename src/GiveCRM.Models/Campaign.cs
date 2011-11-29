@@ -25,5 +25,10 @@ namespace GiveCRM.Models
         {
             return Id + " " + Name;
         }
+
+        public bool IsReadonly
+        {
+            get { return IsCommitted || (IsClosed == "Y"); }
+        }
     }
 }
