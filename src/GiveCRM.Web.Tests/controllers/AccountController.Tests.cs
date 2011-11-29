@@ -1,4 +1,5 @@
-﻿using GiveCRM.Web.Controllers;
+﻿using GiveCRM.BusinessLogic;
+using GiveCRM.Web.Controllers;
 using GiveCRM.Web.Models;
 using GiveCRM.Web.Services;
 using MvcContrib.TestHelper;
@@ -33,7 +34,7 @@ namespace GiveCRM.Web.Tests.controllers
         public void ShouldLogOnUserAndRedirectToHome()
         {
             var controller = CreateController();
-membershipService.ValidateUser("test","password").Returns(true);
+            membershipService.ValidateUser("test","password").Returns(true);
             urlValidationService.IsRedirectable(controller,string.Empty).Returns(false);
 
             var model = new LogOnModel();
@@ -90,7 +91,7 @@ membershipService.ValidateUser("test","password").Returns(true);
             authenticationService.SignOut();
             var controller = CreateController();
 
-			var actionResult = controller.LogOff();
+            var actionResult = controller.LogOff();
             authenticationService.Received();
             actionResult.AssertActionRedirect();
         }
@@ -98,14 +99,19 @@ membershipService.ValidateUser("test","password").Returns(true);
         [Test]
         public void ShouldRegister()
         {
-            string error;
-            membershipService.CreateUser("test", "password", "a@a.a", out error).Returns(true);
+            const string userName = "test";
+            const string password = "password";
+            const string email = "a@a.a";
+
+            string error; 
+            membershipService.CreateUser(userName, password, email, out error).Returns(true);
+            
             var controller = CreateController();
             var model = new RegisterModel
                             {
-                                UserName = "test",
-                                Password ="password",
-                                Email = "a@a.a"
+                                UserName = userName,
+                                Password = password,
+                                Email = email
                             };
             var actionResult = controller.Register(model);
             actionResult.AssertActionRedirect();
@@ -131,14 +137,17 @@ membershipService.ValidateUser("test","password").Returns(true);
         [Ignore]
         public void ShouldChangePassword()
         {
+            const string newPassword = "Slartibartfast";
+            const string oldPassword = "password";
+
             var model = new ChangePasswordModel
                             {
-                                NewPassword = "Slartibartfast",
-                                OldPassword = "password",
-                                ConfirmPassword = "Slartibartfast"
+                                NewPassword = newPassword,
+                                OldPassword = oldPassword,
+                                ConfirmPassword = newPassword
                             };
             
-membershipService.ChangePassword("userName", "password","Slartibartfast").Returns(true);
+            membershipService.ChangePassword("userName", oldPassword,newPassword).Returns(true);
             
             var controller = CreateController();
             

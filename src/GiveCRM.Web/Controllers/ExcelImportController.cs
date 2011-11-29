@@ -6,8 +6,8 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using GiveCRM.BusinessLogic.ExcelImport;
     using GiveCRM.Web.Models;
-    using GiveCRM.Web.Services.ExcelImport;
 
     public class ExcelImportController : AsyncController
     {
@@ -18,11 +18,6 @@
         
         public ExcelImportController(IExcelImportService excelImporter)
         {
-            if (excelImporter == null)
-            {
-                throw new ArgumentNullException("excelImporter");
-            }
-
             if (excelImporter == null)
             {
                 throw new ArgumentNullException("excelImporter");
@@ -82,16 +77,16 @@
         {
             AsyncManager.OutstandingOperations.Increment();
             this.excelImporter.ImportCompleted += (s, e) =>
-                {
-                    AsyncManager.Parameters["members"] = e.ImportedData;
-                    AsyncManager.OutstandingOperations.Decrement();
-                };
+            {
+                AsyncManager.Parameters["members"] = e.ImportedData;
+                AsyncManager.OutstandingOperations.Decrement();
+            };
 
             this.excelImporter.ImportFailed += (s, e) =>
-                {
-                    AsyncManager.Parameters["exception"] = e.Exception;
-                    AsyncManager.OutstandingOperations.Decrement();
-                };
+            {
+                AsyncManager.Parameters["exception"] = e.Exception;
+                AsyncManager.OutstandingOperations.Decrement();
+            };
 
             this.excelImporter.Import(file);
         }

@@ -73,8 +73,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SqlServerCompact.4.0.8482.1\lib\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -127,6 +125,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
+      <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
+      <Name>GiveCRM.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
       <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
       <Name>GiveCRM.DataAccess</Name>

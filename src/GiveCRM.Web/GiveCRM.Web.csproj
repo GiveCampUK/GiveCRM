@@ -60,10 +60,10 @@
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.10\lib\net40\PagedList.dll</HintPath>
     </Reference>
-    <Reference Include="PagedList.Mvc">
-      <HintPath>..\packages\PagedList.Mvc.3.9\lib\net40\PagedList.Mvc.dll</HintPath>
+    <Reference Include="PagedList.Mvc, Version=3.10.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PagedList.Mvc.3.10\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -76,8 +76,6 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
@@ -86,8 +84,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="WebActivator">
-      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    <Reference Include="WebActivator, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +112,7 @@
     <Compile Include="Models\Campaigns\CampaignIndexViewModel.cs" />
     <Compile Include="Models\Campaigns\CampaignShowViewModel.cs" />
     <Compile Include="Models\Campaigns\MemberSearchFilterViewModel.cs" />
+    <Compile Include="Models\Donation\QuickDonateViewModel.cs" />
     <Compile Include="Models\ExcelImportViewModel.cs" />
     <Compile Include="Models\Facets\FacetListViewModel.cs" />
     <Compile Include="Models\Members\MemberEditViewModel.cs" />
@@ -126,30 +126,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\CampaignService.cs" />
-    <Compile Include="Services\DonationsService.cs" />
-    <Compile Include="Services\ExcelImport\ExcelImportService.cs" />
-    <Compile Include="Services\ExcelImport\IExcelImportService.cs" />
-    <Compile Include="Services\ExcelImport\IMemberFactory.cs" />
-    <Compile Include="Services\ExcelImport\ImportDataCompletedEventArgs.cs" />
-    <Compile Include="Services\ExcelImport\ImportDataFailedEventArgs.cs" />
-    <Compile Include="Services\ExcelImport\MemberFactory.cs" />
-    <Compile Include="Services\FacetsService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
-    <Compile Include="Services\ICampaignService.cs" />
-    <Compile Include="Services\IDonationsService.cs" />
-    <Compile Include="Services\IFacetsService.cs" />
-    <Compile Include="Services\IMailingListService.cs" />
-    <Compile Include="Services\IMemberSearchFilterService.cs" />
-    <Compile Include="Services\IMemberService.cs" />
-    <Compile Include="Services\IMembershipService.cs" />
-    <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IUrlValidationService.cs" />
-    <Compile Include="Services\MailingListService.cs" />
-    <Compile Include="Services\MemberSearchFilterService.cs" />
-    <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\MembershipService.cs" />
-    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UrlValidationService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
   </ItemGroup>
@@ -217,15 +196,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-alerts.js" />
+    <Content Include="Scripts\bootstrap-buttons.js" />
     <Content Include="Scripts\bootstrap-dropdown.js" />
     <Content Include="Scripts\bootstrap-modal.js" />
     <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\bootstrap-scrollspy.js" />
     <Content Include="Scripts\bootstrap-tabs.js" />
     <Content Include="Scripts\bootstrap-twipsy.js" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.16.js" />
     <Content Include="Scripts\jquery-ui-1.8.16.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -270,9 +250,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiveCRM.DataAccess\GiveCRM.DataAccess.csproj">
-      <Project>{BAB645DD-6283-4C15-BF97-8700A01FC526}</Project>
-      <Name>GiveCRM.DataAccess</Name>
+    <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
+      <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
+      <Name>GiveCRM.BusinessLogic</Name>
     </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
@@ -360,6 +340,9 @@
   <ItemGroup>
     <Content Include="App_Code\EditHelper.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\files\GiveCRM_Template.xls" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -367,9 +350,15 @@
   <Target Name="BeforeBuild">
     <Exec Command="&quot;$(SolutionDir)Tools\NuGet&quot; install &quot;$(ProjectDir)packages.config&quot; -o 			&quot;$(SolutionDir)packages&quot;" />
   </Target>
-  <!-- <Target Name="AfterBuild">
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <GiveCRMDataAccessOutputPath>$(ProjectDir)..\GiveCRM.DataAccess\bin\$(Configuration)\</GiveCRMDataAccessOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <GiveCRMDataAccessBinaries Include="$(GiveCRMDataAccessOutputPath)*.dll;$(GiveCRMDataAccessOutputPath)*.pdb" />
+    </ItemGroup>
+    <Copy SourceFiles="@(GiveCRMDataAccessBinaries)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
   </Target>
-  -->
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>

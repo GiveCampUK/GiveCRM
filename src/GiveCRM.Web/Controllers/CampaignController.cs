@@ -5,16 +5,15 @@ namespace GiveCRM.Web.Controllers
     using System.IO;
     using System.Linq;
     using System.Web.Mvc;
-    
-    using GiveCRM.DataAccess;
+
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using GiveCRM.Models.Search;
     using GiveCRM.Web.Infrastructure;
     using GiveCRM.Web.Models.Campaigns;
     using GiveCRM.Web.Models.Search;
     using GiveCRM.Web.Properties;
-    using GiveCRM.Web.Services;
-
+    
     public class CampaignController : Controller
     {
         private readonly IMailingListService mailingListService;
@@ -22,7 +21,6 @@ namespace GiveCRM.Web.Controllers
         private readonly ICampaignService campaignService;
         private readonly IMemberSearchFilterService memberSearchFilterService;
         private readonly IMemberService memberService;
-        private readonly CampaignRuns campaignRuns = new CampaignRuns();
         
         public CampaignController(
             IMailingListService mailingListService, 
@@ -41,7 +39,7 @@ namespace GiveCRM.Web.Controllers
         [HttpGet]
         public ActionResult Index(bool showClosed = false)
         {
-            IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.AllClosed() : this.campaignService.AllOpen();
+            IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.GetAllClosed() : this.campaignService.GetAllOpen();
 
             string title, linkText;
 
@@ -223,7 +221,7 @@ namespace GiveCRM.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
-            this.campaignRuns.Commit(viewModel.CampaignId);
+            this.campaignService.Commit(viewModel.CampaignId);
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 

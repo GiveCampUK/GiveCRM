@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|anyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,14 +37,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="MvcContrib.TestHelper">
       <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.90.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="NSubstitute">
-      <HintPath>..\packages\NSubstitute.1.2.1.0\lib\NET40\NSubstitute.dll</HintPath>
+      <HintPath>..\packages\NSubstitute.1.3.0.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
@@ -63,12 +61,11 @@
     <Compile Include="controllers\AccountController.Tests.cs" />
     <Compile Include="controllers\CampaignController.Tests.cs" />
     <Compile Include="controllers\DonationController.Tests.cs" />
+    <Compile Include="controllers\ExcelImportController_Upload_Should.cs" />
     <Compile Include="controllers\HomeController.Tests.cs" />
     <Compile Include="controllers\MemberController.Tests.cs" />
     <Compile Include="controllers\SetUpController.Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ExcelImport\ExcelImportService_Import_Should.cs" />
-    <Compile Include="Services\ExcelImport\MemberFactory_CreateMember_Should.cs" />
     <Compile Include="Services\UrlValidationService.Tests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
+      <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
+      <Name>GiveCRM.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
       <Name>GiveCRM.ImportExport</Name>

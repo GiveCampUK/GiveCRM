@@ -1,7 +1,8 @@
-﻿using System.Web.Security;
-
-namespace GiveCRM.Web.Services
+﻿namespace GiveCRM.Web.Services
 {
+    using System.Web.Security;
+    using GiveCRM.BusinessLogic;
+
     public class MembershipService : IMembershipService
     {
         public bool ValidateUser(string userName, string password)
