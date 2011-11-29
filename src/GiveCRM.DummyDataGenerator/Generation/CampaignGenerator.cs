@@ -1,7 +1,7 @@
 using System;
 using GiveCRM.DataAccess;
-using GiveCRM.DummyDataGenerator.Data;
 using GiveCRM.Models;
+using GiveCRM.DummyDataGenerator.Data;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
@@ -44,7 +44,6 @@ namespace GiveCRM.DummyDataGenerator.Generation
                                            RunOn = runOn
                                };
 
-            //TODO: add members if the campaign has been run
             return campaign;
         }
     }
