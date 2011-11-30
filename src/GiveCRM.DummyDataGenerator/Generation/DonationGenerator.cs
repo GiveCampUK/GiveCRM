@@ -25,6 +25,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         internal void Generate()
         {
             logAction("Generating donations...");
+            //TODO: output percentage completion
 
             // only want to generate donations for committed campaigns
             var committedCampaigns = campaigns.Where(c => c.IsCommitted).ToList();
