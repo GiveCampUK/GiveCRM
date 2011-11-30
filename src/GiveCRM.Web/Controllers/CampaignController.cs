@@ -123,7 +123,8 @@ namespace GiveCRM.Web.Controllers
                                 SearchFilters = searchFilters,
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText,
                                 NoMatchingMembersText = Resources.Literal_NoMatchingMembersText,
-                                ApplicableMembers = applicableMembers
+                                ApplicableMembers = applicableMembers,
+                                IsReadonly = campaign.IsReadonly
                             };
 
             return View(model);

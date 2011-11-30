@@ -51,17 +51,19 @@
                     foreach (MemberSearchFilterViewModel filterViewModel in Model.SearchFilters) {
                         <li>
                             @filterViewModel.CriteriaDisplayText
-                            @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {
-                                campaignId = filterViewModel.CampaignId,
-                                memberSearchFilterId = filterViewModel.MemberSearchFilterId
-                            })
+                            @if(Model.IsReadonly == false) {
+                                @Html.ActionLink("[x]", "DeleteMemberSearchFilter", new {
+                                    campaignId = filterViewModel.CampaignId,
+                                    memberSearchFilterId = filterViewModel.MemberSearchFilterId
+                                })
+                            }
                         </li>
                     }
                 }
 
-                            @if (Model.Campaign.Id > 0) {
-                <li>@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })</li>
-                            }
+                @if (Model.Campaign.Id > 0 && Model.IsReadonly == false) {
+                    <li>@Html.ActionLink("Add new search filter", "AddMembershipSearchFilter", new { campaignId = Model.Campaign.Id })</li>
+                }
             </ul>
 
             <h3>Matched Recipient Listing</h3>
@@ -80,26 +82,34 @@
                              </ul>
                          }
                          
-                        <div class="actions clearfix">
-                <input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
-            </div>
-                }
+                        if (Model.IsReadonly == false)
+                        {
+                            <div class="actions clearfix">
+                            <input type="submit" value="Save Campaign" class="btn primary @formWidthClass" />
+                            </div>
+                        }
+        }
         </div>
     
         <div class="sidebar span-one-third">
             <h2>Quick Links</h2>
         
             <ul class="toolbar">                            
-                            @if (Model.Campaign.Id > 0) {
+                            @if (Model.Campaign.Id > 0)
+                            {
 
-                                if (Model.Campaign.IsCommitted == true && Model.Campaign.IsClosed == "N") {
+                                if (Model.Campaign.IsCommitted == true && Model.Campaign.IsClosed == "N")
+                                {
                                     <li>@Html.ActionLink("Close campaign", "CloseCampaign", new { campaignId = Model.Campaign.Id })</li>                                
                                 }
 
-                                if (Model.Campaign.IsCommitted == false && Model.Campaign.IsClosed == "N") {
+                                if (Model.Campaign.IsCommitted == false && Model.Campaign.IsClosed == "N")
+                                {
                                     <li>@Html.ActionLink("Commit campaign", "CommitCampaign", new { campaignId = Model.Campaign.Id })</li>
-                                } else {
-                                    <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id, name=Model.Campaign.Name })</li>
+                                }
+                                else
+                                {
+                                    <li>@Html.ActionLink("Download mailing list", "DownloadMailingList", new { id = Model.Campaign.Id, name = Model.Campaign.Name })</li>
                                 }
                                 
                                 <li>@Html.ActionLink("Copy this campaign", "Clone", new { id = Model.Campaign.Id })</li>
