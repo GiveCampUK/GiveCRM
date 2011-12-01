@@ -36,6 +36,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>GiveCRM.DummyDataGenerator.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Simple.Data, Version=0.9.8.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -69,25 +75,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DatabaseStatistics.cs" />
+    <Compile Include="DatabaseStatisticsLoader.cs" />
     <Compile Include="Data\EmailData.cs" />
     <Compile Include="Data\FemaleNames.cs" />
     <Compile Include="Data\MaleNames.cs" />
     <Compile Include="Data\TitleData.cs" />
     <Compile Include="Data\TownData.cs" />
     <Compile Include="Data\TownDataItem.cs" />
+    <Compile Include="Data\AddressData.cs" />
+    <Compile Include="Generation\AddressGenerator.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
-    <Compile Include="Generation\DonationsGenerator.cs" />
+    <Compile Include="Data\CriterionData.cs" />
+    <Compile Include="Generation\CampaignRunGenerator.cs" />
+    <Compile Include="Generation\DatabaseGenerator.cs" />
     <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />
     <Compile Include="Data\FamilyNames.cs" />
+    <Compile Include="Generation\DonationGenerator.cs" />
+    <Compile Include="Generation\EmailAddressGenerator.cs" />
+    <Compile Include="Generation\BaseGenerator.cs" />
+    <Compile Include="Generation\MemberSearchFilterGenerator.cs" />
+    <Compile Include="Generation\MemberGenerator.cs" />
+    <Compile Include="Generation\ProgressReporter.cs" />
     <Compile Include="Generation\RandomSource.cs" />
     <Compile Include="Data\TitleDataItem.cs" />
-    <Compile Include="Generator.cs" />
-    <Compile Include="GenericEventArgs.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Generation\TitleGenerator.cs" />
+    <Compile Include="GeneratorWindow.xaml.cs">
+      <DependentUpon>GeneratorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Generation\MemberGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -116,10 +132,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainWindow.xaml">
+    <Page Include="GeneratorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="app.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

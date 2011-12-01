@@ -2,11 +2,9 @@
 {
     internal class TitleDataItem
     {
-        public string Title { get; private set; }
-
-        public string Salutation { get; private set; }
-
-        public int Frequency { get; private set; }
+        public string Title{get;private set;}
+        public string Salutation{get;private set;}
+        public int Frequency{get;private set;}
 
         public TitleDataItem(string title, string salutation, int frequency)
         {

@@ -99,28 +99,31 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Show(int id)
         {
             var campaign = this.campaignService.Get(id);
-
-            var applicableMembers = this.memberService.SearchByCampaignId(id);
+            var applicableMembers = this.memberService.SearchByCampaignId(id).ToList();
+            var searchFilters = this.memberSearchFilterService.ForCampaign(id)
+                                    .Select(m =>
+                                        {
+                                            var criteriaDisplayText = SearchCriteria.Create(m.InternalName,
+                                                                                            m.DisplayName,
+                                                                                            (SearchFieldType) m.FilterType,
+                                                                                            (SearchOperator) m.SearchOperator,
+                                                                                            m.Value
+                                                        ).ToFriendlyDisplayString();
+                                            return new MemberSearchFilterViewModel
+                                                       {
+                                                                   MemberSearchFilterId = m.Id,
+                                                                   CampaignId = campaign.Id,
+                                                                   CriteriaDisplayText = criteriaDisplayText
+                                                       };
+                                        }).ToList();
 
             var model = new CampaignShowViewModel(Resources.Literal_ShowCampaign)
                             {
                                 Campaign = campaign,
-                                SearchFilters = this.memberSearchFilterService.ForCampaign(id).Select(
-                                m =>
-                                    new MemberSearchFilterViewModel
-                                        {
-                                            MemberSearchFilterId = m.Id,
-                                            CampaignId = campaign.Id,
-                                            CriteriaDisplayText = SearchCriteria.Create(m.InternalName,
-                                                                            m.DisplayName,
-                                                                            (SearchFieldType)m.FilterType,
-                                                                            (SearchOperator)m.SearchOperator,
-                                                                            m.Value
-                                                                      ).ToFriendlyDisplayString()
-                                        }).ToList(),
+                                SearchFilters = searchFilters,
                                 NoSearchFiltersText = Resources.Literal_NoSearchFiltersText,
                                 NoMatchingMembersText = Resources.Literal_NoMatchingMembersText,
-                                ApplicableMembers = applicableMembers.ToList(),
+                                ApplicableMembers = applicableMembers,
                                 IsReadonly = campaign.IsReadonly
                             };
 
