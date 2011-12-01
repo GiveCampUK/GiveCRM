@@ -87,6 +87,7 @@
     <Compile Include="Generation\AddressGenerator.cs" />
     <Compile Include="Generation\CampaignGenerator.cs" />
     <Compile Include="Data\CriterionData.cs" />
+    <Compile Include="Generation\CampaignRunGenerator.cs" />
     <Compile Include="Generation\DatabaseGenerator.cs" />
     <Compile Include="Data\StreetData.cs" />
     <Compile Include="Data\CampaignNames.cs" />

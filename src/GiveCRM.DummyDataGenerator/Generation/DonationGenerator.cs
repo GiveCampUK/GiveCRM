@@ -25,7 +25,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         internal void Generate()
         {
             logAction("Generating donations...");
-            //TODO: output percentage completion
+            //TODO: output percentage completion like the other generators
 
             // only want to generate donations for committed campaigns
             var committedCampaigns = campaigns.Where(c => c.IsCommitted).ToList();
@@ -90,6 +90,5 @@ namespace GiveCRM.DummyDataGenerator.Generation
             int totalAmount = (poundsAmount * 100) + penceAmount;
             return new Decimal(totalAmount, 0, 0, false, 2);
         }
-
     }
 }

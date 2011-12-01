@@ -11,6 +11,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private readonly RandomSource random = new RandomSource();
         private readonly MemberSearchFilterGenerator memberSearchFilterGenerator = new MemberSearchFilterGenerator();
+        private readonly CampaignRunGenerator campaignRunGenerator = new CampaignRunGenerator();
 
         public CampaignGenerator(Action<string> logAction) : base(logAction)
         {}
@@ -23,6 +24,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
                                                        var campaign = GenerateCampaign();
                                                        campaign = campaigns.Insert(campaign);
                                                        memberSearchFilterGenerator.GenerateMemberSearchFilters(campaign.Id);
+
+                                                       if (campaign.IsCommitted)
+                                                       {
+                                                           // if the campaign is committed, the members that meet the campaign's search criteria also need creating
+                                                           campaignRunGenerator.GenerateCampaignRun(campaign.Id);
+                                                       }
                                                    });
         }
 
@@ -43,7 +50,6 @@ namespace GiveCRM.DummyDataGenerator.Generation
                                            IsClosed = isClosed  ? "Y" : "N",
                                            RunOn = runOn
                                };
-
             return campaign;
         }
     }

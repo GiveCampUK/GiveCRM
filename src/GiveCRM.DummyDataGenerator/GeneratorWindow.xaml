@@ -22,9 +22,9 @@
                 <TabItem Header="Just Do It">
                     <DockPanel Margin="5">
                         <TextBlock DockPanel.Dock="Top" Text="Use this pane to generate random data from an empty database." />
-                        <TextBlock DockPanel.Dock="Top" Margin="0,15,0,0" Text="WARNING: the entire contents of the database will be replaced" FontWeight="Bold" />
+                        <TextBlock DockPanel.Dock="Top" Margin="0,15,0,0" Text="WARNING: the entire contents of the database will be replaced." FontWeight="Bold" />
 
-                        <Button Width="150" Height="40" Content="Generate Database" Click="GenerateAllButton_Click"/>
+                        <Button Width="150" Height="40" Content="Generate Database" Name="GenerateDatabaseButton" Click="GenerateAllButton_Click" />
                     </DockPanel>
                 </TabItem>
                 
@@ -61,13 +61,19 @@
                         <DockPanel LastChildFill="False">
                             <Label DockPanel.Dock="Left" Content="Number of Members" />
                             <TextBox DockPanel.Dock="Left" Width="150" VerticalAlignment="Bottom" Name="NumberOfMembersTextBox" Text="10000" />
-                            <Button DockPanel.Dock="Right" Height="23" Content="Generate Members" Click="GenerateMembersButton_Click"/>
+                            <Button DockPanel.Dock="Right" Height="23" Content="Generate Members" Name="GenerateMembersButton" Click="GenerateMembersButton_Click" />
                         </DockPanel>
                     </StackPanel>
                 </TabItem>
                 
                 <TabItem Header="Campaigns">
-                    
+                    <StackPanel>
+                        <DockPanel LastChildFill="False">
+                            <Label DockPanel.Dock="Left" Content="Number of Campaigns" />
+                            <TextBox DockPanel.Dock="Left" Width="150" VerticalAlignment="Bottom" Name="NumberOfCampaignsTextBox" Text="100" />
+                            <Button DockPanel.Dock="Right" Height="23" Content="Generate Campaigns" Name="GenerateCampaignsButton" Click="GenerateCampaignsButton_Click" />
+                        </DockPanel>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
 

@@ -37,7 +37,7 @@ namespace GiveCRM.DummyDataGenerator
                                           {
                                               ConnectionDockPanel.IsEnabled = false;
                                               TabControl.IsEnabled = true;
-                                          }, CancellationToken.None, TaskContinuationOptions.None, uiContext);
+                                          }, uiContext);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -58,28 +58,53 @@ namespace GiveCRM.DummyDataGenerator
                                               NumberOfCampaignsLabel.Content = dbStats.NumberOfCampaigns.ToString();
                                               NumberOfSearchFiltersLabel.Content = dbStats.NumberOfSearchFilters.ToString();
                                               NumberOfDonationsLabel.Content = dbStats.NumberOfDonations.ToString();
-                                          }, CancellationToken.None, TaskContinuationOptions.None, uiContext);
+                                          }, uiContext);
         }
 
         private void GenerateMembersButton_Click(object sender, RoutedEventArgs e)
         {
             int numberOfMembersToGenerate = Convert.ToInt32(NumberOfMembersTextBox.Text);
             var generator = new MemberGenerator(Log);
-
-            TaskScheduler uiContext = TaskScheduler.FromCurrentSynchronizationContext();
-            Task.Factory.StartNew(() => generator.Generate(numberOfMembersToGenerate), TaskCreationOptions.LongRunning)
-                        .ContinueWith(_ => RefreshStats(uiContext))
-                        .ContinueWith(LogTaskExceptions, TaskContinuationOptions.OnlyOnFaulted);
+            RunGeneration(() => generator.Generate(numberOfMembersToGenerate));
         }
         
+        private void GenerateCampaignsButton_Click(object sender, RoutedEventArgs e)
+        {
+            int numberOfCampaignsToGenerate = Convert.ToInt32(NumberOfCampaignsTextBox.Text);
+            var generator = new CampaignGenerator(Log);
+            RunGeneration(() => generator.Generate(numberOfCampaignsToGenerate));
+        }
+
         private void GenerateAllButton_Click(object sender, RoutedEventArgs e)
         {
             var generator = new DatabaseGenerator(Log);
+            RunGeneration(generator.Generate);
+        }
 
+        private void RunGeneration(Action generationCallback)
+        {
+            // runs a generation task, disabling the generate buttons to prevent a new generate 
+            //  task being started while one is still in progress
             TaskScheduler uiContext = TaskScheduler.FromCurrentSynchronizationContext();
-            Task.Factory.StartNew(generator.Generate)
-                        .ContinueWith(_ => RefreshStats(uiContext))
-                        .ContinueWith(LogTaskExceptions, TaskContinuationOptions.OnlyOnFaulted);
+            var task = Task.Factory.StartNew(() => SetGenerateButtonsState(false), CancellationToken.None, TaskCreationOptions.None, uiContext)
+                                   .ContinueWith(_ => generationCallback(), TaskContinuationOptions.LongRunning);
+            task.ContinueWith(_ =>
+                                  {
+                                      RefreshStats(uiContext);
+                                      SetGenerateButtonsState(true);
+                                  }, CancellationToken.None, TaskContinuationOptions.LongRunning, uiContext);
+            task.ContinueWith(t =>
+                                  {
+                                      LogTaskExceptions(t);
+                                      SetGenerateButtonsState(true);
+                                  }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, uiContext);
+        }
+
+        private void SetGenerateButtonsState(bool state)
+        {
+            GenerateDatabaseButton.IsEnabled = state;
+            GenerateMembersButton.IsEnabled = state;
+            GenerateCampaignsButton.IsEnabled = state;
         }
 
         private void LogTaskExceptions(Task t)
@@ -87,7 +112,7 @@ namespace GiveCRM.DummyDataGenerator
             string errorMessage = t.Exception == null
                                     ? "(No exception found)"
                                     : string.Join(Environment.NewLine, t.Exception.InnerExceptions.Select(ex => ex.Message));
-            Log(errorMessage);
+            Log("Error: " + errorMessage);
         }
 
         private void Log(string text)
