@@ -1,11 +1,5 @@
-﻿using System.Windows;
-
-namespace DummyDataGenerator
+﻿namespace GiveCRM.DummyDataGenerator
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-    }
+    public partial class App
+    {}
 }

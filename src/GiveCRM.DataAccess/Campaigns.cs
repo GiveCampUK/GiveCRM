@@ -1,11 +1,11 @@
 ﻿namespace GiveCRM.DataAccess
 {
-	using System;
+    using System;
     using System.Collections.Generic;
-	using System.Linq;
-	using GiveCRM.BusinessLogic;
-    using GiveCRM.Models;
+    using System.Linq;
     using Simple.Data;
+    using BusinessLogic;
+    using Models;
 
     public class Campaigns : ICampaignRepository
     {

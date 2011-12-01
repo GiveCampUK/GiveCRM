@@ -2,9 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using GiveCRM.Models;
     using Simple.Data;
+    using Models;
 
     public class MemberFacets
     {

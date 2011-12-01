@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using GiveCRM.BusinessLogic;
-    using GiveCRM.Models.Search;
     using Simple.Data;
+    using BusinessLogic;
+    using Models.Search;
 
     public class SearchQueryService : ISearchQueryService
     {
