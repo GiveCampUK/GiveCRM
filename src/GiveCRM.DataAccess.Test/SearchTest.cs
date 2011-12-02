@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
+using Simple.Data;
+using NUnit.Framework;
 using GiveCRM.Models.Search;
 using GiveCRM.Web.Models.Search;
-using NUnit.Framework;
-using Simple.Data;
 
 namespace GiveCRM.DataAccess.Test
 {
@@ -229,7 +225,7 @@ namespace GiveCRM.DataAccess.Test
             var reference = first.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
             Assert.AreEqual("FacetId", reference.GetName());
-            Assert.AreEqual("freeTextFacet_1", reference.GetOwner().Alias);
+            Assert.AreEqual("freeTextFacet_1", reference.GetOwner().GetAlias());
             Assert.AreEqual(SimpleExpressionType.Equal, first.Type);
             Assert.AreEqual(1, first.RightOperand);
 
@@ -238,50 +234,13 @@ namespace GiveCRM.DataAccess.Test
             reference = second.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
             Assert.AreEqual("FreeTextValue", reference.GetName());
-            Assert.AreEqual("freeTextFacet_1", reference.GetOwner().Alias);
+            Assert.AreEqual("freeTextFacet_1", reference.GetOwner().GetAlias());
             var function = second.RightOperand as SimpleFunction;
             Assert.IsNotNull(function);
             Assert.AreEqual("like", function.Name.ToLowerInvariant());
             Assert.AreEqual(1, function.Args.Count);
             Assert.AreEqual("GiveCamp%", function.Args.First());
             Assert.AreEqual(SimpleExpressionType.Function, second.Type);
-        }
-
-        private class FacetsStub : IFacetRepository
-        {
-            public Facet GetById(int id)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerable<Facet> GetAll()
-            {
-                throw new NotImplementedException();
-            }
-
-            public Facet Insert(Facet facet)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Deletes the item of type <typeparamref name="T"/> identified by the specified identifier.  
-            /// </summary>
-            /// <param name="id">The identifier of the item to delete.</param>
-            public void DeleteById(int id)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Update(Facet facet)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerable<Facet> GetAllFreeText()
-            {
-                yield return new Facet {Id = 1, Name = "Test", Type = FacetType.FreeText};
-            }
         }
     }
 }
