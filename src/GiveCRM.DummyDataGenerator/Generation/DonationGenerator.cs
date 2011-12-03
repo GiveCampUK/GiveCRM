@@ -78,12 +78,12 @@ namespace GiveCRM.DummyDataGenerator.Generation
                 // chance that it's a quarter, half or three quarters
                 if (random.Percent(50))
                 {
-                    penceAmount = random.NextInt(4) / 4;
+                    penceAmount = Convert.ToInt32((random.NextInt(4) / 4.0) * 100);
                 }
                 else
                 {
                     // random from .01 to 0.99
-                    penceAmount = random.NextInt(100) / 100;
+                    penceAmount = random.NextInt(100);
                 }
             }
 
