@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
 using Simple.Data;
+using GiveCRM.Models;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
@@ -43,8 +41,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         private void GenerateMembers()
         {
-            Generate(new MemberGenerator(logAction), 100, 1000);
-//            Generate(new MemberGenerator(logAction), 1000, 10000);
+            Generate(new MemberGenerator(logAction), 1000, 10000);
         }
 
         private void GenerateCampaigns()
@@ -55,16 +52,6 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private void GenerateDonations()
         {
             var campaigns = db.Campaigns.All().Cast<Campaign>();
-/*
-            IEnumerable<Member> members = db.Members.All().Cast<Member>();
-
-            foreach (var campaign in campaigns)
-            {
-                int campaignId = campaign.Id;
-                var campaignToMember = members.Select(member => new {CampaignId = campaignId, MemberId = member.Id});
-                db.CampaignRuns.Insert(campaignToMember);
-            }
-*/
             new DonationGenerator(logAction, campaigns).Generate();
         }
 
