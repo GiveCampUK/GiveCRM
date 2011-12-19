@@ -26,7 +26,7 @@ namespace GiveCRM.BusinessLogic.Tests
             ExcelImportService importer = SetupSuccessfulImportService(dataToImport, (s,e) => eventFired = true);
             var inputStream = Substitute.For<Stream>();
 
-            importer.Import(inputStream);
+            importer.Import(ExcelFileType.XLS, inputStream);
 
             Assert.IsTrue(eventFired);
         }
@@ -38,7 +38,7 @@ namespace GiveCRM.BusinessLogic.Tests
             ExcelImportService importer = SetupFailingImportService(new InvalidOperationException(), (s, e) => eventFired = true);
             var inputStream = Substitute.For<Stream>();
 
-            importer.Import(inputStream);
+            importer.Import(ExcelFileType.XLS, inputStream);
 
             Assert.IsTrue(eventFired);
         }
