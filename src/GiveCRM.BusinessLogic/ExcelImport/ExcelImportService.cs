@@ -38,7 +38,7 @@ namespace GiveCRM.BusinessLogic.ExcelImport
         public event Action<object, ImportDataCompletedEventArgs> ImportCompleted;
         public event Action<object, ImportDataFailedEventArgs> ImportFailed;
 
-        public void Import(Stream file)
+        public void Import(ExcelFileType fileType, Stream file)
         {
             //  FIELDS THAT CANNOT BE NULL!
             //    Reference
@@ -49,13 +49,10 @@ namespace GiveCRM.BusinessLogic.ExcelImport
 
             try
             {
-                // Hard-coded for now - FIX THIS!!!
-                const ExcelFileType FileType = ExcelFileType.XLS;
-                importer.Open(file, FileType, hasHeaderRow: true);
+                importer.Open(file, fileType, hasHeaderRow: true);
 
-                const int SheetIndex = 0; // Hard-coded for now
-                IList<IDictionary<string, object>> rowsAsKeyValuePairs =
-                    importer.GetRowsAsKeyValuePairs(SheetIndex).ToList();
+                const int SheetIndex = 0; // TODO: Hard-coded for now
+                var rowsAsKeyValuePairs = importer.GetRowsAsKeyValuePairs(SheetIndex).ToList();
 
                 AddArchivedFieldToData(rowsAsKeyValuePairs); // This is a non-null field
 
@@ -74,13 +71,13 @@ namespace GiveCRM.BusinessLogic.ExcelImport
                 InvokeImportErrorFailed(ex);
             }
         }
-
         
         private static void AddArchivedFieldToData(IEnumerable<IDictionary<string, object>> rowsAsKeyValuePairs)
         {
             foreach (var row in rowsAsKeyValuePairs)
             {
                 object archived;
+
                 if (!row.TryGetValue("Archived", out archived))
                 {
                     row["Archived"] = false;
@@ -88,10 +85,10 @@ namespace GiveCRM.BusinessLogic.ExcelImport
             }
         }
 
-
         private void InvokeImportDataCompleted()
         {
             var handler = ImportCompleted;
+
             if (handler != null)
             {
                 handler(this, new ImportDataCompletedEventArgs());
@@ -107,6 +104,7 @@ namespace GiveCRM.BusinessLogic.ExcelImport
             }
 
             var handler = ImportFailed;
+
             if (handler != null)
             {
                 handler(this, new ImportDataFailedEventArgs(exception));

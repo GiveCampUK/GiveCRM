@@ -7,6 +7,7 @@
     using System.Web;
     using System.Web.Mvc;
     using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.ImportExport;
     using GiveCRM.Web.Models;
 
     public class ExcelImportController : AsyncController
@@ -51,8 +52,7 @@
             }
 
             // Process the file
-            Task.Factory.StartNew(() => ImportAsync(file.InputStream));
-            
+            Task.Factory.StartNew(() => ImportAsync(file.FileName, file.InputStream));
             return RedirectToAction("Index", "Member");
         }
 
@@ -70,12 +70,23 @@
 
         private bool IsValidFileExtension(string fileName)
         {
-            return fileName.EndsWith(ExcelFileExtensionOldFormat) || fileName.EndsWith(ExcelFileExtensionNewFormat);
+            return IsOldExcelFormat(fileName) || IsNewExcelFormat(fileName);
         }
 
-        private void ImportAsync(Stream file)
+        private static bool IsOldExcelFormat(string fileName)
+        {
+            return fileName.EndsWith(ExcelFileExtensionOldFormat);
+        }
+
+        private static bool IsNewExcelFormat(string fileName)
+        {
+            return fileName.EndsWith(ExcelFileExtensionNewFormat);
+        }
+
+        private void ImportAsync(string fileName, Stream fileStream)
         {
             AsyncManager.OutstandingOperations.Increment();
+
             this.excelImporter.ImportCompleted += (s, e) =>
             {
                 AsyncManager.Parameters["members"] = e.ImportedData;
@@ -88,7 +99,8 @@
                 AsyncManager.OutstandingOperations.Decrement();
             };
 
-            this.excelImporter.Import(file);
+            var fileType = IsNewExcelFormat(fileName) ? ExcelFileType.XLSX : ExcelFileType.XLS;
+            this.excelImporter.Import(fileType, fileStream);
         }
     }
 }
