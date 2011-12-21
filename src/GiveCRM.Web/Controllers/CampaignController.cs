@@ -40,7 +40,7 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Index(bool showClosed = false)
         {
             IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.GetAllClosed() : this.campaignService.GetAllOpen();
-
+            
             string title, linkText;
 
             if (showClosed)
