@@ -129,9 +129,6 @@
     <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql">
       <SubType>Code</SubType>
     </PreDeploy>
-    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql">
-      <SubType>Code</SubType>
-    </PostDeploy>
   </ItemGroup>
   <ItemGroup>
     <BuildContributorArgument Include="OutDir=$(OutDir)" />
@@ -232,10 +229,5 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\Keys\MemberSearchFilter.FK_MemberSearchFilter_Campaign.fkey.sql">
       <SubType>NotInBuild</SubType>
     </Build>
-  </ItemGroup>
-  <ItemGroup>
-    <NotInBuild Include="Scripts\Post-Deployment\ELMAH.sql">
-      <SubType>NotInBuild</SubType>
-    </NotInBuild>
   </ItemGroup>
 </Project>

@@ -1,3 +1,6 @@
+using System.Threading;
+using GiveCRM.Web.Attributes;
+
 namespace GiveCRM.Web.Controllers
 {
     using System;
@@ -9,11 +12,13 @@ namespace GiveCRM.Web.Controllers
     using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using GiveCRM.Models.Search;
-    using GiveCRM.Web.Infrastructure;
-    using GiveCRM.Web.Models.Campaigns;
-    using GiveCRM.Web.Models.Search;
-    using GiveCRM.Web.Properties;
-    
+    using Infrastructure;
+    using Models.Campaigns;
+    using Models.Search;
+    using Properties;
+    using GiveCRM.Web.Attributes;
+
+    [HandleErrorWithElmah]
     public class CampaignController : Controller
     {
         private readonly IMailingListService mailingListService;
@@ -40,7 +45,6 @@ namespace GiveCRM.Web.Controllers
         public ActionResult Index(bool showClosed = false)
         {
             IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.GetAllClosed() : this.campaignService.GetAllOpen();
-            
             string title, linkText;
 
             if (showClosed)

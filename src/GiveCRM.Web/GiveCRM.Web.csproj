@@ -94,6 +94,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahResult.cs" />
+    <Compile Include="Attributes\HandleErrorAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
