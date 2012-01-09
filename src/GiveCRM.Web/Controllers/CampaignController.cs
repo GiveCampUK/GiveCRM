@@ -1,5 +1,6 @@
 using System.Threading;
 using GiveCRM.Web.Attributes;
+using GiveCRM.Web.Services;
 
 namespace GiveCRM.Web.Controllers
 {
@@ -26,19 +27,22 @@ namespace GiveCRM.Web.Controllers
         private readonly ICampaignService campaignService;
         private readonly IMemberSearchFilterService memberSearchFilterService;
         private readonly IMemberService memberService;
+        private readonly ILogService logService;
         
         public CampaignController(
             IMailingListService mailingListService, 
             ISearchService searchService, 
             ICampaignService campaignService, 
             IMemberSearchFilterService memberSearchFilterService,
-            IMemberService memberService)
+            IMemberService memberService,
+            ILogService logService)
         {
             this.mailingListService = mailingListService;
             this.searchService = searchService;
             this.campaignService = campaignService;
             this.memberSearchFilterService = memberSearchFilterService;
             this.memberService = memberService;
+            this.logService = logService;
         }
 
         [HttpGet]
@@ -68,7 +72,6 @@ namespace GiveCRM.Web.Controllers
                                 ShowClosed = showClosed,
                                 Campaigns = campaigns
                             };
-
             return View(model);
         }
 

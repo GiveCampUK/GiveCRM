@@ -1,4 +1,6 @@
-﻿namespace GiveCRM.Web.Controllers
+﻿using GiveCRM.Web.Attributes;
+
+namespace GiveCRM.Web.Controllers
 {
     using System;
     using GiveCRM.BusinessLogic;
@@ -10,6 +12,7 @@
     using GiveCRM.Web.Models.Members;
     using PagedList;
 
+    [HandleErrorWithElmah]
     public class MemberController : Controller
     {
         private const int DefaultPageSize = 25;

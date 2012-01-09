@@ -1,4 +1,6 @@
 ﻿
+using GiveCRM.Web.Attributes;
+
 namespace GiveCRM.Web.Controllers
 {
     using System;
@@ -8,8 +10,8 @@ namespace GiveCRM.Web.Controllers
 	using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
 	using GiveCRM.Web.Models.Donation;
-    
 
+    [HandleErrorWithElmah]
     public class DonationController : Controller
     {
         private readonly IDonationsService donationsService;

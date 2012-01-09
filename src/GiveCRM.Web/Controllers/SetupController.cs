@@ -1,4 +1,6 @@
-﻿namespace GiveCRM.Web.Controllers
+﻿using GiveCRM.Web.Attributes;
+
+namespace GiveCRM.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -6,7 +8,8 @@
     using GiveCRM.BusinessLogic;
     using GiveCRM.Models;
     using GiveCRM.Web.Models.Facets;
-    
+
+    [HandleErrorWithElmah]
     public class SetupController : Controller
     {
         private readonly IFacetsService facetService;

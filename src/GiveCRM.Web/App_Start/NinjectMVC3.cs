@@ -1,4 +1,5 @@
 using GiveCRM.BusinessLogic;
+using GiveCRM.Web.Services;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(GiveCRM.Web.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(GiveCRM.Web.App_Start.NinjectMVC3), "Stop")]
@@ -50,10 +51,14 @@ namespace GiveCRM.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ILogService>().To<LogService>();
+            kernel.Bind<LogService>().ToSelf().InSingletonScope();
+
             kernel.Scan(a =>
                             {
                                 a.FromCallingAssembly();
                                 a.FromAssembliesMatching("GiveCRM.*.dll");
+                                a.Excluding(typeof(LogService));
                                 a.BindWithDefaultConventions();
                                 a.BindWith(new RegexBindingGenerator("(I)(?<name>.+)(Repository)"));
                                 a.BindWith(new GenericBindingGenerator(typeof(IRepository<>)));

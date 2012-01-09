@@ -1,7 +1,10 @@
-﻿namespace GiveCRM.Web.Controllers
+﻿using GiveCRM.Web.Attributes;
+
+namespace GiveCRM.Web.Controllers
 {
     using System.Web.Mvc;
 
+    [HandleErrorWithElmah]
     public class HomeController : Controller
     {
         [HttpGet]

@@ -42,6 +42,9 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.11\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -128,7 +131,9 @@
     </Compile>
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IUrlValidationService.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MembershipService.cs" />
     <Compile Include="Services\UrlValidationService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
