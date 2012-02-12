@@ -51,14 +51,14 @@ namespace GiveCRM.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ILogService>().To<LogService>();
-            kernel.Bind<LogService>().ToSelf().InSingletonScope();
+            kernel.Bind<ILogger>().To<Logger>();
+            kernel.Bind<Logger>().ToSelf().InSingletonScope();
 
             kernel.Scan(a =>
                             {
                                 a.FromCallingAssembly();
                                 a.FromAssembliesMatching("GiveCRM.*.dll");
-                                a.Excluding(typeof(LogService));
+                                a.Excluding(typeof(Logger));
                                 a.BindWithDefaultConventions();
                                 a.BindWith(new RegexBindingGenerator("(I)(?<name>.+)(Repository)"));
                                 a.BindWith(new GenericBindingGenerator(typeof(IRepository<>)));

@@ -27,7 +27,7 @@ namespace GiveCRM.Web.Controllers
         private readonly ICampaignService campaignService;
         private readonly IMemberSearchFilterService memberSearchFilterService;
         private readonly IMemberService memberService;
-        private readonly ILogService logService;
+        private readonly ILogger _logger;
         
         public CampaignController(
             IMailingListService mailingListService, 
@@ -35,14 +35,14 @@ namespace GiveCRM.Web.Controllers
             ICampaignService campaignService, 
             IMemberSearchFilterService memberSearchFilterService,
             IMemberService memberService,
-            ILogService logService)
+            ILogger _logger)
         {
             this.mailingListService = mailingListService;
             this.searchService = searchService;
             this.campaignService = campaignService;
             this.memberSearchFilterService = memberSearchFilterService;
             this.memberService = memberService;
-            this.logService = logService;
+            this._logger = _logger;
         }
 
         [HttpGet]
