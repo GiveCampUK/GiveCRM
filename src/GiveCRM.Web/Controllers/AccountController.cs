@@ -1,4 +1,6 @@
-﻿namespace GiveCRM.Web.Controllers
+﻿using GiveCRM.Web.Attributes;
+
+namespace GiveCRM.Web.Controllers
 {
     using System;
     using System.Web.Mvc;
@@ -7,6 +9,7 @@
     using GiveCRM.Web.Models;
     using GiveCRM.Web.Services;
 
+    [HandleErrorWithElmah]
     public class AccountController : Controller
     {
         private readonly IMembershipService membershipService;

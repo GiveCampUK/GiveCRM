@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="GiveCRM.BusinessLogic.Tests" Label="GiveCRM.BusinessLogic.Tests" Category="Project" />
+    <Node Id="NSubstitute 1.3.0.0" Label="NSubstitute 1.3.0.0" Category="Package" />
+    <Node Id="NUnit 2.5.10.11092" Label="NUnit 2.5.10.11092" Category="Package" />
+    <Node Id="GiveCRM.Web.Tests" Label="GiveCRM.Web.Tests" Category="Project" />
+    <Node Id="Moq 4.0.10827" Label="Moq 4.0.10827" Category="Package" />
+    <Node Id="MvcContrib.Mvc3.TestHelper-ci 3.0.90.0" Label="MvcContrib.Mvc3.TestHelper-ci 3.0.90.0" Category="Package" />
+    <Node Id="NSubstitute 1.3.0.0" Label="NSubstitute 1.3.0.0" Category="Package" />
+    <Node Id="NUnit 2.5.10.11092" Label="NUnit 2.5.10.11092" Category="Package" />
+    <Node Id="RhinoMocks 3.6" Label="RhinoMocks 3.6" Category="Package" />
+    <Node Id="ImportExport\GiveCRM.ImportExport" Label="GiveCRM.ImportExport" Category="Project" />
+    <Node Id="EPPlus 2.9.0.1" Label="EPPlus 2.9.0.1" Category="Package" />
+    <Node Id="NPOI 1.2.3" Label="NPOI 1.2.3" Category="Package" />
+    <Node Id="NUnit 2.5.10.11092" Label="NUnit 2.5.10.11092" Category="Package" />
+    <Node Id="ImportExport\GiveCRM.ImportExport.Test" Label="GiveCRM.ImportExport.Test" Category="Project" />
+    <Node Id="NPOI 1.2.3" Label="NPOI 1.2.3" Category="Package" />
+    <Node Id="NSubstitute 1.3.0.0" Label="NSubstitute 1.3.0.0" Category="Package" />
+    <Node Id="NUnit 2.5.10.11092" Label="NUnit 2.5.10.11092" Category="Package" />
+    <Node Id="DataAccess\GiveCRM.DataAccess" Label="GiveCRM.DataAccess" Category="Project" />
+    <Node Id="Simple.Data.Ado 0.12.2.1" Label="Simple.Data.Ado 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.Core 0.12.2.1" Label="Simple.Data.Core 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.SqlServer 0.12.2.1" Label="Simple.Data.SqlServer 0.12.2.1" Category="Package" />
+    <Node Id="DataAccess\Tests\GiveCRM.DataAccess.Test" Label="GiveCRM.DataAccess.Test" Category="Project" />
+    <Node Id="NUnit 2.5.10.11092" Label="NUnit 2.5.10.11092" Category="Package" />
+    <Node Id="Simple.Data.Ado 0.12.2.1" Label="Simple.Data.Ado 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.Core 0.12.2.1" Label="Simple.Data.Core 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.SqlCompact40 0.12.2.1" Label="Simple.Data.SqlCompact40 0.12.2.1" Category="Package" />
+    <Node Id="SqlServerCompact 4.0.8482.1" Label="SqlServerCompact 4.0.8482.1" Category="Package" />
+    <Node Id="Services\GiveCRM.DummyDataGenerator" Label="GiveCRM.DummyDataGenerator" Category="Project" />
+    <Node Id="Simple.Data.Ado 0.12.2.1" Label="Simple.Data.Ado 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.Core 0.12.2.1" Label="Simple.Data.Core 0.12.2.1" Category="Package" />
+    <Node Id="Simple.Data.SqlServer 0.12.2.1" Label="Simple.Data.SqlServer 0.12.2.1" Category="Package" />
+    <Node Id="GiveCRM.Web" Label="GiveCRM.Web" Category="Project" />
+    <Node Id="AutoMapper 2.0.0" Label="AutoMapper 2.0.0" Category="Package" />
+    <Node Id="elmah 1.2.0.1" Label="elmah 1.2.0.1" Category="Package" />
+    <Node Id="elmah.corelibrary 1.2" Label="elmah.corelibrary 1.2" Category="Package" />
+    <Node Id="Elmah.MVC 1.2" Label="Elmah.MVC 1.2" Category="Package" />
+    <Node Id="jQuery 1.7.1" Label="jQuery 1.7.1" Category="Package" />
+    <Node Id="jQuery.UI.Combined 1.8.16" Label="jQuery.UI.Combined 1.8.16" Category="Package" />
+    <Node Id="jQuery.Validation 1.9" Label="jQuery.Validation 1.9" Category="Package" />
+    <Node Id="Microsoft.Web.Infrastructure 1.0.0.0" Label="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package" />
+    <Node Id="Modernizr 2.0.6" Label="Modernizr 2.0.6" Category="Package" />
+    <Node Id="Ninject 2.2.1.4" Label="Ninject 2.2.1.4" Category="Package" />
+    <Node Id="Ninject.Extensions.Conventions 2.2.0.5" Label="Ninject.Extensions.Conventions 2.2.0.5" Category="Package" />
+    <Node Id="Ninject.MVC3 2.2.2.0" Label="Ninject.MVC3 2.2.2.0" Category="Package" />
+    <Node Id="PagedList 1.10" Label="PagedList 1.10" Category="Package" />
+    <Node Id="PagedList.Mvc 3.10" Label="PagedList.Mvc 3.10" Category="Package" />
+    <Node Id="Twitter.Bootstrap 1.4.0" Label="Twitter.Bootstrap 1.4.0" Category="Package" />
+    <Node Id="WebActivator 1.5" Label="WebActivator 1.5" Category="Package" />
+  </Nodes>
+  <Links>
+    <Link Source="GiveCRM.BusinessLogic.Tests" Target="NSubstitute 1.3.0.0" Category="Installed Package" />
+    <Link Source="GiveCRM.BusinessLogic.Tests" Target="NUnit 2.5.10.11092" Category="Installed Package" />
+    <Link Source="MvcContrib.Mvc3.TestHelper-ci 3.0.90.0" Target="RhinoMocks 3.6" Category="Package Dependency" />
+    <Link Source="GiveCRM.Web.Tests" Target="Moq 4.0.10827" Category="Installed Package" />
+    <Link Source="GiveCRM.Web.Tests" Target="MvcContrib.Mvc3.TestHelper-ci 3.0.90.0" Category="Installed Package" />
+    <Link Source="GiveCRM.Web.Tests" Target="NSubstitute 1.3.0.0" Category="Installed Package" />
+    <Link Source="GiveCRM.Web.Tests" Target="NUnit 2.5.10.11092" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport" Target="EPPlus 2.9.0.1" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport" Target="NPOI 1.2.3" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport" Target="NUnit 2.5.10.11092" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport.Test" Target="NPOI 1.2.3" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport.Test" Target="NSubstitute 1.3.0.0" Category="Installed Package" />
+    <Link Source="ImportExport\GiveCRM.ImportExport.Test" Target="NUnit 2.5.10.11092" Category="Installed Package" />
+    <Link Source="Simple.Data.Ado 0.12.2.1" Target="Simple.Data.Core 0.12.2.1" Category="Package Dependency" />
+    <Link Source="Simple.Data.SqlServer 0.12.2.1" Target="Simple.Data.Ado 0.12.2.1" Category="Package Dependency" />
+    <Link Source="DataAccess\GiveCRM.DataAccess" Target="Simple.Data.SqlServer 0.12.2.1" Category="Installed Package" />
+    <Link Source="Simple.Data.Ado 0.12.2.1" Target="Simple.Data.Core 0.12.2.1" Category="Package Dependency" />
+    <Link Source="Simple.Data.SqlCompact40 0.12.2.1" Target="Simple.Data.Ado 0.12.2.1" Category="Package Dependency" />
+    <Link Source="DataAccess\Tests\GiveCRM.DataAccess.Test" Target="NUnit 2.5.10.11092" Category="Installed Package" />
+    <Link Source="DataAccess\Tests\GiveCRM.DataAccess.Test" Target="Simple.Data.SqlCompact40 0.12.2.1" Category="Installed Package" />
+    <Link Source="DataAccess\Tests\GiveCRM.DataAccess.Test" Target="SqlServerCompact 4.0.8482.1" Category="Installed Package" />
+    <Link Source="Simple.Data.Ado 0.12.2.1" Target="Simple.Data.Core 0.12.2.1" Category="Package Dependency" />
+    <Link Source="Simple.Data.SqlServer 0.12.2.1" Target="Simple.Data.Ado 0.12.2.1" Category="Package Dependency" />
+    <Link Source="Services\GiveCRM.DummyDataGenerator" Target="Simple.Data.SqlServer 0.12.2.1" Category="Installed Package" />
+    <Link Source="elmah 1.2.0.1" Target="elmah.corelibrary 1.2" Category="Package Dependency" />
+    <Link Source="Elmah.MVC 1.2" Target="elmah 1.2.0.1" Category="Package Dependency" />
+    <Link Source="jQuery.UI.Combined 1.8.16" Target="jQuery 1.7.1" Category="Package Dependency" />
+    <Link Source="jQuery.Validation 1.9" Target="jQuery 1.7.1" Category="Package Dependency" />
+    <Link Source="Ninject.Extensions.Conventions 2.2.0.5" Target="Ninject 2.2.1.4" Category="Package Dependency" />
+    <Link Source="Ninject.MVC3 2.2.2.0" Target="Ninject 2.2.1.4" Category="Package Dependency" />
+    <Link Source="Ninject.MVC3 2.2.2.0" Target="WebActivator 1.5" Category="Package Dependency" />
+    <Link Source="PagedList.Mvc 3.10" Target="PagedList 1.10" Category="Package Dependency" />
+    <Link Source="WebActivator 1.5" Target="Microsoft.Web.Infrastructure 1.0.0.0" Category="Package Dependency" />
+    <Link Source="GiveCRM.Web" Target="AutoMapper 2.0.0" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="Elmah.MVC 1.2" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="jQuery.UI.Combined 1.8.16" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="jQuery.Validation 1.9" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="Modernizr 2.0.6" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="Ninject.Extensions.Conventions 2.2.0.5" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="Ninject.MVC3 2.2.2.0" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="PagedList.Mvc 3.10" Category="Installed Package" />
+    <Link Source="GiveCRM.Web" Target="Twitter.Bootstrap 1.4.0" Category="Installed Package" />
+  </Links>
+  <Categories>
+    <Category Id="Project" />
+    <Category Id="Package" />
+  </Categories>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Project" ValueLabel="True">
+      <Condition Expression="HasCategory('Project')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Package Dependency" ValueLabel="True">
+      <Condition Expression="HasCategory('Package Dependency')" />
+      <Setter Property="Background" Value="Yellow" />
+    </Style>
+  </Styles>
+</DirectedGraph>

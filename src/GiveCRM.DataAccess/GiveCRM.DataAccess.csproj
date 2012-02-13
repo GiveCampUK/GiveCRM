@@ -62,6 +62,9 @@
     <Compile Include="SearchQueryService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
       <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
       <Name>GiveCRM.BusinessLogic</Name>
@@ -70,9 +73,6 @@
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
