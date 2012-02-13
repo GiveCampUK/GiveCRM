@@ -1,23 +1,23 @@
-using System.Threading;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+
+using GiveCRM.BusinessLogic;
+using GiveCRM.LoggingService;
+using GiveCRM.Models;
+using GiveCRM.Models.Search;
+
 using GiveCRM.Web.Attributes;
-using GiveCRM.Web.Services;
+using GiveCRM.Web.Infrastructure;
+using GiveCRM.Web.Models.Campaigns;
+using GiveCRM.Web.Models.Search;
+using GiveCRM.Web.Properties;
 
 namespace GiveCRM.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Web.Mvc;
 
-    using GiveCRM.BusinessLogic;
-    using GiveCRM.Models;
-    using GiveCRM.Models.Search;
-    using Infrastructure;
-    using Models.Campaigns;
-    using Models.Search;
-    using Properties;
-    using GiveCRM.Web.Attributes;
 
     [HandleErrorWithElmah]
     public class CampaignController : Controller
@@ -27,7 +27,7 @@ namespace GiveCRM.Web.Controllers
         private readonly ICampaignService campaignService;
         private readonly IMemberSearchFilterService memberSearchFilterService;
         private readonly IMemberService memberService;
-        private readonly ILogger _logger;
+        private readonly ILogService logService;
         
         public CampaignController(
             IMailingListService mailingListService, 
@@ -35,14 +35,14 @@ namespace GiveCRM.Web.Controllers
             ICampaignService campaignService, 
             IMemberSearchFilterService memberSearchFilterService,
             IMemberService memberService,
-            ILogger _logger)
+            ILogService logService)
         {
             this.mailingListService = mailingListService;
             this.searchService = searchService;
             this.campaignService = campaignService;
             this.memberSearchFilterService = memberSearchFilterService;
             this.memberService = memberService;
-            this._logger = _logger;
+            this.logService = logService;
         }
 
         [HttpGet]

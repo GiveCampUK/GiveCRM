@@ -131,9 +131,7 @@
     </Compile>
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
-    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\IUrlValidationService.cs" />
-    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\MembershipService.cs" />
     <Compile Include="Services\UrlValidationService.cs" />
     <Compile Include="Views\MenuHelper.cs" />
@@ -267,6 +265,10 @@
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoggingService\GiveCRM.LoggingService.csproj">
+      <Project>{38077D5A-C16A-4B39-B3BE-78C7485E02D2}</Project>
+      <Name>GiveCRM.LoggingService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,16 +1,17 @@
 ﻿using GiveCRM.Web.Attributes;
+using System;
+using GiveCRM.BusinessLogic;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Routing;
+using GiveCRM.Models;
+using GiveCRM.Web.Models.Members;
+using PagedList;
 
 namespace GiveCRM.Web.Controllers
 {
-    using System;
-    using GiveCRM.BusinessLogic;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using GiveCRM.Models;
-    using GiveCRM.Web.Models.Members;
-    using PagedList;
+
 
     [HandleErrorWithElmah]
     public class MemberController : Controller
