@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</ProjectGuid>
+    <ProjectGuid>{38077D5A-C16A-4B39-B3BE-78C7485E02D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GiveCRM.BusinessLogic</RootNamespace>
-    <AssemblyName>GiveCRM.BusinessLogic</AssemblyName>
+    <RootNamespace>GiveCRM.LoggingService</RootNamespace>
+    <AssemblyName>GiveCRM.LoggingService</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.11\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,47 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CampaignService.cs" />
-    <Compile Include="DonationsService.cs" />
-    <Compile Include="ExcelImport\ExcelImportService.cs" />
-    <Compile Include="ExcelImport\IExcelImportService.cs" />
-    <Compile Include="ExcelImport\IMemberFactory.cs" />
-    <Compile Include="ExcelImport\ImportDataCompletedEventArgs.cs" />
-    <Compile Include="ExcelImport\ImportDataFailedEventArgs.cs" />
-    <Compile Include="ExcelImport\MemberFactory.cs" />
-    <Compile Include="FacetsService.cs" />
-    <Compile Include="ICampaignRepository.cs" />
-    <Compile Include="ICampaignService.cs" />
-    <Compile Include="IDonationRepository.cs" />
-    <Compile Include="IDonationsService.cs" />
-    <Compile Include="IFacetRepository.cs" />
-    <Compile Include="IFacetsService.cs" />
-    <Compile Include="IMailingListService.cs" />
-    <Compile Include="IMemberRepository.cs" />
-    <Compile Include="IMemberSearchFilterRepository.cs" />
-    <Compile Include="IMemberSearchFilterService.cs" />
-    <Compile Include="IMemberService.cs" />
-    <Compile Include="IMembershipService.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="ISearchQueryService.cs" />
-    <Compile Include="ISearchService.cs" />
-    <Compile Include="MailingListService.cs" />
-    <Compile Include="MemberSearchFilterService.cs" />
-    <Compile Include="MemberService.cs" />
+    <Compile Include="ILogService.cs" />
+    <Compile Include="LogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiveCRM.ImportExport\GiveCRM.ImportExport\GiveCRM.ImportExport.csproj">
-      <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
-      <Name>GiveCRM.ImportExport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
-      <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
-      <Name>GiveCRM.Models</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

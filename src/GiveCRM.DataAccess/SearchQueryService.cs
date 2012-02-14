@@ -1,12 +1,12 @@
-﻿namespace GiveCRM.DataAccess
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Simple.Data;
-    using BusinessLogic;
-    using Models.Search;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using GiveCRM.BusinessLogic;
+using GiveCRM.Models.Search;
+using Simple.Data;
 
+namespace GiveCRM.DataAccess
+{
     public class SearchQueryService : ISearchQueryService
     {
         private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
