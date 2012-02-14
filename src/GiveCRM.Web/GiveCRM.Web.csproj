@@ -42,6 +42,9 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.11\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -94,6 +97,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahController.cs" />
     <Compile Include="Areas\Admin\Controllers\ElmahResult.cs" />
+    <Compile Include="Attributes\HandleErrorAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
@@ -261,6 +265,10 @@
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LoggingService\GiveCRM.LoggingService.csproj">
+      <Project>{38077D5A-C16A-4B39-B3BE-78C7485E02D2}</Project>
+      <Name>GiveCRM.LoggingService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
