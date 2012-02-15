@@ -1,19 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+
+using GiveCRM.BusinessLogic;
+using GiveCRM.LoggingService;
+using GiveCRM.Models;
+using GiveCRM.Models.Search;
+
+using GiveCRM.Web.Attributes;
+using GiveCRM.Web.Infrastructure;
+using GiveCRM.Web.Models.Campaigns;
+using GiveCRM.Web.Models.Search;
+using GiveCRM.Web.Properties;
+
 namespace GiveCRM.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Web.Mvc;
 
-    using GiveCRM.BusinessLogic;
-    using GiveCRM.Models;
-    using GiveCRM.Models.Search;
-    using GiveCRM.Web.Infrastructure;
-    using GiveCRM.Web.Models.Campaigns;
-    using GiveCRM.Web.Models.Search;
-    using GiveCRM.Web.Properties;
-    
+
+    [HandleErrorWithElmah]
     public class CampaignController : Controller
     {
         private readonly IMailingListService mailingListService;
@@ -21,26 +27,28 @@ namespace GiveCRM.Web.Controllers
         private readonly ICampaignService campaignService;
         private readonly IMemberSearchFilterService memberSearchFilterService;
         private readonly IMemberService memberService;
+        private readonly ILogService logService;
         
         public CampaignController(
             IMailingListService mailingListService, 
             ISearchService searchService, 
             ICampaignService campaignService, 
             IMemberSearchFilterService memberSearchFilterService,
-            IMemberService memberService)
+            IMemberService memberService,
+            ILogService logService)
         {
             this.mailingListService = mailingListService;
             this.searchService = searchService;
             this.campaignService = campaignService;
             this.memberSearchFilterService = memberSearchFilterService;
             this.memberService = memberService;
+            this.logService = logService;
         }
 
         [HttpGet]
         public ActionResult Index(bool showClosed = false)
         {
             IEnumerable<Campaign> campaigns = showClosed ? this.campaignService.GetAllClosed() : this.campaignService.GetAllOpen();
-
             string title, linkText;
 
             if (showClosed)
@@ -64,7 +72,6 @@ namespace GiveCRM.Web.Controllers
                                 ShowClosed = showClosed,
                                 Campaigns = campaigns
                             };
-
             return View(model);
         }
 

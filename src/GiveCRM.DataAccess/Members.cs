@@ -1,10 +1,12 @@
-﻿namespace GiveCRM.DataAccess
+﻿using System;
+using System.Collections.Generic;
+using GiveCRM.BusinessLogic;
+using GiveCRM.Models;
+using Simple.Data;
+
+namespace GiveCRM.DataAccess
 {
-    using System;
-    using System.Collections.Generic;
-    using Simple.Data;
-    using BusinessLogic;
-    using Models;
+
 
     public class Members : IMemberRepository
     {
