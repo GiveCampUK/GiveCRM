@@ -40,7 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EPPlus, Version=2.9.0.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL" />
+    <Reference Include="EPPlus, Version=3.0.0.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EPPlus.3.0.0.2\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\packages\NPOI.1.2.3\lib\2.0\Ionic.Zip.dll</HintPath>
     </Reference>
