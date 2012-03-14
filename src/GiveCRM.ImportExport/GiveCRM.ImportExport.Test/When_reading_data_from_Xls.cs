@@ -91,7 +91,7 @@ namespace GiveCRM.ImportExport.Test
         }
 
         [Test]
-        [Culture("en-GB")]
+        [SetCulture("en-GB")]
         public void Should_correctly_convert_date_type_to_string()
         {
             var import = new ExcelImport();
