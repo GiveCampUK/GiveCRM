@@ -33,4 +33,5 @@ if (-not(test-path $buildFile)) {
     }
 } 
 
+$psake.use_exit_on_error = $true
 invoke-psake $buildFile $taskList $framework $docs $parameters $properties $nologo
