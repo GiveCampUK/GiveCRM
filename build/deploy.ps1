@@ -1,5 +1,5 @@
 ﻿properties {
-	$release_dir = "c:\websites\test.givecrm.org.uk"
+	$release_dir = "c:\inetpub\wwwroot\GiveCRMStaging"
 }
 
 #Loading external functions file
