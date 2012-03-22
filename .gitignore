@@ -28,7 +28,7 @@ src/GiveCRM.Database/sql/release
 *.crunchsolution.local.xml
 team.txt
 *.orig
-
+package
 packages
 !/src/packages/repositories.config
 /src/GiveCRM.DataAccess/StyleCop.Cache
