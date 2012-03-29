@@ -26,7 +26,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void InsertCampaign()
         {
-            var campaigns = new Campaigns();
+            var campaigns = new Campaigns(new FakeDatabaseProvider(db));
             var campaign = new Campaign
                                {
                                    Name = "Test",

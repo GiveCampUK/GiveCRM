@@ -12,13 +12,13 @@ namespace GiveCRM.DummyDataGenerator.Generation
         private readonly RandomSource random = new RandomSource();
         private readonly MemberSearchFilterGenerator memberSearchFilterGenerator = new MemberSearchFilterGenerator();
         private readonly CampaignRunGenerator campaignRunGenerator = new CampaignRunGenerator();
-
+        
         public CampaignGenerator(Action<string> logAction) : base(logAction)
         {}
 
         internal override void Generate(int numberToGenerate)
         {
-            Campaigns campaigns = new Campaigns();
+            Campaigns campaigns = new Campaigns(new DatabaseProvider());
             GenerateMultiple(numberToGenerate, () =>
                                                    {
                                                        var campaign = GenerateCampaign();
