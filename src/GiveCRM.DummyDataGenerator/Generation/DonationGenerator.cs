@@ -29,8 +29,9 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
             // only want to generate donations for committed campaigns
             var committedCampaigns = campaigns.Where(c => c.IsCommitted).ToList();
+            var databaseProvider = new DatabaseProvider();
             var members = new Members();
-            var donations = new Donations();
+            var donations = new Donations(databaseProvider);
 
             foreach (var campaign in committedCampaigns)
             {

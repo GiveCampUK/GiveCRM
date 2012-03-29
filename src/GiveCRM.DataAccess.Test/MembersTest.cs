@@ -13,6 +13,8 @@ namespace GiveCRM.DataAccess.Test
         [SetUp]
         public void SetUp()
         {
+            databaseProvider = new DatabaseProvider();
+            dynamic db = databaseProvider.GetDatabase();
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
             db.Campaigns.DeleteAll();
@@ -22,7 +24,7 @@ namespace GiveCRM.DataAccess.Test
             db.Members.DeleteAll();
         }
 
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private IDatabaseProvider databaseProvider;
 
         private static Member CreateAliceWithPhoneNumber()
         {
@@ -92,7 +94,7 @@ namespace GiveCRM.DataAccess.Test
             var members = new Members();
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
-            var donations = new Donations();
+            var donations = new Donations(databaseProvider);
             donations.Insert(new Donation {MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today});
             donations.Insert(new Donation { MemberId = member.Id, Amount = 12.50m, Date = DateTime.Today.Subtract(TimeSpan.FromDays(1)) });
 
