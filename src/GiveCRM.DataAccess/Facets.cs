@@ -9,11 +9,16 @@ namespace GiveCRM.DataAccess
 
     public class Facets : IFacetRepository
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public Facets(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public Facet GetById(int id)
         {
-            var record = db.Facets.FindById(id);
+            var record = databaseProvider.GetDatabase().Facets.FindById(id);
             Facet facet = record;
             facet.Values = record.FacetValues.ToList<FacetValue>();
             return facet;
@@ -21,6 +26,7 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Facet> GetAll()
         {
+            dynamic db = databaseProvider.GetDatabase();
             var query = db.Facets.All()
                 .Select(db.Facets.Id, db.Facets.Type, db.Facets.Name,
                         db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
@@ -61,7 +67,7 @@ namespace GiveCRM.DataAccess
             {
                 return InsertWithValues(facet);
             }
-            var record = db.Facets.Insert(facet);
+            var record = databaseProvider.GetDatabase().Facets.Insert(facet);
             return record;
         }
 
@@ -71,7 +77,7 @@ namespace GiveCRM.DataAccess
         /// <param name="id">The identifier of the Facet to delete.</param>
         public void DeleteById(int id)
         {
-            db.Facets.DeleteById(id);
+            databaseProvider.GetDatabase().Facets.DeleteById(id);
         }
 
         public void Update(Facet facet)
@@ -82,13 +88,13 @@ namespace GiveCRM.DataAccess
             }
             else
             {
-                db.Facets.UpdateById(facet);
+                databaseProvider.GetDatabase().Facets.UpdateById(facet);
             }
         }
 
         private void UpdateWithValues(Facet facet)
         {
-            using (var transaction = db.BeginTransaction())
+            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
             {
                 try
                 {
@@ -121,7 +127,7 @@ namespace GiveCRM.DataAccess
 
         private Facet InsertWithValues(Facet facet)
         {
-            using (var transaction = db.BeginTransaction())
+            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
             {
                 try
                 {
@@ -144,7 +150,7 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Facet> GetAllFreeText()
         {
-            return db.Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
+            return databaseProvider.GetDatabase().Facets.FindAllByType(FacetType.FreeText.ToString()).Cast<Facet>();
         }
     }
 }

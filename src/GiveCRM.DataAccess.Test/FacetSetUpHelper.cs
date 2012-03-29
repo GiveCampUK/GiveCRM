@@ -7,7 +7,7 @@ namespace GiveCRM.DataAccess.Test
     {
         public static Facet CreateListFacet()
         {
-            var facets = new Facets();
+            var facets = new Facets(new DatabaseProvider());
             var facet = new Facet
                             {
                                 Type = FacetType.List,
@@ -25,7 +25,7 @@ namespace GiveCRM.DataAccess.Test
 
         public static Facet CreateFreeTextFacet()
         {
-            var facets = new Facets();
+            var facets = new Facets(new DatabaseProvider());
             var facet = new Facet
                             {
                                 Type = FacetType.FreeText,

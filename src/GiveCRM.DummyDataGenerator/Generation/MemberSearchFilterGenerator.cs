@@ -14,7 +14,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
     {
         private readonly RandomSource random = new RandomSource();
         private readonly MemberSearchFilters searchFilters = new MemberSearchFilters();
-        private readonly SearchService searchRepo = new SearchService(new Facets());
+        private readonly SearchService searchRepo = new SearchService(new Facets(new DatabaseProvider()));
 
         private readonly Dictionary<SearchFieldType, IList<SearchOperator>> fieldTypeToOperatorMap;
 
