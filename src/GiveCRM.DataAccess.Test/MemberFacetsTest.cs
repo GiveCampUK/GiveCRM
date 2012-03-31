@@ -9,11 +9,14 @@ namespace GiveCRM.DataAccess.Test
     [TestFixture]
     public class MemberFacetsTest
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private IDatabaseProvider databaseProvider;
 
         [SetUp]
         public void SetUp()
         {
+            databaseProvider = new DatabaseProvider();
+            dynamic db = databaseProvider.GetDatabase();
+
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
             db.Campaigns.DeleteAll();
@@ -39,7 +42,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual("Aardvark", facet.FreeTextValue);
         }
 
-        private static MemberFacetFreeText CreateFreeTextMemberFacet(Member member, Facet textFacet)
+        private MemberFacetFreeText CreateFreeTextMemberFacet(Member member, Facet textFacet)
         {
             var facet = new MemberFacetFreeText
                             {
@@ -47,7 +50,7 @@ namespace GiveCRM.DataAccess.Test
                                 MemberId = member.Id,
                                 FreeTextValue = "Aardvark"
                             };
-            facet = new MemberFacets().Insert(facet);
+            facet = new MemberFacets(databaseProvider).Insert(facet);
             return facet;
         }
 
@@ -68,7 +71,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.AreEqual(listFacet.Values.Last().Id, facet.Values.Last().FacetValueId);
         }
 
-        private static MemberFacetList CreateListMemberFacet(Member member, Facet listFacet)
+        private MemberFacetList CreateListMemberFacet(Member member, Facet listFacet)
         {
             var facet = new MemberFacetList
                             {
@@ -80,7 +83,7 @@ namespace GiveCRM.DataAccess.Test
                                                  new MemberFacetValue {FacetValueId = listFacet.Values.Last().Id},
                                              }
                             };
-            facet = new MemberFacets().Insert(facet);
+            facet = new MemberFacets(databaseProvider).Insert(facet);
             return facet;
         }
 
@@ -95,7 +98,7 @@ namespace GiveCRM.DataAccess.Test
             var expectedMemberListFacet = CreateListMemberFacet(member, listFacet);
             var expectedMemberTextFacet = CreateFreeTextMemberFacet(member, textFacet);
 
-            var facets = new MemberFacets().ForMember(member.Id).ToList();
+            var facets = new MemberFacets(databaseProvider).ForMember(member.Id).ToList();
 
             var actualMemberListFacet = facets.OfType<MemberFacetList>().FirstOrDefault();
             Assert.IsNotNull(actualMemberListFacet);
