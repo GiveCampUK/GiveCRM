@@ -5,40 +5,43 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-
-
     public class MemberSearchFilters : IMemberSearchFilterRepository
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public MemberSearchFilters(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public IEnumerable<MemberSearchFilter> GetByCampaignId(int campaignId)
         {
-            return db.MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
+            return databaseProvider.GetDatabase().MemberSearchFilters.FindAllByCampaignId(campaignId).Cast<MemberSearchFilter>();
         }
 
         public IEnumerable<MemberSearchFilter> GetAll()
         {
-            return db.MemberSearchFilters.All();
+            return databaseProvider.GetDatabase().MemberSearchFilters.All();
         }
 
         public MemberSearchFilter GetById(int id)
         {
-            return db.MemberSearchFilters.FindById(id);
+            return databaseProvider.GetDatabase().MemberSearchFilters.FindById(id);
         }
 
         public void Update(MemberSearchFilter item)
         {
-            db.MemberSearchFilters.UpdateById(item);
+            databaseProvider.GetDatabase().MemberSearchFilters.UpdateById(item);
         }
 
         public MemberSearchFilter Insert(MemberSearchFilter memberSearchFilter)
         {
-            return db.MemberSearchFilters.Insert(memberSearchFilter);
+            return databaseProvider.GetDatabase().MemberSearchFilters.Insert(memberSearchFilter);
         }
         
         public void DeleteById(int id)
         {
-            db.MemberSearchFilters.DeleteById(id);
+            databaseProvider.GetDatabase().MemberSearchFilters.DeleteById(id);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         public CampaignRunGenerator(IDatabaseProvider databaseProvider)
         {
             this.databaseProvider = databaseProvider;
-            memberService = new MemberService(new Members(databaseProvider), new MemberSearchFilters(), new SearchQueryService());
+            memberService = new MemberService(new Members(databaseProvider), new MemberSearchFilters(databaseProvider), new SearchQueryService());
         }
 
         internal void GenerateCampaignRun(int campaignId)
