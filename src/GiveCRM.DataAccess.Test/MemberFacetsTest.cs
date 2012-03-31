@@ -108,7 +108,7 @@ namespace GiveCRM.DataAccess.Test
             Assert.IsNotNull(actualMemberTextFacet);
         }
 
-        private static Member CreateBob()
+        private Member CreateBob()
         {
             var member = new Member
                              {
@@ -119,7 +119,7 @@ namespace GiveCRM.DataAccess.Test
                                  Salutation = "Bob",
                                  EmailAddress = "bob@hotmail.com"
                              };
-            member = new Members().Insert(member);
+            member = new Members(databaseProvider).Insert(member);
             return member;
         }
     }

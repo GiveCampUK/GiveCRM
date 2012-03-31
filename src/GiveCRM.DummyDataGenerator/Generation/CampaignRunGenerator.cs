@@ -7,8 +7,14 @@ namespace GiveCRM.DummyDataGenerator.Generation
 {
     internal class CampaignRunGenerator
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
-        private readonly MemberService memberService = new MemberService(new Members(), new MemberSearchFilters(), new SearchQueryService());
+        private readonly IDatabaseProvider databaseProvider;
+        private readonly MemberService memberService;
+
+        public CampaignRunGenerator(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+            memberService = new MemberService(new Members(databaseProvider), new MemberSearchFilters(), new SearchQueryService());
+        }
 
         internal void GenerateCampaignRun(int campaignId)
         {
@@ -17,7 +23,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
             if (memberCampaignMemberships.Any())
             {
-                db.CampaignRuns.Insert(memberCampaignMemberships);
+                databaseProvider.GetDatabase().CampaignRuns.Insert(memberCampaignMemberships);
             }
         }
     }

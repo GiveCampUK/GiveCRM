@@ -63,7 +63,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void Get()
         {
-            var members = new Members();
+            var members = new Members(databaseProvider);
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
 
@@ -91,7 +91,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void All()
         {
-            var members = new Members();
+            var members = new Members(databaseProvider);
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
             var donations = new Donations(databaseProvider);
@@ -127,7 +127,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void InsertMember()
         {
-            var members = new Members();
+            var members = new Members(databaseProvider);
             Member member = CreateAlice();
             member = members.Insert(member);
             Assert.AreNotEqual(0, member.Id);
@@ -136,7 +136,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void InsertMemberWithPhoneNumber()
         {
-            var members = new Members();
+            var members = new Members(databaseProvider);
             Member member = CreateAliceWithPhoneNumber();
             member = members.Insert(member);
             Assert.AreNotEqual(0, member.Id);
