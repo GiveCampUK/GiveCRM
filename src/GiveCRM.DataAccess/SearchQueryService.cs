@@ -9,7 +9,12 @@ namespace GiveCRM.DataAccess
 {
     public class SearchQueryService : ISearchQueryService
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public SearchQueryService(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public IEnumerable<T> CompileQuery<T>(IEnumerable<SearchCriteria> criteria)
         {
@@ -19,7 +24,7 @@ namespace GiveCRM.DataAccess
             SimpleExpression having = null;
             CompileDonationCriteria(criteriaList.OfType<DonationSearchCriteria>(), ref expr, ref having);
 
-            var query = db.Members.All();
+            var query = databaseProvider.GetDatabase().Members.All();
 
             if (expr != null)
             {
@@ -38,7 +43,7 @@ namespace GiveCRM.DataAccess
         {
             foreach (var criterion in criteria)
             {
-                var facetReference = db.Member.MemberFacet.As(criterion.InternalName);
+                var facetReference = databaseProvider.GetDatabase().Member.MemberFacet.As(criterion.InternalName);
                 var facetExpr = facetReference.FacetId == criterion.FacetId &&
                                 CompileStringExpression(facetReference.FreeTextValue, criterion);
                 expr = Combine(expr, facetExpr);
@@ -54,7 +59,7 @@ namespace GiveCRM.DataAccess
             {
                 return expr;
             }
-            return Combine(expr, CompileStringExpression(db.Members.Campaign.Name, criterion));
+            return Combine(expr, CompileStringExpression(databaseProvider.GetDatabase().Members.Campaign.Name, criterion));
         }
 
         internal void CompileDonationCriteria(IEnumerable<DonationSearchCriteria> criteria, ref SimpleExpression expr, ref SimpleExpression having)
@@ -80,7 +85,7 @@ namespace GiveCRM.DataAccess
 
         private SimpleExpression CompileIndividualDonationCriteria(DonationSearchCriteria donationCriteria)
         {
-            var column = db.Members.Donations.Amount;
+            var column = databaseProvider.GetDatabase().Members.Donations.Amount;
             decimal amount;
             if (!decimal.TryParse(donationCriteria.Value, out amount))
             {
@@ -91,7 +96,7 @@ namespace GiveCRM.DataAccess
 
         private SimpleExpression CompileTotalDonationCriteria(DonationSearchCriteria donationCriteria)
         {
-            var column = db.Members.Donations.Amount.Sum();
+            var column = databaseProvider.GetDatabase().Members.Donations.Amount.Sum();
             decimal amount;
             if (!decimal.TryParse(donationCriteria.Value, out amount))
             {
@@ -102,7 +107,7 @@ namespace GiveCRM.DataAccess
 
         private SimpleExpression CompileLastDonationDate(DonationSearchCriteria donationCriteria)
         {
-            var column = db.Members.Donations.Date.Max();
+            var column = databaseProvider.GetDatabase().Members.Donations.Date.Max();
             DateTime date;
             if (!DateTime.TryParse(donationCriteria.Value, out date))
             {
@@ -137,7 +142,7 @@ namespace GiveCRM.DataAccess
         {
             foreach (var locationCriteria in criteria)
             {
-                var column = db.Members[locationCriteria.InternalName];
+                var column = databaseProvider.GetDatabase().Members[locationCriteria.InternalName];
                 var expr = CompileStringExpression(column, locationCriteria);
 
                 current = Combine(current, expr);

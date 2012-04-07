@@ -22,7 +22,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         internal override void Generate(int numberToGenerate)
         {
-            Members membersDb = new Members();
+            Members membersDb = new Members(new DatabaseProvider());
             GenerateMultiple(numberToGenerate, () =>
                                                    {
                                                        var member = GenerateMember();

@@ -7,18 +7,27 @@ namespace GiveCRM.DummyDataGenerator.Generation
 {
     internal class CampaignGenerator : BaseGenerator
     {
-        internal override string GeneratedItemType{get {return "campaigns";}}
+        internal override string GeneratedItemType
+        {
+            get { return "campaigns"; }
+        }
 
-        private readonly RandomSource random = new RandomSource();
-        private readonly MemberSearchFilterGenerator memberSearchFilterGenerator = new MemberSearchFilterGenerator();
-        private readonly CampaignRunGenerator campaignRunGenerator = new CampaignRunGenerator();
-
+        private readonly IDatabaseProvider databaseProvider;
+        private readonly RandomSource random;
+        private readonly MemberSearchFilterGenerator memberSearchFilterGenerator;
+        private readonly CampaignRunGenerator campaignRunGenerator;
+        
         public CampaignGenerator(Action<string> logAction) : base(logAction)
-        {}
+        {
+            databaseProvider = new DatabaseProvider();
+            random = new RandomSource();
+            memberSearchFilterGenerator = new MemberSearchFilterGenerator();
+            campaignRunGenerator = new CampaignRunGenerator(databaseProvider);
+        }
 
         internal override void Generate(int numberToGenerate)
         {
-            Campaigns campaigns = new Campaigns();
+            Campaigns campaigns = new Campaigns(databaseProvider);
             GenerateMultiple(numberToGenerate, () =>
                                                    {
                                                        var campaign = GenerateCampaign();

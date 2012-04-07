@@ -12,14 +12,19 @@ namespace GiveCRM.DummyDataGenerator.Generation
 {
     internal class MemberSearchFilterGenerator
     {
-        private readonly RandomSource random = new RandomSource();
-        private readonly MemberSearchFilters searchFilters = new MemberSearchFilters();
-        private readonly SearchService searchRepo = new SearchService(new Facets());
+        private readonly RandomSource random;
+        private readonly MemberSearchFilters searchFilters;
+        private readonly SearchService searchRepo;
 
         private readonly Dictionary<SearchFieldType, IList<SearchOperator>> fieldTypeToOperatorMap;
 
         public MemberSearchFilterGenerator()
         {
+            var databaseProvider = new DatabaseProvider();
+            random = new RandomSource();
+            searchFilters = new MemberSearchFilters(databaseProvider);
+            searchRepo = new SearchService(new Facets(databaseProvider));
+
             fieldTypeToOperatorMap = new Dictionary<SearchFieldType, IList<SearchOperator>>();
 
             var allTypesHave = new[]

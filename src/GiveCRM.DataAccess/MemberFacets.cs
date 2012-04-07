@@ -5,14 +5,19 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-
-
     public class MemberFacets
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public MemberFacets(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public IEnumerable<MemberFacet> ForMember(int memberId)
         {
+            dynamic db = databaseProvider.GetDatabase();
+
             var query = db.MemberFacets.FindAllByMemberId(memberId)
                 .Select(db.MemberFacets.ID, db.MemberFacets.FacetId, db.MemberFacets.FreeTextValue,
                         db.MemberFacets.MemberFacetValue.FacetValueId,
@@ -78,12 +83,12 @@ namespace GiveCRM.DataAccess
 
         public MemberFacetFreeText Insert(MemberFacetFreeText facet)
         {
-            return db.MemberFacets.Insert(facet);
+            return databaseProvider.GetDatabase().MemberFacets.Insert(facet);
         }
 
         public MemberFacetList Insert(MemberFacetList facet)
         {
-            using (var transaction = db.BeginTransaction())
+            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
             {
                 try
                 {

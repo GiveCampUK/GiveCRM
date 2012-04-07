@@ -8,11 +8,13 @@ namespace GiveCRM.DataAccess.Test
     [TestFixture]
     public class FacetsTest
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private IDatabaseProvider databaseProvider;
 
         [SetUp]
         public void SetUp()
         {
+            databaseProvider = new DatabaseProvider();
+            dynamic db = databaseProvider.GetDatabase();
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
             db.Campaigns.DeleteAll();
@@ -28,7 +30,7 @@ namespace GiveCRM.DataAccess.Test
         public void InsertFreeTextFacet()
         {
             var facet = FacetSetUpHelper.CreateFreeTextFacet();
-            facet = new Facets().GetById(facet.Id);
+            facet = new Facets(databaseProvider).GetById(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.FreeText, facet.Type);
             Assert.AreEqual("FreeTextTest", facet.Name);
@@ -56,7 +58,7 @@ namespace GiveCRM.DataAccess.Test
         {
             var facet = FacetSetUpHelper.CreateListFacet();
 
-            facet = new Facets().GetById(facet.Id);
+            facet = new Facets(databaseProvider).GetById(facet.Id);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.List, facet.Type);
             Assert.AreEqual("ListTest", facet.Name);
@@ -76,11 +78,11 @@ namespace GiveCRM.DataAccess.Test
             FacetSetUpHelper.CreateFreeTextFacet();
             FacetSetUpHelper.CreateListFacet();
 
-            var facet = new Facets().GetAll().FirstOrDefault(f => f.Type == FacetType.FreeText);
+            var facet = new Facets(databaseProvider).GetAll().FirstOrDefault(f => f.Type == FacetType.FreeText);
             Assert.IsNotNull(facet);
             Assert.AreEqual("FreeTextTest", facet.Name);
 
-            facet = new Facets().GetAll().FirstOrDefault(f => f.Type == FacetType.List);
+            facet = new Facets(databaseProvider).GetAll().FirstOrDefault(f => f.Type == FacetType.List);
             Assert.IsNotNull(facet);
             Assert.AreNotEqual(0, facet.Id);
             Assert.AreEqual(FacetType.List, facet.Type);

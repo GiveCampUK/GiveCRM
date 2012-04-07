@@ -6,15 +6,18 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-
-
     public class Members : IMemberRepository
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public Members(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public Member GetById(int id)
         {
-            var record = db.Members.FindById(id);
+            var record = databaseProvider.GetDatabase().Members.FindById(id);
             Member member = record;
             member.PhoneNumbers = record.PhoneNumbers.ToList<PhoneNumber>();
             member.Donations = record.Donations.ToList<Donation>();
@@ -23,12 +26,14 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> GetAll()
         {
+            dynamic db = databaseProvider.GetDatabase();
             var query = db.Members.All().OrderBy(db.Members.Id);
             return RunMemberQueryWithPhoneNumbers(query);
         }
 
         public IEnumerable<Member> Search(string lastName, string postalCode, string reference)
         {
+            dynamic db = databaseProvider.GetDatabase();
             var query = db.Members.All();
 
             if(!String.IsNullOrWhiteSpace(lastName))
@@ -51,6 +56,7 @@ namespace GiveCRM.DataAccess
 
         public IEnumerable<Member> GetByCampaignId(int campaignId)
         {
+            dynamic db = databaseProvider.GetDatabase();
             var query = db.Members.All()
                 .Where(db.Members.CampaignRun.CampaignId == campaignId)
                 .OrderBy(db.Members.Id);
@@ -59,6 +65,7 @@ namespace GiveCRM.DataAccess
 
         private IEnumerable<Member> RunMemberQueryWithPhoneNumbers(dynamic query)
         {
+            dynamic db = databaseProvider.GetDatabase();
             query = query.Select(db.Members.Id, db.Members.Reference, db.Members.Title, db.Members.FirstName,
                                  db.Members.LastName, db.Members.Salutation, db.Members.EmailAddress,
                                  db.Members.AddressLine1, db.Members.AddressLine2, db.Members.City,
@@ -109,7 +116,7 @@ namespace GiveCRM.DataAccess
             {
                 return InsertWithPhoneNumbers(member);
             }
-            return db.Members.Insert(member);
+            return databaseProvider.GetDatabase().Members.Insert(member);
         }
 
         /// <summary>
@@ -118,12 +125,12 @@ namespace GiveCRM.DataAccess
         /// <param name="id">The identifier of the member to delete.</param>
         public void DeleteById(int id)
         {
-            db.Members.DeleteById(id);
+            databaseProvider.GetDatabase().Members.DeleteById(id);
         }
 
         private Member InsertWithPhoneNumbers(Member member)
         {
-            using (var transaction = db.BeginTransaction())
+            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
             {
                 try
                 {
@@ -149,7 +156,7 @@ namespace GiveCRM.DataAccess
         public void Update(Member member)
         {
             bool refetchPhoneNumbers;
-            using (var transaction = db.BeginTransaction())
+            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
             {
                 try
                 {
@@ -166,7 +173,7 @@ namespace GiveCRM.DataAccess
 
             if (refetchPhoneNumbers)
             {
-                var newNos = db.PhoneNumbers.FindAllByMemberId(member.Id);
+                var newNos = databaseProvider.GetDatabase().PhoneNumbers.FindAllByMemberId(member.Id);
                 member.PhoneNumbers = newNos.ToList<PhoneNumber>();
             }
 
