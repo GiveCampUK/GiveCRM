@@ -20,8 +20,8 @@ apply_config.bat
 NDependOut
 *.dotCover
 *_mm_cache.bin
-src/GiveCRM.Database/sql/debug
-src/GiveCRM.Database/sql/release
+src/*/sql/debug
+src/*/sql/release
 .DS_Store
 *.user
 *.crunchproject.local.xml
