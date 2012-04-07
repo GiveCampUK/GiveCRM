@@ -5,40 +5,43 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
-
-
     public class Donations : IDonationRepository
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private readonly IDatabaseProvider databaseProvider;
+
+        public Donations(IDatabaseProvider databaseProvider)
+        {
+            this.databaseProvider = databaseProvider;
+        }
 
         public Donation GetById(int id)
         {
-            return db.Donations.FindById(id);
+            return databaseProvider.GetDatabase().Donations.FindById(id);
         }
 
         public void Update(Donation item)
         {
-            db.Donations.UpdateById(item);
+            databaseProvider.GetDatabase().Donations.UpdateById(item);
         }
 
         public IEnumerable<Donation> GetAll()
         {
-            return db.Donations.All().Cast<Donation>();
+            return databaseProvider.GetDatabase().Donations.All().Cast<Donation>();
         }
 
         public IEnumerable<Donation> GetByMemberId(int memberId)
         {
-            return db.Donations.FindByMemberId(memberId).Cast<Donation>();
+            return databaseProvider.GetDatabase().Donations.FindByMemberId(memberId).Cast<Donation>();
         }
 
         public IEnumerable<Donation> GetByCampaignId(int campaignId)
         {
-            return db.Donations.FindByCampaignId(campaignId).Cast<Donation>();
+            return databaseProvider.GetDatabase().Donations.FindByCampaignId(campaignId).Cast<Donation>();
         }
 
         public Donation Insert(Donation donation)
         {
-            return db.Donations.Insert(donation);
+            return databaseProvider.GetDatabase().Donations.Insert(donation);
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace GiveCRM.DataAccess
         /// <param name="id">The identifier of the donation to delete.</param>
         public void DeleteById(int id)
         {
-            db.Donations.DeleteById(id);
+            databaseProvider.GetDatabase().Donations.DeleteById(id);
         }
     }
 }
