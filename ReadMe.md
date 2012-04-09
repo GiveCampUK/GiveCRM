@@ -33,13 +33,15 @@ You will notice when you fork the GiveCRM repository that the default branch is 
 
 #### Configuring Git Flow
 
-There is a set of [helper scripts](https://github.com/nvie/gitflow) that will work on both Unix-based operating systems and Windows.  Follow the appropriate [installation instructions](https://github.com/nvie/gitflow/wiki/Installation) for your operating system, and configure your working copy repository for use with Git Flow by typing `git flow init`.  
+There is a set of [helper scripts](https://github.com/nvie/gitflow) that will work on both Unix-based operating systems and Windows.  Follow the appropriate [installation instructions](https://github.com/nvie/gitflow/wiki/Installation) for your operating system, and configure your working copy repository for use with Git Flow by typing `git flow init`.  Accept all the default options to the questions that it asks you.
 
 #### Using Git Flow
 
 Pick a feature or bug to work on and create a new branch for that work by typing `git flow feature start <featurename>`.  This will create you a new *feature branch* for your work called `feature/<featurename>`, and you can use git as usual from this point.  
 
 Once your feature is finished, type `git flow feature publish <featurename>`.  This will copy the *feature branch* to your `origin` repository on GitHub and you will then be able to submit a pull request to have it merged into GiveCRM's own `develop` branch.  **Note: do not use `git flow feature finish <featurename>`!**  This will automatically merge your *feature branch* back into `develop` and delete the *feature branch*, making it harder for you to submit your pull request.
+
+If you wish to update your published feature branch after the initial publish, use a regular `git push origin feature/<featurename>`.  This will also update your pull request if you have one open for that branch.
 
 If you find GiveCRM's `develop` branch has moved on, and you need/want to take advantage of the changes made there, you can update your feature branch as follows:
 
