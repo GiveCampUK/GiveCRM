@@ -29,7 +29,7 @@ We'll do a bit of a code review before accepting your patch.
 
 You will notice when you fork the GiveCRM repository that the default branch is `develop` rather than the more usual `master`.  We use the Git Flow branching model, [first described](http://nvie.com/posts/a-successful-git-branching-model/) by [nvie](http://www.twitter.com/nvie), so GiveCRM's `master` branch moves on only at specific points, when we're really sure we want to promote something to production.  
 
-**Use of Git Flow is not required for contributing to GiveCRM**, particularly if you're submitting a bug-fix or small feature.  Its use is recommended for larger changes where develop might move on whilst you're completing your work.
+**Use of Git Flow is not required for contributing to GiveCRM**, particularly if you're submitting a bug-fix or small feature.  Its use is recommended for larger changes where `develop` might move on whilst you're completing your work.
 
 #### Configuring Git Flow
 
