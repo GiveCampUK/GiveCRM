@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Campaigns.cs" />
-    <Compile Include="DatabaseProvider.cs" />
+    <Compile Include="SingleTenantDatabaseProvider.cs" />
     <Compile Include="Donations.cs" />
     <Compile Include="Facets.cs" />
     <Compile Include="IDatabaseProvider.cs" />

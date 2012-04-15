@@ -19,7 +19,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         
         public CampaignGenerator(Action<string> logAction) : base(logAction)
         {
-            databaseProvider = new DatabaseProvider();
+            databaseProvider = new SingleTenantDatabaseProvider();
             random = new RandomSource();
             memberSearchFilterGenerator = new MemberSearchFilterGenerator();
             campaignRunGenerator = new CampaignRunGenerator(databaseProvider);

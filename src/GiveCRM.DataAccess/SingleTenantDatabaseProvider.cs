@@ -2,7 +2,7 @@
 {
     using Simple.Data;
 
-    public class DatabaseProvider : IDatabaseProvider
+    public class SingleTenantDatabaseProvider : IDatabaseProvider
     {
         private readonly dynamic database = Database.OpenNamedConnection("GiveCRM");
 
