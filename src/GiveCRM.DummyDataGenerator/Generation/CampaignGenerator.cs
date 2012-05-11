@@ -1,10 +1,11 @@
 using System;
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
 using GiveCRM.DummyDataGenerator.Data;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+
     internal class CampaignGenerator : BaseGenerator
     {
         internal override string GeneratedItemType
