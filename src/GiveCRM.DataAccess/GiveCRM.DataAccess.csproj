@@ -48,13 +48,16 @@
       <HintPath>..\packages\Simple.Data.SqlServer.0.12.2.1\lib\net40\Simple.Data.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Campaigns.cs" />
+    <Compile Include="MultiTenantDatabaseProvider.cs" />
     <Compile Include="SingleTenantDatabaseProvider.cs" />
     <Compile Include="Donations.cs" />
     <Compile Include="Facets.cs" />
@@ -72,6 +75,10 @@
     <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
       <Project>{03CBFC3C-70A7-4345-BA77-8A121ACC445E}</Project>
       <Name>GiveCRM.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GiveCRM.Infrastructure\GiveCRM.Infrastructure.csproj">
+      <Project>{17DCEF58-5354-42F2-9D0C-3734781106D8}</Project>
+      <Name>GiveCRM.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
