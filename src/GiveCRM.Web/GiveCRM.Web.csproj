@@ -268,6 +268,10 @@
       <Project>{191D37B7-B50F-45D5-9336-1A700F719617}</Project>
       <Name>GiveCRM.ImportExport</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GiveCRM.Infrastructure\GiveCRM.Infrastructure.csproj">
+      <Project>{17DCEF58-5354-42F2-9D0C-3734781106D8}</Project>
+      <Name>GiveCRM.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GiveCRM.Models\GiveCRM.Models.csproj">
       <Project>{EF13BB24-17A9-4A39-BB5C-9A3B36519CB1}</Project>
       <Name>GiveCRM.Models</Name>

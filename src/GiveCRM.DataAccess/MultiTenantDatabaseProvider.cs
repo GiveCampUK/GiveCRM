@@ -1,5 +1,6 @@
 ﻿namespace GiveCRM.DataAccess
 {
+    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
@@ -10,7 +11,7 @@
     public class MultiTenantDatabaseProvider : IDatabaseProvider
     {
         private readonly ITenantCodeProvider tenantCodeProvider;
-        private readonly IDictionary<string, string> connectionStrings = new Dictionary<string, string>();
+        private readonly IDictionary<string, ConnectionDetails> cache = new Dictionary<string, ConnectionDetails>();
 
         public MultiTenantDatabaseProvider(ITenantCodeProvider tenantCodeProvider)
         {
@@ -21,38 +22,83 @@
         {
             string tenantCode = tenantCodeProvider.GetTenantCode();
 
-            string connectionString;
-            lock (connectionStrings)
+            ConnectionDetails connectionDetails;
+            lock (this.cache)
             {
-                if (!connectionStrings.TryGetValue(tenantCode, out connectionString))
+                if (!this.cache.TryGetValue(tenantCode, out connectionDetails))
                 {
-                    connectionString = GetConnectionString(tenantCode);
-                    connectionStrings.Add(tenantCode, connectionString);
+                    connectionDetails = GetConnectionString(tenantCode);
+
+                    if (connectionDetails == null)
+                    {
+                        throw new InvalidOperationException(string.Format("Unable to obtain connection details for tenant code {0}", tenantCode));
+                    }
+
+                    this.cache.Add(tenantCode, connectionDetails);
                 }
             }
 
-            return Database.OpenConnection(connectionString);
+            return Database.OpenConnection(connectionDetails.ConnectionString)[connectionDetails.DatabaseSchema];
         }
 
-        private string GetConnectionString(string tenantCode)
+        private ConnectionDetails GetConnectionString(string tenantCode)
+        {
+            ConnectionDetails result = null;
+            using (var transaction = TransactionScopeFactory.Create(true))
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT TOP 1 ConnectionString, DatabaseSchema FROM Charity WHERE TenantCode = @tenantCode";
+                var tenantCodeParam = command.CreateParameter();
+                tenantCodeParam.ParameterName = "@tenantCode";
+                tenantCodeParam.SqlDbType = SqlDbType.NVarChar;
+                tenantCodeParam.Value = tenantCode;
+                command.Parameters.Add(tenantCodeParam);
+                
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        result = new ConnectionDetails
+                                     {
+                                         ConnectionString = reader.GetString(0),
+                                         DatabaseSchema = reader.GetString(1)
+                                     };
+                    }
+                }
+
+                transaction.Complete();
+            }
+
+            return result;
+        }
+
+        private ConnectionDetails GetConnectionString2(string tenantCode)
         {
             // TODO: Make this a service call to the Admin site rather than hitting the DB directly
             using (var transaction = TransactionScopeFactory.Create(true))
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["GiveCRM_Admin"].ConnectionString))
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT TOP 1 ConnectionString FROM Charity WHERE SubDomain = @subDomain";
-                command.CommandType = CommandType.Text;
-                var subDomainParameter = command.CreateParameter();
-                subDomainParameter.ParameterName = "@subDomain";
-                subDomainParameter.Value = tenantCode;
+                var database = Database.OpenConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString);
 
-                var connectionString = (string) command.ExecuteScalar();
+                var charity = database.Charity.FindByTenantCode(tenantCode); //.Select(database.Charity.ConnectionString, database.Charity.DatabaseSchema);
                 
                 transaction.Complete();
 
-                return connectionString;
+                if (charity == null)
+                {
+                    throw new InvalidOperationException(string.Format("Not able to find charity for tenant code {0}", tenantCode));
+                }
+
+                return new ConnectionDetails { ConnectionString = charity.ConnectionString, DatabaseSchema = charity.DatabaseSchema };
             }
         }
+    }
+
+    public class ConnectionDetails
+    {
+        public string ConnectionString { get; set; }
+        public string DatabaseSchema { get; set; }
     }
 }

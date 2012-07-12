@@ -10,6 +10,7 @@ namespace GiveCRM.Web.App_Start
     using System.Configuration;
     using System.Reflection;
     using GiveCRM.DataAccess;
+    using GiveCRM.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
@@ -55,8 +56,9 @@ namespace GiveCRM.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ILogService>().To<LogService>();
+            kernel.Bind<ITenantCodeProvider>().To<DomainNameTenantCodeProvider>();
             kernel.Bind<LogService>().ToSelf().InSingletonScope();
-
+            
             string databaseProviderTypeName = ConfigurationManager.AppSettings.Get("DatabaseProviderType");
             if (string.IsNullOrWhiteSpace(databaseProviderTypeName))
             {
