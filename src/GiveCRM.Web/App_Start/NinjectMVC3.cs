@@ -6,7 +6,11 @@ using GiveCRM.LoggingService;
 
 namespace GiveCRM.Web.App_Start
 {
+    using System;
+    using System.Configuration;
     using System.Reflection;
+    using GiveCRM.DataAccess;
+    using GiveCRM.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
@@ -52,13 +56,26 @@ namespace GiveCRM.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ILogService>().To<LogService>();
+            kernel.Bind<ITenantCodeProvider>().To<DomainNameTenantCodeProvider>();
             kernel.Bind<LogService>().ToSelf().InSingletonScope();
+            
+            string databaseProviderTypeName = ConfigurationManager.AppSettings.Get("DatabaseProviderType");
+            if (string.IsNullOrWhiteSpace(databaseProviderTypeName))
+            {
+                kernel.Bind<IDatabaseProvider>().To<SingleTenantDatabaseProvider>().InRequestScope();
+            }
+            else
+            {
+                Type databaseProviderType = Type.GetType(databaseProviderTypeName);
+                kernel.Bind<IDatabaseProvider>().To(databaseProviderType).InRequestScope();
+            }
 
             kernel.Scan(a =>
                             {
                                 a.FromCallingAssembly();
                                 a.FromAssembliesMatching("GiveCRM.*.dll");
                                 a.Excluding(typeof(LogService));
+                                a.Excluding<IDatabaseProvider>();
                                 a.BindWithDefaultConventions();
                                 a.BindWith(new RegexBindingGenerator("(I)(?<name>.+)(Repository)"));
                                 a.BindWith(new GenericBindingGenerator(typeof(IRepository<>)));
