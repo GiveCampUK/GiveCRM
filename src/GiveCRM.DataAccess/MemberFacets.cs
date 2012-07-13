@@ -5,6 +5,8 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
+    using GiveCRM.Infrastructure;
+
     public class MemberFacets
     {
         private readonly IDatabaseProvider databaseProvider;
@@ -88,28 +90,23 @@ namespace GiveCRM.DataAccess
 
         public MemberFacetList Insert(MemberFacetList facet)
         {
-            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
+            MemberFacetList inserted;
+            using (var transaction = TransactionScopeFactory.Create())
             {
-                try
-                {
-                    MemberFacetList inserted = transaction.MemberFacets.Insert(facet);
+                var database = databaseProvider.GetDatabase();
+                inserted = database.MemberFacets.Insert(facet);
 
-                    inserted.Values = new List<MemberFacetValue>();
-                    foreach (var value in facet.Values)
-                    {
-                        value.MemberFacetId = inserted.Id;
-                        MemberFacetValue insertedValue = transaction.MemberFacetValues.Insert(value);
-                        inserted.Values.Add(insertedValue);
-                    }
-                    transaction.Commit();
-                    return inserted;
-                }
-                catch
+                inserted.Values = new List<MemberFacetValue>();
+                foreach (var value in facet.Values)
                 {
-                    transaction.Rollback();
-                    throw;
+                    value.MemberFacetId = inserted.Id;
+                    MemberFacetValue insertedValue = database.MemberFacetValues.Insert(value);
+                    inserted.Values.Add(insertedValue);
                 }
+                transaction.Complete();
             }
+
+            return inserted;
         }
     }
 }
