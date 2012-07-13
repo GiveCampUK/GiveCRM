@@ -6,45 +6,45 @@
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
 <!--[if gt IE 8]><!--> <html class="no-jsa" lang="en"> <!--<![endif]-->
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>@ViewBag.Title</title>
-	
-	<!-- TODO load bootstrap.min if we're in prod -->
-	<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
-
-	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>@ViewBag.Title</title>
     
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"><\/script>')</script>
+    <!-- TODO load bootstrap.min if we're in prod -->
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.datepicker.css")" rel="stylesheet" type="text/css" />
 
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-	<script>window.jQuery.ui || document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")"><\/script>')</script>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"><\/script>')</script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script>window.jQuery.ui || document.write('<script src="@Url.Content("~/Scripts/jquery-ui-1.8.16.min.js")"><\/script>')</script>
 </head>
 
 <body>
-	<div class="page">
-		<div id="header" class="topbar">
-			@Html.Partial("_GlobHeader")
-		</div>
+    <div class="page">
+        <div id="header" class="topbar">
+            @Html.Partial("_GlobHeader")
+        </div>
 
-		<div id="main" class="container">
-			@RenderBody()
-		</div>
+        <div id="main" class="container">
+            @RenderBody()
+        </div>
 
-		<div id="footer">
-			@Html.Partial("_GlobFooter")
-		</div>
-	</div>
+        <div id="footer">
+            @Html.Partial("_GlobFooter")
+        </div>
+    </div>
 
-	<script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")"></script>
 
-	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-		chromium.org/developers/how-tos/chrome-frame-getting-started -->
-	<!--[if lt IE 7 ]>
-		<script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-		<script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-	<![endif]-->
+    <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+        chromium.org/developers/how-tos/chrome-frame-getting-started -->
+    <!--[if lt IE 7 ]>
+        <script defer src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+        <script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+    <![endif]-->
 </body>
 </html>

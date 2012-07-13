@@ -24,7 +24,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new SearchQueryService(new DatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -47,7 +47,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new SearchQueryService(new DatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -70,7 +70,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new SearchQueryService(new DatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -99,7 +99,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new DatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNotNull(expr);
             Assert.IsNull(having);
@@ -127,7 +127,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new DatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -157,7 +157,7 @@ namespace GiveCRM.DataAccess.Test
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new DatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -186,7 +186,7 @@ namespace GiveCRM.DataAccess.Test
                                        }
                                };
 
-            var expr = new SearchQueryService(new DatabaseProvider()).CompileCampaignCriteria(criteria, null);
+            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileCampaignCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -202,7 +202,7 @@ namespace GiveCRM.DataAccess.Test
         [Test]
         public void Facet()
         {
-            var search = new SearchQueryService(new DatabaseProvider());
+            var search = new SearchQueryService(new SingleTenantDatabaseProvider());
             var criteria = new[]
                                {
                                    new FacetSearchCriteria

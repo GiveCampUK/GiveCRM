@@ -1,0 +1,11 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Sorry...";
+}
+
+<h2>
+    Sorry...
+</h2>
+<p>@ViewBag.Message</p>
+<p>@Html.ActionLink("Go Back", (string)ViewBag.ReturnActionName, (object)ViewBag.ReturnRouteValues)</p>

@@ -6,6 +6,8 @@ using GiveCRM.Models;
 
 namespace GiveCRM.DataAccess
 {
+    using GiveCRM.Infrastructure;
+
     public class Campaigns : ICampaignRepository
     {
         private readonly IDatabaseProvider databaseProvider;
@@ -58,21 +60,15 @@ namespace GiveCRM.DataAccess
         {
             var results = campaignMembers.Select(member => new { CampaignId = campaignId, MemberId = member.Id });
 
-            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
+            using (var transaction = TransactionScopeFactory.Create())
             {
-                try
-                {
-                    transaction.Campaign.UpdateById(Id: campaignId, runOn: DateTime.Today);
-                    transaction.CampaignRuns.Insert(results);
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+                var database = databaseProvider.GetDatabase();
 
+                database.Campaign.UpdateById(Id: campaignId, runOn: DateTime.Today);
+                database.CampaignRuns.Insert(results);
+
+                transaction.Complete();
+            }
         }
     }
 }

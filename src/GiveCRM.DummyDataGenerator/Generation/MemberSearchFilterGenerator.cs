@@ -20,7 +20,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
 
         public MemberSearchFilterGenerator()
         {
-            var databaseProvider = new DatabaseProvider();
+            var databaseProvider = new SingleTenantDatabaseProvider();
             random = new RandomSource();
             searchFilters = new MemberSearchFilters(databaseProvider);
             searchRepo = new SearchService(new Facets(databaseProvider));

@@ -61,7 +61,13 @@ namespace GiveCRM.BusinessLogic
         public void Commit(int campaignId)
         {
             var filters = memberSearchFilterRepository.GetByCampaignId(campaignId).Select(msf => msf.ToSearchCriteria());
-            var filteredMembers = memberService.Search(filters);
+            var filteredMembers = memberService.Search(filters).ToArray();
+
+            if (!filteredMembers.Any())
+            {
+                throw new InvalidBusinessOperationException("There are no members matching the search criteria for this campaign. Check you have member filters set up, and that there are members who match those criteria.");
+            }
+
             this.campaignRepository.Commit(campaignId, filteredMembers);
         }
     }

@@ -6,6 +6,7 @@ using Simple.Data;
 
 namespace GiveCRM.DataAccess
 {
+    using GiveCRM.Infrastructure;
 
     public class Facets : IFacetRepository
     {
@@ -94,58 +95,47 @@ namespace GiveCRM.DataAccess
 
         private void UpdateWithValues(Facet facet)
         {
-            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
+            using (var transaction = TransactionScopeFactory.Create())
             {
-                try
+                var database = databaseProvider.GetDatabase();
+                database.Facets.UpdateById(facet);
+                foreach (var facetValue in facet.Values)
                 {
-                    transaction.Facets.UpdateById(facet);
-                    foreach (var facetValue in facet.Values)
+                    if (facetValue.Id == 0)
                     {
-                        if (facetValue.Id == 0)
-                        {
-                            facetValue.FacetId = facet.Id;
-                            transaction.FacetValues.Insert(facetValue);
-                        }
-                        else if (string.IsNullOrWhiteSpace(facetValue.Value))
-                        {
-                            transaction.FacetValues.DeleteById(facetValue.Id);
-                        }
-                        else
-                        {
-                            transaction.FacetValues.UpdateById(facetValue);
-                        }
+                        facetValue.FacetId = facet.Id;
+                        database.FacetValues.Insert(facetValue);
                     }
-                    transaction.Commit();
+                    else if (string.IsNullOrWhiteSpace(facetValue.Value))
+                    {
+                        database.FacetValues.DeleteById(facetValue.Id);
+                    }
+                    else
+                    {
+                        database.FacetValues.UpdateById(facetValue);
+                    }
                 }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+
+                transaction.Complete();
             }
         }
 
         private Facet InsertWithValues(Facet facet)
         {
-            using (var transaction = databaseProvider.GetDatabase().BeginTransaction())
+            Facet inserted;
+            using (var transaction = TransactionScopeFactory.Create())
             {
-                try
+                var database = databaseProvider.GetDatabase();
+                inserted = database.Facets.Insert(facet);
+                foreach (var facetValue in facet.Values)
                 {
-                    Facet inserted = transaction.Facets.Insert(facet);
-                    foreach (var facetValue in facet.Values)
-                    {
-                        facetValue.FacetId = inserted.Id;
-                    }
-                    inserted.Values = transaction.FacetValues.Insert(facet.Values).ToList<FacetValue>();
-                    transaction.Commit();
-                    return inserted;
+                    facetValue.FacetId = inserted.Id;
                 }
-                catch
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+                inserted.Values = database.FacetValues.Insert(facet.Values).ToList<FacetValue>();
+
+                transaction.Complete();
             }
+            return inserted;
         }
 
         public IEnumerable<Facet> GetAllFreeText()
