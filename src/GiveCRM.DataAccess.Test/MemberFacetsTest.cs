@@ -14,7 +14,7 @@ namespace GiveCRM.DataAccess.Test
         [SetUp]
         public void SetUp()
         {
-            databaseProvider = new DatabaseProvider();
+            databaseProvider = new SingleTenantDatabaseProvider();
             dynamic db = databaseProvider.GetDatabase();
 
             db.Donations.DeleteAll();

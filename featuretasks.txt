@@ -1,0 +1,7 @@
+/ Renamed the connection string in the log4net web.config section so the database name matches that in the GiveCRMLogging connection string.
+. Add MultiTenantDatabaseProvider.
+. Add commented-out appsetting for MultiTenantDatabaseProvider as per app startup.
+. Ensure impl of MultiTenantDatabaseProvider uses it's own new transactionscope, in case it's called within another ambient TS.
+. Implement TransactionScopeFactory to ensure that by default all transaction scopes are ReadCommitted.
+. Create CodingSamplesController to demonstrate data access?
+. Delete this file.

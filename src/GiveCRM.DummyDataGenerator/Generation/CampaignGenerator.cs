@@ -1,10 +1,11 @@
 using System;
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
 using GiveCRM.DummyDataGenerator.Data;
 
 namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+
     internal class CampaignGenerator : BaseGenerator
     {
         internal override string GeneratedItemType
@@ -19,7 +20,7 @@ namespace GiveCRM.DummyDataGenerator.Generation
         
         public CampaignGenerator(Action<string> logAction) : base(logAction)
         {
-            databaseProvider = new DatabaseProvider();
+            databaseProvider = new SingleTenantDatabaseProvider();
             random = new RandomSource();
             memberSearchFilterGenerator = new MemberSearchFilterGenerator();
             campaignRunGenerator = new CampaignRunGenerator(databaseProvider);

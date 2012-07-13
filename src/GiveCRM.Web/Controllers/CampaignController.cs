@@ -229,7 +229,17 @@ namespace GiveCRM.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CommitCampaign(SimpleCampaignViewModel viewModel)
         {
-            this.campaignService.Commit(viewModel.CampaignId);
+            try
+            {
+                this.campaignService.Commit(viewModel.CampaignId);
+            }
+            catch (InvalidBusinessOperationException e)
+            {
+                ViewBag.Message = e.Message;
+                ViewBag.ReturnActionName = "Show";
+                ViewBag.ReturnRouteValues = new { id = viewModel.CampaignId };
+                return View("Fail");
+            }
             return RedirectToAction("Show", new { id = viewModel.CampaignId });
         }
 
