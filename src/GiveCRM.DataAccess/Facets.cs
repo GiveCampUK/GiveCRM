@@ -119,11 +119,10 @@
 
         private Facet InsertWithValues(Facet facet)
         {
-            Facet inserted;
             using (var transaction = TransactionScopeFactory.Create())
             {
                 var database = databaseProvider.GetDatabase();
-                inserted = database.Facets.Insert(facet);
+                Facet inserted = database.Facets.Insert(facet);
                 foreach (var facetValue in facet.Values)
                 {
                     facetValue.FacetId = inserted.Id;
@@ -131,8 +130,8 @@
                 inserted.Values = database.FacetValues.Insert(facet.Values).ToList<FacetValue>();
 
                 transaction.Complete();
+                return inserted;
             }
-            return inserted;
         }
 
         public IEnumerable<Facet> GetAllFreeText()

@@ -88,11 +88,10 @@
 
         public MemberFacetList Insert(MemberFacetList facet)
         {
-            MemberFacetList inserted;
             using (var transaction = TransactionScopeFactory.Create())
             {
                 var database = databaseProvider.GetDatabase();
-                inserted = database.MemberFacets.Insert(facet);
+                MemberFacetList inserted = database.MemberFacets.Insert(facet);
 
                 inserted.Values = new List<MemberFacetValue>();
                 foreach (var value in facet.Values)
@@ -102,9 +101,8 @@
                     inserted.Values.Add(insertedValue);
                 }
                 transaction.Complete();
+                return inserted;
             }
-
-            return inserted;
         }
     }
 }

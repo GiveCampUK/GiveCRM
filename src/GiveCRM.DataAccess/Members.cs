@@ -130,11 +130,10 @@
 
         private Member InsertWithPhoneNumbers(Member member)
         {
-            Member inserted;
             using (var transaction = TransactionScopeFactory.Create())
             {
                 var database = databaseProvider.GetDatabase();
-                inserted = database.Members.Insert(member);
+                Member inserted = database.Members.Insert(member);
 
                 foreach (var phoneNumber in member.PhoneNumbers)
                 {
@@ -144,9 +143,8 @@
                 inserted.PhoneNumbers = database.PhoneNumbers.Insert(member.PhoneNumbers).ToList<PhoneNumber>();
 
                 transaction.Complete();
+                return inserted;
             }
-
-            return inserted;
         }
 
         public void Update(Member member)
