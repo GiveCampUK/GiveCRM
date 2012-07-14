@@ -83,26 +83,6 @@
 
             return result;
         }
-
-        private ConnectionDetails GetConnectionString2(string tenantCode)
-        {
-            // TODO: Make this a service call to the Admin site rather than hitting the DB directly
-            using (var transaction = TransactionScopeFactory.Create(true))
-            {
-                var database = Database.OpenConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString);
-
-                var charity = database.Charity.FindByTenantCode(tenantCode); //.Select(database.Charity.ConnectionString, database.Charity.DatabaseSchema);
-                
-                transaction.Complete();
-
-                if (charity == null)
-                {
-                    throw new InvalidOperationException(string.Format("Not able to find charity for tenant code {0}", tenantCode));
-                }
-
-                return new ConnectionDetails { ConnectionString = charity.ConnectionString, DatabaseSchema = charity.DatabaseSchema };
-            }
-        }
     }
 
     public class ConnectionDetails
