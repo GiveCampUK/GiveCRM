@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.Models;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public class FacetsService : IFacetsService
     {
         private readonly IRepository<Facet> _repository;

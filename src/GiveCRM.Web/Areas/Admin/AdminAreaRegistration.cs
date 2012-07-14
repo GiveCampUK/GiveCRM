@@ -1,6 +1,6 @@
-using System.Web.Mvc;
-
 namespace GiveCRM.Web.Areas.Admin {
+    using System.Web.Mvc;
+
     public class AdminAreaRegistration : AreaRegistration {
         public override string AreaName {
             get {

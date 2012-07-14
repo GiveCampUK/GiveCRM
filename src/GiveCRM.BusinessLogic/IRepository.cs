@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace GiveCRM.BusinessLogic
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Defines the basic interactions for a repository with some form of back-end persistence, 
     /// such as a database.  Exposes basic CRUD operations.

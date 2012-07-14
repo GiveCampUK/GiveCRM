@@ -1,13 +1,13 @@
-﻿using GiveCRM.BusinessLogic;
-using GiveCRM.Web.Controllers;
-using GiveCRM.Web.Models;
-using GiveCRM.Web.Services;
-using MvcContrib.TestHelper;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace GiveCRM.Web.Tests.controllers
+﻿namespace GiveCRM.Web.Tests.controllers
 {
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.Web.Controllers;
+    using GiveCRM.Web.Models;
+    using GiveCRM.Web.Services;
+    using MvcContrib.TestHelper;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class AccountControllerTests:AssertionHelper
     {

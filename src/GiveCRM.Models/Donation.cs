@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace GiveCRM.Models
+﻿namespace GiveCRM.Models
 {
+    using System;
     using System.ComponentModel;
 
     public class Donation

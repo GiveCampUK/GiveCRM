@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.DummyDataGenerator.Data
+﻿namespace GiveCRM.DummyDataGenerator.Data
 {
+    using System.Collections.Generic;
+
     internal class TitleData
     {
         internal static readonly IList<TitleDataItem> MaleTitles = new List<TitleDataItem>

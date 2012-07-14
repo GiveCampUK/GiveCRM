@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GiveCRM.ImportExport.Cells;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.ImportExport.Cells;
+
     public class ExcelExport:IDisposable, IExcelExport
     {
         internal IExcelExporter ExcelExporter;

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.DummyDataGenerator.Data
+﻿namespace GiveCRM.DummyDataGenerator.Data
 {
+    using System.Collections.Generic;
+
     internal static class EmailData
     {
         internal static readonly IList<string> Separators = new List<string> {string.Empty, ".", "_"};

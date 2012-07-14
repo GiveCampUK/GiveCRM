@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using GiveCRM.ImportExport.Cells;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using NUnit.Framework;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
-namespace GiveCRM.ImportExport.Test
+﻿namespace GiveCRM.ImportExport.Test
 {
+    using System.Collections.Generic;
+    using GiveCRM.ImportExport.Cells;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using Cell = GiveCRM.ImportExport.Cells.Cell;
+
     [TestFixture]
     public class When_creating_plain_content
     {

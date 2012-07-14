@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using GiveCRM.BusinessLogic.ExcelImport;
-using GiveCRM.ImportExport;
-using GiveCRM.Web.Models;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
-
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.ImportExport;
+    using GiveCRM.Web.Models;
 
     public class ExcelImportController : AsyncController
     {

@@ -1,7 +1,7 @@
-using System;
-
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
+    using System;
+
     public class ImportDataFailedEventArgs : EventArgs
     {
         public ImportDataFailedEventArgs(Exception exception)

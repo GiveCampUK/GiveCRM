@@ -1,9 +1,9 @@
-﻿using System;
-using Simple.Data;
-using GiveCRM.Models;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+    using GiveCRM.Models;
+    using Simple.Data;
+
     internal class DatabaseGenerator
     {
         private readonly RandomSource random = new RandomSource();

@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-using NUnit.Framework;
-using Simple.Data;
-
 namespace GiveCRM.DataAccess.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Models;
+    using NUnit.Framework;
+
     [TestFixture]
     public class MembersTest
     {

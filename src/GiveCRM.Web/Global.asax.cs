@@ -1,8 +1,7 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace GiveCRM.Web
+﻿namespace GiveCRM.Web
 {
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.DataAccess;
-using GiveCRM.Models;
-using System.Linq;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.DataAccess;
+    using GiveCRM.Models;
+
     internal class DonationGenerator
     {
         private readonly RandomSource random = new RandomSource();

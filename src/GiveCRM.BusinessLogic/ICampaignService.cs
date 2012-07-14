@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.BusinessLogic
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public interface ICampaignService
     {
         IEnumerable<Campaign> GetAllOpen();

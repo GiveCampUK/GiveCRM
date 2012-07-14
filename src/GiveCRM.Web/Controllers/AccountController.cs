@@ -1,11 +1,9 @@
-﻿using GiveCRM.Web.Attributes;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System;
     using System.Web.Mvc;
-
     using GiveCRM.BusinessLogic;
+    using GiveCRM.Web.Attributes;
     using GiveCRM.Web.Models;
     using GiveCRM.Web.Services;
 

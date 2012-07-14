@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using GiveCRM.Models;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public interface IFacetRepository : IRepository<Facet>
     {
         IEnumerable<Facet> GetAllFreeText();

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.Models.Search
+﻿namespace GiveCRM.Models.Search
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Web.Models.Search;
+
     public abstract class SearchCriteria
     {
         public string InternalName { get; set; }

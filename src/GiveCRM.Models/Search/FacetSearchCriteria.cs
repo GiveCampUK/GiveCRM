@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.Models.Search
+﻿namespace GiveCRM.Models.Search
 {
     public class FacetSearchCriteria : SearchCriteria
     {

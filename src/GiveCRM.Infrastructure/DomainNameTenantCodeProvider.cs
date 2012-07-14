@@ -1,6 +1,5 @@
 namespace GiveCRM.Infrastructure
 {
-    using System.Configuration;
     using System.Web;
 
     public class DomainNameTenantCodeProvider : ITenantCodeProvider

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.DummyDataGenerator.Data
+﻿namespace GiveCRM.DummyDataGenerator.Data
 {
+    using System.Collections.Generic;
+
     internal static class CampaignNames
     {
         internal static readonly IList<string> CharitySuffix = new List<string>

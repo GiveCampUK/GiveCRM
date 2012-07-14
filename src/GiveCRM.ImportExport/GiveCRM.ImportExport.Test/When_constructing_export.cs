@@ -1,10 +1,10 @@
-using System.Drawing;
-using GiveCRM.ImportExport.Borders;
-using GiveCRM.ImportExport.Cells;
-using NUnit.Framework;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System.Drawing;
+    using GiveCRM.ImportExport.Borders;
+    using GiveCRM.ImportExport.Cells;
+    using NUnit.Framework;
+
     [TestFixture]
     public class When_constructing_export
     {

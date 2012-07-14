@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.BusinessLogic;
-using GiveCRM.DataAccess;
-using GiveCRM.DummyDataGenerator.Data;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.DataAccess;
+    using GiveCRM.DummyDataGenerator.Data;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Models.Search;
+
     internal class MemberSearchFilterGenerator
     {
         private readonly RandomSource random;

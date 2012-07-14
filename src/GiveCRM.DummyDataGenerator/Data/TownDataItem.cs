@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.DummyDataGenerator.Data
+﻿namespace GiveCRM.DummyDataGenerator.Data
 {
+    using System.Collections.Generic;
+
     public class TownDataItem
     {
         public string Town{get;set;}

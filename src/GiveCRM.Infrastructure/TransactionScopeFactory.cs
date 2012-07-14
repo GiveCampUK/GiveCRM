@@ -1,6 +1,5 @@
 ﻿namespace GiveCRM.Infrastructure
 {
-    using System;
     using System.Transactions;
 
     public static class TransactionScopeFactory

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using NPOI.SS.Formula;
-using OfficeOpenXml;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using NPOI.SS.Formula;
+    using OfficeOpenXml;
+
     public class ExcelXlsxImporter : IExcelImporter
     {
         internal ExcelWorkbook Workbook;

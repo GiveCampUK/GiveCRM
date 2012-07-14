@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GiveCRM.ImportExport.Cells;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.ImportExport.Cells;
+
     internal interface IExcelExporter: IDisposable
     {
         /// <summary>

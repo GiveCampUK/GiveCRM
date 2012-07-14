@@ -1,13 +1,11 @@
-﻿using System;
-using System.Web.Mvc;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
-using GiveCRM.Web.Models.Donation;
-using GiveCRM.Web.Attributes;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
-
+    using System;
+    using System.Web.Mvc;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.Models;
+    using GiveCRM.Web.Attributes;
+    using GiveCRM.Web.Models.Donation;
 
     [HandleErrorWithElmah]
     public class DonationController : Controller

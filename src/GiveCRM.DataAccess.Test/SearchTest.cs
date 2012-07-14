@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using Simple.Data;
-using NUnit.Framework;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.DataAccess.Test
+﻿namespace GiveCRM.DataAccess.Test
 {
+    using System;
+    using System.Linq;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Models.Search;
+    using NUnit.Framework;
+    using Simple.Data;
+
     [TestFixture]
     public class SearchTest
     {

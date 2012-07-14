@@ -1,8 +1,7 @@
-﻿using GiveCRM.Web.Attributes;
-
-namespace GiveCRM.Web.Controllers
+﻿namespace GiveCRM.Web.Controllers
 {
     using System.Web.Mvc;
+    using GiveCRM.Web.Attributes;
 
     [HandleErrorWithElmah]
     public class HomeController : Controller

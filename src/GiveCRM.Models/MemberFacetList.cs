@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace GiveCRM.Models
 {
+    using System.Collections.Generic;
+
     public class MemberFacetList : MemberFacet
     {
         public ICollection<int> Ids { get; set; } 

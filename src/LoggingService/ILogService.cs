@@ -1,7 +1,7 @@
-using System;
-
 namespace GiveCRM.LoggingService
 {
+    using System;
+
     public interface ILogService
     {
         

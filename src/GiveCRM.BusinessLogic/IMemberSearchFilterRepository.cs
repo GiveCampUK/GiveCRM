@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.BusinessLogic
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     /// <summary>
     /// Exposes basic CRUD functionality for <see cref="MemberSearchFilter"/>s (see <see cref="IRepository{T}"/>), plus
     /// behaviours specific to member search filters.

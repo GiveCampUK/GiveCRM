@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
     internal interface IExcelImporter : IDisposable
     {
         void Open(Stream stream);

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+
     public interface IMemberService
     {
         IEnumerable<Member> All();

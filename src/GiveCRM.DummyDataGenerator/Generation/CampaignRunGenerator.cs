@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using Simple.Data;
-using GiveCRM.BusinessLogic;
-using GiveCRM.DataAccess;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System.Linq;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.DataAccess;
+
     internal class CampaignRunGenerator
     {
         private readonly IDatabaseProvider databaseProvider;

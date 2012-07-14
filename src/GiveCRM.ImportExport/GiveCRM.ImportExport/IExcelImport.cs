@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.IO;
-
 namespace GiveCRM.ImportExport
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     public interface IExcelImport
     {
         void Open(Stream streamToProcess, ExcelFileType fileType, bool hasHeaderRow);

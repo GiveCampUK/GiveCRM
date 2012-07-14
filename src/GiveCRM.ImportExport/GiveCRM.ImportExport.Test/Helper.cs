@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NUnit.Framework;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using Cell = GiveCRM.ImportExport.Cells.Cell;
+
     public static class Helper
     {
         public static Workbook CreateWorkBookWithSheet()

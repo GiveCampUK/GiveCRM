@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using GiveCRM.ImportExport.Borders;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
-using Font = NPOI.SS.UserModel.Font;
-
-namespace GiveCRM.ImportExport.Cells
+﻿namespace GiveCRM.ImportExport.Cells
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using GiveCRM.ImportExport.Borders;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using Font = NPOI.SS.UserModel.Font;
+
     public class CellFormatter
     {
         private Sheet sheet;
