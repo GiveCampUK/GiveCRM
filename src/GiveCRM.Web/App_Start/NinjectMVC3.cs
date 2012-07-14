@@ -60,12 +60,12 @@ namespace GiveCRM.Web.App_Start
             string databaseProviderTypeName = ConfigurationManager.AppSettings.Get("DatabaseProviderType");
             if (string.IsNullOrWhiteSpace(databaseProviderTypeName))
             {
-                kernel.Bind<IDatabaseProvider>().To<SingleTenantDatabaseProvider>().InRequestScope();
+                kernel.Bind<IDatabaseProvider>().To<SingleTenantDatabaseProvider>();
             }
             else
             {
                 Type databaseProviderType = Type.GetType(databaseProviderTypeName);
-                kernel.Bind<IDatabaseProvider>().To(databaseProviderType).InRequestScope();
+                kernel.Bind<IDatabaseProvider>().To(databaseProviderType);
             }
 
             kernel.Scan(a =>
