@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
-using GiveCRM.Web.Controllers;
-using GiveCRM.Web.Services;
-using NSubstitute;
-using NUnit.Framework;
-using System.Web.Routing;
-
-namespace GiveCRM.Web.Tests.Services
+﻿namespace GiveCRM.Web.Tests.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using GiveCRM.Web.Controllers;
+    using GiveCRM.Web.Services;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class UrlValidationServiceTest:AssertionHelper
     {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Text;
-using GiveCRM.Models;
-using NUnit.Framework;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess.Test
+﻿namespace GiveCRM.DataAccess.Test
 {
+    using GiveCRM.Models;
+    using NUnit.Framework;
+    using Simple.Data;
+
     [TestFixture]
     public class CampaignsTest
     {

@@ -1,10 +1,10 @@
-using System;
-using System.Web;
-using System.Web.Mvc;
-using Elmah;
-
 namespace GiveCRM.Web.Attributes
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using Elmah;
+
     public class HandleErrorWithElmahAttribute:System.Web.Mvc.HandleErrorAttribute
     {
         public override void OnException(ExceptionContext context)

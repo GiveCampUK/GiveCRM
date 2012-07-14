@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using GiveCRM.ImportExport;
-using GiveCRM.Models;
-
-namespace GiveCRM.BusinessLogic.ExcelImport
+﻿namespace GiveCRM.BusinessLogic.ExcelImport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using GiveCRM.ImportExport;
+    using GiveCRM.Models;
+
     public class ExcelImportService : IExcelImportService
     {
         private readonly IExcelImport importer;

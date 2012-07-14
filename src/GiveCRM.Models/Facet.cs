@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace GiveCRM.Models
+﻿namespace GiveCRM.Models
 {
+    using System.Collections.Generic;
+
     public class Facet
     {
         public int Id { get; set; }

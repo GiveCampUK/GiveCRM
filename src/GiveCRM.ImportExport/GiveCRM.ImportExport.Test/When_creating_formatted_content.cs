@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using GiveCRM.ImportExport.Borders;
-using GiveCRM.ImportExport.Cells;
-using NPOI.SS.UserModel;
-using NUnit.Framework;
-using BorderStyle = GiveCRM.ImportExport.Borders.BorderStyle;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using GiveCRM.ImportExport.Borders;
+    using GiveCRM.ImportExport.Cells;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using BorderStyle = GiveCRM.ImportExport.Borders.BorderStyle;
+    using Cell = GiveCRM.ImportExport.Cells.Cell;
+
     [TestFixture]
     public class When_creating_formatted_content
     {

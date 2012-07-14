@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
-using GiveCRM.Web.Controllers;
-using GiveCRM.Web.Models.Facets;
-using MvcContrib.TestHelper;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace GiveCRM.Web.Tests.controllers
+﻿namespace GiveCRM.Web.Tests.controllers
 {
+    using System.Collections.Generic;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.Models;
+    using GiveCRM.Web.Controllers;
+    using GiveCRM.Web.Models.Facets;
+    using MvcContrib.TestHelper;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class SetUpControllerTests
     {

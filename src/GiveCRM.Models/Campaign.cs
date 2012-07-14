@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace GiveCRM.Models
+﻿namespace GiveCRM.Models
 {
+    using System;
+
     public class Campaign
     {
         public int Id { get; set; }

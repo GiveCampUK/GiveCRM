@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.IO;
-using GiveCRM.ImportExport.Cells;
-
 namespace GiveCRM.ImportExport
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.ImportExport.Cells;
+
     public interface IExcelExport
     {
         /// <summary>

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using GiveCRM.DummyDataGenerator.Data;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System.Collections.Generic;
+    using GiveCRM.DummyDataGenerator.Data;
+
     internal class AddressGenerator
     {
         private readonly RandomSource random = new RandomSource();

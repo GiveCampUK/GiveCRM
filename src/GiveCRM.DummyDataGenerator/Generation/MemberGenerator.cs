@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.DataAccess;
-using GiveCRM.DummyDataGenerator.Data;
-using GiveCRM.Models;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+    using System.Collections.Generic;
+    using GiveCRM.DataAccess;
+    using GiveCRM.DummyDataGenerator.Data;
+    using GiveCRM.Models;
+
     internal class MemberGenerator : BaseGenerator
     {
         internal override string GeneratedItemType{get {return "members";}}

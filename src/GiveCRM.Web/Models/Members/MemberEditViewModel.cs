@@ -1,10 +1,9 @@
 ﻿namespace GiveCRM.Web.Models.Members
 {
-    using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using GiveCRM.Models;
-    
+
     public class MemberEditViewModel
     {
         public MemberEditViewModel()

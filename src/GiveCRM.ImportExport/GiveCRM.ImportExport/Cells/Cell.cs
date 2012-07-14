@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Drawing;
-using GiveCRM.ImportExport.Borders;
-
 namespace GiveCRM.ImportExport.Cells
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using GiveCRM.ImportExport.Borders;
+
     public class Cell
     {
         public Cell()

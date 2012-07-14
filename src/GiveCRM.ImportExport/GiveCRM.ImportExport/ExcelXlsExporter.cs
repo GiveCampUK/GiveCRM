@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GiveCRM.ImportExport.Cells;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.ImportExport.Cells;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using Cell = GiveCRM.ImportExport.Cells.Cell;
+
     public class ExcelXlsExporter:IExcelExporter
     {
         private readonly Workbook workBook;

@@ -1,9 +1,9 @@
-﻿using GiveCRM.Web.Controllers;
-using MvcContrib.TestHelper;
-using NUnit.Framework;
-
-namespace GiveCRM.Web.Tests.controllers
+﻿namespace GiveCRM.Web.Tests.controllers
 {
+    using GiveCRM.Web.Controllers;
+    using MvcContrib.TestHelper;
+    using NUnit.Framework;
+
     [TestFixture]
     public class HomeControllerTests
     {

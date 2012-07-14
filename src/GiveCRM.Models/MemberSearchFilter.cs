@@ -1,8 +1,8 @@
-﻿using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.Models
+﻿namespace GiveCRM.Models
 {
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Models.Search;
+
     public class MemberSearchFilter
     {
         public int Id { get; set; }

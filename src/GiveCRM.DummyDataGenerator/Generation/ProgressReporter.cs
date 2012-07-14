@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+
     internal class ProgressReporter
     {
         private readonly int totalItems;

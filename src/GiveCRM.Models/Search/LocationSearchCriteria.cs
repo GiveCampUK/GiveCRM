@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.Models.Search
+﻿namespace GiveCRM.Models.Search
 {
+    using System.Collections.Generic;
+
     public class LocationSearchCriteria : SearchCriteria
     {
         public const string City = "city";

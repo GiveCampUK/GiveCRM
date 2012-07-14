@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using GiveCRM.Web.Controllers;
-using GiveCRM.BusinessLogic.ExcelImport;
-using NSubstitute;
-using NUnit.Framework;
-using System.Web.Mvc;
-
-namespace GiveCRM.Admin.Web.Tests
+﻿namespace GiveCRM.Admin.Web.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.Web.Controllers;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class ExcelImportController_Upload_Should
     {

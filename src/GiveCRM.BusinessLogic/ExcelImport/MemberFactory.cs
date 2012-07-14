@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
+    using System;
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public class MemberFactory : IMemberFactory
     {
         public Member CreateMember(IDictionary<string, object> memberData)

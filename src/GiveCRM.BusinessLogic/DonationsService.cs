@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Models;
+
     public class DonationsService : IDonationsService
     {
         private readonly IDonationRepository _repository;

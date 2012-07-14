@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+
     public class MemberService : IMemberService
     {
         private readonly IMemberRepository memberRepository;

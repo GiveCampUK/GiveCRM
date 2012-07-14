@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.BusinessLogic.ExcelImport
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     /// <summary>
     /// Defines an interface for creating <see cref="Member"/> objects from various serialised representations
     /// of that class.

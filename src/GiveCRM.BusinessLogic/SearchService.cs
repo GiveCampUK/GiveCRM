@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-using GiveCRM.Web.Models.Search;
-
-namespace GiveCRM.BusinessLogic
+﻿namespace GiveCRM.BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Models.Search;
+
     public class SearchService : ISearchService
     {
         private readonly IFacetRepository facetRepository;

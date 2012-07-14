@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-
-namespace GiveCRM.ImportExport
+﻿namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+
     public class ExcelXlsImporter : IExcelImporter
     {
         internal HSSFWorkbook Workbook;

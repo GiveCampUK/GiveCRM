@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-
-namespace GiveCRM.Web.Services
+﻿namespace GiveCRM.Web.Services
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
     public class UrlValidationService : IUrlValidationService
     {
         private readonly IEnumerable<IAmAUrlValidationRule> rules;

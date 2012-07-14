@@ -1,14 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Configuration;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using Simple.Data;
-using GiveCRM.DummyDataGenerator.Generation;
-
-namespace GiveCRM.DummyDataGenerator
+﻿namespace GiveCRM.DummyDataGenerator
 {
+    using System;
+    using System.Configuration;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using GiveCRM.DummyDataGenerator.Generation;
+    using Simple.Data;
+
     public partial class GeneratorWindow
     {
         private volatile dynamic db;

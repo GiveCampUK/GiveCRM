@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using GiveCRM.ImportExport;
-using GiveCRM.ImportExport.Borders;
-using GiveCRM.ImportExport.Cells;
-
-namespace GiveCRM.App
+﻿namespace GiveCRM.App
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using GiveCRM.ImportExport;
+    using GiveCRM.ImportExport.Borders;
+    using GiveCRM.ImportExport.Cells;
+
     public class Program
     {
         public static void Main(string[] args)

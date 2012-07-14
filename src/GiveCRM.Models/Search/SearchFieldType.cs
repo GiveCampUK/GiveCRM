@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GiveCRM.Web.Models.Search
+﻿namespace GiveCRM.Web.Models.Search
 {
     public enum SearchFieldType
     {

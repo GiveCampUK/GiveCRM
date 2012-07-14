@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Drawing;
-using NPOI.SS.UserModel;
-using BorderStyle = GiveCRM.ImportExport.Borders.BorderStyle;
-
 namespace GiveCRM.ImportExport
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using NPOI.SS.UserModel;
+    using BorderStyle = GiveCRM.ImportExport.Borders.BorderStyle;
+
     public static class NPOIExtensions
     {
 

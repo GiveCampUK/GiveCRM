@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace GiveCRM.DummyDataGenerator.Generation
+﻿namespace GiveCRM.DummyDataGenerator.Generation
 {
+    using System;
+
     internal abstract class BaseGenerator
     {
         internal abstract string GeneratedItemType{get;}

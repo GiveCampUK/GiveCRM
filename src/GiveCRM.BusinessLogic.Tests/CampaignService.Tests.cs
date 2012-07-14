@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.Models;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace GiveCRM.BusinessLogic.Tests
+﻿namespace GiveCRM.BusinessLogic.Tests
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.Models;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class TestCampaignService
     {

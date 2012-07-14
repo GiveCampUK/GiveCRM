@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using GiveCRM.BusinessLogic.ExcelImport;
-using GiveCRM.Models;
-using NUnit.Framework;
-
-namespace GiveCRM.BusinessLogic.Tests.ExcelImport
+﻿namespace GiveCRM.BusinessLogic.Tests.ExcelImport
 {
+    using System.Collections.Generic;
+    using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.Models;
+    using NUnit.Framework;
+
     [TestFixture]
     public class MemberFactory_CreateMember_Should
     {

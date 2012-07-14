@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Infrastructure;
+    using GiveCRM.Models;
 
     public class Campaigns : ICampaignRepository
     {

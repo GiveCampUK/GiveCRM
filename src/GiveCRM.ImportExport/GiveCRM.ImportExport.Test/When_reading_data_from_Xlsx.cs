@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-
-namespace GiveCRM.ImportExport.Test
+﻿namespace GiveCRM.ImportExport.Test
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class When_reading_data_from_Xlsx
     {

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-
-namespace GiveCRM.Web.Views
+﻿namespace GiveCRM.Web.Views
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+
     public static class MenuHelper
     {
         public static bool IsCurrentPage(

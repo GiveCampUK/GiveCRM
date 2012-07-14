@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using GiveCRM.BusinessLogic.ExcelImport;
-using GiveCRM.ImportExport;
-using NSubstitute;
-using NUnit.Framework;
-
-namespace GiveCRM.BusinessLogic.Tests
+﻿namespace GiveCRM.BusinessLogic.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.BusinessLogic.ExcelImport;
+    using GiveCRM.ImportExport;
+    using NSubstitute;
+    using NUnit.Framework;
+
     [TestFixture]
     public class ExcelImportService_Import_Should
     {

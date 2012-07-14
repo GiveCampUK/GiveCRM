@@ -1,8 +1,8 @@
-﻿using System;
-using log4net;
-
-namespace GiveCRM.LoggingService
+﻿namespace GiveCRM.LoggingService
 {
+    using System;
+    using log4net;
+
     public class LogService:ILogService
     {
         private readonly ILog logger;

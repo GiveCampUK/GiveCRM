@@ -1,8 +1,8 @@
-using System;
-using NUnit.Framework;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System;
+    using NUnit.Framework;
+
     [TestFixture]
     public class When_constructing_import
     {

@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-
 namespace GiveCRM.ImportExport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
     public class ExcelImport:IDisposable, IExcelImport
     {
         private bool disposed;

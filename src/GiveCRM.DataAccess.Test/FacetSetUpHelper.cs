@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using GiveCRM.Models;
-
 namespace GiveCRM.DataAccess.Test
 {
+    using System.Collections.Generic;
+    using GiveCRM.Models;
+
     public static class FacetSetUpHelper
     {
         public static Facet CreateListFacet()

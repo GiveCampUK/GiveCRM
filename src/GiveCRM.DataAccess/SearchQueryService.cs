@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models.Search;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.Models.Search;
+    using Simple.Data;
+
     public class SearchQueryService : ISearchQueryService
     {
         private readonly IDatabaseProvider databaseProvider;

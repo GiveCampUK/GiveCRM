@@ -1,14 +1,14 @@
-using System;
-using System.IO;
-using GiveCRM.ImportExport.Cells;
-using NPOI.SS.UserModel;
-using NSubstitute;
-using NUnit.Framework;
-using System.Collections.Generic;
-using Cell = GiveCRM.ImportExport.Cells.Cell;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using GiveCRM.ImportExport.Cells;
+    using NPOI.SS.UserModel;
+    using NSubstitute;
+    using NUnit.Framework;
+    using Cell = GiveCRM.ImportExport.Cells.Cell;
+
     [TestFixture]
     public class When_using_ExcelExport
     {

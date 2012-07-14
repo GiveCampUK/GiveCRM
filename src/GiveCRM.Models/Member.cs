@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace GiveCRM.Models
+﻿namespace GiveCRM.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Member
     {
         private decimal totalDonations;

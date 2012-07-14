@@ -1,9 +1,9 @@
-using System;
-using System.IO;
-using NUnit.Framework;
-
 namespace GiveCRM.ImportExport.Test
 {
+    using System;
+    using System.IO;
+    using NUnit.Framework;
+
     [TestFixture]
     public class When_opening_file_from_stream
     {

@@ -1,7 +1,7 @@
-using System.Drawing;
-
 namespace GiveCRM.ImportExport.Borders
 {
+    using System.Drawing;
+
     public class Border
     {
         public Border()

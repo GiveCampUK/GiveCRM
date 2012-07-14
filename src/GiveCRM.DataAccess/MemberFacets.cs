@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.Models;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System;
+    using System.Collections.Generic;
     using GiveCRM.Infrastructure;
+    using GiveCRM.Models;
 
     public class MemberFacets
     {

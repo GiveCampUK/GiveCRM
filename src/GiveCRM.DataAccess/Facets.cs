@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using GiveCRM.BusinessLogic;
-using GiveCRM.Models;
-using Simple.Data;
-
-namespace GiveCRM.DataAccess
+﻿namespace GiveCRM.DataAccess
 {
+    using System.Collections.Generic;
+    using GiveCRM.BusinessLogic;
     using GiveCRM.Infrastructure;
+    using GiveCRM.Models;
 
     public class Facets : IFacetRepository
     {

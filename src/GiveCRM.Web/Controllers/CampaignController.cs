@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Mvc;
-
-using GiveCRM.BusinessLogic;
-using GiveCRM.LoggingService;
-using GiveCRM.Models;
-using GiveCRM.Models.Search;
-
-using GiveCRM.Web.Attributes;
-using GiveCRM.Web.Infrastructure;
-using GiveCRM.Web.Models.Campaigns;
-using GiveCRM.Web.Models.Search;
-using GiveCRM.Web.Properties;
-
 namespace GiveCRM.Web.Controllers
 {
-
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Web.Mvc;
+    using GiveCRM.BusinessLogic;
+    using GiveCRM.LoggingService;
+    using GiveCRM.Models;
+    using GiveCRM.Models.Search;
+    using GiveCRM.Web.Attributes;
+    using GiveCRM.Web.Infrastructure;
+    using GiveCRM.Web.Models.Campaigns;
+    using GiveCRM.Web.Models.Search;
+    using GiveCRM.Web.Properties;
 
     [HandleErrorWithElmah]
     public class CampaignController : Controller
