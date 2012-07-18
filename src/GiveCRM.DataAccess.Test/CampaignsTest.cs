@@ -7,11 +7,14 @@
     [TestFixture]
     public class CampaignsTest
     {
-        private readonly dynamic db = Database.OpenNamedConnection("GiveCRM");
+        private IDatabaseProvider databaseProvider;
 
         [SetUp]
         public void SetUp()
         {
+            databaseProvider = new InMemorySingleTenantDatabaseProvider()
+                .Configure(adapter => adapter.SetAutoIncrementKeyColumn("Campaigns", "Id"));
+            dynamic db = databaseProvider.GetDatabase();
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
             db.Campaigns.DeleteAll();
@@ -24,7 +27,7 @@
         [Test]
         public void InsertCampaign()
         {
-            var campaigns = new Campaigns(new FakeDatabaseProvider(db));
+            var campaigns = new Campaigns(databaseProvider);
             var campaign = new Campaign
                                {
                                    Name = "Test",
