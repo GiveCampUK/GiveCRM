@@ -26,8 +26,13 @@
         {
             dynamic db = databaseProvider.GetDatabase();
             var query = db.Facets.All()
-                .Select(db.Facets.Id, db.Facets.Type, db.Facets.Name,
-                        db.Facets.FacetValues.Id.As("FacetValueId"), db.Facets.FacetValues.FacetId, db.Facets.FacetValues.Value)
+                .Select(
+                    db.Facets.Id,
+                    db.Facets.Type,
+                    db.Facets.Name,
+                    db.Facets.FacetValues.Id.As("FacetValueId"),
+                    db.Facets.FacetValues.FacetId,
+                    db.Facets.FacetValues.Value.As("FacetValueValue"))
                 .OrderBy(db.Facets.Id);
 
             Facet facet = null;
@@ -44,7 +49,7 @@
                     {
                         facet.Values = new List<FacetValue>();
                     }
-                    facet.Values.Add(new FacetValue { FacetId = row.Id, Id = row.FacetValueId, Value = row.Value });
+                    facet.Values.Add(new FacetValue { FacetId = row.Id, Id = row.FacetValueId, Value = row.FacetValueValue });
                 }
                 else
                 {

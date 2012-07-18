@@ -24,7 +24,7 @@
                                        }
                                };
 
-            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -47,7 +47,7 @@
                                        }
                                };
 
-            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -70,7 +70,7 @@
                                        }
                                };
 
-            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
+            var expr = new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileLocationCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -99,7 +99,7 @@
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNotNull(expr);
             Assert.IsNull(having);
@@ -127,7 +127,7 @@
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -157,7 +157,7 @@
 
             SimpleExpression expr = null;
             SimpleExpression having = null;
-            new SearchQueryService(new SingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
+            new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileDonationCriteria(criteria, ref expr, ref having);
 
             Assert.IsNull(expr);
             Assert.IsNotNull(having);
@@ -186,7 +186,7 @@
                                        }
                                };
 
-            var expr = new SearchQueryService(new SingleTenantDatabaseProvider()).CompileCampaignCriteria(criteria, null);
+            var expr = new SearchQueryService(new InMemorySingleTenantDatabaseProvider()).CompileCampaignCriteria(criteria, null);
 
             var reference = expr.LeftOperand as ObjectReference;
             Assert.IsNotNull(reference);
@@ -202,7 +202,7 @@
         [Test]
         public void Facet()
         {
-            var search = new SearchQueryService(new SingleTenantDatabaseProvider());
+            var search = new SearchQueryService(new InMemorySingleTenantDatabaseProvider());
             var criteria = new[]
                                {
                                    new FacetSearchCriteria

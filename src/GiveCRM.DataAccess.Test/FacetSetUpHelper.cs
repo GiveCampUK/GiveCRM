@@ -5,17 +5,17 @@ namespace GiveCRM.DataAccess.Test
 
     public static class FacetSetUpHelper
     {
-        public static Facet CreateListFacet()
+        public static Facet CreateListFacet(IDatabaseProvider databaseProvider)
         {
-            var facets = new Facets(new SingleTenantDatabaseProvider());
+            var facets = new Facets(databaseProvider);
             var facet = new Facet
                             {
                                 Type = FacetType.List,
                                 Name = "ListTest",
                                 Values = new List<FacetValue>
                                              {
-                                                 new FacetValue {Value = "One"},
-                                                 new FacetValue {Value = "Two"},
+                                                 new FacetValue { Value = "One" },
+                                                 new FacetValue { Value = "Two" },
                                              }
                             };
             var record = facets.Insert(facet);
@@ -23,9 +23,9 @@ namespace GiveCRM.DataAccess.Test
             return facet;
         }
 
-        public static Facet CreateFreeTextFacet()
+        public static Facet CreateFreeTextFacet(IDatabaseProvider databaseProvider)
         {
-            var facets = new Facets(new SingleTenantDatabaseProvider());
+            var facets = new Facets(databaseProvider);
             var facet = new Facet
                             {
                                 Type = FacetType.FreeText,
