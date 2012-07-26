@@ -18,8 +18,7 @@ namespace GiveCRM.DataAccess.Test
                                {
                                    adapter.SetAutoIncrementKeyColumn("Facets", "Id");
                                    adapter.SetAutoIncrementKeyColumn("FacetValues", "Id");
-                                   //adapter.ConfigureJoin("Facets", "Id", "Facet", "FacetValues", "FacetId", "Values");
-                                   adapter.Join.Master("Facets", "Id").Detail("FacetValues", "FacetId");
+                                   adapter.Join.Master("Facets", "Id").Detail("FacetValues", "FacetId", "Values");
                                });
 
             dynamic db = databaseProvider.GetDatabase();
