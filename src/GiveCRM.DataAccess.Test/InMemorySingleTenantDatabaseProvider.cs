@@ -1,12 +1,13 @@
 namespace GiveCRM.DataAccess.Test
 {
+    using System;
     using Simple.Data;
 
     public class InMemorySingleTenantDatabaseProvider : IDatabaseProvider
     {
         private readonly dynamic db;
 
-        public InMemoryAdapter Adapter { get; private set; }
+        private InMemoryAdapter Adapter { get; set; }
 
         public InMemorySingleTenantDatabaseProvider()
         {
@@ -18,6 +19,12 @@ namespace GiveCRM.DataAccess.Test
         public dynamic GetDatabase()
         {
             return this.db;
+        }
+
+        public IDatabaseProvider Configure(Action<InMemoryAdapter> configurer)
+        {
+            configurer(Adapter);
+            return this;
         }
     }
 }

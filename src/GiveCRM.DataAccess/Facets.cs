@@ -25,7 +25,7 @@
         public IEnumerable<Facet> GetAll()
         {
             dynamic db = databaseProvider.GetDatabase();
-            var query = db.Facets.All()
+            var query = db.Facets.Query()
                 .Select(
                     db.Facets.Id,
                     db.Facets.Type,
@@ -37,7 +37,7 @@
 
             Facet facet = null;
 
-            foreach (var row in query)
+            foreach (dynamic row in query)
             {
                 if (facet == null)
                 {

@@ -7,13 +7,13 @@
     [TestFixture]
     public class CampaignsTest
     {
-        private InMemorySingleTenantDatabaseProvider databaseProvider;
+        private IDatabaseProvider databaseProvider;
 
         [SetUp]
         public void SetUp()
         {
-            databaseProvider = new InMemorySingleTenantDatabaseProvider();
-            databaseProvider.Adapter.SetAutoIncrementKeyColumn("Campaigns", "Id");
+            databaseProvider = new InMemorySingleTenantDatabaseProvider()
+                .Configure(adapter => adapter.SetAutoIncrementKeyColumn("Campaigns", "Id"));
             dynamic db = databaseProvider.GetDatabase();
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();

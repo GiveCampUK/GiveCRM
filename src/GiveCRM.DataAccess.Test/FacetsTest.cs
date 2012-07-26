@@ -3,6 +3,7 @@ namespace GiveCRM.DataAccess.Test
     using System.Linq;
     using GiveCRM.Models;
     using NUnit.Framework;
+    using Simple.Data;
 
     [TestFixture]
     public class FacetsTest
@@ -12,7 +13,15 @@ namespace GiveCRM.DataAccess.Test
         [SetUp]
         public void SetUp()
         {
-            databaseProvider = new InMemorySingleTenantDatabaseProvider();
+            databaseProvider = new InMemorySingleTenantDatabaseProvider()
+                .Configure(adapter =>
+                               {
+                                   adapter.SetAutoIncrementKeyColumn("Facets", "Id");
+                                   adapter.SetAutoIncrementKeyColumn("FacetValues", "Id");
+                                   //adapter.ConfigureJoin("Facets", "Id", "Facet", "FacetValues", "FacetId", "Values");
+                                   adapter.Join.Master("Facets", "Id").Detail("FacetValues", "FacetId");
+                               });
+
             dynamic db = databaseProvider.GetDatabase();
             db.Donations.DeleteAll();
             db.CampaignRuns.DeleteAll();
@@ -78,7 +87,7 @@ namespace GiveCRM.DataAccess.Test
             FacetSetUpHelper.CreateListFacet(databaseProvider);
 
             var facets = new Facets(databaseProvider).GetAll();
-            var facetValues = databaseProvider.GetDatabase().FacetValues.All().ToArray();
+
             var facet = facets.FirstOrDefault(f => f.Type == FacetType.FreeText);
             Assert.IsNotNull(facet);
             Assert.AreEqual("FreeTextTest", facet.Name);
