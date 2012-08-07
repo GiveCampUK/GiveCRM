@@ -8,6 +8,7 @@
     using Simple.Data;
 
     [TestFixture]
+    [Ignore("Ignored until a new version of Simple.Data is available to fix issues with InMemoryAdapter.")]
     public class SearchTest
     {
         [Test]

@@ -7,6 +7,7 @@ namespace GiveCRM.DataAccess.Test
     using NUnit.Framework;
 
     [TestFixture]
+    [Ignore("Ignored until a new version of Simple.Data is available to fix issues with InMemoryAdapter.")]
     public class MembersTest
     {
         [SetUp]
