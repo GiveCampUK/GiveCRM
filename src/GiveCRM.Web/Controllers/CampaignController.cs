@@ -229,7 +229,7 @@ namespace GiveCRM.Web.Controllers
             {
                 this.campaignService.Commit(viewModel.CampaignId);
             }
-            catch (InvalidBusinessOperationException e)
+            catch (DomainException e)
             {
                 ViewBag.Message = e.Message;
                 ViewBag.ReturnActionName = "Show";

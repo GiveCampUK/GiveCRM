@@ -63,7 +63,7 @@
     <Compile Include="IMemberSearchFilterService.cs" />
     <Compile Include="IMemberService.cs" />
     <Compile Include="IMembershipService.cs" />
-    <Compile Include="InvalidBusinessOperationException.cs" />
+    <Compile Include="DomainException.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ISearchQueryService.cs" />
     <Compile Include="ISearchService.cs" />

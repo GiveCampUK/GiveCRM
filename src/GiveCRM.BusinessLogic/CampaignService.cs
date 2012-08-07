@@ -65,7 +65,7 @@
 
             if (!filteredMembers.Any())
             {
-                throw new InvalidBusinessOperationException("There are no members matching the search criteria for this campaign. Check you have member filters set up, and that there are members who match those criteria.");
+                throw new DomainException("There are no members matching the search criteria for this campaign. Check you have member filters set up, and that there are members who match those criteria.");
             }
 
             this.campaignRepository.Commit(campaignId, filteredMembers);
