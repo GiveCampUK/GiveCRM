@@ -4,9 +4,16 @@ namespace GiveCRM.Infrastructure
 
     public class DomainNameTenantCodeProvider : ITenantCodeProvider
     {
+        private readonly IHttpRequest request;
+
+        public DomainNameTenantCodeProvider(IHttpRequest request)
+        {
+            this.request = request;
+        }
+
         public string GetTenantCode()
         {
-            return HttpContext.Current.Request.Url.Host;
+            return request.Url.Host;
         }
     }
 }

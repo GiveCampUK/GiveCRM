@@ -5,6 +5,7 @@ namespace GiveCRM.Web.App_Start
 {
     using System;
     using System.Configuration;
+    using System.Web;
     using GiveCRM.BusinessLogic;
     using GiveCRM.DataAccess;
     using GiveCRM.Infrastructure;
@@ -13,6 +14,7 @@ namespace GiveCRM.Web.App_Start
     using Ninject;
     using Ninject.Extensions.Conventions;
     using Ninject.Web.Mvc;
+    using HttpRequest = System.Web.HttpRequest;
 
     public static class NinjectMVC3 
     {
@@ -56,6 +58,8 @@ namespace GiveCRM.Web.App_Start
             kernel.Bind<ILogService>().To<LogService>();
             kernel.Bind<ITenantCodeProvider>().To<DomainNameTenantCodeProvider>();
             kernel.Bind<LogService>().ToSelf().InSingletonScope();
+            kernel.Bind<HttpRequest>().ToMethod(_ => HttpContext.Current.Request).InRequestScope();
+            kernel.Bind<IHttpRequest>().To<ThinHttpRequest>().InRequestScope();
             
             string databaseProviderTypeName = ConfigurationManager.AppSettings.Get("DatabaseProviderType");
             if (string.IsNullOrWhiteSpace(databaseProviderTypeName))
