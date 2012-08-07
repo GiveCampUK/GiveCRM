@@ -52,36 +52,22 @@
 
         private ConnectionDetails GetConnectionString(string tenantCode)
         {
-            ConnectionDetails result = null;
+            // TODO: Make this a service call to the Admin site rather than hitting the DB directly
             using (var transaction = TransactionScopeFactory.Create(true))
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString))
             {
-                var command = connection.CreateCommand();
-                command.CommandText = "SELECT TOP 1 ConnectionString, DatabaseSchema FROM Charity WHERE TenantCode = @tenantCode";
-                var tenantCodeParam = command.CreateParameter();
-                tenantCodeParam.ParameterName = "@tenantCode";
-                tenantCodeParam.SqlDbType = SqlDbType.NVarChar;
-                tenantCodeParam.Value = tenantCode;
-                command.Parameters.Add(tenantCodeParam);
-                
-                connection.Open();
+                var database = Database.OpenConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString);
 
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        result = new ConnectionDetails
-                                     {
-                                         ConnectionString = reader.GetString(0),
-                                         DatabaseSchema = reader.GetString(1)
-                                     };
-                    }
-                }
+                var charity = database.Charity.FindByTenantCode(tenantCode);
 
                 transaction.Complete();
-            }
 
-            return result;
+                if (charity == null)
+                {
+                    throw new InvalidOperationException(string.Format("Not able to find charity for tenant code {0}", tenantCode));
+                }
+
+                return new ConnectionDetails { ConnectionString = charity.ConnectionString, DatabaseSchema = charity.DatabaseSchema };
+            }
         }
     }
 
