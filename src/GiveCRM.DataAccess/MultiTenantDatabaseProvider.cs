@@ -40,7 +40,7 @@
                         message.AppendLine("If this is the case and you wish to add the record, here's one we prepared earlier:");
                         message.AppendFormat("-- INSERT INTO Charity (Name, RegisteredCharityNumber, TenantCode, ConnectionString, DatabaseSchema) VALUES (Name, RegisteredCharityNumber, '{0}', ConnectionString, DatabaseSchema)", tenantCode);
 
-                        throw new InvalidOperationException(message.ToString());
+                        throw new TenantNotFoundException(message.ToString());
                     }
 
                     this.cache.Add(tenantCode, connectionDetails);
