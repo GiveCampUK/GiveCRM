@@ -64,6 +64,7 @@
     <Compile Include="MemberSearchFilters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchQueryService.cs" />
+    <Compile Include="TenantNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiveCRM.BusinessLogic\GiveCRM.BusinessLogic.csproj">
