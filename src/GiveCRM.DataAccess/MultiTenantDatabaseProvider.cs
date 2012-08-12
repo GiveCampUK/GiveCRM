@@ -63,7 +63,7 @@
 
                 if (charity == null)
                 {
-                    throw new InvalidOperationException(string.Format("Not able to find charity for tenant code {0}", tenantCode));
+                    throw new TenantNotFoundException(string.Format("Not able to find charity for tenant code {0}", tenantCode));
                 }
 
                 return new ConnectionDetails { ConnectionString = charity.ConnectionString, DatabaseSchema = charity.DatabaseSchema };
