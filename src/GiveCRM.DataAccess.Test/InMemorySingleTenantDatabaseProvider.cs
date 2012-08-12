@@ -19,12 +19,12 @@ namespace GiveCRM.DataAccess.Test
             return this.db;
         }
 
-        public IDatabaseProvider Configure(Action<InMemoryAdapter> configurer)
+        public IDatabaseProvider Configure(Action<InMemoryAdapter> configure)
         {
             Adapter = new InMemoryAdapter();
             Database.UseMockAdapter(Adapter);
             this.db = Database.Open();
-            configurer(Adapter);
+            configure(Adapter);
             return this;
         }
     }
