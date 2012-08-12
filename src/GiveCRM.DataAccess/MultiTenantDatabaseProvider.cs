@@ -55,7 +55,7 @@
             // TODO: Make this a service call to the Admin site rather than hitting the DB directly
             using (var transaction = TransactionScopeFactory.Create(true))
             {
-                var database = Database.OpenConnection(ConfigurationManager.ConnectionStrings["GiveCRMAdmin"].ConnectionString);
+                var database = Database.OpenNamedConnection("GiveCRMAdmin");
 
                 var charity = database.Charity.FindByTenantCode(tenantCode);
 
