@@ -110,6 +110,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ConfigurationSettings.cs" />
     <Compile Include="Infrastructure\SearchExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Campaigns\AddSearchFilterSearchCriterionViewModel.cs" />
