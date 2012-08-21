@@ -29,6 +29,8 @@ We'll do a bit of a code review before accepting your patch.
 
 Our solutions are compatible with both Visual Studio 2010 (**with Service Pack 1 applied**) and Visual Studio 2012.  We do not support any earlier versions of Visual Studio, including VS2010 RTM.  If you are using Visual Studio 2010 SP1, you will also need to install the SQL Server Developer Tools (SSDT), the replacement for the retired Visual Studio Database Projects.  You can download SSDT from http://go.microsoft.com/fwlink/?LinkID=237127&clcid=0x409, or via the [Web Platform Installer](http://www.microsoft.com/web/downloads/platform.aspx).  
 
+To deploy the SSDT projects to a SQL Server database instance (SQL Express or full), right-click the project file and click `Publish...`.  Provide a connection string for the target database instance, and click the `Publish` button.
+
 ### Git Flow
 
 You will notice when you fork the GiveCRM repository that the default branch is `develop` rather than the more usual `master`.  We use the Git Flow branching model, [first described](http://nvie.com/posts/a-successful-git-branching-model/) by [nvie](http://www.twitter.com/nvie), so GiveCRM's `master` branch moves on only at specific points, when we're really sure we want to promote something to production.  
