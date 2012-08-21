@@ -14,7 +14,7 @@
     <Name>GiveCRM.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.0</ProjectVersion>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ShowWizard>False</ShowWizard>
     <OutputType>Database</OutputType>
@@ -31,7 +31,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{82d522b2-5a3f-4d82-bcc1-5c63985b5c99}</ProjectGuid>
     <GenerateDatabaseFile>False</GenerateDatabaseFile>
-    <GenerateCreateScript>False</GenerateCreateScript>
+    <GenerateCreateScript>True</GenerateCreateScript>
     <SqlServerVerification>False</SqlServerVerification>
     <TargetLanguage>CS</TargetLanguage>
     <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
